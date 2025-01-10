@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[43,)"
+loaderVersion = "[47,)"
 issueTrackerURL = "https://github.com/cassiancc/Raspberry-Core/issues"
 license = "MIT"
 
@@ -16,14 +16,14 @@ Various compatibility blocks and fixes for the Raspberry Flavoured modpack.
 [[dependencies.raspberry]]
 modId = "forge"
 mandatory = true
-versionRange = "[43,)"
+versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.raspberry]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.2,)"
+versionRange = "[1.20.1,)"
 ordering = "NONE"
 side = "BOTH"
 
