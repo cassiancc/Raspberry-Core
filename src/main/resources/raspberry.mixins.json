@@ -10,6 +10,7 @@
     "BrazierBlockMixin",
     "CampfireBlockMixin",
     "FlintAndSteelMixin",
+    "KegBlockEntityMixin",
     "LevelSummaryMixin",
     "StoveBlockMixin"
   ],

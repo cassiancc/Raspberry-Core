@@ -12,6 +12,8 @@ Comfortable Campfires is a client and server mod for Forge 1.19.2.
 - [Supplementaries](https://modrinth.com/mod/supplementaries) is recommended.
 - [Oreganized](https://modrinth.com/mod/oreganized) is recommended.
 - [Caverns and Chasms](https://modrinth.com/mod/caverns-and-chasms) is optional.
+- [Aquaculture 2](https://modrinth.com/mod/aquaculture) is optional.
+- [Brewing and Chewin](https://www.curseforge.com/minecraft/mc-mods/brewin-and-chewin) is optional.
 - [Cloth Config](https://modrinth.com/mod/cloth-config) is recommended to configure the mod.
 
 
@@ -25,6 +27,10 @@ Comfortable Campfires is a client and server mod for Forge 1.19.2.
 ### Compatibility Changes
 - Twigs can now light Stoves.
 
+### Tweaks
+- Fishing Rods (Aquaculture 2) show their bait as a tooltip.
+- Jerky (Brewin and Chewin) and other items without a fluid no longer cause a ticking block entity crash.
+
 ### Configurable Tweaks
 - Stoves (Farmer's Delight) start unlit.
 - Campfires start unlit.
@@ -37,4 +43,4 @@ Comfortable Campfires is a client and server mod for Forge 1.19.2.
 
 
 
-If you are thinking about using the code or assets from Raspberry Core, please note the mod's licensing. **All assets of Raspberry Core are unlicensed and all rights are reserved to them by their respective authors.** The source code of Raspberry Flavoured mod for Minecraft 1.19.2 is under the MIT license.
+If you are thinking about using the code or assets from Raspberry Core, please note the mod's licensing. **All assets of Raspberry Core are unlicensed and all rights are reserved to them by their respective authors.** The source code of Raspberry Core mod for Minecraft 1.19.2 is under the MIT license.

@@ -1,12 +1,14 @@
 package cc.cassian.raspberry;
 
 import cc.cassian.raspberry.client.config.ModConfigFactory;
+import cc.cassian.raspberry.compat.AquacultureCompat;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
 import cc.cassian.raspberry.registry.RaspberryItems;
 import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -26,6 +28,7 @@ public final class RaspberryMod {
         RaspberryBlocks.BLOCKS.register(context.getModEventBus());
         RaspberryItems.ITEMS.register(context.getModEventBus());
         registerModsPage(context);
+        addTooltips();
     }
 
     /**
@@ -34,5 +37,15 @@ public final class RaspberryMod {
     public static void registerModsPage(FMLJavaModLoadingContext context) {
         if (ModList.get().isLoaded("cloth_config"))
             context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(ModConfigFactory::createScreen));
+    }
+
+    public void addTooltips() {
+        MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
+    }
+
+    @SubscribeEvent
+    public void onItemTooltipEvent(ItemTooltipEvent event) {
+        if (ModList.get().isLoaded("aquaculture"))
+            AquacultureCompat.checkAndAddTooltip(event);
     }
 }
