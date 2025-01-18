@@ -64,6 +64,7 @@ dependencies {
     modImplementation "maven.modrinth:jei:15.20.0.106-forge"
     modImplementation "curse.maven:aquaculture-60028:5919146"
     // modImplementation "curse.maven:brewin-and-chewin-637808:4468049"
+    implementation("io.github.llamalad7:mixinextras-forge:0.4.1")
 
 
 
