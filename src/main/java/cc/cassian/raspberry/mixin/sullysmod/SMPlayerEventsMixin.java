@@ -34,7 +34,7 @@ public class SMPlayerEventsMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;setCanceled(Z)V"),
             remap = false
     )
-    private static void fixParticles(PlayerInteractEvent.RightClickBlock event, CallbackInfo ci, @Local Level level, @Local BlockPos pos, @Local RandomSource random, @Local(ordinal = 1) ItemStack itemInHand) {
+    private static void fixParticles(PlayerInteractEvent.RightClickBlock event, CallbackInfo ci, @Local Level level, @Local BlockPos pos, @Local RandomSource random, @Local(ordinal = 0) ItemStack itemInHand) {
         ParticleUtils.spawnParticlesOnBlockFace(level, pos, new ItemParticleOption(ParticleTypes.ITEM, itemInHand), UniformInt.of(1, 2), event.getFace(), () -> {
             return new Vec3(Mth.nextDouble(random, -0.05, 0.05), 0.0, Mth.nextDouble(random, -0.05, 0.05));
         }, 0.55);

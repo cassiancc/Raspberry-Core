@@ -97,13 +97,13 @@ dependencies {
     modImplementation("com.jozufozu.flywheel:flywheel-forge-$minecraft_version:$flywheel_forge_version")
 
     // Optional dependencies for mods with only mixin fixes
-    modImplementation "curse.maven:aquaculture-60028:$aquaculture_version"
+    modCompileOnly "curse.maven:aquaculture-60028:$aquaculture_version"
     modImplementation "curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version"
 //    modImplementation "curse.maven:copperized-567666:$copperized_version"
-    modImplementation "software.bernie.geckolib:geckolib-forge-$geckolib_version"
+    modCompileOnly "software.bernie.geckolib:geckolib-forge-$geckolib_version"
     modCompileOnly "maven.modrinth:supplementaries:$supplementaries_version-forge"
     modImplementation "maven.modrinth:moonlight:$moonlight_lib_version-forge"
-    modImplementation "maven.modrinth:naturalist:$naturalist_version"
+    modCompileOnly "maven.modrinth:naturalist:$naturalist_version"
 //    modImplementation "maven.modrinth:another-furniture:$another_furniture_version"
     modImplementation "maven.modrinth:oreganized:$oreganized_version"
     modImplementation "maven.modrinth:spelunkery:$spelunkery_version-forge"
