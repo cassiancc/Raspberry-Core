@@ -7,11 +7,11 @@ license = "MIT"
 modId = "raspberry"
 version = "${version}"
 displayName = "Raspberry Core"
-authors = "cassiancc"
+authors = "cassiancc, DavigJ"
 description = '''
 Various compatibility blocks and fixes for the Raspberry Flavoured modpack.
 '''
-#logoFile = ""
+logoFile = "logo.png"
 
 [[dependencies.raspberry]]
 modId = "forge"

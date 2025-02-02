@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.registry;
 
-import net.minecraft.resources.ResourceKey;
+import cc.cassian.raspberry.compat.EnvironmentalCompat;
+import com.teamabnormals.environmental.core.other.EnvironmentalProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -8,6 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -38,6 +41,15 @@ public class RaspberryBlocks {
             LEAD_GRATE = registerBlock("lead_grate",
             ()-> new GrateBlock(BlockBehaviour.Properties.of().noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL)), CreativeModeTabs.BUILDING_BLOCKS);
 
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            WORMY_DIRT = registerBlock("wormy_dirt",
+            ()-> new Block(getTruffleProperties()), CreativeModeTab.TAB_BUILDING_BLOCKS);
+
+    public static BlockBehaviour.Properties getTruffleProperties() {
+        if (ModList.get().isLoaded("environmental"))
+            return EnvironmentalCompat.getTruffleProperties();
+        else return BlockBehaviour.Properties.copy(Blocks.DIRT);
+    }
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>> registerBlock(String blockID, Supplier<Block> blockSupplier, @Nullable ResourceKey<CreativeModeTab> tab) {
         final var block = BLOCKS.register(blockID, blockSupplier);

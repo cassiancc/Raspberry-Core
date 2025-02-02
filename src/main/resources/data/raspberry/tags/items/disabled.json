@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "environmental:thief_hood",
+      "required": false
+    },
+    {
+      "id": "environmental:healer_pouch",
+      "required": false
+    },
+    {
+      "id": "environmental:architect_belt",
+      "required": false
+    },
+    {
+      "id": "environmental:wanderer_boots",
+      "required": false
+    }
+  ]
+}

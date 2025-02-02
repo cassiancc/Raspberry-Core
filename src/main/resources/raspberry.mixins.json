@@ -4,16 +4,35 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
+	"naturalist.GlowGoopItemMixin"
   ],
   "mixins": [
-    "BlockEntityTypeMixin",
-    "BrazierBlockMixin",
-    "CampfireBlockMixin",
-    "FlintAndSteelMixin",
-    "LevelSummaryMixin",
-    "StoveBlockMixin"
+	"CampfireBlockMixin",
+	"ItemStackMixin",
+	"LevelSummaryMixin",
+	"PigMixin",
+	"aquaculture.AquaFishingBobberEntityMixin",
+	"aquaculture.BaitItemMixin",
+	"aquaculture.FishingRodEquipmentHandlerMixin",
+	"aquaculture.TackleBoxContainerMixin",
+	"brewinandchewin.KegBlockEntityMixin",
+	"caverns_and_chasms.BrazierBlockMixin",
+	"create.AllFluidsMixin",
+	"create.MountedStorageMixin",
+	"environmental.AbstractSkeletonMixin",
+	"environmental.ArmorItemMixin",
+	"environmental.WitherSkeletonMixin",
+	"environmental.YakPantsItemMixin",
+	"farmersdelight.BlockEntityTypeMixin",
+	"farmersdelight.FlintAndSteelMixin",
+	"farmersdelight.StoveBlockMixin",
+	"sullysmod.SMPlayerEventsMixin",
+	"upgrade_aquatic.PikeMixin",
+	"upgrade_aquatic.ThrasherMixin",
+	"upgrade_aquatic.ThrasherThrashGoalMixin"
   ],
+  "plugin": "cc.cassian.raspberry.mixin.RaspberryMixinPlugin",
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   }
 }

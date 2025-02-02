@@ -1,4 +1,4 @@
-package cc.cassian.raspberry.mixin;
+package cc.cassian.raspberry.mixin.farmersdelight;
 
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.world.item.context.BlockPlaceContext;

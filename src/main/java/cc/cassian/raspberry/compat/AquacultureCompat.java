@@ -11,7 +11,7 @@ public class AquacultureCompat {
         if (event.getItemStack().getItem() instanceof AquaFishingRodItem) {
             ItemStack bait = AquaFishingRodItem.getBait(event.getItemStack());
             if (!bait.getItem().equals(Items.AIR))
-                event.getToolTip().add(Component.translatable(bait.getDescriptionId()));
+                event.getToolTip().add(1, Component.translatable(bait.getDescriptionId()));
         }
     }
 }

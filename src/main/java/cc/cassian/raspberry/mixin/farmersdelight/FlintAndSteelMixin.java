@@ -1,4 +1,4 @@
-package cc.cassian.raspberry.mixin;
+package cc.cassian.raspberry.mixin.farmersdelight;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

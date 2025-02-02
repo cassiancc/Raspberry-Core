@@ -1,4 +1,4 @@
-package cc.cassian.raspberry.mixin;
+package cc.cassian.raspberry.mixin.farmersdelight;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,7 +11,7 @@ import vectorwing.farmersdelight.common.block.StoveBlock;
 @Mixin(BlockEntityType.class)
 public class BlockEntityTypeMixin {
     @Inject(method = "isValid", at = @At(value = "RETURN"), cancellable = true)
-    private void forceAllow(BlockState arg, CallbackInfoReturnable<Boolean> cir) {
+    private void forceAllowStoves(BlockState arg, CallbackInfoReturnable<Boolean> cir) {
         if (arg.getBlock() instanceof StoveBlock)
             cir.setReturnValue(true);
     }

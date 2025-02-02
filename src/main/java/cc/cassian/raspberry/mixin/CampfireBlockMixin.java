@@ -9,16 +9,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static vectorwing.farmersdelight.common.block.StoveBlock.LIT;
-
 @Mixin(CampfireBlock.class)
 public abstract class CampfireBlockMixin {
     @Inject(
             method = "getStateForPlacement",
             at = @At(value = "RETURN"),
             cancellable = true)
-    private void startStovesLit(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
+    private void startCampfiresLit(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
         if (!ModConfig.get().campfiresStartLit)
-            cir.setReturnValue(cir.getReturnValue().setValue(LIT, false));
+            cir.setReturnValue(cir.getReturnValue().setValue(CampfireBlock.LIT, false));
     }
 }

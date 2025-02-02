@@ -2,15 +2,22 @@ package cc.cassian.raspberry;
 
 import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.compat.AquacultureCompat;
+import cc.cassian.raspberry.compat.CopperizedCompat;
+import cc.cassian.raspberry.compat.NeapolitanCompat;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
 import cc.cassian.raspberry.registry.RaspberryItems;
+import cc.cassian.raspberry.registry.RasperryMobEffects;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +28,33 @@ public final class RaspberryMod {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public RaspberryMod(FMLJavaModLoadingContext context) {
+        var eventBus = context.getModEventBus();
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like registries and resources) may still be uninitialized.
         // Proceed with mild caution.
         ModConfig.load();
-        RaspberryBlocks.BLOCKS.register(context.getModEventBus());
-        RaspberryItems.ITEMS.register(context.getModEventBus());
+        // Register deferred registers.
+        RaspberryBlocks.BLOCKS.register(eventBus);
+        RaspberryItems.ITEMS.register(eventBus);
+        RasperryMobEffects.MOB_EFFECTS.register(eventBus);
+        // Register config
         registerModsPage(context);
-        addTooltips();
+        // Register event bus listeners.
+        MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
+        eventBus.addListener(RaspberryMod::commonSetup);
+        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::copperTick);
+    }
+
+    @SubscribeEvent
+    public static void commonSetup(FMLCommonSetupEvent event) {
+        if (ModList.get().isLoaded("neapolitan"))
+            NeapolitanCompat.boostAgility();
+    }
+
+    @SubscribeEvent
+    public static void copperTick(EntityStruckByLightningEvent event) {
+        if (ModList.get().isLoaded("copperized"))
+            CopperizedCompat.electrify(event);
     }
 
     /**
@@ -37,10 +63,6 @@ public final class RaspberryMod {
     public static void registerModsPage(FMLJavaModLoadingContext context) {
         if (ModList.get().isLoaded("cloth_config"))
             context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(ModConfigFactory::createScreen));
-    }
-
-    public void addTooltips() {
-        MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
     }
 
     @SubscribeEvent

@@ -22,6 +22,8 @@ public class ModConfig {
     public boolean campfiresStartLit = false;
     public boolean braziersStartLit = false;
     public boolean hideWorldVersion = true;
+    public boolean hideTooltips = true;
+
 
 
     public static void load() {

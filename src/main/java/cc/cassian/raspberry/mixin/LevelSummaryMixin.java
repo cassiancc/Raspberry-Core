@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class LevelSummaryMixin {
 
 	@Inject(method = "createInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/LevelSummary;markVersionInList()Z"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-	private void mixin2(CallbackInfoReturnable<MutableComponent> cir, MutableComponent mutablecomponent) {
+	private void hideCreateInfo(CallbackInfoReturnable<MutableComponent> cir, MutableComponent mutablecomponent) {
 		if (ModConfig.get().hideWorldVersion)
 			cir.setReturnValue(mutablecomponent);
 	}
