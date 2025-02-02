@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
-    @Inject(method = "tagMatches", at = @At(value = "RETURN"), cancellable = true)
+    @Inject(method = "isSameItemSameTags", at = @At(value = "RETURN"), cancellable = true)
     private static void mixin(ItemStack arg, ItemStack arg2, CallbackInfoReturnable<Boolean> cir) {
         if (!arg.hasTag() && !arg2.hasTag()) {
             cir.setReturnValue(true);

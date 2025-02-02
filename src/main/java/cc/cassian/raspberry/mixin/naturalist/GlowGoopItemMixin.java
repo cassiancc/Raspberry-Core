@@ -1,7 +1,7 @@
 package cc.cassian.raspberry.mixin.naturalist;
 
 import cc.cassian.raspberry.config.ModConfig;
-import com.starfish_studios.naturalist.item.GlowGoopItem;
+import com.starfish_studios.naturalist.common.item.GlowGoopItem;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

@@ -1,15 +1,15 @@
 package cc.cassian.raspberry.registry;
 
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
-import com.teamabnormals.environmental.core.other.EnvironmentalProperties;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -43,7 +43,7 @@ public class RaspberryBlocks {
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             WORMY_DIRT = registerBlock("wormy_dirt",
-            ()-> new Block(getTruffleProperties()), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new Block(getTruffleProperties()), CreativeModeTabs.BUILDING_BLOCKS);
 
     public static BlockBehaviour.Properties getTruffleProperties() {
         if (ModList.get().isLoaded("environmental"))

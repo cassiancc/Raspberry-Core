@@ -15,21 +15,15 @@
 	"aquaculture.BaitItemMixin",
 	"aquaculture.FishingRodEquipmentHandlerMixin",
 	"aquaculture.TackleBoxContainerMixin",
-	"brewinandchewin.KegBlockEntityMixin",
 	"caverns_and_chasms.BrazierBlockMixin",
 	"create.AllFluidsMixin",
 	"create.MountedStorageMixin",
-	"environmental.AbstractSkeletonMixin",
 	"environmental.ArmorItemMixin",
-	"environmental.WitherSkeletonMixin",
 	"environmental.YakPantsItemMixin",
 	"farmersdelight.BlockEntityTypeMixin",
 	"farmersdelight.FlintAndSteelMixin",
 	"farmersdelight.StoveBlockMixin",
-	"sullysmod.SMPlayerEventsMixin",
-	"upgrade_aquatic.PikeMixin",
-	"upgrade_aquatic.ThrasherMixin",
-	"upgrade_aquatic.ThrasherThrashGoalMixin"
+	"sullysmod.SMPlayerEventsMixin"
   ],
   "plugin": "cc.cassian.raspberry.mixin.RaspberryMixinPlugin",
   "injectors": {

@@ -8,9 +8,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.onvoid.copperized.common.CopperizedArmorMaterials;
+//import net.onvoid.copperized.common.CopperizedArmorMaterials;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +23,8 @@ public class CopperizedCompat {
         int copperCount = 0;
         if (entity instanceof Player player) {
             for (ItemStack armorSlot : entity.getArmorSlots()) {
-                if (armorSlot.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().equals(CopperizedArmorMaterials.COPPER)) {
+                //TODO find new copper armour mod
+                if (armorSlot.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().equals(ArmorMaterials.CHAIN)) {
                     copperCount++;
                 }
             }
