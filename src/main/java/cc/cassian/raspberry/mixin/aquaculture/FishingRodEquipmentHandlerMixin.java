@@ -1,8 +1,7 @@
 package cc.cassian.raspberry.mixin.aquaculture;
 
+import cc.cassian.raspberry.registry.RaspberryTags;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
-import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
-import com.teammetallurgy.aquaculture.item.BaitItem;
 import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeableLeatherItem;
@@ -31,7 +30,7 @@ public class FishingRodEquipmentHandlerMixin {
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 return switch (slot) {
                     case 0 -> stack.getItem() instanceof HookItem;
-                    case 1 -> stack.getItem() instanceof BaitItem;
+                    case 1 -> stack.is(RaspberryTags.BAIT);
                     case 2 ->
                             stack.is(AquacultureAPI.Tags.FISHING_LINE) && stack.getItem() instanceof DyeableLeatherItem;
                     case 3 -> stack.is(AquacultureAPI.Tags.BOBBER) && stack.getItem() instanceof DyeableLeatherItem;

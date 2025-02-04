@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.aquaculture;
 
+import cc.cassian.raspberry.registry.RaspberryTags;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
@@ -7,7 +8,6 @@ import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
 import com.teammetallurgy.aquaculture.inventory.container.TackleBoxContainer;
 import com.teammetallurgy.aquaculture.inventory.container.slot.SlotFishingRod;
 import com.teammetallurgy.aquaculture.inventory.container.slot.SlotHidable;
-import com.teammetallurgy.aquaculture.item.BaitItem;
 import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -63,7 +63,7 @@ public abstract class TackleBoxContainerMixin extends AbstractContainerMenu {
 
             this.slotBait = this.addSlot(new SlotHidable(fishingRod, 1, 129, 44) {
                 public boolean mayPlace(@Nonnull ItemStack stack) {
-                    return stack.getItem() instanceof BaitItem && super.mayPlace(stack);
+                    return stack.is(RaspberryTags.BAIT) && super.mayPlace(stack);
                 }
             });
 

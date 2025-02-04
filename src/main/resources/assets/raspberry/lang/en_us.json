@@ -1,14 +1,19 @@
 {
  "block.raspberry.ash_stove": "Ash Stove",
- "block.raspberry.lead_grate": "Lead Grate",
  "block.raspberry.silt_stove": "Silt Stove",
+ "block.raspberry.lead_grate": "Lead Grate",
  "block.raspberry.wormy_dirt": "Wormy Dirt",
- "effect.raspberry.thunder_synergy": "Synergy",
+
+ "effect.raspberry.aftershock": "Aftershock",
+ "effect.raspberry.aftershock.description": "Increases movement & attack speed. Gained from getting struck by lightning while wearing copper armour.",
+
  "config.raspberry.title": "Raspberry Core",
  "config.raspberry.config.stovesStartLit": "Light stoves by default",
  "config.raspberry.config.campfiresStartLit": "Light campfires by default",
  "config.raspberry.config.braziersStartLit": "Light braziers by default",
  "config.raspberry.config.hideWorldVersion": "Hide world version",
- "config.raspberry.config.hideTooltips": "Hide some modded tooltips"
-
+ "config.raspberry.config.hideTooltips": "Hide some modded tooltips",
+ "config.raspberry.config.badBaitLureBonus": "Lure bonus gained from bad-tier bait",
+ "config.raspberry.config.midBaitLureBonus": "Lure bonus gained from mid-tier bait",
+ "config.raspberry.config.goodBaitLureBonus": "Lure bonus gained from good-tier bait"
 }

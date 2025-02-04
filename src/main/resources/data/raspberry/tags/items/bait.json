@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#raspberry:bad_bait",
+    "#raspberry:mid_bait",
+    "#raspberry:good_bait"
+  ]
+}

@@ -10,6 +10,7 @@ import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RasperryMobEffects;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -43,6 +44,7 @@ public final class RaspberryMod {
         MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
         eventBus.addListener(RaspberryMod::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::copperTick);
+        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
     }
 
     @SubscribeEvent
@@ -52,9 +54,17 @@ public final class RaspberryMod {
     }
 
     @SubscribeEvent
-    public static void copperTick(EntityStruckByLightningEvent event) {
-        if (ModList.get().isLoaded("copperized"))
+    public static void lightningTick(EntityStruckByLightningEvent event) {
+        var modlist = ModList.get();
+        if (modlist.isLoaded("copperized") && !modlist.isLoaded("cofh_core"))
             CopperizedCompat.electrify(event);
+    }
+
+    @SubscribeEvent
+    public static void copperTick(TickEvent.PlayerTickEvent event) {
+        var modlist = ModList.get();
+        if (modlist.isLoaded("copperized") && modlist.isLoaded("cofh_core"))
+            CopperizedCompat.resist(event);
     }
 
     /**

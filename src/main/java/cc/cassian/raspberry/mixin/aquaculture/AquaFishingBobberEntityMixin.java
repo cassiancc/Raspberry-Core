@@ -27,7 +27,14 @@ public class AquaFishingBobberEntityMixin {
         ItemStack bait = rodHandler.getStackInSlot(1);
         if (!bait.isEmpty()) {
             if (bait.getCount() == 1) {
-                bobber.playSound((SoundEvent)AquaSounds.BOBBER_BAIT_BREAK.get(), 0.7F, 0.2F);
+                bobber.playSound((SoundEvent)AquaSounds.BOBBER_BAIT_BREAK.get(), 0.6F, 0.2F);
+            }
+            ItemStack containerStack = bait.getCraftingRemainingItem();
+            Player player = bobber.getPlayerOwner();
+            if (player != null && !player.getAbilities().instabuild) {
+                if (!player.getInventory().add(containerStack)) {
+                    player.drop(containerStack, false);
+                }
             }
             bait.shrink(1);
             rodHandler.setStackInSlot(1, bait);

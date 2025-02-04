@@ -2,7 +2,7 @@
 
 <a href='https://files.minecraftforge.net'><img alt="forge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg"></a>
 
-This is a collection of minor tweaks for the [Raspberry Flavoured](https://www.curseforge.com/minecraft/modpacks/raspberry-flavoured) modpack, focusing on compatibility and fixes for issues in older mods.
+This is a collection of minor tweaks for the [Raspberry Flavoured](https://www.curseforge.com/minecraft/modpacks/raspberry-flavoured) modpack, focusing on compatibility and fixes for issues in older mods, as well as a few minor features that work best in a full mod.
 
 ## Installation
 
@@ -13,18 +13,22 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 - [Copper and Tuff Backport](https://www.curseforge.com/minecraft/mc-mods/copper-tuff-backport-fabric) is required.
 
 #### Optional Dependencies
+- [Copperized](https://www.curseforge.com/minecraft/mc-mods/copperized) is recommended.
+- [CoFH Core](https://www.curseforge.com/minecraft/mc-mods/cofh-core) is recommended.
 - [Environmental](https://modrinth.com/mod/environmental) is recommended.
 - [Twigs](https://modrinth.com/mod/twigs) is recommended.
 - [Supplementaries](https://modrinth.com/mod/supplementaries) is recommended.
 - [Oreganized](https://modrinth.com/mod/oreganized) is recommended.
-- [Caverns and Chasms](https://modrinth.com/mod/caverns-and-chasms) is optional.
 - [Aquaculture 2](https://modrinth.com/mod/aquaculture) is optional.
-- [Brewing and Chewin](https://www.curseforge.com/minecraft/mc-mods/brewin-and-chewin) is optional.
-- [Sully's Mod](https://modrinth.com/mod/sullysmod) is optional.
-- [Create](https://modrinth.com/mod/create) is optional.
-- [Upgrade Aquatic](https://modrinth.com/mod/upgrade-aquatic) is optional.
-- [Neapolitan](https://modrinth.com/mod/neapolitan) is optional.
 - [Another Furniture](https://modrinth.com/mod/another-furniture) is optional.
+- [Brewing and Chewin](https://www.curseforge.com/minecraft/mc-mods/brewin-and-chewin) is optional.
+- [Caverns and Chasms](https://modrinth.com/mod/caverns-and-chasms) is optional.
+- [Create](https://modrinth.com/mod/create) is optional.
+- [Dynamic Crosshair](https://modrinth.com/mod/dynamiccrosshair) is optional.
+- [Neapolitan](https://modrinth.com/mod/neapolitan) is optional.
+- [Quark](https://modrinth.com/mod/quark) is optional.
+- [Sully's Mod](https://modrinth.com/mod/sullysmod) is optional.
+- [Upgrade Aquatic](https://modrinth.com/mod/upgrade-aquatic) is optional.
 - [Cloth Config](https://modrinth.com/mod/cloth-config) is recommended to configure the mod.
 
 
@@ -34,6 +38,10 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 - Ash Ovens, crafted from Ash Bricks (Supplementaries).
 - Silt Ovens, crafted from Silt Bricks (Twigs).
 - Lead Grate, crafted from Lead Blocks (Oreganized)
+
+### Features
+- Copper Armour (Copperized) will grant the new Aftershock effect when struck by lightning. This effect increases attack speed and movement speed.
+- Copper Armour (Copperized) will grant Lightning Resistance (CoFH Core) effect.
 
 ### Fixes
 - Jerky (Brewin and Chewin) and other items without a fluid no longer cause a ticking block entity crash.
@@ -46,6 +54,7 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 
 ### Configurable Tweaks
 - Stoves (Farmer's Delight) start unlit.
+- Nether Stoves (My Nether's Delight) start unlit.
 - Campfires start unlit.
 - Braziers (Caverns and Chasms) start unlit.
 - World version is hidden.
@@ -60,13 +69,16 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 ### Tweaks
 - Fishing Rods (Aquaculture 2) show their bait as a tooltip, and can hold up to a stack. Bait items can also be moved freely in and out of rods.
 - Bait (Aquaculture 2) decreases with each successful fishing reel, instead of relying on durability.
+- Bait (Aquaculture 2) now uses three different item tags, instead of being relegated to instances of BaitItem.
 - Flowing Honey fluid (Create) makes Ochrum with Lava instead of Limestone.
 - Yak Pants (Environmental) now uses Forge's step height modifier instead of its own.
 - Agility (Neapolitan) now uses Forge's step height modifier as well as its climbing boost.
+- Knives (Farmers Delight) now mine Bamboo instantly like in 1.20+.
 
 ### Compatibility Changes
 - Twigs (Twigs) can now light Stoves (Farmer's Delight).
 - Cabinets (Farmer's Delight), Drawers (Another Furniture), Sacks and Safes (Supplementaries) can be used as Mounted Storage (Create).
+- Golden Tools will show their harvest level correctly in Dynamic Crosshair when it has been changed by Quark.
 
 ## License
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)

@@ -23,8 +23,9 @@ public class ModConfig {
     public boolean braziersStartLit = false;
     public boolean hideWorldVersion = true;
     public boolean hideTooltips = true;
-
-
+    public int badBaitLureBonus = 1;
+    public int midBaitLureBonus = 2;
+    public int goodBaitLureBonus = 3;
 
     public static void load() {
         if (!Files.exists(configPath())) {
