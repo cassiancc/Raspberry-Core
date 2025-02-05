@@ -84,12 +84,14 @@ dependencies {
 
     // Recipe viewers
     modImplementation "maven.modrinth:emi:1.1.19+1.20.1+forge"
-    modImplementation "maven.modrinth:jei:15.20.0.106-forge"
+//    modImplementation "maven.modrinth:jei:15.20.0.106-forge"
 
     // Farmer's Delight and its addons
     modImplementation "maven.modrinth:farmers-delight:$farmers_delight_version"
     modImplementation "curse.maven:brewin-and-chewin-637808:$brewin_and_chewin_version"
     modImplementation "maven.modrinth:cultural-delights:$cultural_delights_version"
+    modImplementation "maven.modrinth:my-nethers-delight:$nethers_delight_version"
+
 
     // Create and its dependencies
     modImplementation("com.simibubi.create:create-$minecraft_version:$create_forge_version:slim") { transitive = false }
@@ -102,18 +104,27 @@ dependencies {
 //    modImplementation "curse.maven:copperized-567666:$copperized_version"
     modCompileOnly "software.bernie.geckolib:geckolib-forge-$geckolib_version"
     modCompileOnly "maven.modrinth:supplementaries:$supplementaries_version-forge"
-    modImplementation "maven.modrinth:moonlight:$moonlight_lib_version-forge"
+    modCompileOnly "maven.modrinth:moonlight:$moonlight_lib_version-forge"
     modCompileOnly "maven.modrinth:naturalist:$naturalist_version"
 //    modImplementation "maven.modrinth:another-furniture:$another_furniture_version"
-    modImplementation "maven.modrinth:oreganized:$oreganized_version"
-    modImplementation "maven.modrinth:spelunkery:$spelunkery_version-forge"
-    modImplementation "maven.modrinth:sullysmod:$sullys_version"
-    modImplementation "maven.modrinth:twigs:$twigs_version"
+    modCompileOnly "maven.modrinth:oreganized:$oreganized_version"
+    modCompileOnly "maven.modrinth:spelunkery:$spelunkery_version-forge"
+    modCompileOnly "maven.modrinth:sullysmod:$sullys_version"
+    modCompileOnly "maven.modrinth:twigs:$twigs_version"
+    modCompileOnly "maven.modrinth:quark:$quark_version"
+    modCompileOnly "maven.modrinth:zeta:$zeta_version"
+    modCompileOnly "maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge"
+    modCompileOnly "maven.modrinth:cofh-core:$cofh_core_version-forge"
 
     // beacons
-    modImplementation "curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version"
-    modImplementation "curse.maven:cerbons-better-beacons-921066:$better_beacons_version"
-    modImplementation "maven.modrinth:cerbons-api:1.1.0-forge"
+//    modImplementation "curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version"
+//    modImplementation "curse.maven:cerbons-better-beacons-921066:$better_beacons_version"
+//    modImplementation "maven.modrinth:cerbons-api:1.1.0-forge"
+
+
+    //1.20
+    modImplementation "maven.modrinth:better-copper-armor-and-tools:1.2-1.20.1"
+
 
     // MixinExtras
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))

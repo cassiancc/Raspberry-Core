@@ -1,7 +1,7 @@
 package cc.cassian.raspberry.mixin.cofh_core;
 
 import cc.cassian.raspberry.compat.CopperizedCompat;
-import cofh.core.event.EffectEvents;
+import cofh.core.common.event.EffectEvents;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;

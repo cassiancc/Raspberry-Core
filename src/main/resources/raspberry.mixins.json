@@ -22,7 +22,6 @@
 	"create.AllFluidsMixin",
 	"create.MountedStorageMixin",
 	"dynamiccrosshair.VanillaBlockHandlerMixin",
-	"environmental.AbstractSkeletonMixin",
 	"environmental.ArmorItemMixin",
 	"environmental.YakPantsItemMixin",
 	"farmersdelight.BambooBlockMixin",

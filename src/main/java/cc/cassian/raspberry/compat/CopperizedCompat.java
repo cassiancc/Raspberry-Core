@@ -7,16 +7,16 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 //import net.onvoid.copperized.common.CopperizedArmorMaterials;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraftforge.fml.ModList;
+import fr.anto.bettercopper.utils.CustomArmorMaterials;
 
 public class CopperizedCompat {
-    public static final ArmorMaterial COPPER = CopperizedArmorMaterials.COPPER;
+    public static final ArmorMaterial COPPER = CustomArmorMaterials.COPPER_ARMOR;
 
     public static void electrify(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
@@ -24,7 +24,7 @@ public class CopperizedCompat {
         if (entity instanceof Player player) {
             for (ItemStack armorSlot : entity.getArmorSlots()) {
                 //TODO find new copper armour mod
-                if (armorSlot.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().equals(ArmorMaterials.CHAIN)) {
+                if (armorSlot.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().equals(COPPER)) {
                     copperCount++;
                 }
             }

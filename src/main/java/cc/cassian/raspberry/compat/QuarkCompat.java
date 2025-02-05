@@ -5,7 +5,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
-import vazkii.quark.content.tweaks.module.GoldToolsHaveFortuneModule;
+import org.violetmoon.quark.content.tweaks.module.GoldToolsHaveFortuneModule;
 
 import java.util.Locale;
 

@@ -57,7 +57,7 @@ public abstract class AquaFishingRodItemMixin {
             luck += hook.getLuckModifier();
         }
         lureSpeed = Math.min(5, lureSpeed);
-        Entity bobber = new AquaFishingBobberEntity(player, player.level, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack);
-        return player.level.addFreshEntity(bobber);
+        Entity bobber = new AquaFishingBobberEntity(player, player.level(), luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack);
+        return player.level().addFreshEntity(bobber);
     }
 }
