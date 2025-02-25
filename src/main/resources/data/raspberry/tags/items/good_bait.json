@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "aquaculture:minnow"
+    {
+      "id": "aquaculture:minnow",
+      "required": false
+    }
   ]
 }

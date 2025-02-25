@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.compat;
 
+import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RasperryMobEffects;
 import cofh.core.init.CoreMobEffects;
 import net.minecraft.world.effect.MobEffectInstance;

@@ -18,14 +18,18 @@ public class ModConfig {
 
     private static ModConfig INSTANCE = new ModConfig();
     //General settings
+    public boolean aftershock = true;
     public boolean stovesStartLit = false;
     public boolean campfiresStartLit = false;
     public boolean braziersStartLit = false;
     public boolean hideWorldVersion = true;
     public boolean hideTooltips = true;
-    public int badBaitLureBonus = 1;
-    public int midBaitLureBonus = 2;
-    public int goodBaitLureBonus = 3;
+    public boolean gliders_disableLightning = true;
+    public boolean gliders_disableNetherDamage = true;
+    public int aquaculture_badBaitLureBonus = 1;
+    public int aquaculture_midBaitLureBonus = 2;
+    public int aquaculture_goodBaitLureBonus = 3;
+    public int aquaculture_wormDiscoveryRange = 80;
 
     public static void load() {
         if (!Files.exists(configPath())) {

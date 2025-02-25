@@ -45,11 +45,11 @@ public abstract class AquaFishingRodItemMixin {
         }
         if (!isAdminRod && !bait.isEmpty()) {
             if (bait.is(RaspberryTags.BAD_BAIT)) {
-                lureSpeed += ModConfig.get().badBaitLureBonus;
+                lureSpeed += ModConfig.get().aquaculture_badBaitLureBonus;
             } else if (bait.is(RaspberryTags.MID_BAIT)) {
-                lureSpeed += ModConfig.get().midBaitLureBonus;
+                lureSpeed += ModConfig.get().aquaculture_midBaitLureBonus;
             } else if (bait.is(RaspberryTags.GOOD_BAIT)) {
-                lureSpeed += ModConfig.get().goodBaitLureBonus;
+                lureSpeed += ModConfig.get().aquaculture_goodBaitLureBonus;
             }
         }
         int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);

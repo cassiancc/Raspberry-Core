@@ -1,0 +1,48 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:oak_wood",
+    "minecraft:spruce_wood",
+    "minecraft:birch_wood",
+    "minecraft:jungle_wood",
+    "minecraft:acacia_wood",
+    "minecraft:dark_oak_wood",
+    "minecraft:mangrove_wood",
+    {
+      "id": "upgrade_aquatic:river_wood",
+      "required": false
+    },
+    {
+      "id": "environmental:willow_wood",
+      "required": false
+    },
+    {
+      "id": "environmental:cherry_wood",
+      "required": false
+    },
+    {
+      "id": "environmental:wisteria_wood",
+      "required": false
+    },
+    {
+      "id": "caverns_and_chasms:azalea_wood",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:driftwood_wood",
+      "required": false
+    },
+    {
+      "id": "culturaldelights:avocado_wood",
+      "required": false
+    },
+    {
+      "id": "quark:blossom_wood",
+      "required": false
+    },
+    {
+      "id": "quark:ancient_wood",
+      "required": false
+    }
+  ]
+}

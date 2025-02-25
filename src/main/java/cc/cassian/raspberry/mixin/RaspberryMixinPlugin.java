@@ -42,6 +42,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("caverns_and_chasms", mixinClassName)){
             return false;
         }
+        else if (checkMixin("vc_gliders", mixinClassName)){
+            return false;
+        }
         return true;
     }
 

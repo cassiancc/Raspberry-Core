@@ -1,8 +1,15 @@
 package cc.cassian.raspberry.compat;
 
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.violetmoon.quark.content.tweaks.module.GoldToolsHaveFortuneModule;
@@ -25,5 +32,15 @@ public class QuarkCompat {
         }
 
         return false;
+    }
+
+    public static void register() {
+        DispenserBlock.registerBehavior(TorchArrowModule.torch_arrow, new AbstractProjectileDispenseBehavior() {
+            protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
+                TorchArrow torch_arrow = new TorchArrow(level, position.x(), position.y(), position.z());
+                torch_arrow.pickup = AbstractArrow.Pickup.ALLOWED;
+                return torch_arrow;
+            }
+        });
     }
 }

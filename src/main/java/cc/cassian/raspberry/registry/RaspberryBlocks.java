@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.registry;
 
+import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
@@ -22,8 +23,6 @@ import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModCreativeTabs;
 import xanthian.copperandtuffbackport.blocks.custom.GrateBlock;
 
-import java.util.function.Supplier;
-
 import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
 
 public class RaspberryBlocks {
@@ -38,8 +37,7 @@ public class RaspberryBlocks {
             ()-> new StoveBlock(BlockBehaviour.Properties.copy(ModBlocks.STOVE.get())), ModCreativeTabs.TAB_FARMERS_DELIGHT.getKey());
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
-            LEAD_GRATE = registerBlock("lead_grate",
-            ()-> new GrateBlock(BlockBehaviour.Properties.of().noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL)), CreativeModeTabs.BUILDING_BLOCKS);
+            LEAD_GRATE = registerLeadGrate();
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             WORMY_DIRT = registerBlock("wormy_dirt",
@@ -51,7 +49,16 @@ public class RaspberryBlocks {
         else return BlockBehaviour.Properties.copy(Blocks.DIRT);
     }
 
-    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>> registerBlock(String blockID, Supplier<Block> blockSupplier, @Nullable ResourceKey<CreativeModeTab> tab) {
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>> registerLeadGrate() {
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of(Material.HEAVY_METAL).noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL);
+        if (ModList.get().isLoaded("copperandtuffbackport")) {
+            return CopperBackportCompat.registerGrateBlock(properties);
+        }
+        else return registerBlock("lead_grate",
+                ()-> new Block(properties), CreativeModeTab.TAB_BUILDING_BLOCKS);
+    }
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>> registerBlock(String blockID, Supplier<Block> blockSupplier, CreativeModeTab tab) {
         final var block = BLOCKS.register(blockID, blockSupplier);
         final var item = RaspberryItems.ITEMS.register(blockID, () -> new BlockItem(block.get(), new Item.Properties()));
         return new Pair<>(block, item);

@@ -8,7 +8,7 @@ modId = "raspberry"
 version = "${version}"
 displayName = "Raspberry Core"
 authors = "cassiancc, DavigJ"
-credits = "Features textures by Derb, nöelle, and noodleman, ideas from raspmary"
+credits = "Features textures by Derb, nöelle, and noodleman, ideas/textures from raspmary"
 description = '''
 A collection of compatibility blocks, minor features, and fixes designed for the Raspberry Flavoured modpack.
 '''

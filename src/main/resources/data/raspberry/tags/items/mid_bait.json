@@ -1,7 +1,9 @@
 {
   "replace": false,
   "values": [
-    "aquaculture:leech",
-    "minecraft:apple"
+    {
+      "id": "aquaculture:leech",
+      "required": false
+    }
   ]
 }

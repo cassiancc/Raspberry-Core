@@ -1,7 +1,9 @@
 {
   "replace": false,
   "values": [
-    "aquaculture:worm",
-    "farmersdelight:dog_food"
+    {
+      "id": "aquaculture:worm",
+      "required": false
+    }
   ]
 }

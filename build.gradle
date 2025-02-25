@@ -54,13 +54,24 @@ repositories {
         url = "https://maven.tterrag.com/"
         name = "Create"
     }
+    // GeckoLib
     maven {
         name = 'GeckoLib'
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
+    // Parchment Mappings
     maven {
         name = 'ParchmentMC'
         url = 'https://maven.parchmentmc.org'
+    }
+    // Player Animator
+    maven {
+        name = "KosmX's maven"
+        url = 'https://maven.kosmx.dev/'
+    }
+    // PalladiumCore
+    maven {
+        url 'https://repo.repsy.io/mvn/lucraft/threetag'
     }
 }
 

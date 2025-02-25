@@ -1,0 +1,48 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:oak_log",
+    "minecraft:spruce_log",
+    "minecraft:birch_log",
+    "minecraft:jungle_log",
+    "minecraft:acacia_log",
+    "minecraft:dark_oak_log",
+    "minecraft:mangrove_log",
+    {
+      "id": "upgrade_aquatic:river_log",
+      "required": false
+    },
+    {
+      "id": "environmental:willow_log",
+      "required": false
+    },
+    {
+      "id": "environmental:cherry_log",
+      "required": false
+    },
+    {
+      "id": "environmental:wisteria_log",
+      "required": false
+    },
+    {
+      "id": "caverns_and_chasms:azalea_log",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:driftwood_log",
+      "required": false
+    },
+    {
+      "id": "culturaldelights:avocado_log",
+      "required": false
+    },
+    {
+      "id": "quark:blossom_log",
+      "required": false
+    },
+    {
+      "id": "quark:ancient_log",
+      "required": false
+    }
+  ]
+}

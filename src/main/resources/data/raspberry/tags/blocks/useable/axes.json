@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#raspberry:unstripped_logs",
+    "#raspberry:unstripped_woods"
+  ]
+}

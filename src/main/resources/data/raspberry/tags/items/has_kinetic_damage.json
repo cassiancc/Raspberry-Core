@@ -1,0 +1,17 @@
+{
+  "values": [
+    "oreganized:electrum_axe",
+    "oreganized:electrum_hoe",
+    {
+      "id": "oreganized:electrum_machete",
+      "required": false
+    },
+    {
+      "id": "oreganized:electrum_knife",
+      "required": false
+    },
+    "oreganized:electrum_pickaxe",
+    "oreganized:electrum_shovel",
+    "oreganized:electrum_sword"
+  ]
+}

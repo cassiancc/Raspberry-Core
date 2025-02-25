@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
-	"naturalist.GlowGoopItemMixin"
+    "naturalist.GlowGoopItemMixin"
   ],
   "mixins": [
 	"CampfireBlockMixin",
@@ -34,6 +34,6 @@
   ],
   "plugin": "cc.cassian.raspberry.mixin.RaspberryMixinPlugin",
   "injectors": {
-	"defaultRequire": 1
+    "defaultRequire": 1
   }
 }

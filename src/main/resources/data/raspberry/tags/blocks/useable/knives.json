@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:pumpkin",
+    "#farmersdelight:drops_cake_slice",
+    "minecraft:cake",
+    {
+      "id": "farmersdelight:sweet_berry_cheesecake",
+      "required": false
+    },
+    {
+      "id": "mynethersdelight:magma_cake",
+      "required": false
+    }
+  ]
+}
