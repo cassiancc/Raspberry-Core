@@ -1,7 +1,6 @@
 plugins {
     id 'dev.architectury.loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
-    id "lol.bai.explosion" version "0.3.1"
 }
 
 group = project.maven_group
@@ -123,9 +122,11 @@ dependencies {
     modCompileOnly "maven.modrinth:spelunkery:$spelunkery_version-forge"
     modCompileOnly "maven.modrinth:sullysmod:$sullys_version"
     modCompileOnly "maven.modrinth:twigs:$twigs_version"
-    modCompileOnly "maven.modrinth:quark:$quark_version"
-    modCompileOnly "maven.modrinth:zeta:$zeta_version"
-    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
+    modImplementation "maven.modrinth:quark:$quark_version"
+    modImplementation "maven.modrinth:zeta:$zeta_version"
+    modCompileOnly("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
+    modCompileOnlyApi("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version:api")
+//    forgeRuntimeLibrary("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version:api")
     modImplementation "maven.modrinth:cofh-core:$cofh_core_version-forge"
     modImplementation "curse.maven:clash-468706:$clash_version"
     modImplementation "maven.modrinth:gliders:$gliders_version"

@@ -5,6 +5,8 @@ import cc.cassian.raspberry.registry.RaspberryTags;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import mod.crend.dynamiccrosshair.impl.CrosshairContextImpl;
+import mod.crend.dynamiccrosshairapi.crosshair.CrosshairContext;
+import mod.crend.dynamiccrosshairapi.interaction.InteractionType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
@@ -18,7 +20,7 @@ import vectorwing.farmersdelight.common.tag.ModTags;
 
 @Pseudo
 @Mixin(CrosshairContextImpl.class)
-public class VanillaBlockHandlerMixin {
+public abstract class VanillaBlockHandlerMixin implements CrosshairContext {
 
     @WrapOperation(
             method = "checkToolWithBlock",
@@ -32,26 +34,26 @@ public class VanillaBlockHandlerMixin {
         return original.call(instance, state);
     }
 
-//    @Inject(method = "checkToolWithBlock", at = @At(value = "HEAD"), cancellable = true, remap = false)
-//    private void checkShearsTag(CallbackInfoReturnable<mod.crend.dynamiccrosshair.interaction.InteractionType> cir) {
-//        if (context.getItem() instanceof ShearsItem) {
-//            if (context.getBlockState().is(RaspberryTags.SHEARS_SHOULD_MINE))
-//                cir.setReturnValue(Crosshair.CORRECT_TOOL);
-//            else if (context.getBlockState().is(RaspberryTags.SHEARS_SHOULD_USE))
-//                cir.setReturnValue(Crosshair.USABLE);
-//        }
-//        else if (context.getItem() instanceof KnifeItem) {
-//            if (context.getBlockState().is(RaspberryTags.KNIVES_SHOULD_USE))
-//                cir.setReturnValue(Crosshair.USABLE);
-//            else if (context.getBlockState().is(ModTags.MINEABLE_WITH_KNIFE))
-//                cir.setReturnValue(Crosshair.CORRECT_TOOL);
-//        }
-//        else if (context.getItem() instanceof AxeItem && context.getBlockState().is(RaspberryTags.AXES_SHOULD_USE)) {
-//            cir.setReturnValue(Crosshair.USABLE);
-//        }
-//        else if (context.getItem() instanceof HoeItem && context.getBlockState().is(RaspberryTags.HOES_SHOULD_USE)) {
-//            cir.setReturnValue(Crosshair.USABLE);
-//        }
-//        }
+    @Inject(method = "checkToolWithBlock", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    private void checkShearsTag(CallbackInfoReturnable<InteractionType> cir) {
+        if (this.getItem() instanceof ShearsItem) {
+            if (this.getBlockState().is(RaspberryTags.SHEARS_SHOULD_MINE))
+                cir.setReturnValue(InteractionType.CORRECT_TOOL);
+            else if (this.getBlockState().is(RaspberryTags.SHEARS_SHOULD_USE))
+                cir.setReturnValue(InteractionType.USABLE_TOOL);
+        }
+        else if (this.getItem() instanceof KnifeItem) {
+            if (this.getBlockState().is(RaspberryTags.KNIVES_SHOULD_USE))
+                cir.setReturnValue(InteractionType.USABLE_TOOL);
+            else if (this.getBlockState().is(ModTags.MINEABLE_WITH_KNIFE))
+                cir.setReturnValue(InteractionType.CORRECT_TOOL);
+        }
+        else if (this.getItem() instanceof AxeItem && this.getBlockState().is(RaspberryTags.AXES_SHOULD_USE)) {
+            cir.setReturnValue(InteractionType.USABLE_TOOL);
+        }
+        else if (this.getItem() instanceof HoeItem && this.getBlockState().is(RaspberryTags.HOES_SHOULD_USE)) {
+            cir.setReturnValue(InteractionType.USABLE_TOOL);
+        }
+        }
 
 }

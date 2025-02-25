@@ -24,14 +24,14 @@
 	"dynamiccrosshair.VanillaBlockHandlerMixin",
 	"environmental.ArmorItemMixin",
 	"environmental.YakPantsItemMixin",
-	"farmersdelight.BambooBlockMixin",
-	"farmersdelight.BambooSaplingMixin",
 	"farmersdelight.BlockEntityTypeMixin",
 	"farmersdelight.FlintAndSteelMixin",
 	"farmersdelight.NetherStoveBlockMixin",
 	"farmersdelight.StoveBlockMixin",
 	"quark.ExpandedItemInteractionsModuleMixin",
-	"sullysmod.SMPlayerEventsMixin"
+	"sullysmod.SMPlayerEventsMixin",
+	"vc_gliders.GliderItemMixin",
+	"vc_gliders.GliderUtilMixin"
   ],
   "plugin": "cc.cassian.raspberry.mixin.RaspberryMixinPlugin",
   "injectors": {
