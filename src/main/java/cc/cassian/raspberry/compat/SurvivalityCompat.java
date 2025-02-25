@@ -1,7 +1,7 @@
 package cc.cassian.raspberry.compat;
 
 import com.github.creoii.survivality.config.SurvivalityConfig;
-import com.github.creoii.survivality.util.SurvivalityUtils;
+//import com.github.creoii.survivality.util.SurvivalityUtils;
 import net.minecraft.world.entity.player.Player;
 
 public class SurvivalityCompat {
@@ -10,6 +10,6 @@ public class SurvivalityCompat {
     }
 
     public static void swap(Player user) {
-        SurvivalityUtils.swapArmor(user);
+//        SurvivalityUtils.swapArmor(user);
     }
 }

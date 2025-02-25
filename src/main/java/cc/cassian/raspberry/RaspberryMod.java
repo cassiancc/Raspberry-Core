@@ -2,8 +2,6 @@ package cc.cassian.raspberry;
 
 import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.compat.*;
-import cc.cassian.raspberry.compat.oreganized.OreganizedEvents;
-import cc.cassian.raspberry.compat.oreganized.network.RaspberryOreganizedNetwork;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryAttributes;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
@@ -61,11 +59,6 @@ public final class RaspberryMod {
         eventBus.addListener(RaspberryMod::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::copperTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
-        if (ModList.get().isLoaded("oreganized")) {
-            RaspberryAttributes.ATTRIBUTES.register(eventBus);
-            RaspberryOreganizedNetwork.register();
-            MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onItemAttributes);
-        }
 
         TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MOD_ID, "truffle_hunting_time"), WORM_HUNTING_TIME);
         TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MOD_ID, "sniff_sound_time"), SNIFF_SOUND_TIME);
@@ -78,9 +71,6 @@ public final class RaspberryMod {
     public static void commonSetup(FMLCommonSetupEvent event) {
         if (ModList.get().isLoaded("neapolitan"))
             NeapolitanCompat.boostAgility();
-        if (ModList.get().isLoaded("quark")) {
-            QuarkCompat.register();
-        }
     }
 
     @SubscribeEvent

@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
-    "naturalist.GlowGoopItemMixin"
+	"naturalist.GlowGoopItemMixin"
   ],
   "mixins": [
 	"CampfireBlockMixin",
@@ -30,10 +30,11 @@
 	"farmersdelight.FlintAndSteelMixin",
 	"farmersdelight.NetherStoveBlockMixin",
 	"farmersdelight.StoveBlockMixin",
+	"quark.ExpandedItemInteractionsModuleMixin",
 	"sullysmod.SMPlayerEventsMixin"
   ],
   "plugin": "cc.cassian.raspberry.mixin.RaspberryMixinPlugin",
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   }
 }

@@ -10,7 +10,7 @@ import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
-import vazkii.quark.content.management.module.ExpandedItemInteractionsModule;
+import org.violetmoon.quark.content.management.module.ExpandedItemInteractionsModule;
 
 @Pseudo
 @Mixin(ExpandedItemInteractionsModule.class)

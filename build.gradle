@@ -1,6 +1,7 @@
 plugins {
     id 'dev.architectury.loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
+    id "lol.bai.explosion" version "0.3.1"
 }
 
 group = project.maven_group
@@ -110,12 +111,12 @@ dependencies {
     modImplementation("com.jozufozu.flywheel:flywheel-forge-$minecraft_version:$flywheel_forge_version")
 
     // Optional dependencies for mods with only mixin fixes
-    modCompileOnly "curse.maven:aquaculture-60028:$aquaculture_version"
+    modImplementation "curse.maven:aquaculture-60028:$aquaculture_version"
     modImplementation "curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version"
 //    modImplementation "curse.maven:copperized-567666:$copperized_version"
     modCompileOnly "software.bernie.geckolib:geckolib-forge-$geckolib_version"
     modCompileOnly "maven.modrinth:supplementaries:$supplementaries_version-forge"
-    modCompileOnly "maven.modrinth:moonlight:$moonlight_lib_version-forge"
+    modImplementation "maven.modrinth:moonlight:$moonlight_lib_version-forge"
     modCompileOnly "maven.modrinth:naturalist:$naturalist_version"
 //    modImplementation "maven.modrinth:another-furniture:$another_furniture_version"
     modCompileOnly "maven.modrinth:oreganized:$oreganized_version"
@@ -124,8 +125,13 @@ dependencies {
     modCompileOnly "maven.modrinth:twigs:$twigs_version"
     modCompileOnly "maven.modrinth:quark:$quark_version"
     modCompileOnly "maven.modrinth:zeta:$zeta_version"
-    modCompileOnly "maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge"
-    modCompileOnly "maven.modrinth:cofh-core:$cofh_core_version-forge"
+    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
+    modImplementation "maven.modrinth:cofh-core:$cofh_core_version-forge"
+    modImplementation "curse.maven:clash-468706:$clash_version"
+    modImplementation "maven.modrinth:gliders:$gliders_version"
+    modRuntimeOnly("dev.kosmx.player-anim:player-animation-lib-forge:${player_anim_version}")
+    modRuntimeOnly "net.threetag:PalladiumCore-forge:${palladiumcore_version}"
+    modImplementation "maven.modrinth:survivality:${survivality_version}"
 
     // beacons
 //    modImplementation "curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version"

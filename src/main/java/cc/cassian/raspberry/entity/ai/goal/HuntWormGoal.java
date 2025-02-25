@@ -93,7 +93,7 @@ public class HuntWormGoal extends Goal {
     }
 
     private boolean findWorm() {
-        if (!this.seeker.level.dimensionType().natural())
+        if (!this.seeker.level().dimensionType().natural())
             return false;
 
         int range = ModConfig.get().aquaculture_wormDiscoveryRange;
@@ -112,11 +112,11 @@ public class HuntWormGoal extends Goal {
                         blockpos$mutable.setWithOffset(blockpos, x, y - 1, z);
 
                         if (this.seeker.isWithinRestriction(blockpos$mutable)) {
-                            if (this.isWorm(this.seeker.level, blockpos$mutable)) {
+                            if (this.isWorm(this.seeker.level(), blockpos$mutable)) {
                                 this.data.setValue(RaspberryMod.HAS_WORM_TARGET, true);
                                 this.data.setValue(RaspberryMod.WORM_POS, blockpos$mutable);
                                 return true;
-                            } else if (this.isSuitableForWorm(this.seeker.level, blockpos$mutable)) {
+                            } else if (this.isSuitableForWorm(this.seeker.level(), blockpos$mutable)) {
                                 if (i <= 48 && !flag) {
                                     flag = true;
                                     wormblocks.clear();
@@ -133,7 +133,7 @@ public class HuntWormGoal extends Goal {
         if (wormblocks.size() > 0) {
             BlockPos wormpos = wormblocks.get(this.seeker.getRandom().nextInt(wormblocks.size()));
 
-            this.seeker.level.setBlock(wormpos, RaspberryBlocks.WORMY_DIRT.getA().get().defaultBlockState(), 3);
+            this.seeker.level().setBlock(wormpos, RaspberryBlocks.WORMY_DIRT.getA().get().defaultBlockState(), 3);
             this.data.setValue(RaspberryMod.HAS_WORM_TARGET, true);
             this.data.setValue(RaspberryMod.WORM_POS, wormpos);
 

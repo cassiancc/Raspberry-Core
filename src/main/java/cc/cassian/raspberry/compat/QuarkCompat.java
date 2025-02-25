@@ -33,14 +33,4 @@ public class QuarkCompat {
 
         return false;
     }
-
-    public static void register() {
-        DispenserBlock.registerBehavior(TorchArrowModule.torch_arrow, new AbstractProjectileDispenseBehavior() {
-            protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-                TorchArrow torch_arrow = new TorchArrow(level, position.x(), position.y(), position.z());
-                torch_arrow.pickup = AbstractArrow.Pickup.ALLOWED;
-                return torch_arrow;
-            }
-        });
-    }
 }
