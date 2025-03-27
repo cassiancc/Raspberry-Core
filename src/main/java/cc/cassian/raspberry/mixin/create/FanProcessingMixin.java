@@ -15,7 +15,7 @@ import java.util.List;
 public class FanProcessingMixin {
     @Inject(method = "applyProcessing(Lnet/minecraft/world/entity/item/ItemEntity;Lcom/simibubi/create/content/kinetics/fan/processing/FanProcessingType;)Z", at = @At(value = "INVOKE", target = "Ljava/util/List;remove(I)Ljava/lang/Object;"), remap = false, cancellable = true)
     private static void mixin(ItemEntity entity, FanProcessingType type, CallbackInfoReturnable<Boolean> cir) {
-        List<ItemStack> stacks = type.process(entity.getItem(), entity.level);
+        List<ItemStack> stacks = type.process(entity.getItem(), entity.level());
         try {
             assert stacks != null;
             stacks.remove(0);

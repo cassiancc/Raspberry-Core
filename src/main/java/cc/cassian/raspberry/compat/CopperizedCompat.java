@@ -3,6 +3,7 @@ package cc.cassian.raspberry.compat;
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.registry.RasperryMobEffects;
 import cofh.core.init.CoreMobEffects;
+import fr.anto.bettercopper.utils.CustomArmorMaterials;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -12,7 +13,6 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.onvoid.copperized.common.CopperizedArmorMaterials;
 
 public class CopperizedCompat {
     public static final ArmorMaterial COPPER = CustomArmorMaterials.COPPER_ARMOR;

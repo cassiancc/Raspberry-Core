@@ -11,10 +11,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Item.class)
 public class ItemMixin {
-    @Inject(method = "getEquipSound", at = @At(value = "RETURN"), cancellable = true)
-    private void glidersMakeEquipNoises(CallbackInfoReturnable<SoundEvent> cir) {
-        if ((Item)(Object) this instanceof GliderItem) {
-            cir.setReturnValue(SoundEvents.ARMOR_EQUIP_GENERIC);
-        }
-    }
+    //TODO re-enable - gliders aren't armour and equip sounds are only applied to armor.
+//    @Inject(method = "getEquipSound", at = @At(value = "RETURN"), cancellable = true)
+//    private void glidersMakeEquipNoises(CallbackInfoReturnable<SoundEvent> cir) {
+//        if ((Item)(Object) this instanceof GliderItem) {
+//            cir.setReturnValue(SoundEvents.ARMOR_EQUIP_GENERIC);
+//        }
+//    }
 }

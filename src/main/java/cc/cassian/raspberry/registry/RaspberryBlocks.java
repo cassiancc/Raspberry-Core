@@ -4,26 +4,21 @@ import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.blocks.RaspberryGravelBlock;
 import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
-import net.minecraft.resources.ResourceKey;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.RakedGravelBlock;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.fml.ModList;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import oshi.util.tuples.Pair;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
-import vectorwing.farmersdelight.common.registry.ModCreativeTabs;
-import xanthian.copperandtuffbackport.blocks.custom.GrateBlock;
 
 import java.util.function.Supplier;
 
@@ -49,19 +44,19 @@ public class RaspberryBlocks {
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             RAKED_BLACKSTONE_GRAVEL = registerBlock("raked_blackstone_gravel",
-            ()-> new RakedGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new RakedGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL)));
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             RAKED_DEEPSLATE_GRAVEL = registerBlock("raked_deepslate_gravel",
-            ()-> new RakedGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new RakedGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL)));
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             BLACKSTONE_GRAVEL = registerBlock("blackstone_gravel",
-            ()-> new RaspberryGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL), 986379), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new RaspberryGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL), 986379));
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             DEEPSLATE_GRAVEL = registerBlock("deepslate_gravel",
-            ()-> new RaspberryGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL), 2039584), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new RaspberryGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL), 2039584));
 
     public static BlockBehaviour.Properties getTruffleProperties() {
         if (ModCompat.ENVIRONMENTAL)
@@ -70,7 +65,7 @@ public class RaspberryBlocks {
     }
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>> registerLeadGrate() {
-        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of(Material.HEAVY_METAL).noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL);
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.METAL).noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL);
         if (ModCompat.COPPER_BACKPORT) {
             return CopperBackportCompat.registerGrateBlock(properties);
         }

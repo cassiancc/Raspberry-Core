@@ -96,59 +96,62 @@ dependencies {
     modApi("me.shedaniel.cloth:cloth-config-forge:$cloth_config_version")
 
     // Abnormals
-    modImplementation("maven.modrinth:environmental:$environmental_version")
-    modImplementation("maven.modrinth:caverns-and-chasms:$caverns_and_chasms_version")
-    modImplementation("maven.modrinth:upgrade-aquatic:$upgrade_aquatic_version")
-    modImplementation("maven.modrinth:neapolitan:$neapolitan_version")
+    modCompileOnly("maven.modrinth:environmental:$environmental_version")
+    modCompileOnly("maven.modrinth:caverns-and-chasms:$caverns_and_chasms_version")
+    modCompileOnly("maven.modrinth:upgrade-aquatic:$upgrade_aquatic_version")
+    modCompileOnly("maven.modrinth:neapolitan:$neapolitan_version")
     modImplementation("com.teamabnormals:blueprint:$blueprint_version")
     modCompileOnly("maven.modrinth:endergetic:$endergetic_version")
 
     // Recipe viewers
     modImplementation("maven.modrinth:emi:$emi_version+$minecraft_version+forge")
-    modImplementation("maven.modrinth:jei:$jei_version-forge")
+    modCompileOnly("maven.modrinth:jei:$jei_version-forge")
 
     // Farmer's Delight and its addons
     modImplementation("maven.modrinth:farmers-delight:$farmers_delight_version")
-    modImplementation("curse.maven:brewin-and-chewin-637808:$brewin_and_chewin_version")
-    modImplementation("maven.modrinth:cultural-delights:$cultural_delights_version")
-    modImplementation("maven.modrinth:my-nethers-delight:$nethers_delight_version")
+    modCompileOnly("curse.maven:brewin-and-chewin-637808:$brewin_and_chewin_version")
+    modCompileOnly("maven.modrinth:cultural-delights:$cultural_delights_version")
+    modCompileOnly("maven.modrinth:my-nethers-delight:$nethers_delight_version")
 
     // Create, its dependencies, and its dependents
     modCompileOnly("com.simibubi.create:create-$minecraft_version:$create_forge_version:slim") { transitive = false }
     modCompileOnly("com.tterrag.registrate:Registrate:$registrate_forge_version")
     modCompileOnly("com.jozufozu.flywheel:flywheel-forge-$minecraft_version:$flywheel_forge_version")
-    modCompileOnly("curse.maven:create-alloyed-564792:$create_alloyed_version")
 
     // Optional dependencies for mods with only mixin fixes
     modImplementation("curse.maven:aquaculture-60028:$aquaculture_version")
-    modImplementation("curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version")
-    modImplementation("curse.maven:copperized-567666:$copperized_version")
-    modImplementation("software.bernie.geckolib:geckolib-forge-$geckolib_version")
+    modCompileOnly("curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version")
+//    modImplementation("curse.maven:copperized-567666:$copperized_version")
+    modCompileOnly("software.bernie.geckolib:geckolib-forge-$geckolib_version")
     modImplementation("maven.modrinth:supplementaries:$supplementaries_version-forge")
     modImplementation("maven.modrinth:moonlight:$moonlight_lib_version-forge")
-    modImplementation("maven.modrinth:naturalist:$naturalist_version")
-    modImplementation("maven.modrinth:another-furniture:$another_furniture_version")
-    modImplementation("maven.modrinth:oreganized:$oreganized_version")
-    modImplementation("maven.modrinth:spelunkery:$spelunkery_version-forge")
-    modImplementation("maven.modrinth:sullysmod:$sullys_version")
-    modImplementation("maven.modrinth:twigs:$twigs_version")
-    modImplementation("maven.modrinth:quark:$quark_version")
-    modImplementation("maven.modrinth:autoreglib:$autoreglib_version")
-    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
-    modImplementation("maven.modrinth:cofh-core:$cofh_core_version-forge")
-    modImplementation("curse.maven:clash-468706:$clash_version")
-    modImplementation("maven.modrinth:gliders:$gliders_version")
-    modRuntimeOnly("dev.kosmx.player-anim:player-animation-lib-forge:${player_anim_version}")
-    modRuntimeOnly("net.threetag:PalladiumCore-forge:${palladiumcore_version}")
-    modImplementation("maven.modrinth:survivality:${survivality_version}")
+    modCompileOnly("maven.modrinth:naturalist:$naturalist_version")
+//    modImplementation("maven.modrinth:another-furniture:$another_furniture_version")
+    modCompileOnly("maven.modrinth:oreganized:$oreganized_version")
+    modCompileOnly("maven.modrinth:spelunkery:$spelunkery_version-forge")
+    modCompileOnly("maven.modrinth:sullysmod:$sullys_version")
+    modCompileOnly("maven.modrinth:twigs:$twigs_version")
+    modCompileOnly("maven.modrinth:quark:$quark_version")
+    modCompileOnly("maven.modrinth:zeta:$zeta_version")
+//    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
+    modCompileOnly("maven.modrinth:cofh-core:$cofh_core_version-forge")
+    modCompileOnly("curse.maven:clash-468706:$clash_version")
+    modCompileOnly("maven.modrinth:gliders:$gliders_version")
+//    modRuntimeOnly("dev.kosmx.player-anim:player-animation-lib-forge:${player_anim_version}")
+//    modRuntimeOnly("net.threetag:PalladiumCore-forge:${palladiumcore_version}")
+    modCompileOnly("maven.modrinth:survivality:${survivality_version}")
 
     // mods for testing purposes
-    modImplementation("curse.maven:map-atlases-forge-519759:5138314")
-    modImplementation("maven.modrinth:mmmmmmmmmmmm:1.7.2-forge")
+    modImplementation("curse.maven:map-atlases-forge-519759:6301932")
+//    modImplementation("maven.modrinth:mmmmmmmmmmmm:1.7.2-forge")
 
     // beacons
-    modImplementation("curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version")
-    modImplementation("curse.maven:cerbons-better-beacons-921066:$better_beacons_version")
+//    modImplementation("curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version")
+//    modImplementation("curse.maven:cerbons-better-beacons-921066:$better_beacons_version")
+
+
+    //1.20
+    modImplementation "maven.modrinth:better-copper-armor-and-tools:1.2-1.20.1"
 
     // MixinExtras
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))

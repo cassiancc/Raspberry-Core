@@ -3,7 +3,6 @@ package cc.cassian.raspberry;
 import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.compat.*;
 import cc.cassian.raspberry.config.ModConfig;
-import cc.cassian.raspberry.registry.RaspberryAttributes;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
 import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RasperryMobEffects;
@@ -20,12 +19,10 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +63,6 @@ public final class RaspberryMod {
             MinecraftForge.EVENT_BUS.addListener(CompassOverlay::toss);
             MinecraftForge.EVENT_BUS.addListener(CompassOverlay::closeInventory);
             MinecraftForge.EVENT_BUS.addListener(CompassOverlay::renderGameOverlayEvent);
-            context.registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
         }
 
         TrackedDataManager.INSTANCE.registerData(locate("truffle_hunting_time"), WORM_HUNTING_TIME);
@@ -88,9 +84,6 @@ public final class RaspberryMod {
     public static void commonSetup(FMLCommonSetupEvent event) {
         if (ModCompat.NEAPOLITAN)
             NeapolitanCompat.boostAgility();
-        if (ModCompat.QUARK) {
-            QuarkCompat.register();
-        }
     }
 
     @SubscribeEvent

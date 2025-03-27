@@ -5,9 +5,9 @@ import cc.cassian.raspberry.compat.QuarkCompat;
 import cc.cassian.raspberry.registry.RaspberryTags;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import mod.crend.dynamiccrosshair.impl.CrosshairContextImpl;
-import mod.crend.dynamiccrosshairapi.crosshair.CrosshairContext;
-import mod.crend.dynamiccrosshairapi.interaction.InteractionType;
+//import mod.crend.dynamiccrosshair.impl.CrosshairContextImpl;
+//import mod.crend.dynamiccrosshairapi.crosshair.CrosshairContext;
+//import mod.crend.dynamiccrosshairapi.interaction.InteractionType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import vectorwing.farmersdelight.common.item.KnifeItem;
 import vectorwing.farmersdelight.common.tag.ModTags;
-
+/*
 @Pseudo
 @Mixin(CrosshairContextImpl.class)
 public abstract class VanillaBlockHandlerMixin implements CrosshairContext {
@@ -57,3 +57,4 @@ public abstract class VanillaBlockHandlerMixin implements CrosshairContext {
         }
 
 }
+*/

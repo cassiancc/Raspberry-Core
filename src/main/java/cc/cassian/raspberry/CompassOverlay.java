@@ -4,10 +4,8 @@ import cc.cassian.raspberry.compat.CavernsAndChasmsCompat;
 import cc.cassian.raspberry.compat.MapAtlasesCompat;
 import cc.cassian.raspberry.compat.SpelunkeryCompat;
 import cc.cassian.raspberry.config.ModConfig;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -172,20 +170,20 @@ public class CompassOverlay {
 
         int windowWidth = mc.getWindow().getGuiScaledWidth();
         int placement = windowWidth-2-fontWidth;
-        var poseStack = event.getPoseStack();
-        RenderSystem.setShaderTexture(0, RaspberryMod.locate("textures/gui/tooltip.png"));
-        GuiComponent.blit(poseStack,
+        var poseStack = event.getGuiGraphics();
+        var texture = RaspberryMod.locate("textures/gui/tooltip.png");
+        poseStack.blit(texture,
                 placement-offset-4, top-3,
                 0, 0,
                 textureOffset, fontWidth+offset+4, tooltipSize,
                 textureSize, textureSize);
-        GuiComponent.blit(poseStack,
+        poseStack.blit(texture,
                 windowWidth-4, top-3,
                 0, 197,
                 textureOffset, offset, tooltipSize,
                 textureSize, textureSize);
         for (String text : coords) {
-            GuiComponent.drawString(poseStack, mc.font, text, placement-offset, top, 14737632);
+            poseStack.drawString(mc.font, text, placement-offset, top, 14737632);
             top += mc.font.lineHeight;
         }
     }

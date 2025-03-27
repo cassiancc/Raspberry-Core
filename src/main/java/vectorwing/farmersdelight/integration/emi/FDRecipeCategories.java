@@ -26,7 +26,6 @@ package vectorwing.farmersdelight.integration.emi;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiRenderable;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import vectorwing.farmersdelight.FarmersDelight;
 
@@ -41,8 +40,7 @@ public class FDRecipeCategories {
 
     private static EmiRenderable simplifiedRenderer(int u, int v) {
         return (draw, x, y, delta) -> {
-            RenderSystem.setShaderTexture(0, SIMPLIFIED_TEXTURES);
-            GuiComponent.blit(draw, x, y, u, v, 16, 16, 48, 16);
+            draw.blit(SIMPLIFIED_TEXTURES, x, y, u, v, 16, 16, 48, 16);
         };
     }
 }

@@ -31,6 +31,7 @@ import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import net.minecraft.client.Minecraft;
 import vectorwing.farmersdelight.common.crafting.CookingPotRecipe;
 import vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe;
 import vectorwing.farmersdelight.common.registry.ModMenuTypes;
@@ -58,7 +59,7 @@ public class EMIPlugin implements EmiPlugin {
 
         for (CookingPotRecipe recipe : registry.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COOKING.get())) {
             registry.addRecipe(new CookingPotEmiRecipe(recipe.getId(), recipe.getIngredients().stream().map(EmiIngredient::of).toList(),
-                    EmiStack.of(recipe.getResultItem()), EmiStack.of(recipe.getOutputContainer()), recipe.getCookTime(), recipe.getExperience()));
+                    EmiStack.of(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())), EmiStack.of(recipe.getOutputContainer()), recipe.getCookTime(), recipe.getExperience()));
         }
 
         for (CuttingBoardRecipe recipe : registry.getRecipeManager().getAllRecipesFor(ModRecipeTypes.CUTTING.get())) {
