@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "spelunkery:depth_gauge",
+      "required": false
+    }
+  ]
+}

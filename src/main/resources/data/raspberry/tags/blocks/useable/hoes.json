@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+	{
+	  "id": "raspberry:blackstone_gravel",
+	  "required": false
+	},
+	{
+	  "id": "raspberry:deepslate_gravel",
+	  "required": false
+	},
+	"minecraft:gravel"
+  ]
+}

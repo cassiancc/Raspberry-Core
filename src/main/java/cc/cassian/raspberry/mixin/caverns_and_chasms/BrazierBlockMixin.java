@@ -24,9 +24,10 @@ public abstract class BrazierBlockMixin {
             method = "getStateForPlacement",
             at = @At(value = "RETURN"),
             cancellable = true)
-    private void startStovesLit(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
-        if (!ModConfig.get().braziersStartLit)
-            cir.setReturnValue(cir.getReturnValue().setValue(LIT, false));
+    private void startBraziersLit(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
+        BlockState state = cir.getReturnValue();
+        if (!ModConfig.get().braziersStartLit && state != null)
+            cir.setReturnValue(state.setValue(LIT, false));
     }
 
     @Inject(method = "animateTick",

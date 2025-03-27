@@ -8,7 +8,7 @@ modId = "raspberry"
 version = "${version}"
 displayName = "Raspberry Core"
 authors = "cassiancc, DavigJ"
-credits = "Features textures by Derb, nöelle, and noodleman, ideas/textures from raspmary"
+credits = "Features textures by Derb, nöelle, and noodleman, ideas/textures from raspmary. Contains some code from MerchantPug and from the Oreganized mod under MIT License."
 description = '''
 A collection of compatibility blocks, minor features, and fixes designed for the Raspberry Flavoured modpack.
 '''
@@ -32,5 +32,19 @@ side = "BOTH"
 modId = "farmersdelight"
 mandatory = true
 versionRange = "[1.19.2-1.2.4,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.raspberry]]
+modId = "blueprint"
+mandatory = true
+versionRange = "[6.2.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.raspberry]]
+modId = "supplementaries"
+mandatory = true
+versionRange = "[1.19.2-2.4.20,)"
 ordering = "AFTER"
 side = "BOTH"

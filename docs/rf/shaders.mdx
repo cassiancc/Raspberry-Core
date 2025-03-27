@@ -1,0 +1,43 @@
+---
+title: Raspberry Flavoured - Unofficial Shader Guide
+hide_meta: true
+---
+
+This unofficial guide by nöelle covers how to set up your Raspberry Flavoured instance with shaders. Please note that if something breaks while you are using this setup DO NOT report it in #rf-support. Send \@nöelle a message in the [Raspberry Flavoured Discord](https://discord.gg/jxNe26WNYh) about the issue, with a log/screenshots if possible
+
+<hr />
+
+## Additional Installations
+### ‣ [Oculus](https://modrinth.com/mod/oculus/version/1.19.2-1.6.9a)
+    - (Uncheck "Rubidium" dependency before installing)
+
+### ‣ [Oculus Flywheel Compat](https://modrinth.com/mod/iris-flw-compat/version/k5wcEnhS)
+    - (This is needed otherwise create contraptions will tank your fps lol)
+
+### ‣ [Complementary Shaders Reimagined](https://modrinth.com/shader/complementary-reimagined/version/r5.4)
+    - (nöelle deemed this to be the most stable shader, with [CS: Unbound](https://modrinth.com/shader/complementary-unbound) also worth considering since they're pretty similar)
+
+### ‣ [Shader Config (Optional)](https://asphodel.cc/resources/cf/ComplementaryReimagined_r5.4.zip.txt)
+    - (nöelle's recommended config with tweaks to match the aesthetic of RF more, while not being too demanding graphically :3)
+
+## Tutorial
+After installing the required files, open RF on any world, then open `Settings > Video Settings` you should now see the button `Shader Packs...` on the top right of the menu, click it and double click the shader in the list to enable it.
+
+If you want to use nöelle's Complementary Shaders config made for RF, on the `Shader Packs...` screen click `Shader Pack Settings...` and import the .txt using the button on the top right, next to the pack name.
+
+If the visuals are all messed up with a bunch of dark polygons invading your screen, try changing your flywheel rendering mode. Open the chat and type `/flywheel backend instancing` and press enter, the issue should be resolved, if some items in your hotbar persist bugged out try opening a container like a chest or your inventory and it should go back to normal, if not restart your game and you should be good.
+
+**IMPORTANT: If something breaks while using this setup DO NOT report it in #rf-support. Send \@nöelle a message in the Raspberry Flavoured Discord about the issue, with a log/screenshots if possible.**
+
+<hr />
+
+## KNOWN BUGS
+
+### Sun and Moon missing
+How to fix: Disable/Remove `Fog Looks Good Now`. Either do that from the mod list in your launcher, or in-game open `Settings > More Settings... > Mods & Configurations` search for the mod name, then click `Config > Modify > Client`  and then turn off `Usecavefog` at the bottom of the list.
+
+### Recipe book items appear darkened
+
+How to fix: Disable EMI's Batch Rendering. Open your inventory, and click the gear icon on the bottom left,  then in the search bar on the bottom of the screen search for `Use Batch Renderer` and set it to `False`.
+
+![](https://asphodel.cc/resources/cf/core/shaders.avif)

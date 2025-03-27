@@ -1,0 +1,56 @@
+---
+title: Tweaks
+hide_meta: true
+---
+
+## Configurable Tweaks
+
+Configurable tweaks can be changed with Cloth Config installed in the Forge mod menu.
+
+- Stoves (Farmer's Delight) start unlit.
+- Nether Stoves (My Nether's Delight) start unlit.
+- Campfires start unlit.
+- Braziers (Caverns and Chasms) start unlit.
+- World version is hidden.
+- Glow Goop (Naturalist) has its tooltip hidden.
+- Gliders (Gliders) no longer attract lightning.
+- Blasting an item with lava that has no blasting recipe will no longer destroy the item. (Create)
+
+## Datapackable Tweaks
+
+Datapackable tweaks can be changed through datapacks.
+
+- Thief Hoods (Environmental) no longer generate on skeletons.
+  - Disable by overwriting `data/raspberry/tags/items/disabled.json`
+- Healer Pouches (Environmental) no longer generate.
+  - Disable by overwriting `data/environmental/tags/worldgen/structure/has_healer_pouch.json`
+- Dynamic Crosshair can now show what Shears should be able to mine.
+  - Edit this list by changing `data/raspberry/tags/blocks/mineable/shears`
+- Dynamic Crosshair can now show what Shears should be able to be used on.
+  - Edit this list by changing `data/raspberry/tags/blocks/useable/shearss`
+- Dynamic Crosshair can now show what Knives should be able to mine.
+  - Edit this list by changing `data/farmersdelight/tags/blocks/mineable/knives`
+- Dynamic Crosshair can now show what Knives should be able to be used on.
+  - Edit this list by changing `data/raspberry/tags/blocks/useable/knives`
+- Dynamic Crosshair can now show what Hoes should be able to be used on.
+  - Edit this list by changing `data/raspberry/tags/blocks/useable/hoes`
+- Common seeds found in Raspberry Flavoured (Farmer's Delight, Cultural Delights, etc.) can now be used to breed chickens.
+  - Edit this list by changing `data/blueprint/tags/items/chicken_food.json`
+
+## Tweaks
+
+Tweaks cannot be changed.
+
+- Fishing Rods (Aquaculture 2) show their bait as a tooltip, and can hold up to a stack. Bait items can also be moved freely in and out of rods.
+- Bait (Aquaculture 2) decreases with each successful fishing reel, instead of relying on durability.
+- Bait (Aquaculture 2) now uses three different item tags, instead of being relegated to instances of `BaitItem`.
+- Flowing Honey fluid (Create) makes Ochrum with Lava instead of Limestone.
+- Yak Pants (Environmental) now uses Forge's step height modifier instead of its own.
+- Agility (Neapolitan) now uses Forge's step height modifier as well as its climbing boost.
+- Knives (Farmers Delight) now mine Bamboo instantly like in 1.20+.
+- Torch Arrows (Quark) can now be fired out of Dispensers like in 1.20+.
+- Electrum Weapons (Oreganized) now deal kinetic damage like in 1.20+.
+- Gliders (Gliders) make a noise when they are equipped.
+- Bomb (Supplementaries) rarity has been changed - only blue bombs are considered rare.
+- Pointed Dripstone stalactites can now convert Dripstone blocks below into Rock Salt blocks.
+

@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.dynamiccrosshair;
 
+import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.compat.QuarkCompat;
 import cc.cassian.raspberry.registry.RaspberryTags;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -9,7 +10,6 @@ import mod.crend.dynamiccrosshairapi.crosshair.CrosshairContext;
 import mod.crend.dynamiccrosshairapi.interaction.InteractionType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,8 +26,8 @@ public abstract class VanillaBlockHandlerMixin implements CrosshairContext {
             method = "checkToolWithBlock",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isCorrectToolForDrops(Lnet/minecraft/world/level/block/state/BlockState;)Z")
     )
-    private boolean fixQuarkGoldTools(ItemStack instance, BlockState state, Operation<Boolean> original) {
-        if (ModList.get().isLoaded("quark") && instance.getItem() instanceof DiggerItem diggerItem && diggerItem.getTier().equals(Tiers.GOLD)) {
+    private static boolean fixQuarkGoldTools(Item instance, BlockState state, Operation<Boolean> original) {
+        if (ModCompat.QUARK && instance instanceof DiggerItem diggerItem && diggerItem.getTier().equals(Tiers.GOLD)) {
             if (QuarkCompat.checkGold(diggerItem, state))
                 return true;
         }

@@ -1,0 +1,7 @@
+{
+  "id": "raspberry-core",
+  "platforms": {
+	"modrinth": "raspberry-core",
+	"curseforge": "raspberry-core"
+  }
+}

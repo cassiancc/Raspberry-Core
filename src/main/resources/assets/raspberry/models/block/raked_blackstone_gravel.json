@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_farmland",
+  "textures": {
+	"dirt": "raspberry:block/blackstone_gravel",
+	"top": "raspberry:block/raked_blackstone_gravel"
+  }
+}

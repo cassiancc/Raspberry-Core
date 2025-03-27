@@ -1,0 +1,26 @@
+{
+  "variants": {
+	"shape=east_west": {
+	  "model": "raspberry:block/raked_blackstone_gravel",
+	  "y": 90
+	},
+	"shape=north_east": {
+	  "model": "raspberry:block/raked_blackstone_gravel_corner",
+	  "y": 270
+	},
+	"shape=north_south": {
+	  "model": "raspberry:block/raked_blackstone_gravel"
+	},
+	"shape=north_west": {
+	  "model": "raspberry:block/raked_blackstone_gravel_corner",
+	  "y": 180
+	},
+	"shape=south_east": {
+	  "model": "raspberry:block/raked_blackstone_gravel_corner"
+	},
+	"shape=south_west": {
+	  "model": "raspberry:block/raked_blackstone_gravel_corner",
+	  "y": 90
+	}
+  }
+}

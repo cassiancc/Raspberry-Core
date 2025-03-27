@@ -1,0 +1,24 @@
+{
+  "values": [
+    {
+      "id": "farmersdelight:tomato_seeds",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:cabbage_seeds",
+      "required": false
+    },
+    {
+      "id": "supplementaries:flax_seeds",
+      "required": false
+    },
+    {
+      "id": "farmersrespite:tea_seeds",
+      "required": false
+    },
+    {
+      "id": "culturaldelights:eggplant_seeds",
+      "required": false
+    }
+  ]
+}

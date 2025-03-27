@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+
 @Mixin(CampfireBlock.class)
 public abstract class CampfireBlockMixin {
     @Inject(
@@ -16,7 +17,8 @@ public abstract class CampfireBlockMixin {
             at = @At(value = "RETURN"),
             cancellable = true)
     private void startCampfiresLit(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
-        if (!ModConfig.get().campfiresStartLit)
-            cir.setReturnValue(cir.getReturnValue().setValue(CampfireBlock.LIT, false));
+        BlockState state = cir.getReturnValue();
+        if (!ModConfig.get().campfiresStartLit && state != null)
+            cir.setReturnValue(state.setValue(CampfireBlock.LIT, false));
     }
 }

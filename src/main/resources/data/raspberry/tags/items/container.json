@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:bundle",
+      "required": false
+    },
+    {
+      "id": "supplementaries:sack",
+      "required": false
+    }
+  ]
+}

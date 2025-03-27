@@ -18,7 +18,8 @@ public abstract class StoveBlockMixin {
             at = @At(value = "RETURN"),
             cancellable = true)
     private void startStovesLit(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
-        if (!ModConfig.get().stovesStartLit)
-            cir.setReturnValue(cir.getReturnValue().setValue(LIT, false));
+        BlockState state = cir.getReturnValue();
+        if (!ModConfig.get().stovesStartLit && state != null)
+            cir.setReturnValue(state.setValue(LIT, false));
     }
 }

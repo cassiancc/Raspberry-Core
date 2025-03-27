@@ -18,13 +18,14 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.network.NetworkConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,73 +50,95 @@ public final class RaspberryMod {
         RaspberryBlocks.BLOCKS.register(eventBus);
         RaspberryItems.ITEMS.register(eventBus);
         RasperryMobEffects.MOB_EFFECTS.register(eventBus);
-        // Register config
-        registerModsPage(context);
         // Register event bus listeners.
         MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityInteract);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityJoinLevel);
         MinecraftForge.EVENT_BUS.addListener(this::onLivingUpdate);
         eventBus.addListener(RaspberryMod::commonSetup);
-        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::copperTick);
+        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
+        if (FMLEnvironment.dist.isClient()) {
+            // Register config
+            registerModsPage(context);
+            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::pickup);
+            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::join);
+            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::toss);
+            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::closeInventory);
+            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::renderGameOverlayEvent);
+            context.registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
+        }
 
-        TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MOD_ID, "truffle_hunting_time"), WORM_HUNTING_TIME);
-        TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MOD_ID, "sniff_sound_time"), SNIFF_SOUND_TIME);
-        TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MOD_ID, "truffle_pos"), WORM_POS);
-        TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MOD_ID, "has_truffle_target"), HAS_WORM_TARGET);
-        TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MOD_ID, "looking_for_truffle"), LOOKING_FOR_WORM);
+        TrackedDataManager.INSTANCE.registerData(locate("truffle_hunting_time"), WORM_HUNTING_TIME);
+        TrackedDataManager.INSTANCE.registerData(locate("sniff_sound_time"), SNIFF_SOUND_TIME);
+        TrackedDataManager.INSTANCE.registerData(locate( "truffle_pos"), WORM_POS);
+        TrackedDataManager.INSTANCE.registerData(locate( "has_truffle_target"), HAS_WORM_TARGET);
+        TrackedDataManager.INSTANCE.registerData(locate("looking_for_truffle"), LOOKING_FOR_WORM);
+    }
+
+    public static ResourceLocation locate(String id) {
+        return identifier(MOD_ID, id);
+    }
+
+    public static ResourceLocation identifier(String namespace, String id) {
+        return new ResourceLocation(namespace, id);
     }
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        if (ModList.get().isLoaded("neapolitan"))
+        if (ModCompat.NEAPOLITAN)
             NeapolitanCompat.boostAgility();
+        if (ModCompat.QUARK) {
+            QuarkCompat.register();
+        }
     }
 
     @SubscribeEvent
     public static void lightningTick(EntityStruckByLightningEvent event) {
-        var modlist = ModList.get();
-        if (modlist.isLoaded("copperized") && !modlist.isLoaded("cofh_core") && ModConfig.get().aftershock)
+        if (ModCompat.COPPERIZED && !ModCompat.COFH_CORE && ModConfig.get().aftershock)
             CopperizedCompat.electrify(event);
     }
 
     @SubscribeEvent
-    public static void copperTick(TickEvent.PlayerTickEvent event) {
-        var modlist = ModList.get();
-        if (modlist.isLoaded("copperized") && modlist.isLoaded("cofh_core"))
+    public static void playerTick(TickEvent.PlayerTickEvent event) {
+        if (ModCompat.COPPERIZED && ModCompat.COFH_CORE)
             CopperizedCompat.resist(event);
+        // TODO remove if possible
+        // I'd really rather not check the player's inventory every tick like this,
+        // but the events I'm using aren't working well enough on servers.
+        if (ModConfig.get().overlay_enable)
+            CompassOverlay.checkInventoryForItems(event.player);
     }
 
     /**
 	 * Integrate Cloth Config screen (if mod present) with Forge mod menu.
 	 */
     public static void registerModsPage(FMLJavaModLoadingContext context) {
-        if (ModList.get().isLoaded("cloth_config"))
+        if (ModCompat.CLOTH_CONFIG)
             context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(ModConfigFactory::createScreen));
     }
 
     @SubscribeEvent
     public void onItemTooltipEvent(ItemTooltipEvent event) {
-        if (ModList.get().isLoaded("aquaculture"))
+        if (ModCompat.AQUACULTURE)
             AquacultureCompat.checkAndAddTooltip(event);
     }
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (ModList.get().isLoaded("environmental"))
+        if (ModCompat.ENVIRONMENTAL)
             EnvironmentalCompat.onEntityInteract(event);
     }
 
     @SubscribeEvent
     public void onEntityJoinLevel(EntityJoinLevelEvent event) {
-        if (ModList.get().isLoaded("environmental"))
+        if (ModCompat.ENVIRONMENTAL)
             EnvironmentalCompat.onEntityJoinWorld(event);
     }
 
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
-        if (ModList.get().isLoaded("environmental"))
+        if (ModCompat.ENVIRONMENTAL)
             EnvironmentalCompat.onLivingUpdate(event);
     }
 }

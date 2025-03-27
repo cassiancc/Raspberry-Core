@@ -1,5 +1,7 @@
 package cc.cassian.raspberry.registry;
 
+import cc.cassian.raspberry.ModCompat;
+import cc.cassian.raspberry.blocks.RaspberryGravelBlock;
 import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
 import net.minecraft.resources.ResourceKey;
@@ -45,15 +47,31 @@ public class RaspberryBlocks {
             WORMY_DIRT = registerBlock("wormy_dirt",
             ()-> new Block(getTruffleProperties()));
 
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            RAKED_BLACKSTONE_GRAVEL = registerBlock("raked_blackstone_gravel",
+            ()-> new RakedGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            RAKED_DEEPSLATE_GRAVEL = registerBlock("raked_deepslate_gravel",
+            ()-> new RakedGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            BLACKSTONE_GRAVEL = registerBlock("blackstone_gravel",
+            ()-> new RaspberryGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL), 986379), CreativeModeTab.TAB_BUILDING_BLOCKS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            DEEPSLATE_GRAVEL = registerBlock("deepslate_gravel",
+            ()-> new RaspberryGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL), 2039584), CreativeModeTab.TAB_BUILDING_BLOCKS);
+
     public static BlockBehaviour.Properties getTruffleProperties() {
-        if (ModList.get().isLoaded("environmental"))
+        if (ModCompat.ENVIRONMENTAL)
             return EnvironmentalCompat.getTruffleProperties();
         else return BlockBehaviour.Properties.copy(Blocks.DIRT);
     }
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>> registerLeadGrate() {
-        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of().noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL);
-        if (ModList.get().isLoaded("copperandtuffbackport")) {
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of(Material.HEAVY_METAL).noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL);
+        if (ModCompat.COPPER_BACKPORT) {
             return CopperBackportCompat.registerGrateBlock(properties);
         }
         else return registerBlock("lead_grate",

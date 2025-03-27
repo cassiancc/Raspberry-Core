@@ -7,15 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Pointed Dripstone stalactites can now convert Dripstone blocks below into Rock Salt blocks.
+
+### Fixed
+- Alloyed encased blocks now tick correctly.
+- Potential fix for dying when gliding causing a crash and softlock.
+- Farmer's Delight EMI integration is now translated correctly.
+- Raspberry Core Stoves are now valid workstations in EMI.
+
+## [0.1.12] - 2024-03-20
+
+### Added
+- Direct compatibility between Farmer's Delight and EMI based off [the work of MerchantPug](https://github.com/vectorwing/FarmersDelight/pull/971).
+
+### Changed
+- Bomb (Supplementaries) rarity has been changed - only blue bombs are considered rare.
+
+### Fixed
+- Additional null safety for unlit blocks.
+- Further safety fixes for Create blastproofing.
+- Further fixes for disabled items.
+
+## [0.1.11] - 2024-02-27
+
+### Fixed
+- Crashes from making item entities blastproof.
+
+## [0.1.10] - 2024-02-27
+
+### Added
 - Dynamic Crosshair can now show what shears can be used on and what they can mine.
 - Dynamic Crosshair can now show what knives can be used on and what they can mine.
 - Dynamic Crosshair can now show what axes can be used on.
 - Wormy Dirt texture by raspmary.
+- Deepslate Gravel and Raked Deepslate Gravel (textures by raspmary)
+- Blackstone Gravel and Raked Blackstone Gravel (textures by raspmary)
+- Copper Doors (Copper and Tuff Backport) can now be opened as double doors (Quark)
+- Common seeds found in Raspberry Flavoured (Farmer's Delight, Cultural Delights, etc.) can now be used to breed chickens.
+- Configurable tweak - blasting an item with lava that has no blasting recipe will no longer destroy the item. (Create)
 
 ### Fixed
 - Further fixes for Thrashers.
 - Yak Pants should no longer cause a game crash with newer versions of Environmental.
 - Kinetic damage should no longer cause a server crash.
+- Ender Torches (Endergetic Expansion) now give the correct particles.
 
 ## [0.1.4] - 2024-04-18
 

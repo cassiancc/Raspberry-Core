@@ -1,6 +1,5 @@
 package cc.cassian.raspberry.mixin;
 
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -43,6 +42,12 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
             return false;
         }
         else if (checkMixin("vc_gliders", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("endergetic", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("alloyed", mixinClassName)){
             return false;
         }
         return true;

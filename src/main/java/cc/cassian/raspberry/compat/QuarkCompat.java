@@ -16,6 +16,8 @@ import org.violetmoon.quark.content.tweaks.module.GoldToolsHaveFortuneModule;
 
 import java.util.Locale;
 
+import static cc.cassian.raspberry.RaspberryMod.identifier;
+
 public class QuarkCompat {
     public static boolean checkGold(Item diggerItem, BlockState block) {
         if (GoldToolsHaveFortuneModule.harvestLevel != 0) {
@@ -23,7 +25,7 @@ public class QuarkCompat {
             for (Tiers value : values) {
                 if (value.getLevel() == GoldToolsHaveFortuneModule.harvestLevel) {
                     ResourceLocation key = ForgeRegistries.ITEMS.getKey(diggerItem);
-                    ResourceLocation effectiveKey = new ResourceLocation(key.getNamespace(), key.getPath().replace("golden", value.toString().toLowerCase(Locale.ROOT)));
+                    ResourceLocation effectiveKey = identifier(key.getNamespace(), key.getPath().replace("golden", value.toString().toLowerCase(Locale.ROOT)));
                     Item item = ForgeRegistries.ITEMS.getValue(effectiveKey);
                     if (item != null)
                         return item.isCorrectToolForDrops(item.getDefaultInstance(), block);

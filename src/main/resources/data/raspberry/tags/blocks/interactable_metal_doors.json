@@ -1,0 +1,38 @@
+{
+  "replace": false,
+  "values": [
+	{
+	  "id": "copperandtuff_backport:copper_door",
+	  "required": false
+	},
+	{
+	  "id": "copperandtuff_backport:waxed_copper_door",
+	  "required": false
+	},
+	{
+	  "id": "copperandtuff_backport:exposed_copper_door",
+	  "required": false
+	},
+	{
+	  "id": "copperandtuff_backport:waxed_exposed_copper_door",
+	  "required": false
+	},
+	{
+	  "id": "copperandtuff_backport:oxidized_copper_door",
+	  "required": false
+	},
+	{
+	  "id": "copperandtuff_backport:waxed_oxidized_copper_door",
+	  "required": false
+	},
+	{
+	  "id": "copperandtuff_backport:weathered_copper_door",
+	  "required": false
+	},
+	{
+	  "id": "copperandtuff_backport:waxed_weathered_copper_door",
+	  "required": false
+	}
+
+  ]
+}

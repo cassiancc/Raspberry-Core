@@ -1,6 +1,6 @@
 package cc.cassian.raspberry.compat;
 
-import cc.cassian.raspberry.config.ModConfig;
+import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.registry.RasperryMobEffects;
 import cofh.core.init.CoreMobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -12,9 +12,7 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-//import net.onvoid.copperized.common.CopperizedArmorMaterials;
-import net.minecraftforge.fml.ModList;
-import fr.anto.bettercopper.utils.CustomArmorMaterials;
+import net.onvoid.copperized.common.CopperizedArmorMaterials;
 
 public class CopperizedCompat {
     public static final ArmorMaterial COPPER = CustomArmorMaterials.COPPER_ARMOR;
@@ -31,7 +29,7 @@ public class CopperizedCompat {
             }
             copperCount--;
             if (copperCount >= 0) {
-                if (!ModList.get().isLoaded("cofh_core"))
+                if (!ModCompat.COFH_CORE)
                     player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20, copperCount, false, false, false));
                 player.addEffect(new MobEffectInstance(RasperryMobEffects.AFTERSHOCK.get(), 6000, copperCount, false, false, true));
             }
