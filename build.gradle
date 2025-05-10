@@ -171,7 +171,8 @@ dependencies {
     modImplementation("maven.modrinth:screenshot-viewer:${screenshot_viewer_version}")
     modCompileOnly("local:ecologics-forge:1.19.2-2.1.11") // jar built locally to avoid errors when importing the project
     modImplementation("maven.modrinth:spyglass-improvements:${spyglass_improvements_version}")
-    modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of sypyglass improvements
+    modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of spyglass improvements
+    modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
 
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:5138314")

@@ -55,6 +55,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("spyglass_improvements", mixinClassName)){
             return false;
         }
+        else if (checkMixin("toms_storage", mixinClassName)){
+            return false;
+        }
         return true;
     }
 

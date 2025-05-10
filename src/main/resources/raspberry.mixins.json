@@ -60,6 +60,7 @@
     "sullysmod.SMPlayerEventsMixin",
     "supplementaries.BombItemMixin",
     "supplementaries.RakedGravelBlockMixin",
+    "toms_storage.AbstractStorageTerminalScreenMixin",
     "upgrade_aquatic.PikeMixin",
     "upgrade_aquatic.ThrasherMixin",
     "upgrade_aquatic.ThrasherThrashGoalMixin",
