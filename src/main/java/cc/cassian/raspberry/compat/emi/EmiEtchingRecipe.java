@@ -1,34 +1,18 @@
 package cc.cassian.raspberry.compat.emi;
 
 import cc.cassian.raspberry.RaspberryMod;
-import cofh.ensorcellation.init.EnsorcEnchantments;
-import com.brokenkeyboard.usefulspyglass.UsefulSpyglass;
-import com.github.alexthe668.domesticationinnovation.server.enchantment.DIEnchantmentRegistry;
-import com.github.alexthe668.domesticationinnovation.server.item.DIItemRegistry;
-import com.simibubi.create.AllItems;
-import com.teamabnormals.allurement.core.registry.AllurementEnchantments;
-import de.cadentem.additional_enchantments.registry.AEEnchantments;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.infernalstudios.miningmaster.init.MMEnchantments;
-import vectorwing.farmersdelight.common.registry.ModEnchantments;
-import vectorwing.farmersdelight.common.registry.ModItems;
-import vectorwing.farmersdelight.common.tag.ForgeTags;
 
 public class EmiEtchingRecipe extends EmiSmithingRecipe {
 
@@ -48,7 +32,7 @@ public class EmiEtchingRecipe extends EmiSmithingRecipe {
             var runedGear = enchantedGear.copy();
             var compound = runedGear.getOrCreateTag();
             var quark = new CompoundTag();
-            var rune = Registry.ITEM.get(new ResourceLocation("quark", "%s_rune".formatted(dye)));
+            var rune = BuiltInRegistries.ITEM.get(new ResourceLocation("quark", "%s_rune".formatted(dye)));
             quark.putString("id", "quark:%s_rune".formatted(dye));
             quark.putByte("Count", Byte.parseByte("64"));
             compound.put("quark:RuneColor", quark);

@@ -6,6 +6,7 @@ import com.teamabnormals.caverns_and_chasms.core.registry.CCParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 public class CavernsAndChasmsCompat {
@@ -18,7 +19,7 @@ public class CavernsAndChasmsCompat {
     }
 
     public static Block getCupricCandle() {
-        return CCBlocks.CUPRIC_CANDLE.get();
+        return Blocks.CANDLE;
     }
 
     public static @NotNull SimpleParticleType getCupricCandleFlame() {

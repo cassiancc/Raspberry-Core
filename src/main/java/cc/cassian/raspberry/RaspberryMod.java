@@ -4,6 +4,7 @@ import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.compat.*;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
+import cc.cassian.raspberry.registry.RaspberryEntityTypes;
 import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RasperryMobEffects;
 import com.teamabnormals.blueprint.common.world.storage.tracking.DataProcessors;
@@ -27,6 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import oshi.util.tuples.Pair;
@@ -86,9 +88,6 @@ public final class RaspberryMod {
     public static void commonSetup(FMLCommonSetupEvent event) {
         if (ModCompat.NEAPOLITAN)
             NeapolitanCompat.boostAgility();
-        if (ModCompat.QUARK) {
-            QuarkCompat.register();
-        }
         for (Pair<RegistryObject<Block>, RegistryObject<BlockItem>> foliageBlock : FOLIAGE_BLOCKS) {
             ComposterBlock.COMPOSTABLES.put(foliageBlock.getB().get(), 0.3f);
         }

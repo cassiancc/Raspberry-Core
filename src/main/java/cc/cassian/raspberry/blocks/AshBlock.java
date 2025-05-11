@@ -11,7 +11,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 public class AshBlock extends AshLayerBlock {
     private static final Block ASH_LAYER = ModRegistry.ASH_BLOCK.get();
@@ -32,8 +31,7 @@ public class AshBlock extends AshLayerBlock {
 
 
     public static boolean isFree(BlockState state) {
-        Material material = state.getMaterial();
         if (state.getBlock() instanceof AshBlock || state.getBlock() instanceof GravitationalSnowLayerBlock) return false;
-        return state.isAir() || state.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
+        return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || state.canBeReplaced();
     }
 }

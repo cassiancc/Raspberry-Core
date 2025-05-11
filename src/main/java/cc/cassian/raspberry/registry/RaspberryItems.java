@@ -17,7 +17,7 @@ import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
 public class RaspberryItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
-    public static Supplier<Item> ASHBALL = registerBlock("ashball", () -> new AshballItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static Supplier<Item> ASHBALL = registerBlock("ashball", () -> new AshballItem(new Item.Properties()));
 
     public static RegistryObject<Item> registerBlock(String blockID, Supplier<Item> item) {
         return RaspberryItems.ITEMS.register(blockID, item);

@@ -1,6 +1,5 @@
 package cc.cassian.raspberry.blocks;
 
-import cc.cassian.raspberry.registry.RaspberryBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -13,11 +12,9 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 public class GravitationalSnowLayerBlock extends SnowLayerBlock implements Fallable {
     public GravitationalSnowLayerBlock(Properties properties) {
@@ -56,9 +53,8 @@ public class GravitationalSnowLayerBlock extends SnowLayerBlock implements Falla
     }
 
     public static boolean isFree(BlockState state) {
-        Material material = state.getMaterial();
         if (state.getBlock() instanceof AshBlock || state.getBlock() instanceof GravitationalSnowLayerBlock) return false;
-        return state.isAir() || state.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
+        return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || state.canBeReplaced();
     }
 
     @Override

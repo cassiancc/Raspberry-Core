@@ -410,7 +410,7 @@ public class RaspberryCakeBlock extends Block {
     }
 
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return level.getBlockState(pos.below()).getMaterial().isSolid();
+        return level.getBlockState(pos.below()).isSolid();
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

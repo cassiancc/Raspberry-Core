@@ -2,6 +2,8 @@ package cc.cassian.raspberry.mixin.farmersdelight;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,6 +19,6 @@ public class RichSoilFarmlandBlockMixin {
     // This restores the implementation of Block::fallOn.
     @Inject(at = @At(value = "HEAD"), method = "fallOn")
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
-        entity.causeFallDamage(fallDistance, 1.0F, DamageSource.FALL);
+        entity.causeFallDamage(fallDistance, 1.0F, level.damageSources().fall());
     }
 }

@@ -56,7 +56,7 @@ public class CoconutSliceItemMixin {
         }
 
         if (!compatibleEffects.isEmpty()) {
-            MobEffectInstance selectedEffect = consumer.getEffect(compatibleEffects.get(consumer.level.random.nextInt(compatibleEffects.size())));
+            MobEffectInstance selectedEffect = consumer.getEffect(compatibleEffects.get(consumer.level().random.nextInt(compatibleEffects.size())));
             if (selectedEffect != null && !MinecraftForge.EVENT_BUS.post(new MobEffectEvent.Remove(consumer, selectedEffect))) {
                 consumer.removeEffect(selectedEffect.getEffect());
             }

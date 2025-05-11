@@ -164,22 +164,14 @@ dependencies {
 //    modRuntimeOnly("dev.kosmx.player-anim:player-animation-lib-forge:${player_anim_version}")
 //    modRuntimeOnly("net.threetag:PalladiumCore-forge:${palladiumcore_version}")
     modCompileOnly("maven.modrinth:survivality:${survivality_version}")
+    modCompileOnly("local:ecologics-forge:1.19.2-2.1.11") // jar built locally to avoid errors when importing the project
+    modImplementation("maven.modrinth:screenshot-viewer:${screenshot_viewer_version}")
+    modImplementation("maven.modrinth:spyglass-improvements:${spyglass_improvements_version}")
+    modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of sypyglass improvements
 
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
 //    modImplementation("maven.modrinth:mmmmmmmmmmmm:1.7.2-forge")
-
-    // EMI Compat for Enchantments
-    modRuntimeOnly("dev.latvian.mods:kubejs-forge:$kubejs_version")
-    modImplementation("maven.modrinth:ensorcellation:4.3.1")
-    modImplementation("curse.maven:allurement-438003:4781076")
-    modImplementation("maven.modrinth:mining-master:1.19.2-4.1.4")
-    modImplementation("maven.modrinth:useful-spyglass:0.4.0-1.19.2")
-    modImplementation("maven.modrinth:additional-enchantments:1.1.5")
-    modImplementation("maven.modrinth:domestication-innovation:1.6.1")
-    modImplementation("curse.maven:citadel-331936:4556677") // dependency of domestication innovation
-
-
 
     // beacons
 //    modImplementation("curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version")
