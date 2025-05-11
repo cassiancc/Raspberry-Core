@@ -1,6 +1,6 @@
 package cc.cassian.raspberry.compat;
 
-import cc.cassian.raspberry.RaspberryMod;
+import cc.cassian.raspberry.RaspberryData;
 import cc.cassian.raspberry.entity.ai.goal.HuntWormGoal;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
 import cc.cassian.raspberry.registry.RaspberryTags;
@@ -39,9 +39,9 @@ public class EnvironmentalCompat {
         if (target.getType().is(RaspberryTags.WORM_SEEKERS) && target.isAlive() && target instanceof Animal seeker) {
             IDataManager data = ((IDataManager) target);
             if (!seeker.isLeashed() && stack.is(RaspberryTags.WORM_SEEKER_ITEMS) && !seeker.isBaby()) {
-                if (data.getValue(RaspberryMod.WORM_HUNTING_TIME) == 0) {
+                if (data.getValue(RaspberryData.WORM_HUNTING_TIME) == 0) {
                     if (level.dimensionType().natural()) {
-                        data.setValue(RaspberryMod.WORM_HUNTING_TIME, 4800);
+                        data.setValue(RaspberryData.WORM_HUNTING_TIME, 4800);
                         if (!event.getEntity().isCreative()) stack.shrink(1);
 
                         if (level.isClientSide()) {
@@ -85,18 +85,18 @@ public class EnvironmentalCompat {
 
         if (entity.getType().is(RaspberryTags.WORM_SEEKERS) && entity.isAlive()) {
             IDataManager data = ((IDataManager) entity);
-            int huntingtime = data.getValue(RaspberryMod.WORM_HUNTING_TIME);
-            BlockPos wormpos = data.getValue(RaspberryMod.WORM_POS);
+            int huntingtime = data.getValue(RaspberryData.WORM_HUNTING_TIME);
+            BlockPos wormpos = data.getValue(RaspberryData.WORM_POS);
 
-            if (huntingtime == 0 || (data.getValue(RaspberryMod.HAS_WORM_TARGET) && level.getBlockState(wormpos).getBlock() != RaspberryBlocks.WORMY_DIRT.getA().get())) {
-                data.setValue(RaspberryMod.HAS_WORM_TARGET, false);
-                if (huntingtime > 0) data.setValue(RaspberryMod.WORM_HUNTING_TIME, Math.max(-400, -huntingtime));
+            if (huntingtime == 0 || (data.getValue(RaspberryData.HAS_WORM_TARGET) && level.getBlockState(wormpos).getBlock() != RaspberryBlocks.WORMY_DIRT.getA().get())) {
+                data.setValue(RaspberryData.HAS_WORM_TARGET, false);
+                if (huntingtime > 0) data.setValue(RaspberryData.WORM_HUNTING_TIME, Math.max(-400, -huntingtime));
             } else {
                 if (huntingtime > 0) {
-                    data.setValue(RaspberryMod.WORM_HUNTING_TIME, huntingtime - 1);
+                    data.setValue(RaspberryData.WORM_HUNTING_TIME, huntingtime - 1);
                 } else {
-                    data.setValue(RaspberryMod.WORM_HUNTING_TIME, huntingtime + 1);
-                    if (level.isClientSide() && data.getValue(RaspberryMod.HAS_WORM_TARGET) && huntingtime % 10 == 0) {
+                    data.setValue(RaspberryData.WORM_HUNTING_TIME, huntingtime + 1);
+                    if (level.isClientSide() && data.getValue(RaspberryData.HAS_WORM_TARGET) && huntingtime % 10 == 0) {
                         double d0 = random.nextGaussian() * 0.02D;
                         double d1 = random.nextGaussian() * 0.02D;
                         double d2 = random.nextGaussian() * 0.02D;
@@ -105,11 +105,11 @@ public class EnvironmentalCompat {
                 }
             }
 
-            int sniffsoundtime = data.getValue(RaspberryMod.SNIFF_SOUND_TIME);
-            data.setValue(RaspberryMod.SNIFF_SOUND_TIME, sniffsoundtime + 1);
-            if (!level.isClientSide() && data.getValue(RaspberryMod.LOOKING_FOR_WORM) && random.nextInt(90) < sniffsoundtime) {
+            int sniffsoundtime = data.getValue(RaspberryData.SNIFF_SOUND_TIME);
+            data.setValue(RaspberryData.SNIFF_SOUND_TIME, sniffsoundtime + 1);
+            if (!level.isClientSide() && data.getValue(RaspberryData.LOOKING_FOR_WORM) && random.nextInt(90) < sniffsoundtime) {
                 ((Mob)entity).playAmbientSound();
-                data.setValue(RaspberryMod.SNIFF_SOUND_TIME, -90);
+                data.setValue(RaspberryData.SNIFF_SOUND_TIME, -90);
             }
         }
     }

@@ -19,19 +19,24 @@ import oshi.util.tuples.Pair;
 public class RaspberryModClient {
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event){
-        BlockColors blockColors = event.getBlockColors();
-        for (Pair<RegistryObject<Block>, RegistryObject<BlockItem>> block : RaspberryBlocks.FOLIAGE_BLOCKS) {
-            event.register(((state, view, pos, tintIndex) -> {
-                if (view == null || pos == null) {
-                    return 9551193;
-                }
-                return BiomeColors.getAverageFoliageColor(view, pos);
-            }), block.getA().get());
+        if (ModCompat.SUPPLEMENTARIES && ModCompat.FARMERS_DELIGHT) {
+            BlockColors blockColors = event.getBlockColors();
+            for (Pair<RegistryObject<Block>, RegistryObject<BlockItem>> block : RaspberryBlocks.FOLIAGE_BLOCKS) {
+                event.register(((state, view, pos, tintIndex) -> {
+                    if (view == null || pos == null) {
+                        return 9551193;
+                    }
+                    return BiomeColors.getAverageFoliageColor(view, pos);
+                }), block.getA().get());
+            }
         }
+
     }
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(RaspberryEntityTypes.ASHBALL.get(), ThrownItemRenderer::new);
+        if (ModCompat.FARMERS_DELIGHT && ModCompat.SUPPLEMENTARIES) {
+            event.registerEntityRenderer(RaspberryEntityTypes.ASHBALL.get(), ThrownItemRenderer::new);
+        }
     }
 }
