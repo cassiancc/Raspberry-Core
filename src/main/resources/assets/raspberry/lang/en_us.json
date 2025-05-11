@@ -13,9 +13,12 @@
  "block.raspberry.pink_petals": "Pink Petals",
  "block.raspberry.clovers": "Clovers",
  "block.raspberry.snow": "Snow",
+ "lore.raspberry.snow": "A block that drops Snowballs when broken with a shovel.",
  "block.raspberry.ash_block": "Ash Block",
+ "lore.raspberry.ash_block": "A solid block of Ash.",
  "item.raspberry.ashball": "Ashball",
-
+ "lore.raspberry.ashball": "An item that can be thrown to inflict Blidness. Dropped when digging Ash.",
+ "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
 
  "block.raspberry.cake": "Cake",
  "block.raspberry.chocolate_cake": "Chocolate Cake",

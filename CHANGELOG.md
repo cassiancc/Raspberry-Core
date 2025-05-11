@@ -9,11 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Storage block for Ash (Supplementaries).
 
+### Changed
+- Moved Blueprint to an optional dependency.
+
 ### Fixed
 - Backported fix for players deploying gliders in boats (Gliders).  
 - Foxes no longer spawn with Rabbit's Feet.
 - Launching no longer shows as an option for axes (RF/EMI).
 - Tangle roots show that they're shearable. (Dynamic Crosshair)
+- Deployers not being able to use modded shears. (Create) (SarahIsWeird)
 
 ## [1.4] - 2024-05-07
 

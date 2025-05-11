@@ -1,7 +1,7 @@
 package cc.cassian.raspberry.items;
 
 import cc.cassian.raspberry.entity.Ashball;
-import net.minecraft.sounds.SoundEvents;
+import cc.cassian.raspberry.registry.RaspberrySoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -24,7 +24,7 @@ public class AshballItem extends Item {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                SoundEvents.SNOWBALL_THROW,
+                RaspberrySoundEvents.ASHBALL_THROW.get(),
                 SoundSource.NEUTRAL,
                 0.5F,
                 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)

@@ -4,6 +4,7 @@ import cc.cassian.raspberry.registry.RaspberryEntityTypes;
 import cc.cassian.raspberry.registry.RaspberryItems;
 import net.mehvahdjukaar.supplementaries.reg.ModParticles;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -32,6 +33,13 @@ public class Ashball extends ThrowableItemProjectile {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (this.random.nextBoolean())
+            this.level.addParticle(getParticle(), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+    }
+
+    @Override
     protected Item getDefaultItem() {
         return RaspberryItems.ASHBALL.get();
     }
@@ -45,7 +53,7 @@ public class Ashball extends ThrowableItemProjectile {
         if (id == 3) {
             ParticleOptions particleOptions = this.getParticle();
 
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 16; i++) {
                 this.level().addParticle(particleOptions, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }
         }
@@ -57,9 +65,10 @@ public class Ashball extends ThrowableItemProjectile {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             if (livingEntity.isAffectedByPotions()) {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 600));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100));
             }
         }
+        entity.hurt(DamageSource.thrown(this, this.getOwner()), 0);
     }
 
     @Override
@@ -69,5 +78,13 @@ public class Ashball extends ThrowableItemProjectile {
             this.level().broadcastEntityEvent(this, (byte)3);
             this.discard();
         }
+    }
+
+    /**
+     * Gets the amount of gravity to apply to the thrown entity with each tick.
+     */
+    @Override
+    protected float getGravity() {
+        return 0.06F;
     }
 }
