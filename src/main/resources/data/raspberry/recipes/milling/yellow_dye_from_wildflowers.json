@@ -1,0 +1,23 @@
+{
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "raspberry:cheery_wildflowers"
+    }
+  ],
+  "processingTime": 50,
+  "results": [
+    {
+      "count": 1,
+      "item": "minecraft:yellow_dye"
+    },
+    {
+      "count": 1,
+      "item": "minecraft:white_dye"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:orange_dye"
+    }
+  ]
+}

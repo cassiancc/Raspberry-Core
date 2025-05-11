@@ -1,0 +1,139 @@
+{
+  "variants": {
+    "bites=0,candle_type=0": {
+      "model": "neapolitan:block/banana_cake"
+    },
+    "bites=0,candle_type=1,lit=false": {
+      "model": "neapolitan:block/banana_candle_cake"
+    },
+    "bites=0,candle_type=1,lit=true": {
+      "model": "neapolitan:block/banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=2,lit=false": {
+      "model": "neapolitan:block/white_banana_candle_cake"
+    },
+    "bites=0,candle_type=2,lit=true": {
+      "model": "neapolitan:block/white_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=3,lit=false": {
+      "model": "neapolitan:block/light_gray_banana_candle_cake"
+    },
+    "bites=0,candle_type=3,lit=true": {
+      "model": "neapolitan:block/light_gray_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=4,lit=false": {
+      "model": "neapolitan:block/gray_banana_candle_cake"
+    },
+    "bites=0,candle_type=4,lit=true": {
+      "model": "neapolitan:block/gray_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=5,lit=false": {
+      "model": "neapolitan:block/black_banana_candle_cake"
+    },
+    "bites=0,candle_type=5,lit=true": {
+      "model": "neapolitan:block/black_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=6,lit=false": {
+      "model": "neapolitan:block/brown_banana_candle_cake"
+    },
+    "bites=0,candle_type=6,lit=true": {
+      "model": "neapolitan:block/brown_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=7,lit=false": {
+      "model": "neapolitan:block/red_banana_candle_cake"
+    },
+    "bites=0,candle_type=7,lit=true": {
+      "model": "neapolitan:block/red_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=8,lit=false": {
+      "model": "neapolitan:block/orange_banana_candle_cake"
+    },
+    "bites=0,candle_type=8,lit=true": {
+      "model": "neapolitan:block/orange_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=9,lit=false": {
+      "model": "neapolitan:block/yellow_banana_candle_cake"
+    },
+    "bites=0,candle_type=9,lit=true": {
+      "model": "neapolitan:block/yellow_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=10,lit=false": {
+      "model": "neapolitan:block/lime_banana_candle_cake"
+    },
+    "bites=0,candle_type=10,lit=true": {
+      "model": "neapolitan:block/lime_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=11,lit=false": {
+      "model": "neapolitan:block/green_banana_candle_cake"
+    },
+    "bites=0,candle_type=11,lit=true": {
+      "model": "neapolitan:block/green_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=12,lit=false": {
+      "model": "neapolitan:block/cyan_banana_candle_cake"
+    },
+    "bites=0,candle_type=12,lit=true": {
+      "model": "neapolitan:block/cyan_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=13,lit=false": {
+      "model": "neapolitan:block/light_blue_banana_candle_cake"
+    },
+    "bites=0,candle_type=13,lit=true": {
+      "model": "neapolitan:block/light_blue_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=14,lit=false": {
+      "model": "neapolitan:block/blue_banana_candle_cake"
+    },
+    "bites=0,candle_type=14,lit=true": {
+      "model": "neapolitan:block/blue_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=15,lit=false": {
+      "model": "neapolitan:block/purple_banana_candle_cake"
+    },
+    "bites=0,candle_type=15,lit=true": {
+      "model": "neapolitan:block/purple_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=16,lit=false": {
+      "model": "neapolitan:block/magenta_banana_candle_cake"
+    },
+    "bites=0,candle_type=16,lit=true": {
+      "model": "neapolitan:block/magenta_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=17,lit=false": {
+      "model": "neapolitan:block/pink_banana_candle_cake"
+    },
+    "bites=0,candle_type=17,lit=true": {
+      "model": "neapolitan:block/pink_banana_candle_cake_lit"
+    },
+    "bites=0,candle_type=18,lit=false": {
+      "model": "raspberry:block/soul_candle_banana_cake"
+    },
+    "bites=0,candle_type=18,lit=true": {
+      "model": "raspberry:block/soul_candle_banana_cake_lit"
+    },
+    "bites=0,candle_type=19,lit=false": {
+      "model": "raspberry:block/cupric_candle_banana_cake"
+    },
+    "bites=0,candle_type=19,lit=true": {
+      "model": "raspberry:block/cupric_candle_banana_cake_lit"
+    },
+    "bites=1": {
+      "model": "neapolitan:block/banana_cake_slice1"
+    },
+    "bites=2": {
+      "model": "neapolitan:block/banana_cake_slice2"
+    },
+    "bites=3": {
+      "model": "neapolitan:block/banana_cake_slice3"
+    },
+    "bites=4": {
+      "model": "neapolitan:block/banana_cake_slice4"
+    },
+    "bites=5": {
+      "model": "neapolitan:block/banana_cake_slice5"
+    },
+    "bites=6": {
+      "model": "neapolitan:block/banana_cake_slice6"
+    }
+  }
+}

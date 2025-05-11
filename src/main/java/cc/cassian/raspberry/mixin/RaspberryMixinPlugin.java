@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin;
 
+import com.bawnorton.mixinsquared.canceller.MixinCancellerRegistrar;
 import net.minecraftforge.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -11,6 +12,7 @@ import java.util.Set;
 public class RaspberryMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
+        MixinCancellerRegistrar.register(new RaspberryMixinCanceller());
     }
 
     @Override
@@ -48,6 +50,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
             return false;
         }
         else if (checkMixin("alloyed", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("spyglass_improvements", mixinClassName)){
             return false;
         }
         return true;

@@ -30,15 +30,19 @@ public class RaspberryTags {
 
     public static final TagKey<Block> CONVERTS_TO_SALT = createBlockTag("converts_to_salt");
 
-    public static TagKey<Block> createBlockTag(String id) {
+    public static final TagKey<Item> HORSE_FOOD = createItemTag("horse_food");
+    public static final TagKey<Item> CONTAINERS = createItemTag("container");
+    public static final TagKey<Item> TROWEL_BLACKLIST = createItemTag("trowel_blacklist");
+
+    private static TagKey<Block> createBlockTag(String id) {
         return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), locate(id));
     }
 
-    public static TagKey<Item> createItemTag(String id) {
+    private static TagKey<Item> createItemTag(String id) {
         return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), locate(id));
     }
 
-    public static TagKey<EntityType<?>> createEntityTypeTag(String id) {
+    private static TagKey<EntityType<?>> createEntityTypeTag(String id) {
         return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), locate(id));
     }
 }

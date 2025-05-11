@@ -31,13 +31,10 @@ public class ModConfig {
     public int aquaculture_goodBaitLureBonus = 3;
     public int aquaculture_wormDiscoveryRange = 80;
     public boolean create_blastproofing = true;
-    public boolean overlay_enable = true;
-    public boolean overlay_searchContainers = true;
-    public boolean overlay_requireItemInHand = false;
-    public String overlay_x_colour = "Red";
-    public String overlay_y_colour = "Green";
-    public String overlay_z_colour = "Blue";
-    public int overlay_position_vertical = 90;
+    public boolean searchContainers = true;
+    public boolean horses_noWander = true;
+    public boolean horses_stepHeight = true;
+
 
     public static void load() {
         if (!Files.exists(configPath())) {

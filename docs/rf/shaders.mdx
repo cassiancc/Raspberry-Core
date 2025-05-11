@@ -1,43 +1,69 @@
 ---
-title: Raspberry Flavoured - Unofficial Shader Guide
+title: Raspberry Flavoured - Shader Guide
 hide_meta: true
 ---
 
-This unofficial guide by nöelle covers how to set up your Raspberry Flavoured instance with shaders. Please note that if something breaks while you are using this setup DO NOT report it in #rf-support. Send \@nöelle a message in the [Raspberry Flavoured Discord](https://discord.gg/jxNe26WNYh) about the issue, with a log/screenshots if possible
+This guide will cover how you can add shaders to your Raspberry Flavoured instance. **If you have any issues regarding the installation process, or with the shader itself, please submit an bug report on the [Raspberry Flavoured Discord](https://discord.gg/jxNe26WNYh) (#rf-support) and tag `@noelle.jpg` .**
+<br/> **Before making a report please check if you are having any of the issues listed at the bottom of this page, if not report your issue and provide logs and/or screenshots if possible.**
 
 <hr />
 
-## Additional Installations
-### ‣ [Oculus](https://modrinth.com/mod/oculus/version/1.19.2-1.6.9a)
-    - (Uncheck "Rubidium" dependency before installing)
+# List of Additional Mods
+### ‣ Oculus
+Oculus is a fork of 'Iris' for the Forge Mod Loader, you will need this to load any shader into the game. **Remember to uninstall its dependency mod Rubidium, it is the same as Embeddium which is already installed on the modpack by default, leaving Rubidium installed will cause a crash on bootup.**
+<br/><br/><a href="https://cdn.modrinth.com/data/GchcoXML/versions/Mw8aFpWF/oculus-mc1.19.2-1.6.9a.jar"><img src="https://github.com/cassiancc/Raspberry-Core/blob/main/modwiki-assets/card_oculus.png?raw=true" /></a>
 
-### ‣ [Oculus Flywheel Compat](https://modrinth.com/mod/iris-flw-compat/version/k5wcEnhS)
-    - (This is needed otherwise create contraptions will tank your fps lol)
 
-### ‣ [Complementary Shaders Reimagined](https://modrinth.com/shader/complementary-reimagined/version/r5.4)
-    - (nöelle deemed this to be the most stable shader, with [CS: Unbound](https://modrinth.com/shader/complementary-unbound) also worth considering since they're pretty similar)
+### ‣ Iris & Oculus Flywheel compat
+This is a compatibility mod that will enable 'Flywheel' — Create's optimized renderer for its blocks and contraptions — with shaders to allow for a smoother experience. **This is an optional mod, but heavily recommended as moving contraptions will drop your fps by a lot if you dont have a beefy setup.**
+<br/><br/><a href="https://cdn.modrinth.com/data/ndHYMY2K/versions/k5wcEnhS/oculus-flywheel-compat-forge1.19.2%2B1.0.3b.jar"><img src="https://github.com/cassiancc/Raspberry-Core/blob/main/modwiki-assets/card_flywheel.png?raw=true" /></a>
 
-### ‣ [Shader Config (Optional)](https://asphodel.cc/resources/cf/ComplementaryReimagined_r5.4.zip.txt)
-    - (nöelle's recommended config with tweaks to match the aesthetic of RF more, while not being too demanding graphically :3)
 
-## Tutorial
-After installing the required files, open RF on any world, then open `Settings > Video Settings` you should now see the button `Shader Packs...` on the top right of the menu, click it and double click the shader in the list to enable it.
+### ‣ Complementary Shaders - Reimagined
+This is the shader we'll be using for this guide, it is lightweight and fits the style of vanilla better than most other packs.
+<br/><br/><a href="https://cdn.modrinth.com/data/HVnmMxH1/versions/b45ALGLG/ComplementaryReimagined_r5.4.zip"><img src="https://github.com/cassiancc/Raspberry-Core/blob/main/modwiki-assets/card_compshaders.png?raw=true" /></a>
+
+## Shader Config
+We have made some config files that you can use with Complementary for an experience similar to the upcoming [Vibrant Visuals](https://www.minecraft.net/en-us/article/minecraft-vibrant-visuals), they are not too demanding and still look pretty good! We also have an alternative shader config that emulates the [True Darkness](https://www.curseforge.com/minecraft/mc-mods/true-darkness) mod that was present in older versions of RF. This config currently includes: 
+- Pixel perfect shadows and water caustics
+- Dynamic fog that changes depending on the weather
+- [WIP] Dynamic waving leaves and grass (foliage will not wave when inside of a cave)
+- Water edge foam
+- True darkness mode (optional)
+
+### Downloads: 
+- [Shader config](https://github.com/cassiancc/Raspberry-Core/blob/main/modwiki-assets/%5BRegular%5D%20Flavourful%20Visuals.txt)
+- [Shader config - True Darkness](https://github.com/cassiancc/Raspberry-Core/blob/main/modwiki-assets/%5BTruDark%5D%20Flavourful%20Visuals.txt)
+
+If you want examples of how the shader config looks, scroll to the bottom of this page!
+
+# Tutorial
+After installing the required files, go to `Settings > Video Settings` you should now see the button `Shaders` on the top right of the menu, click it and double click the shader in the list to enable it. To use the custom config file provided earlier, go to the shader selection screen, click `Shader Pack Settings...` and press the small `Import From .txt File` button, and import your preferred version of the config.
 
 If you want to use nöelle's Complementary Shaders config made for RF, on the `Shader Packs...` screen click `Shader Pack Settings...` and import the .txt using the button on the top right, next to the pack name.
 
 If the visuals are all messed up with a bunch of dark polygons invading your screen, try changing your flywheel rendering mode. Open the chat and type `/flywheel backend instancing` and press enter, the issue should be resolved, if some items in your hotbar persist bugged out try opening a container like a chest or your inventory and it should go back to normal, if not restart your game and you should be good.
 
-**IMPORTANT: If something breaks while using this setup DO NOT report it in #rf-support. Send \@nöelle a message in the Raspberry Flavoured Discord about the issue, with a log/screenshots if possible.**
-
 <hr />
 
-## KNOWN BUGS
+## List of currently known bugs
 
-### Sun and Moon missing
-How to fix: Disable/Remove `Fog Looks Good Now`. Either do that from the mod list in your launcher, or in-game open `Settings > More Settings... > Mods & Configurations` search for the mod name, then click `Config > Modify > Client`  and then turn off `Usecavefog` at the bottom of the list.
+- Modded foliage such as leaves, grass and other similar blocks will nove wave in the wind — Currently, no fix is availible.
+- Some items like campfire kindlings will glow in the dark despite not being a light source anymore — Ditto.
+- Items from JEI/EMI appear darkened — You can fix this by disabling EMI's Batch Renderering, Open your inventory and click the small EMI button on the bottom left of your screen, after that, type in the search bar `"batch"` and the option "Use Batch Renderer" should appear, set that to false and the problem should be fixed. 
 
-### Recipe book items appear darkened
+## Gallery
+### Shadows and Caustics <hr/>
+![](https://raw.githubusercontent.com/cassiancc/Raspberry-Core/refs/heads/main/modwiki-assets/caustics.png) <hr/>
 
-How to fix: Disable EMI's Batch Rendering. Open your inventory, and click the gear icon on the bottom left,  then in the search bar on the bottom of the screen search for `Use Batch Renderer` and set it to `False`.
+### Weather and Fog <hr/>
+![](https://raw.githubusercontent.com/cassiancc/Raspberry-Core/refs/heads/main/modwiki-assets/clear_weather.png)
+![](https://raw.githubusercontent.com/cassiancc/Raspberry-Core/refs/heads/main/modwiki-assets/rain.png)
+![](https://raw.githubusercontent.com/cassiancc/Raspberry-Core/refs/heads/main/modwiki-assets/thunder.png) <hr/>
 
-![](https://asphodel.cc/resources/cf/core/shaders.avif)
+### True Darkness <hr/>
+![](https://raw.githubusercontent.com/cassiancc/Raspberry-Core/refs/heads/main/modwiki-assets/true_dark_cave.png)
+![](https://raw.githubusercontent.com/cassiancc/Raspberry-Core/refs/heads/main/modwiki-assets/true_dark_cave2.png)
+![](https://raw.githubusercontent.com/cassiancc/Raspberry-Core/refs/heads/main/modwiki-assets/true_dark_forest.png)
+ 
+

@@ -52,8 +52,14 @@ public class GliderUtilMixin {
     }
 
     @Inject(method = "isGlidingWithActiveGlider", remap = false, at = @At(value = "TAIL"), cancellable = true)
-    private static void mixin(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
+    private static void theDeadCantGlide(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
         if (!livingEntity.isAlive())
+            cir.setReturnValue(false);
+    }
+
+    @Inject(method = "canDeployHere", remap = false, at = @At(value = "TAIL"), cancellable = true)
+    private static void noBoatDeploy(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
+        if (livingEntity.isPassenger())
             cir.setReturnValue(false);
     }
 }

@@ -33,7 +33,7 @@
 				  "condition": "minecraft:survives_explosion"
 				}
 			  ],
-			  "name": "kubejs:blackstone_gravel"
+			  "name": "raspberry:blackstone_gravel"
 			}
 		  ]
 		}

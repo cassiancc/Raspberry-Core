@@ -1,10 +1,12 @@
 package cc.cassian.raspberry.registry;
 
 import cc.cassian.raspberry.ModCompat;
-import cc.cassian.raspberry.blocks.RaspberryGravelBlock;
+import cc.cassian.raspberry.blocks.*;
 import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.AshLayerBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.RakedGravelBlock;
+import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -19,7 +21,9 @@ import org.jetbrains.annotations.NotNull;
 import oshi.util.tuples.Pair;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
+import vectorwing.farmersdelight.common.registry.ModItems;
 
+import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
@@ -57,6 +61,92 @@ public class RaspberryBlocks {
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             DEEPSLATE_GRAVEL = registerBlock("deepslate_gravel",
             ()-> new RaspberryGravelBlock(BlockBehaviour.Properties.copy(Blocks.GRAVEL), 2039584));
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            CHEERFUL_WILDFLOWERS = registerBlock("cheery_wildflowers",
+            ()-> new FlowerBedBlock(flowerBedProperties()), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            PINK_PETALS = registerBlock("pink_petals",
+            ()-> new FlowerBedBlock(flowerBedProperties()), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            CLOVERS = registerBlock("clovers",
+            ()-> new FlowerBedBlock(flowerBedProperties()), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            MOODY_WILDFLOWERS = registerBlock("moody_wildflowers",
+            ()-> new FlowerBedBlock(flowerBedProperties()), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            CAKE = registerBlock("cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "farmersdelight:cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            CHOCOLATE_CAKE = registerBlock("chocolate_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "abnormals_delight:chocolate_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            STRAWBERRY_CAKE = registerBlock("strawberry_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "abnormals_delight:strawberry_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            BANANA_CAKE = registerBlock("banana_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "abnormals_delight:banana_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            MINT_CAKE = registerBlock("mint_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "abnormals_delight:mint_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            VANILLA_CAKE = registerBlock("vanilla_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "abnormals_delight:vanilla_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            CHERRY_CAKE = registerBlock("cherry_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "abnormals_delight:adzuki_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            MAGMA_CAKE = registerBlock("magma_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "mynethersdelight:magma_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            GREEN_TEA_CAKE = registerBlock("green_tea_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "respiteful:green_tea_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            YELLOW_TEA_CAKE = registerBlock("yellow_tea_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "respiteful:yellow_tea_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            BLACK_TEA_CAKE = registerBlock("black_tea_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "respiteful:black_tea_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            COFFEE_CAKE = registerBlock("coffee_cake",
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "farmersrespite:coffee_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+            
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            SNOW_LAYER = registerBlock("snow",
+            ()-> new GravitationalSnowLayerBlock(BlockBehaviour.Properties.copy(Blocks.SNOW)), CreativeModeTab.TAB_DECORATIONS);
+
+    public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
+            ASH_BLOCK = registerBlock("ash_block",
+            ()-> new AshBlock(BlockBehaviour.Properties.copy(ModRegistry.ASH_BLOCK.get())), CreativeModeTab.TAB_BUILDING_BLOCKS);
+
+
+    private static BlockBehaviour.Properties flowerBedProperties() {
+        return BlockBehaviour.Properties.of(Material.PLANT).noCollission().sound(SoundType.FLOWERING_AZALEA);
+    }
+
+    public static final ArrayList<Pair<RegistryObject<Block>, RegistryObject<BlockItem>>> FOLIAGE_BLOCKS = new ArrayList<Pair<RegistryObject<Block>, RegistryObject<BlockItem>>>();
+
+    public static void register(IEventBus eventBus) {
+        RaspberryBlocks.BLOCKS.register(eventBus);
+        FOLIAGE_BLOCKS.add(CHEERFUL_WILDFLOWERS);
+        FOLIAGE_BLOCKS.add(PINK_PETALS);
+        FOLIAGE_BLOCKS.add(MOODY_WILDFLOWERS);
+    }
 
     public static BlockBehaviour.Properties getTruffleProperties() {
         if (ModCompat.ENVIRONMENTAL)

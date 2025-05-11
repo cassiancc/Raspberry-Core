@@ -7,6 +7,80 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Storage block for Ash (Supplementaries).
+
+### Fixed
+- Backported fix for players deploying gliders in boats (Gliders).  
+- Foxes no longer spawn with Rabbit's Feet.
+- Launching no longer shows as an option for axes (RF/EMI).
+- Tangle roots show that they're shearable. (Dynamic Crosshair)
+
+## [1.4] - 2024-05-07
+
+### Fixed
+- Issue with Useful Spyglass's keybind.
+
+## [1.3] - 2024-05-07
+
+### Added
+- Snow layer block that obeys gravity.
+- Hardcoded EMI integration for Better Beacons, as running it through JEMI causes visual errors, especially on dedicated servers.
+- Spyglasses can now be used from a bundle when Spyglass Improvements is installed.
+- Backported trowel blacklist from Quark 1.20.
+- Saddled horses no longer wander.
+- Horses can now step up path blocks.
+
+### Changed
+- Tweaked Ash Stove Side texture (Kayla_the_Bee)
+- Tweaked Moody Wildflower texture (ProbablyEkho)
+
+### Fixed
+- Replaced redirect in Spyglass Improvements to fix compatibility with Controllable.
+- Rich Soil Farmland no longer converts to Dirt when trampled. (@SarahIsWeird)
+- Rich Soil Farmland no longer prevents fall damage. (@SarahIsWeird)
+
+### Removed
+- Overlay functionality, as it is now part of Immersive Overlays.
+
+## [1.2] - 2024-04-04
+
+### Fixed
+- Magnetic and Recovery compasses can now display a coordinate overlay.
+- Lit Ash and Silt stoves now have correct textures by Kayla_the_Bee and ProbablyEkho.
+- Tether warp now shows the correct tablet in EMI.
+
+## [1.1] - 2024-04-03
+
+### Fixed
+- Crash when viewing flowerbeds.
+- Swift Sneak being applied to boots instead of leggings.
+
+## [1.0] - 2024-04-03
+
+### Added
+- Added Cheery and Moody Wildflowers, new flowerbed blocks textured and modelled by ProbablyEkho and inspired by the Spring to Life drop.
+- Added Pink Petals, textured by ProbablyEkho and inspired by the Trails and Tales update.
+- Added Clovers, a new natural block textured and modelled by ProbablyEkho.
+- Compasses now show a coordinate overlay (X and Z) when in a player's inventory.
+- Depth Gauges now show a coordinate overlay (Y) when in a player's inventory.
+  - This applies to the items from Spelunkery and Caverns and Chasms. When neither mod is present, a compass can be used instead.
+- Clocks now show a time overlay when in a player's inventory.
+- Added EMI integration to enchanting tablets from Raspberry Flavoured.
+- Added EMI integration to runes from Quark.
+- Goggles (Create) can be right-clicked in the inventory to equip them (Quark).
+- Goggles (Create) can be right-clicked to swap them with armour (Survivality).
+
+### Changed
+- Snakes (Naturalist) can no longer drop a Rabbit's Foot.
+- Coconut Slices (Ecologics) clear one effect, instead of all of them.
+
+### Fixed
+- Screenshot Viewer no longer causes a crash when paused via F3-Esc.
+- Swapping gliders with armour functions again.
+
+## [0.1.13] - 2024-03-26
+
+### Added
 - Pointed Dripstone stalactites can now convert Dripstone blocks below into Rock Salt blocks.
 
 ### Fixed
@@ -18,7 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.12] - 2024-03-20
 
 ### Added
-- Direct compatibility between Farmer's Delight and EMI based off [the work of MerchantPug](https://github.com/vectorwing/FarmersDelight/pull/971).
+- Direct compatibility between Farmer's Delight and EMI based off [the work of MerchantCalico](https://github.com/vectorwing/FarmersDelight/pull/971).
 
 ### Changed
 - Bomb (Supplementaries) rarity has been changed - only blue bombs are considered rare.

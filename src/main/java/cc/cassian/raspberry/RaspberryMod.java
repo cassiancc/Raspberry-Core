@@ -11,7 +11,11 @@ import com.teamabnormals.blueprint.common.world.storage.tracking.TrackedData;
 import com.teamabnormals.blueprint.common.world.storage.tracking.TrackedDataManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -25,6 +29,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import oshi.util.tuples.Pair;
+
+import static cc.cassian.raspberry.registry.RaspberryBlocks.FOLIAGE_BLOCKS;
 
 @Mod(RaspberryMod.MOD_ID)
 public final class RaspberryMod {
@@ -44,9 +51,10 @@ public final class RaspberryMod {
         // Proceed with mild caution.
         ModConfig.load();
         // Register deferred registers.
-        RaspberryBlocks.BLOCKS.register(eventBus);
+        RaspberryBlocks.register(eventBus);
         RaspberryItems.ITEMS.register(eventBus);
         RasperryMobEffects.MOB_EFFECTS.register(eventBus);
+        RaspberryEntityTypes.ENTITIES.register(eventBus);
         // Register event bus listeners.
         MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityInteract);
@@ -58,13 +66,7 @@ public final class RaspberryMod {
         if (FMLEnvironment.dist.isClient()) {
             // Register config
             registerModsPage(context);
-            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::pickup);
-            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::join);
-            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::toss);
-            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::closeInventory);
-            MinecraftForge.EVENT_BUS.addListener(CompassOverlay::renderGameOverlayEvent);
         }
-
         TrackedDataManager.INSTANCE.registerData(locate("truffle_hunting_time"), WORM_HUNTING_TIME);
         TrackedDataManager.INSTANCE.registerData(locate("sniff_sound_time"), SNIFF_SOUND_TIME);
         TrackedDataManager.INSTANCE.registerData(locate( "truffle_pos"), WORM_POS);
@@ -84,6 +86,12 @@ public final class RaspberryMod {
     public static void commonSetup(FMLCommonSetupEvent event) {
         if (ModCompat.NEAPOLITAN)
             NeapolitanCompat.boostAgility();
+        if (ModCompat.QUARK) {
+            QuarkCompat.register();
+        }
+        for (Pair<RegistryObject<Block>, RegistryObject<BlockItem>> foliageBlock : FOLIAGE_BLOCKS) {
+            ComposterBlock.COMPOSTABLES.put(foliageBlock.getB().get(), 0.3f);
+        }
     }
 
     @SubscribeEvent
@@ -96,11 +104,6 @@ public final class RaspberryMod {
     public static void playerTick(TickEvent.PlayerTickEvent event) {
         if (ModCompat.COPPERIZED && ModCompat.COFH_CORE)
             CopperizedCompat.resist(event);
-        // TODO remove if possible
-        // I'd really rather not check the player's inventory every tick like this,
-        // but the events I'm using aren't working well enough on servers.
-        if (ModConfig.get().overlay_enable)
-            CompassOverlay.checkInventoryForItems(event.player);
     }
 
     /**

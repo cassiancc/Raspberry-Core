@@ -33,7 +33,7 @@
 				  "condition": "minecraft:survives_explosion"
 				}
 			  ],
-			  "name": "kubejs:deepslate_gravel"
+			  "name": "raspberry:deepslate_gravel"
 			}
 		  ]
 		}

@@ -9,6 +9,8 @@
 	  "id": "raspberry:deepslate_gravel",
 	  "required": false
 	},
-	"minecraft:gravel"
+	"minecraft:gravel",
+	"minecraft:grass_block",
+	"#minecraft:dirt"
   ]
 }

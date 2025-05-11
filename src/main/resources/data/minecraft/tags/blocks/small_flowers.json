@@ -1,0 +1,17 @@
+{
+    "replace": false,
+    "values": [
+        {
+            "id": "raspberry:cheery_wildflowers",
+            "required": false
+        },
+        {
+            "id": "raspberry:moody_wildflowers",
+            "required": false
+        },
+        {
+            "id": "raspberry:pink_petals",
+            "required": false
+        }
+    ]
+}

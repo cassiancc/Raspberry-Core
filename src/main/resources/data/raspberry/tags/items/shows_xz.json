@@ -4,6 +4,14 @@
     {
       "id": "minecraft:compass",
       "required": false
+    },
+    {
+      "id": "minecraft:recovery_compass",
+      "required": false
+    },
+    {
+      "id": "spelunkery:magnetic_compass",
+      "required": false
     }
   ]
 }

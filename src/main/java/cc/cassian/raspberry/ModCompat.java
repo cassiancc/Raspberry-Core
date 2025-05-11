@@ -3,42 +3,29 @@ package cc.cassian.raspberry;
 import net.minecraftforge.fml.ModList;
 
 public final class ModCompat {
-    public static final boolean ANOTHER_FURNITURE;
-    public static final boolean AQUACULTURE;
-    public static final boolean CLOTH_CONFIG;
-    public static final boolean COFH_CORE;
-    public static final boolean COPPERIZED;
-    public static final boolean COPPER_BACKPORT;
-    public static final boolean ENVIRONMENTAL;
-    public static final boolean FARMERS_DELIGHT;
-    public static final boolean GLIDERS;
-    public static final boolean OREGANIZED;
-    public static final boolean MAP_ATLASES;
-    public static final boolean NEAPOLITAN;
-    public static final boolean QUARK;
-    public static final boolean SURVIVALITY;
-    public static final boolean SUPPLEMENTARIES;
-    public static final boolean SPELUNKERY;
-    public static final boolean CAVERNS_AND_CHASMS;
+    public static final boolean ALLUREMENT = ModList.get().isLoaded("allurement");
+    public static final boolean ANOTHER_FURNITURE  = ModList.get().isLoaded("another_furniture");
+    public static final boolean AQUACULTURE = ModList.get().isLoaded("aquaculture");
+    public static final boolean BETTER_BEACONS = ModList.get().isLoaded("better_beacons");
+    public static final boolean CAVERNS_AND_CHASMS = ModList.get().isLoaded("caverns_and_chasms");
+    public static final boolean CLOTH_CONFIG = ModList.get().isLoaded("cloth_config");
+    public static final boolean COFH_CORE = ModList.get().isLoaded("cofh_core");
+    public static final boolean COPPERIZED = ModList.get().isLoaded("copperized");
+    public static final boolean COPPER_BACKPORT = ModList.get().isLoaded("copperandtuffbackport");
+    public static final boolean CREATE = ModList.get().isLoaded("create");
+    public static final boolean DOMESTICATION_INNOVATION = ModList.get().isLoaded("domesticationinnovation");
+    public static final boolean ENSORCELLATION = ModList.get().isLoaded("ensorcellation");
+    public static final boolean ENVIRONMENTAL = ModList.get().isLoaded("environmental");
+    public static final boolean FARMERS_DELIGHT = ModList.get().isLoaded("farmersdelight");
+    public static final boolean GLIDERS = ModList.get().isLoaded("vc_gliders");
+    public static final boolean IMMERSIVE_OVERLAYS = ModList.get().isLoaded("immersiveoverlays");
+    public static final boolean OREGANIZED = ModList.get().isLoaded("oreganized");
+    public static final boolean MAP_ATLASES = ModList.get().isLoaded("map_atlases");
+    public static final boolean MINING_MASTER = ModList.get().isLoaded("miningmaster");
+    public static final boolean NEAPOLITAN = ModList.get().isLoaded("neapolitan");
+    public static final boolean QUARK = ModList.get().isLoaded("quark");
+    public static final boolean SURVIVALITY = ModList.get().isLoaded("survivality");
+    public static final boolean SUPPLEMENTARIES = ModList.get().isLoaded("supplementaries");
+    public static final boolean SPELUNKERY = ModList.get().isLoaded("spelunkery");
 
-    static {
-        var mods = ModList.get();
-        ANOTHER_FURNITURE = mods.isLoaded("another_furniture");
-        AQUACULTURE = mods.isLoaded("aquaculture");
-        CAVERNS_AND_CHASMS = mods.isLoaded("caverns_and_chasms");
-        CLOTH_CONFIG = mods.isLoaded("cloth_config");
-        COFH_CORE = mods.isLoaded("cofh_core");
-        COPPERIZED = mods.isLoaded("copperized");
-        COPPER_BACKPORT = mods.isLoaded("copperandtuffbackport");
-        ENVIRONMENTAL = mods.isLoaded("environmental");
-        FARMERS_DELIGHT = mods.isLoaded("farmersdelight");
-        GLIDERS = mods.isLoaded("gliders");
-        MAP_ATLASES = mods.isLoaded("map_atlases");
-        NEAPOLITAN = mods.isLoaded("neapolitan");
-        OREGANIZED = mods.isLoaded("oreganized");
-        QUARK = mods.isLoaded("quark");
-        SURVIVALITY = mods.isLoaded("survivality");
-        SUPPLEMENTARIES = mods.isLoaded("supplementaries");
-        SPELUNKERY = mods.isLoaded("spelunkery");
-    }
 }

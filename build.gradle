@@ -47,7 +47,7 @@ repositories {
         name = "shedaniel - cloth config"
     }
     maven {
-        url = "https://maven.jaackson.me"
+        url = "https://maven.teamabnormals.com/"
     }
     exclusiveContent {
         forRepository {
@@ -82,6 +82,29 @@ repositories {
     maven {
         url 'https://repo.repsy.io/mvn/lucraft/threetag'
     }
+    maven {
+        url "https://maven.latvian.dev/releases"
+        content {
+            includeGroup "dev.latvian.mods"
+            includeGroup "dev.latvian.apps"
+        }
+    }
+
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup "com.github.rtyley"
+        }
+    }
+    flatDir {
+        dirs 'libs'
+    }
+    maven { url = "https://maven.bawnorton.com/releases" } // MixinSquared
+    maven { url = "https://maven.enjarai.dev/mirrors" } // MixinSquared Mirror
+    maven { // Curios
+        name = "Illusive Soulworks maven"
+        url = "https://maven.theillusivec4.top/"
+    }
 }
 
 dependencies {
@@ -102,6 +125,7 @@ dependencies {
     modCompileOnly("maven.modrinth:neapolitan:$neapolitan_version")
     modImplementation("com.teamabnormals:blueprint:$blueprint_version")
     modCompileOnly("maven.modrinth:endergetic:$endergetic_version")
+    modImplementation("maven.modrinth:buzzier-bees:$buzzier_bees_version")
 
     // Recipe viewers
     modImplementation("maven.modrinth:emi:$emi_version+$minecraft_version+forge")
@@ -145,6 +169,18 @@ dependencies {
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
 //    modImplementation("maven.modrinth:mmmmmmmmmmmm:1.7.2-forge")
 
+    // EMI Compat for Enchantments
+    modRuntimeOnly("dev.latvian.mods:kubejs-forge:$kubejs_version")
+    modImplementation("maven.modrinth:ensorcellation:4.3.1")
+    modImplementation("curse.maven:allurement-438003:4781076")
+    modImplementation("maven.modrinth:mining-master:1.19.2-4.1.4")
+    modImplementation("maven.modrinth:useful-spyglass:0.4.0-1.19.2")
+    modImplementation("maven.modrinth:additional-enchantments:1.1.5")
+    modImplementation("maven.modrinth:domestication-innovation:1.6.1")
+    modImplementation("curse.maven:citadel-331936:4556677") // dependency of domestication innovation
+
+
+
     // beacons
 //    modImplementation("curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version")
 //    modImplementation("curse.maven:cerbons-better-beacons-921066:$better_beacons_version")
@@ -153,6 +189,9 @@ dependencies {
     //1.20
     modImplementation "maven.modrinth:better-copper-armor-and-tools:1.2-1.20.1"
 
+    // MixinSquared
+    compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.2.0"))
+    implementation(include("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.2.0"))
     // MixinExtras
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     implementation(include("io.github.llamalad7:mixinextras-forge:0.4.1"))
@@ -185,6 +224,7 @@ tasks.withType(JavaCompile).configureEach {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId = base.archivesName.get()
             from components.java
         }
     }

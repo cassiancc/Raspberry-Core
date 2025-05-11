@@ -22,4 +22,8 @@ public class SpelunkeryCompat {
     static {
         rockSalt = ModList.get().isLoaded("spelunkery") ? ModBlocks.ROCK_SALT_BLOCK.get() : Blocks.DRIPSTONE_BLOCK;
     }
+
+    public static Item getMagneticCompass() {
+        return ModItems.MAGNETIC_COMPASS.get();
+    }
 }

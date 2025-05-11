@@ -1,0 +1,23 @@
+{
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "raspberry:moody_wildflowers"
+    }
+  ],
+  "processingTime": 50,
+  "results": [
+    {
+      "count": 2,
+      "item": "minecraft:purple_dye"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:red_dye"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:blue_dye"
+    }
+  ]
+}

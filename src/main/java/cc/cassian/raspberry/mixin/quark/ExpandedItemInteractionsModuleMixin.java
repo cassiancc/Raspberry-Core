@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.mixin.quark;
 
 import cc.cassian.raspberry.ModCompat;
+import cc.cassian.raspberry.compat.CreateCompat;
 import cc.cassian.raspberry.compat.GlidersCompat;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -22,6 +23,17 @@ public class ExpandedItemInteractionsModuleMixin {
     private static Item glidersAreElytrasBasically(ItemStack stack, Operation<Item> original) {
         if (ModCompat.GLIDERS && GlidersCompat.isGlider(stack)) {
             return Items.ELYTRA;
+        }
+        else return original.call(stack);
+    }
+
+    @WrapOperation(
+            method = "armorOverride",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;")
+    )
+    private static Item gogglesAreHelmetsBasically(ItemStack stack, Operation<Item> original) {
+        if (ModCompat.CREATE && CreateCompat.isGoggles(stack)) {
+            return Items.CHAINMAIL_HELMET;
         }
         else return original.call(stack);
     }
