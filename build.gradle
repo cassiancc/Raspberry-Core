@@ -233,7 +233,7 @@ dependencies {
     modImplementation("maven.modrinth:oreganized:$oreganized_version")
     modImplementation("maven.modrinth:spelunkery:$spelunkery_version-forge")
     modImplementation("maven.modrinth:sullysmod:$sullys_version")
-    modImplementation("maven.modrinth:twigs:$twigs_version")
+    modCompileOnly("maven.modrinth:twigs:$twigs_version")
     modImplementation("maven.modrinth:quark:$quark_version")
     modImplementation("maven.modrinth:zeta:$zeta_version")
 //    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
@@ -271,8 +271,8 @@ dependencies {
 // Uncomment the lines below if you wish to configure mixin. The mixin file should be named modid.mixins.json.
 
 mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
-    config "${mod_id}.mixins.json"
+    add sourceSets.main, "raspberry.refmap.json"
+    config "raspberry.mixins.json"
 }
 
 dependencies {
@@ -281,7 +281,7 @@ dependencies {
 
 jar {
     manifest.attributes([
-            "MixinConfigs": "${mod_id}.mixins.json"
+            "MixinConfigs": "raspberry.mixins.json"
     ])
 }
 

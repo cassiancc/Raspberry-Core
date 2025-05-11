@@ -16,6 +16,6 @@ public class RaspberrySoundEvents {
     public static final RegistryObject<SoundEvent> ASHBALL_THROW = register("entity.ashball.throw");
 
     private static RegistryObject<SoundEvent> register(String key) {
-        return SOUNDS.register(key, ()-> new SoundEvent(locate(key)));
+        return SOUNDS.register(key, ()-> SoundEvent.createVariableRangeEvent(locate(key)));
     }
 }
