@@ -13,10 +13,11 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "isSameItemSameTags", at = @At(value = "RETURN"), cancellable = true)
     private static void mixin(ItemStack arg, ItemStack arg2, CallbackInfoReturnable<Boolean> cir) {
-        if (!arg.hasTag() && !arg2.hasTag()) {
-            cir.setReturnValue(true);
-        }
-        else if (ModCompat.SPELUNKERY) {
+        // TODO causes adding item twice crash on 1.20
+//        if (!arg.hasTag() && !arg2.hasTag()) {
+//            cir.setReturnValue(true);
+//        } else
+        if (ModCompat.SPELUNKERY) {
             if (SpelunkeryCompat.checkDimensionalTears(arg, arg2))
                 cir.setReturnValue(true);
         }

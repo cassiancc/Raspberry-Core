@@ -239,7 +239,7 @@ dependencies {
 //    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
     modCompileOnly("maven.modrinth:cofh-core:$cofh_core_version-forge")
     modCompileOnly("curse.maven:clash-468706:$clash_version")
-    modCompileOnly("maven.modrinth:gliders:$gliders_version")
+    modImplementation("maven.modrinth:gliders:$gliders_version")
 //    modRuntimeOnly("dev.kosmx.player-anim:player-animation-lib-forge:${player_anim_version}")
 //    modRuntimeOnly("net.threetag:PalladiumCore-forge:${palladiumcore_version}")
     modCompileOnly("maven.modrinth:survivality:${survivality_version}")
@@ -293,7 +293,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             minecraft_version        : minecraft_version,
             forge_version            : forge_version,
             mod_id                   : mod_id,
-            mod_version              : mod_version
+            mod_version              : version
     ]
     inputs.properties replaceProperties
     expand replaceProperties

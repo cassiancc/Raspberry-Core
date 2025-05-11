@@ -47,6 +47,7 @@
     "vc_gliders.GliderItemMixin",
     "vc_gliders.GliderUtilMixin"
   ],
+  "refmap": "raspberry.refmap.json",
   "plugin": "cc.cassian.raspberry.mixin.RaspberryMixinPlugin",
   "injectors": {
     "defaultRequire": 1
