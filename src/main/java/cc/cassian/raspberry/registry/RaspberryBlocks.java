@@ -18,7 +18,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
 import oshi.util.tuples.Pair;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
@@ -173,14 +172,14 @@ public class RaspberryBlocks {
     /**
 	 * Get a block from the registry
 	 */
-    public static @NotNull Block getBlock(Pair<RegistryObject<Block>, RegistryObject<BlockItem>> block) {
+    public static Block getBlock(Pair<RegistryObject<Block>, RegistryObject<BlockItem>> block) {
         return block.getA().get();
     }
 
     /**
      * Get a blockitem from the registry
      */
-    public static @NotNull Item getItem(Pair<RegistryObject<Block>, RegistryObject<BlockItem>> block) {
+    public static Item getItem(Pair<RegistryObject<Block>, RegistryObject<BlockItem>> block) {
         return block.getB().get();
     }
 }

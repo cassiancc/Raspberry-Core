@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.naturalist;
 
+import cc.cassian.raspberry.config.ModConfig;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.starfish_studios.naturalist.common.entity.Snake;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +16,7 @@ public class SnakeMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/RandomSource;nextFloat()F")
     )
     private float disableRabbitFootDrop(float original) {
-        if (original < 0.05F) {
+        if (original < 0.05F && (ModConfig.get().noRabbitFootDrops)) {
             return 0.11F;
         } else return original;
     }

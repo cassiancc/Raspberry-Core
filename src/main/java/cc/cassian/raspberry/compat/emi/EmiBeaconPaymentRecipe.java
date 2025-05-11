@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -24,7 +23,7 @@ public class EmiBeaconPaymentRecipe extends EmiBeaconBaseRecipe {
     }
 
     @Override
-    public @Nullable ResourceLocation getId() {
+    public ResourceLocation getId() {
         return new ResourceLocation("raspberry", "/beacon_payment");
     }
 
@@ -98,7 +97,7 @@ public class EmiBeaconPaymentRecipe extends EmiBeaconBaseRecipe {
         ArrayList<EmiStack> blocks = new ArrayList<>();
         Set<String> strings = BEACON_PAYMENTS.keySet();
         for (String string : strings) {
-            Item value = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(string));
+            Item value = ForgeRegistries.ITEMS.getValue(new ResourceLocation(string));
             if (value != null) {
                 blocks.add(EmiStack.of(value.getDefaultInstance()));
             }

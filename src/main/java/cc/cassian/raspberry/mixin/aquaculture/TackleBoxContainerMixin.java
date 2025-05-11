@@ -20,7 +20,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.util.NonNullConsumer;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,7 +32,7 @@ import javax.annotation.Nonnull;
 @Pseudo
 @Mixin(TackleBoxContainer.class)
 public abstract class TackleBoxContainerMixin extends AbstractContainerMenu {
-    protected TackleBoxContainerMixin(@Nullable MenuType<?> arg, int i) {
+    protected TackleBoxContainerMixin(MenuType<?> arg, int i) {
         super(arg, i);
     }
 

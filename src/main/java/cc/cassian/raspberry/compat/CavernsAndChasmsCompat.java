@@ -7,7 +7,6 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import org.jetbrains.annotations.NotNull;
 
 public class CavernsAndChasmsCompat {
     public static Item getDepthGauge() {
@@ -22,7 +21,7 @@ public class CavernsAndChasmsCompat {
         return Blocks.CANDLE;
     }
 
-    public static @NotNull SimpleParticleType getCupricCandleFlame() {
+    public static SimpleParticleType getCupricCandleFlame() {
         return CCParticleTypes.CUPRIC_FIRE_FLAME.get();
     }
 }

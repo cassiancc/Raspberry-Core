@@ -34,6 +34,9 @@ public class ModConfig {
     public boolean searchContainers = true;
     public boolean horses_noWander = true;
     public boolean horses_stepHeight = true;
+    public boolean foxes_noRabbitDrops = true;
+    public boolean noRabbitFootDrops = true;
+    public boolean raspberry_beacon_interaction = false;
 
 
     public static void load() {

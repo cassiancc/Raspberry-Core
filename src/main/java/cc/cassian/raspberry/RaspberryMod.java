@@ -16,7 +16,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -24,6 +23,7 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -46,8 +46,9 @@ public final class RaspberryMod {
     public static final TrackedData<Boolean> HAS_WORM_TARGET = TrackedData.Builder.create(DataProcessors.BOOLEAN, () -> false).enableSaving().build();
     public static final TrackedData<Boolean> LOOKING_FOR_WORM = TrackedData.Builder.create(DataProcessors.BOOLEAN, () -> false).build();
 
-    public RaspberryMod(FMLJavaModLoadingContext context) {
-        var eventBus = context.getModEventBus();
+    public RaspberryMod() {
+        var context = ModLoadingContext.get();
+        var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like registries and resources) may still be uninitialized.
         // Proceed with mild caution.
@@ -108,7 +109,7 @@ public final class RaspberryMod {
     /**
 	 * Integrate Cloth Config screen (if mod present) with Forge mod menu.
 	 */
-    public static void registerModsPage(FMLJavaModLoadingContext context) {
+    public static void registerModsPage(ModLoadingContext context) {
         if (ModCompat.CLOTH_CONFIG)
             context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(ModConfigFactory::createScreen));
     }

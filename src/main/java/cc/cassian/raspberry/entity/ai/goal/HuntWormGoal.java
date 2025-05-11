@@ -29,7 +29,7 @@ public class HuntWormGoal extends Goal {
     public HuntWormGoal(Animal seekerIn) {
         this.seeker = seekerIn;
         this.data = (IDataManager) this.seeker;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     @Override

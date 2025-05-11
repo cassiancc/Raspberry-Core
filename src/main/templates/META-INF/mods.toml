@@ -5,7 +5,7 @@ license = "MIT"
 
 [[mods]]
 modId = "raspberry"
-version = "${version}"
+version = "${mod_version}"
 displayName = "Raspberry Core"
 authors = "cassiancc, DavigJ"
 credits = "Features textures by Derb, nöelle, and noodleman, ideas/textures from raspmary. Contains some code from MerchantPug and from the Oreganized mod under MIT License."

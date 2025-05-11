@@ -31,7 +31,7 @@ public class FlowerBedBlock extends BushBlock implements BonemealableBlock {
     private static final BiFunction<Direction, Integer, VoxelShape> SHAPE_BY_PROPERTIES;
 
 
-    public FlowerBedBlock(BlockBehaviour.Properties properties) {
+    public FlowerBedBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(AMOUNT, 1));
     }

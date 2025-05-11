@@ -2,6 +2,7 @@ package cc.cassian.raspberry.compat.emi;
 
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.RaspberryMod;
+import cc.cassian.raspberry.config.ModConfig;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -25,7 +26,7 @@ public class EmiCompat implements EmiPlugin {
             emiRegistry.addCategory(ANVIL);
             EmiEtchingRecipe.addRunes(emiRegistry);
         }
-        if (ModCompat.BETTER_BEACONS) {
+        if (ModCompat.BETTER_BEACONS && ModConfig.get().raspberry_beacon_interaction) {
             emiRegistry.addWorkstation(EmiCompat.BEACON_BASE, EmiStack.of(Items.BEACON));
             emiRegistry.addCategory(BEACON_BASE);
             EmiBeaconBaseRecipe.addBeaconRecipe(emiRegistry);

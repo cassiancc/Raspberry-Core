@@ -32,8 +32,6 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import vectorwing.farmersdelight.FarmersDelight;
 import vectorwing.farmersdelight.common.registry.ModItems;
 import vectorwing.farmersdelight.common.tag.ModTags;
@@ -61,7 +59,7 @@ public class DecompositionEmiRecipe implements EmiRecipe {
     }
 
     @Override
-    public @Nullable ResourceLocation getId() {
+    public ResourceLocation getId() {
         return identifier(FarmersDelight.MODID, "decomposition/dummy");
     }
 
@@ -109,7 +107,7 @@ public class DecompositionEmiRecipe implements EmiRecipe {
         return widgets.addSlot(ingredient, x, y).backgroundTexture(BACKGROUND, 119, 0);
     }
 
-    private static ClientTooltipComponent createTooltip(@NotNull String suffix) {
+    private static ClientTooltipComponent createTooltip(String suffix) {
         return ClientTooltipComponent.create(Component.translatable(FarmersDelight.MODID + ".jei.decomposition" + suffix).getVisualOrderText());
     }
 }
