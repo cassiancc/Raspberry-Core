@@ -1,32 +1,34 @@
 package cc.cassian.raspberry.mixin.toms_storage;
 
+import cc.cassian.raspberry.misc.toms_storage.filters.AnyFilter;
+import cc.cassian.raspberry.misc.toms_storage.filters.ModIdFilter;
+import cc.cassian.raspberry.misc.toms_storage.filters.TagFilter;
+import cc.cassian.raspberry.misc.toms_storage.filters.TooltipFilter;
 import com.google.common.cache.LoadingCache;
 import com.tom.storagemod.gui.AbstractStorageTerminalScreen;
 import com.tom.storagemod.gui.PlatformEditBox;
 import com.tom.storagemod.gui.StorageTerminalMenu;
-import com.tom.storagemod.platform.Platform;
 import com.tom.storagemod.util.IAutoFillTerminal;
 import com.tom.storagemod.util.StoredItemStack;
-import dev.emi.emi.config.EmiConfig;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITag;
+import net.minecraft.world.item.TooltipFlag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 @Mixin(value = AbstractStorageTerminalScreen.class, remap = false)
 public abstract class AbstractStorageTerminalScreenMixin {
@@ -49,16 +51,16 @@ public abstract class AbstractStorageTerminalScreenMixin {
     private Comparator<StoredItemStack> sortComp;
 
     @Shadow
-    protected float currentScroll;
+    private float currentScroll;
 
     @Shadow
-    protected int searchType;
+    private int searchType;
 
     @Shadow
     protected abstract void onUpdateSearch(String text);
 
     @Nullable
-    private Pattern queryToRegex(String regex) {
+    private static Pattern queryToRegex(String regex) {
         try {
             return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         } catch (PatternSyntaxException e) {
@@ -70,54 +72,22 @@ public abstract class AbstractStorageTerminalScreenMixin {
         }
     }
 
-    private boolean queriesMatch(List<Pattern> queries, String name) {
-        if (queries.isEmpty()) return true;
+    @Nonnull
+    private static Predicate<StoredItemStack> getStoredItemStackPredicate(String queryPart) {
+        Pattern simplePattern = queryToRegex(queryPart);
+        Pattern prefixPattern = queryToRegex(queryPart.substring(1));
 
-        for (Pattern pattern : queries) {
-            if (pattern.matcher(name).find()) return true;
+        Predicate<StoredItemStack> newPredicate;
+        if (queryPart.startsWith("@")) {
+            newPredicate = new ModIdFilter(prefixPattern);
+        } else if (queryPart.startsWith("#")) {
+            newPredicate = new TagFilter(prefixPattern);
+        } else if (queryPart.startsWith("$")) {
+            newPredicate = new TooltipFilter(tooltipCache, prefixPattern);
+        } else {
+            newPredicate = new AnyFilter(tooltipCache, simplePattern);
         }
-
-        return false;
-    }
-
-    private boolean queriesMatchSimple(List<Pattern> queries, StoredItemStack storedStack) {
-        ItemStack stack = storedStack.getStack();
-
-        String realName = stack.getItem().getName(stack).getString().toLowerCase();
-        if (queriesMatch(queries, realName)) return true;
-
-        String displayName = stack.getHoverName().getString().toLowerCase();
-        return queriesMatch(queries, displayName);
-    }
-
-    private boolean queriesMatchTooltip(List<Pattern> queries, StoredItemStack storedStack) {
-        List<String> tooltips;
-        try {
-            tooltips = tooltipCache.get(storedStack);
-        } catch (Exception e) {
-            return false;
-        }
-
-        for (String tooltip : tooltips) {
-            if (queriesMatch(queries, tooltip)) return true;
-        }
-
-        return false;
-    }
-
-    private boolean queriesMatchTag(List<Pattern> queries, ITag<?> tag) {
-        String tagString = tag.getKey().location().toString();
-        return queriesMatch(queries, tagString);
-    }
-
-    private boolean tagsMatchItem(List<ITag<Item>> itemTags, List<ITag<Block>> blockTags, Item item) {
-        boolean itemTagsMatch = itemTags.stream().anyMatch(tag -> tag.contains(item));
-        boolean blockTagsMatch = false;
-        if (item instanceof BlockItem blockItem) {
-            blockTagsMatch = blockTags.stream().anyMatch(tag -> tag.contains(blockItem.getBlock()));
-        }
-
-        return itemTagsMatch || blockTagsMatch;
+        return newPredicate;
     }
 
     private void resetScroll(StorageTerminalMenu menu, String query) {
@@ -135,6 +105,15 @@ public abstract class AbstractStorageTerminalScreenMixin {
 
         this.onUpdateSearch(query);
     }
+    
+    private static final Predicate<StoredItemStack> DEFAULT_PREDICATE = (stack) -> true;
+
+    @Inject(method = "getTooltipFlag()Lnet/minecraft/world/item/TooltipFlag;", at = @At("HEAD"), cancellable = true)
+    private static void neverUseAdvancedTooltips(CallbackInfoReturnable<TooltipFlag> cir) {
+        // EMI parity
+        cir.setReturnValue(TooltipFlag.Default.NORMAL);
+        cir.cancel();
+    }
 
     @Inject(method = "updateSearch()V", at = @At("HEAD"), cancellable = true)
     private void updateSearch(CallbackInfo ci) {
@@ -146,73 +125,22 @@ public abstract class AbstractStorageTerminalScreenMixin {
 
         if (!this.refreshItemList && this.searchLast.equals(query)) return;
 
-        List<Pattern> modQueries = new ArrayList<>();
-        List<Pattern> simpleQueries = new ArrayList<>();
-        List<Pattern> tooltipQueries = new ArrayList<>();
-        List<Pattern> tagQueries = new ArrayList<>();
-
-        for (String queryPart : query.split(" ")) {
-            if (queryPart.isEmpty()) continue;
-
-            Pattern prefixPattern = queryToRegex(queryPart.substring(1));
-            Pattern normalPattern = queryToRegex(queryPart);
-
-            if (queryPart.startsWith("@")) {
-                modQueries.add(prefixPattern);
-                continue;
-            } else if (queryPart.startsWith("#")) {
-                tagQueries.add(prefixPattern);
-                continue;
-            } else if (queryPart.startsWith("$")) {
-                tooltipQueries.add(prefixPattern);
-                continue;
-            }
-
-            if (EmiConfig.searchModNameByDefault) modQueries.add(normalPattern);
-            if (EmiConfig.searchTagsByDefault) tagQueries.add(normalPattern);
-            if (EmiConfig.searchTooltipByDefault) tagQueries.add(normalPattern);
-            simpleQueries.add(queryToRegex(queryPart));
-        }
-
-        List<ITag<Item>> itemTags = new ArrayList<>();
-        List<ITag<Block>> blockTags = new ArrayList<>();
-        if (!tagQueries.isEmpty()) {
-            // noinspection DataFlowIssue
-            ForgeRegistries.ITEMS.tags()
-                    .stream()
-                    .filter(tag -> queriesMatchTag(tagQueries, tag))
-                    .forEach(itemTags::add);
-
-            // noinspection DataFlowIssue
-            ForgeRegistries.BLOCKS.tags()
-                    .stream()
-                    .filter(tag -> queriesMatchTag(tagQueries, tag))
-                    .forEach(blockTags::add);
-        }
+        Predicate<StoredItemStack> predicate = Arrays.stream(query.split(" "))
+                .filter(part -> !part.isEmpty())
+                .map(String::toLowerCase)
+                .map(AbstractStorageTerminalScreenMixin::getStoredItemStackPredicate)
+                .reduce(DEFAULT_PREDICATE, Predicate::and);
 
         @SuppressWarnings("DataFlowIssue")
         var screen = (AbstractStorageTerminalScreen<? extends StorageTerminalMenu>) (Object) this;
         StorageTerminalMenu menu = screen.getMenu();
 
-        menu.itemListClientSorted.clear();
+        menu.itemListClientSorted = menu.itemListClient
+                .stream()
+                .filter(predicate)
+                .sorted(menu.noSort ? this.sortComp : this.comparator)
+                .collect(Collectors.toCollection(ArrayList::new));
 
-        for (StoredItemStack storedStack : menu.itemListClient) {
-            if (storedStack == null || storedStack.getStack() == null) continue;
-
-            ItemStack stack = storedStack.getStack();
-            if (!queriesMatchSimple(simpleQueries, storedStack)) continue;
-
-            Item item = stack.getItem();
-            String modName = Platform.getItemId(item).getNamespace();
-            if (!queriesMatch(modQueries, modName)) continue;
-
-            if (!tagQueries.isEmpty() && !tagsMatchItem(itemTags, blockTags, item)) continue;
-            if (!queriesMatchTooltip(tooltipQueries, storedStack)) continue;
-
-            menu.itemListClientSorted.add(storedStack);
-        }
-
-        menu.itemListClientSorted.sort(menu.noSort ? this.sortComp : this.comparator);
         if (!this.searchLast.equals(query)) {
             this.resetScroll(menu, query);
         } else {
