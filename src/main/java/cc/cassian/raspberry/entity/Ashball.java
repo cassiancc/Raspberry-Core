@@ -33,7 +33,7 @@ public class Ashball extends ThrowableItemProjectile {
     public void tick() {
         super.tick();
         if (this.random.nextBoolean() && ModConfig.get().thrownItemParticles)
-            this.level.addParticle(getParticle(), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level().addParticle(getParticle(), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
     }
 
     @Override

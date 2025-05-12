@@ -21,7 +21,7 @@ public class ThrowableProjectileMixin {
             if (projectile instanceof Snowball snowball) {
                 var random = new Random();
                 if (random.nextBoolean()) {
-                    snowball.level.addParticle(ParticleTypes.SNOWFLAKE, snowball.getX(), snowball.getY(), snowball.getZ(), 0.0, 0.0, 0.0);
+                    snowball.level().addParticle(ParticleTypes.SNOWFLAKE, snowball.getX(), snowball.getY(), snowball.getZ(), 0.0, 0.0, 0.0);
                 }
             }
         }

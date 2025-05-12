@@ -18,6 +18,7 @@
     "PigMixin",
     "PointedDripstoneBlockMixin",
     "ScreenshotViewerMixin",
+    "ThrowableProjectileMixin",
     "aquaculture.AquaFishingBobberEntityMixin",
     "aquaculture.AquaFishingRodItemMixin",
     "aquaculture.BaitItemMixin",
