@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Storage block for Ash (Supplementaries).
+- Ashball items, which can be thrown to inflict blindness. Not obtainable in survival without changing loot tables.
+- Particles for Snowballs, which can be disabled in the config.
 
 ### Changed
 - Moved Blueprint to an optional dependency.

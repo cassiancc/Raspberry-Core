@@ -42,6 +42,7 @@
  "config.raspberry.config.braziersStartLit": "Light braziers by default",
  "config.raspberry.config.hideWorldVersion": "Hide world version",
  "config.raspberry.config.hideTooltips": "Hide some modded tooltips",
+ "config.raspberry.config.thrownItemParticles": "Thrown Item Particles",
  "config.raspberry.gliders": "Gliders",
  "config.raspberry.config.gliders_disableLightning": "Disable Lightning Strikes to Gliders",
  "config.raspberry.config.gliders_disableNetherDamage": "Disable Nether Damage to Gliders",
@@ -53,6 +54,7 @@
  "config.raspberry.config.aftershock": "Enable Aftershock effect from lightning strikes",
  "config.raspberry.config.create_blastproofing": "Disable Create blasting destroying items.",
  "config.raspberry.config.horses_noWander": "Prevent Horse Wandering",
+ "config.raspberry.config.horses_stepHeight": "Increase Horse Step Height",
 
  "config.raspberry.config.searchContainers": "Allow items in bundles/containers",
 

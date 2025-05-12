@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.entity;
 
+import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryEntityTypes;
 import cc.cassian.raspberry.registry.RaspberryItems;
 import net.mehvahdjukaar.supplementaries.reg.ModParticles;
@@ -31,8 +32,8 @@ public class Ashball extends ThrowableItemProjectile {
     @Override
     public void tick() {
         super.tick();
-        if (this.random.nextBoolean())
-            this.level().addParticle(getParticle(), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+        if (this.random.nextBoolean() && ModConfig.get().thrownItemParticles)
+            this.level.addParticle(getParticle(), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
     }
 
     @Override
