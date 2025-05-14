@@ -120,3 +120,4 @@ run/
 !libs/ecologics-forge-1.19.2-2.1.11.jar
 
 kubejs/
+!src/main/java/**/kubejs

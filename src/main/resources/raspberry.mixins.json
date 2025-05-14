@@ -50,6 +50,7 @@
     "farmersdelight.NetherStoveBlockMixin",
     "farmersdelight.RichSoilFarmlandBlockMixin",
     "farmersdelight.StoveBlockMixin",
+    "minecraft.ScreenMixin",
     "naturalist.SnakeMixin",
     "oreganized.EnchantmentHelperMixin",
     "oreganized.EntityMixin",

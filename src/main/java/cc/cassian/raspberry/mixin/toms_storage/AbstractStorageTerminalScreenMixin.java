@@ -4,6 +4,8 @@ import cc.cassian.raspberry.misc.toms_storage.filters.AnyFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.ModIdFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.TagFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.TooltipFilter;
+import cc.cassian.raspberry.client.tooltips.TooltipCacheLoader;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import com.tom.storagemod.gui.AbstractStorageTerminalScreen;
 import com.tom.storagemod.gui.PlatformEditBox;
@@ -21,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -59,6 +62,12 @@ public abstract class AbstractStorageTerminalScreenMixin {
     @Shadow
     protected abstract void onUpdateSearch(String text);
 
+    // The default one will just sit around unused, but it won't take up many resources, so it's fine:tm:
+    private static final LoadingCache<StoredItemStack, List<String>> betterTooltipCache =
+            CacheBuilder.newBuilder()
+                    .expireAfterAccess(Duration.ofSeconds(5))
+                    .build(new TooltipCacheLoader());
+
     @Nullable
     private static Pattern queryToRegex(String regex) {
         try {
@@ -72,6 +81,8 @@ public abstract class AbstractStorageTerminalScreenMixin {
         }
     }
 
+    private static final Predicate<StoredItemStack> DEFAULT_PREDICATE = (stack) -> true;
+
     @Nonnull
     private static Predicate<StoredItemStack> getStoredItemStackPredicate(String queryPart) {
         Pattern simplePattern = queryToRegex(queryPart);
@@ -83,9 +94,9 @@ public abstract class AbstractStorageTerminalScreenMixin {
         } else if (queryPart.startsWith("#")) {
             newPredicate = new TagFilter(prefixPattern);
         } else if (queryPart.startsWith("$")) {
-            newPredicate = new TooltipFilter(tooltipCache, prefixPattern);
+            newPredicate = new TooltipFilter(betterTooltipCache, prefixPattern);
         } else {
-            newPredicate = new AnyFilter(tooltipCache, simplePattern);
+            newPredicate = new AnyFilter(betterTooltipCache, simplePattern);
         }
         return newPredicate;
     }
@@ -105,13 +116,11 @@ public abstract class AbstractStorageTerminalScreenMixin {
 
         this.onUpdateSearch(query);
     }
-    
-    private static final Predicate<StoredItemStack> DEFAULT_PREDICATE = (stack) -> true;
 
     @Inject(method = "getTooltipFlag()Lnet/minecraft/world/item/TooltipFlag;", at = @At("HEAD"), cancellable = true)
     private static void neverUseAdvancedTooltips(CallbackInfoReturnable<TooltipFlag> cir) {
         // EMI parity
-        cir.setReturnValue(TooltipFlag.Default.NORMAL);
+        cir.setReturnValue(TooltipFlag.Default.ADVANCED);
         cir.cancel();
     }
 

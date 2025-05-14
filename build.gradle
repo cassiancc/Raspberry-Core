@@ -179,7 +179,7 @@ dependencies {
     modImplementation("maven.modrinth:mmmmmmmmmmmm:1.7.2-forge")
 
     // EMI Compat for Enchantments
-    modRuntimeOnly("dev.latvian.mods:kubejs-forge:$kubejs_version")
+    modImplementation("dev.latvian.mods:kubejs-forge:$kubejs_version")
     modImplementation("maven.modrinth:ensorcellation:4.3.1")
     modImplementation("curse.maven:allurement-438003:4781076")
     modImplementation("maven.modrinth:mining-master:1.19.2-4.1.4")
