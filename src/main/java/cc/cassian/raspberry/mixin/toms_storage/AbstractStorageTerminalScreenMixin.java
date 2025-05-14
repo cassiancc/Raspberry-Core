@@ -45,9 +45,6 @@ public abstract class AbstractStorageTerminalScreenMixin {
     private String searchLast;
 
     @Shadow
-    private static LoadingCache<StoredItemStack, List<String>> tooltipCache;
-
-    @Shadow
     private StoredItemStack.IStoredItemStackComparator comparator;
 
     @Shadow
@@ -101,6 +98,10 @@ public abstract class AbstractStorageTerminalScreenMixin {
         return newPredicate;
     }
 
+    /* This is extracted from the tail end of the original updateSearch method. We can't feasibly
+     * continue there again though, and I really don't want the default search to run in the background
+     * unused, so it's just copied wholesale into here.
+     */
     private void resetScroll(StorageTerminalMenu menu, String query) {
         menu.scrollTo(0.0F);
         this.currentScroll = 0.0F;
@@ -115,13 +116,6 @@ public abstract class AbstractStorageTerminalScreenMixin {
         }
 
         this.onUpdateSearch(query);
-    }
-
-    @Inject(method = "getTooltipFlag()Lnet/minecraft/world/item/TooltipFlag;", at = @At("HEAD"), cancellable = true)
-    private static void neverUseAdvancedTooltips(CallbackInfoReturnable<TooltipFlag> cir) {
-        // EMI parity
-        cir.setReturnValue(TooltipFlag.Default.ADVANCED);
-        cir.cancel();
     }
 
     @Inject(method = "updateSearch()V", at = @At("HEAD"), cancellable = true)

@@ -20,6 +20,18 @@ public class TooltipCacheLoader extends CacheLoader<StoredItemStack, List<String
         return isFakeShifting;
     }
 
+    /* ForgeHooksClient#gatherTooltipComponents is marked as @Internal.
+     * I'm not a fan of using that, but
+     *   a) EMI uses it too, and
+     *   b) it's the only way I can see to make sure mods will definitely have added their tooltips.
+     *
+     * Why? The method sends out a RenderTooltipEvent.GatherComponents event onto the event bus,
+     * which allows mods to modify or even cancel the tooltip components being rendered.
+     *
+     * Tooltips in Minecraft are really finicky, and this whole stringification thing is a sin,
+     * so I think this is the lesser evil than accidentally missing some (weirdly lately) added
+     * tooltips and confusing users.
+     */
     @SuppressWarnings("UnstableApiUsage")
     private static List<ClientTooltipComponent> getClientTooltips(StoredItemStack storedStack) {
         Minecraft client = Minecraft.getInstance();
@@ -54,6 +66,7 @@ public class TooltipCacheLoader extends CacheLoader<StoredItemStack, List<String
         List<ClientTooltipComponent> tooltips = getClientTooltips(storedStack);
         List<String> tooltipLines = stringifyTooltips(tooltips);
 
+        // The first line would be the item name
         if (tooltipLines.isEmpty()) return tooltipLines;
         return tooltipLines.subList(1, tooltipLines.size());
     }
