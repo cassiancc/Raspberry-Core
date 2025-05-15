@@ -1,4 +1,4 @@
-package cc.cassian.raspberry.client.tooltips;
+package cc.cassian.raspberry.misc.toms_storage.tooltips;
 
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSink;
@@ -26,7 +26,6 @@ public class StringifyFormattedCharSink implements FormattedCharSink {
 
     @Override
     public String toString() {
-        System.out.println("StringifyFormattedCharSink: " + stringBuilder);
         return stringBuilder.toString();
     }
 }

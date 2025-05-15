@@ -4,34 +4,32 @@ import cc.cassian.raspberry.misc.toms_storage.filters.AnyFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.ModIdFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.TagFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.TooltipFilter;
-import cc.cassian.raspberry.client.tooltips.TooltipCacheLoader;
+import cc.cassian.raspberry.misc.toms_storage.tooltips.TooltipCacheLoader;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 import com.tom.storagemod.gui.AbstractStorageTerminalScreen;
 import com.tom.storagemod.gui.PlatformEditBox;
 import com.tom.storagemod.gui.StorageTerminalMenu;
 import com.tom.storagemod.util.IAutoFillTerminal;
 import com.tom.storagemod.util.StoredItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.TooltipFlag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.Executors;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
 
 @Mixin(value = AbstractStorageTerminalScreen.class, remap = false)
 public abstract class AbstractStorageTerminalScreenMixin {
@@ -59,11 +57,16 @@ public abstract class AbstractStorageTerminalScreenMixin {
     @Shadow
     protected abstract void onUpdateSearch(String text);
 
+    private static final ListeningExecutorService tooltipLoadingExecutor =
+            MoreExecutors.listeningDecorator(Executors.newWorkStealingPool());
+    private static final CacheLoader<StoredItemStack, List<String>> cacheLoader =
+            CacheLoader.asyncReloading(new TooltipCacheLoader(), tooltipLoadingExecutor);
+
     // The default one will just sit around unused, but it won't take up many resources, so it's fine:tm:
     private static final LoadingCache<StoredItemStack, List<String>> betterTooltipCache =
             CacheBuilder.newBuilder()
                     .expireAfterAccess(Duration.ofSeconds(5))
-                    .build(new TooltipCacheLoader());
+                    .build(cacheLoader);
 
     @Nullable
     private static Pattern queryToRegex(String regex) {
@@ -118,6 +121,41 @@ public abstract class AbstractStorageTerminalScreenMixin {
         this.onUpdateSearch(query);
     }
 
+    private Predicate<StoredItemStack> buildQueryPredicate(String query) {
+        return Arrays.stream(query.split(" "))
+                .filter(part -> !part.isEmpty())
+                .map(String::toLowerCase)
+                .map(AbstractStorageTerminalScreenMixin::getStoredItemStackPredicate)
+                .reduce(DEFAULT_PREDICATE, Predicate::and);
+    }
+
+    private void rebuildSortedItemList(StorageTerminalMenu menu, String query) {
+        Predicate<StoredItemStack> queryPredicate = buildQueryPredicate(query);
+        menu.itemListClientSorted.clear();
+
+        tooltipLoadingExecutor.submit(() -> {
+            List<StoredItemStack> syncedList = Collections.synchronizedList(new ArrayList<>());
+
+            TooltipCacheLoader.setFakeShiftLock(true);
+            menu.itemListClient.parallelStream()
+                            .filter(queryPredicate)
+                            .forEach(syncedList::add);
+            TooltipCacheLoader.setFakeShiftLock(false);
+
+            syncedList.sort(menu.noSort ? this.sortComp : this.comparator);
+            menu.itemListClientSorted = syncedList;
+
+            if (!this.searchLast.equals(query)) {
+                this.resetScroll(menu, query);
+            } else {
+                menu.scrollTo(this.currentScroll);
+            }
+
+            this.refreshItemList = false;
+            this.searchLast = query;
+        });
+    }
+
     @Inject(method = "updateSearch()V", at = @At("HEAD"), cancellable = true)
     private void updateSearch(CallbackInfo ci) {
         // This is a heavy-handed approach, but let's be real:
@@ -125,32 +163,12 @@ public abstract class AbstractStorageTerminalScreenMixin {
         ci.cancel();
 
         String query = this.searchField.getValue();
-
         if (!this.refreshItemList && this.searchLast.equals(query)) return;
-
-        Predicate<StoredItemStack> predicate = Arrays.stream(query.split(" "))
-                .filter(part -> !part.isEmpty())
-                .map(String::toLowerCase)
-                .map(AbstractStorageTerminalScreenMixin::getStoredItemStackPredicate)
-                .reduce(DEFAULT_PREDICATE, Predicate::and);
 
         @SuppressWarnings("DataFlowIssue")
         var screen = (AbstractStorageTerminalScreen<? extends StorageTerminalMenu>) (Object) this;
         StorageTerminalMenu menu = screen.getMenu();
 
-        menu.itemListClientSorted = menu.itemListClient
-                .stream()
-                .filter(predicate)
-                .sorted(menu.noSort ? this.sortComp : this.comparator)
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        if (!this.searchLast.equals(query)) {
-            this.resetScroll(menu, query);
-        } else {
-            menu.scrollTo(this.currentScroll);
-        }
-
-        this.refreshItemList = false;
-        this.searchLast = query;
+        rebuildSortedItemList(menu, query);
     }
 }

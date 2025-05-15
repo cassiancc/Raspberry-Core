@@ -1,4 +1,4 @@
-package cc.cassian.raspberry.client.tooltips;
+package cc.cassian.raspberry.misc.toms_storage.tooltips;
 
 import com.google.common.cache.CacheLoader;
 import com.tom.storagemod.util.StoredItemStack;
@@ -13,11 +13,18 @@ import net.minecraftforge.client.ForgeHooksClient;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TooltipCacheLoader extends CacheLoader<StoredItemStack, List<String>> {
-    private static boolean isFakeShifting = false;
+    private static final AtomicBoolean isFakeShifting = new AtomicBoolean(false);
+    private static boolean fakeShiftIsLocked = false;
+
+    public static void setFakeShiftLock(boolean value) {
+        fakeShiftIsLocked = value;
+    }
+
     public static boolean isFakeShifting() {
-        return isFakeShifting;
+        return fakeShiftIsLocked || isFakeShifting.get();
     }
 
     /* ForgeHooksClient#gatherTooltipComponents is marked as @Internal.
@@ -37,13 +44,14 @@ public class TooltipCacheLoader extends CacheLoader<StoredItemStack, List<String
         Minecraft client = Minecraft.getInstance();
         ItemStack stack = storedStack.getStack();
 
-        isFakeShifting = true;
+        isFakeShifting.set(true);
+
         List<Component> defaultTooltips = stack.getTooltipLines(client.player, TooltipFlag.Default.NORMAL);
 
         List<ClientTooltipComponent> components = ForgeHooksClient.gatherTooltipComponents(stack, defaultTooltips, 0,
                 Integer.MAX_VALUE, Integer.MAX_VALUE, null, client.font);
 
-        isFakeShifting = false;
+        isFakeShifting.set(false);
         return components;
     }
 
