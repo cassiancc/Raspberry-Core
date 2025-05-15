@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "clash:greatblade",
+      "required": false
+    },
+    {
+      "id": "kubejs:rose_gold_rapier",
+      "required": false
+    },
+    {
+      "id": "clash:swept_axe",
+      "required": false
+    },
+    {
+      "id": "clash:spear",
+      "required": false
+    },
+    {
+      "id": "oreganized:silver_mirror",
+      "required": false
+    }
+  ]
+}

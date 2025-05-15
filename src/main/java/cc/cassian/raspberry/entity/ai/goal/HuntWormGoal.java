@@ -1,6 +1,6 @@
 package cc.cassian.raspberry.entity.ai.goal;
 
-import cc.cassian.raspberry.RaspberryMod;
+import cc.cassian.raspberry.RaspberryData;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
 import com.google.common.collect.Lists;
@@ -39,35 +39,35 @@ public class HuntWormGoal extends Goal {
             return false;
         } else {
             this.runDelay = this.adjustedTickDelay(20);
-            if (this.data.getValue(RaspberryMod.HAS_WORM_TARGET)) {
+            if (this.data.getValue(RaspberryData.HAS_WORM_TARGET)) {
                 return true;
             } else {
-                return this.data.getValue(RaspberryMod.WORM_HUNTING_TIME) > 0 && this.findWorm();
+                return this.data.getValue(RaspberryData.WORM_HUNTING_TIME) > 0 && this.findWorm();
             }
         }
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.data.getValue(RaspberryMod.HAS_WORM_TARGET) && this.data.getValue(RaspberryMod.WORM_HUNTING_TIME) != 0;
+        return this.data.getValue(RaspberryData.HAS_WORM_TARGET) && this.data.getValue(RaspberryData.WORM_HUNTING_TIME) != 0;
     }
 
     @Override
     public void start() {
         this.lookVector = new Vec3(1.0D, 0.0D, 1.0D);
         this.moveToWorm();
-        this.data.setValue(RaspberryMod.LOOKING_FOR_WORM, true);
+        this.data.setValue(RaspberryData.LOOKING_FOR_WORM, true);
     }
 
     @Override
     public void stop() {
-        this.data.setValue(RaspberryMod.LOOKING_FOR_WORM, false);
+        this.data.setValue(RaspberryData.LOOKING_FOR_WORM, false);
     }
 
     @Override
     public void tick() {
-        int wormhuntingtime = this.data.getValue(RaspberryMod.WORM_HUNTING_TIME);
-        BlockPos blockpos = this.data.getValue(RaspberryMod.WORM_POS);
+        int wormhuntingtime = this.data.getValue(RaspberryData.WORM_HUNTING_TIME);
+        BlockPos blockpos = this.data.getValue(RaspberryData.WORM_POS);
         Vec3 seekerpos = this.seeker.position();
 
         Vec3 vector3d = new Vec3((blockpos.getX() + 0.5D) - seekerpos.x(), 0.0D, (blockpos.getZ() + 0.5D) - seekerpos.z()).normalize();
@@ -76,7 +76,7 @@ public class HuntWormGoal extends Goal {
 
         if (blockpos.closerThan(this.seeker.blockPosition(), 4.0D)) {
             if (wormhuntingtime > 0)
-                this.data.setValue(RaspberryMod.WORM_HUNTING_TIME, -800);
+                this.data.setValue(RaspberryData.WORM_HUNTING_TIME, -800);
         } else {
             if (this.lookTimer-- <= 0) {
                 this.lookTimer = this.adjustedTickDelay(18 + this.seeker.getRandom().nextInt(9));
@@ -88,7 +88,7 @@ public class HuntWormGoal extends Goal {
     }
 
     private void moveToWorm() {
-        BlockPos blockpos = this.data.getValue(RaspberryMod.WORM_POS);
+        BlockPos blockpos = this.data.getValue(RaspberryData.WORM_POS);
         this.seeker.getNavigation().moveTo((double) ((float) blockpos.getX()) + 0.5D, blockpos.getY() + 1, (double) ((float) blockpos.getZ()) + 0.5D, 1.1D);
     }
 
@@ -113,8 +113,8 @@ public class HuntWormGoal extends Goal {
 
                         if (this.seeker.isWithinRestriction(blockpos$mutable)) {
                             if (this.isWorm(this.seeker.level, blockpos$mutable)) {
-                                this.data.setValue(RaspberryMod.HAS_WORM_TARGET, true);
-                                this.data.setValue(RaspberryMod.WORM_POS, blockpos$mutable);
+                                this.data.setValue(RaspberryData.HAS_WORM_TARGET, true);
+                                this.data.setValue(RaspberryData.WORM_POS, blockpos$mutable);
                                 return true;
                             } else if (this.isSuitableForWorm(this.seeker.level, blockpos$mutable)) {
                                 if (i <= 48 && !flag) {
@@ -134,8 +134,8 @@ public class HuntWormGoal extends Goal {
             BlockPos wormpos = wormblocks.get(this.seeker.getRandom().nextInt(wormblocks.size()));
 
             this.seeker.level.setBlock(wormpos, RaspberryBlocks.WORMY_DIRT.getA().get().defaultBlockState(), 3);
-            this.data.setValue(RaspberryMod.HAS_WORM_TARGET, true);
-            this.data.setValue(RaspberryMod.WORM_POS, wormpos);
+            this.data.setValue(RaspberryData.HAS_WORM_TARGET, true);
+            this.data.setValue(RaspberryData.WORM_POS, wormpos);
 
             return true;
         }

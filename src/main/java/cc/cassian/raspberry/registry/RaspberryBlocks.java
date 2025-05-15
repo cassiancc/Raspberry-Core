@@ -83,7 +83,7 @@ public class RaspberryBlocks {
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             CAKE = registerBlock("cake",
-            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), ModItems.CAKE_SLICE), CreativeModeTab.TAB_DECORATIONS);
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "farmersdelight:cake_slice"), CreativeModeTab.TAB_DECORATIONS);
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             CHOCOLATE_CAKE = registerBlock("chocolate_cake",
@@ -107,7 +107,7 @@ public class RaspberryBlocks {
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             CHERRY_CAKE = registerBlock("cherry_cake",
-            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "abnormals_delight:azduki_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
+            ()-> new RaspberryCakeBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), "abnormals_delight:adzuki_cake_slice"), CreativeModeTab.TAB_DECORATIONS);
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             MAGMA_CAKE = registerBlock("magma_cake",

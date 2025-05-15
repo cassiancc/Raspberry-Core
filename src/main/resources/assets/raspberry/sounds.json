@@ -1,0 +1,8 @@
+{
+  "entity.ashball.throw": {
+  "sounds": [
+    "random/bow"
+  ],
+  "subtitle": "raspberry.subtitles.entity.ashball.throw"
+  }
+}

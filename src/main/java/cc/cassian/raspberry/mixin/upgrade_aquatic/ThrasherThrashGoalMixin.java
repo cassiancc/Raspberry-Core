@@ -15,6 +15,11 @@ import java.util.List;
 @Mixin(ThrasherThrashGoal.class)
 public class ThrasherThrashGoalMixin {
 
+    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/teamabnormals/upgrade_aquatic/common/entity/monster/Thrasher;getPassengers()Ljava/util/List;", ordinal = 0))
+    public List<Entity> fixTick(Thrasher instance) {
+        return Collections.singletonList(instance.getFirstPassenger());
+    }
+
     @Redirect(method = "canUse", at = @At(value = "INVOKE", target = "Lcom/teamabnormals/upgrade_aquatic/common/entity/monster/Thrasher;getPassengers()Ljava/util/List;", ordinal = 0))
     public List<Entity> canUse(Thrasher instance) {
         return Collections.singletonList(instance.getFirstPassenger());

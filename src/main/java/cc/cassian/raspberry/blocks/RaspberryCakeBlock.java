@@ -51,23 +51,11 @@ public class RaspberryCakeBlock extends Block {
     public final String cakeSliceItemID;
     private static final Iterable<Vec3> PARTICLE_OFFSETS;
 
-    public RaspberryCakeBlock(BlockBehaviour.Properties properties, Supplier<Item> cakeSlice) {
-        super(properties);
-        this.cakeSlice = cakeSlice;
-        this.cakeSliceItemID = cakeSlice.toString();
-        this.registerDefaultState(this.stateDefinition.any().setValue(BITES, 0).setValue(CANDLE_TYPE, 0).setValue(LIT, false));
-
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(LIT, false);
-    }
-
     public RaspberryCakeBlock(Properties properties, String cakeSlice) {
         super(properties);
         this.cakeSliceItemID = cakeSlice;
         this.cakeSlice = null;
+        this.registerDefaultState(this.stateDefinition.any().setValue(BITES, 0).setValue(CANDLE_TYPE, 0).setValue(LIT, false));
     }
 
     @Override

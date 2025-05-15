@@ -5,14 +5,7 @@ import cc.cassian.raspberry.compat.*;
 import cc.cassian.raspberry.compat.oreganized.OreganizedEvents;
 import cc.cassian.raspberry.compat.oreganized.network.RaspberryOreganizedNetwork;
 import cc.cassian.raspberry.config.ModConfig;
-import cc.cassian.raspberry.registry.RaspberryAttributes;
-import cc.cassian.raspberry.registry.RaspberryBlocks;
-import cc.cassian.raspberry.registry.RaspberryItems;
-import cc.cassian.raspberry.registry.RasperryMobEffects;
-import com.teamabnormals.blueprint.common.world.storage.tracking.DataProcessors;
-import com.teamabnormals.blueprint.common.world.storage.tracking.TrackedData;
-import com.teamabnormals.blueprint.common.world.storage.tracking.TrackedDataManager;
-import net.minecraft.core.BlockPos;
+import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
@@ -41,12 +34,6 @@ public final class RaspberryMod {
     public static final String MOD_ID = "raspberry";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final TrackedData<Integer> WORM_HUNTING_TIME = TrackedData.Builder.create(DataProcessors.INT, () -> 0).enableSaving().build();
-    public static final TrackedData<Integer> SNIFF_SOUND_TIME = TrackedData.Builder.create(DataProcessors.INT, () -> 0).build();
-    public static final TrackedData<BlockPos> WORM_POS = TrackedData.Builder.create(DataProcessors.POS, () -> BlockPos.ZERO).enableSaving().build();
-    public static final TrackedData<Boolean> HAS_WORM_TARGET = TrackedData.Builder.create(DataProcessors.BOOLEAN, () -> false).enableSaving().build();
-    public static final TrackedData<Boolean> LOOKING_FOR_WORM = TrackedData.Builder.create(DataProcessors.BOOLEAN, () -> false).build();
-
     public RaspberryMod(FMLJavaModLoadingContext context) {
         var eventBus = context.getModEventBus();
         // This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -57,6 +44,8 @@ public final class RaspberryMod {
         RaspberryBlocks.register(eventBus);
         RaspberryItems.ITEMS.register(eventBus);
         RasperryMobEffects.MOB_EFFECTS.register(eventBus);
+        RaspberryEntityTypes.ENTITIES.register(eventBus);
+        RaspberrySoundEvents.SOUNDS.register(eventBus);
         // Register event bus listeners.
         MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityInteract);
@@ -74,11 +63,9 @@ public final class RaspberryMod {
             // Register config
             registerModsPage(context);
         }
-        TrackedDataManager.INSTANCE.registerData(locate("truffle_hunting_time"), WORM_HUNTING_TIME);
-        TrackedDataManager.INSTANCE.registerData(locate("sniff_sound_time"), SNIFF_SOUND_TIME);
-        TrackedDataManager.INSTANCE.registerData(locate( "truffle_pos"), WORM_POS);
-        TrackedDataManager.INSTANCE.registerData(locate( "has_truffle_target"), HAS_WORM_TARGET);
-        TrackedDataManager.INSTANCE.registerData(locate("looking_for_truffle"), LOOKING_FOR_WORM);
+        if (ModCompat.BLUEPRINT) {
+            RaspberryData.register();
+        }
     }
 
     public static ResourceLocation locate(String id) {
