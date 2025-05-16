@@ -174,7 +174,8 @@ public abstract class AbstractStorageTerminalScreenMixin {
         rebuildSortedItemList(menu, query);
     }
 
-    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lcom/tom/storagemod/gui/StorageTerminalMenu;beaconLvl:I", opcode = Opcodes.GETFIELD))
+    @SuppressWarnings("DefaultAnnotationParam") // We need to re-enable remapping for this method!
+    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lcom/tom/storagemod/gui/StorageTerminalMenu;beaconLvl:I", opcode = Opcodes.GETFIELD), remap = true)
     private int fakeBeaconLevel(StorageTerminalMenu menu) {
         return 0; // Beacons? No, not around here. :^)
     }
