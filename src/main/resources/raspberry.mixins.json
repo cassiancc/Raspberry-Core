@@ -70,6 +70,7 @@
     "supplementaries.RakedGravelBlockMixin",
     "supplementaries.SoapClearMixin",
     "toms_storage.AbstractStorageTerminalScreenMixin",
+    "toms_storage.StorageTerminalMenuMixin",
     "upgrade_aquatic.PikeMixin",
     "upgrade_aquatic.ThrasherMixin",
     "upgrade_aquatic.ThrasherThrashGoalMixin",
