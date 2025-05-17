@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "clash:greatblade",
+      "required": false
+    },
+    {
+      "id": "kubejs:rose_gold_rapier",
+      "required": false
+    }
+  ]
+}

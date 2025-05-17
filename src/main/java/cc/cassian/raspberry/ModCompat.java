@@ -27,6 +27,7 @@ public final class ModCompat {
     public static final boolean SURVIVALITY = ModList.get().isLoaded("survivality");
     public static final boolean SUPPLEMENTARIES = ModList.get().isLoaded("supplementaries");
     public static final boolean SPELUNKERY = ModList.get().isLoaded("spelunkery");
+    public static final boolean TOMS_STORAGE = ModList.get().isLoaded("toms_storage");
 
     public static final boolean BLUEPRINT = ModList.get().isLoaded("blueprint");
 }

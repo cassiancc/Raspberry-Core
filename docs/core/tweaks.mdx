@@ -15,6 +15,9 @@ Configurable tweaks can be changed with Cloth Config installed in the Forge mod 
 - Glow Goop (Naturalist) has its tooltip hidden.
 - Gliders (Gliders) no longer attract lightning.
 - Blasting an item with lava that has no blasting recipe will no longer destroy the item. (Create)
+- Snowballs emit snowflake particles when thrown.
+- Foxes no longer spawn with Rabbit's Hide/Rabbit's Foot.
+- Snakes (Naturalist) can no longer drop a Rabbit's Foot.
 
 ## Datapackable Tweaks
 
@@ -34,6 +37,8 @@ Datapackable tweaks can be changed through datapacks.
   - Edit this list by changing `data/raspberry/tags/blocks/useable/hoes`
 - Common seeds found in Raspberry Flavoured (Farmer's Delight, Cultural Delights, etc.) can now be used to breed chickens.
   - Edit this list by changing `data/blueprint/tags/items/chicken_food.json`
+- Various modded weapons can now be enchanted with primarily sword enchantments.
+  - Edit this list by changing `data/raspberry/tags/items/enchantable/weapon`
 
 ## Tweaks
 
@@ -51,8 +56,12 @@ Tweaks cannot be changed.
 - Gliders (Gliders) make a noise when they are equipped.
 - Bomb (Supplementaries) rarity has been changed - only blue bombs are considered rare.
 - Pointed Dripstone stalactites can now convert Dripstone blocks below into Rock Salt blocks.
-- Snakes (Naturalist) can no longer drop a Rabbit's Foot.
-- Foxes can no longer spawn holding a Rabbit's Foot.
 - Coconut Slices (Ecologics) clear one effect, instead of all of them.
 - Spyglasses can now be used from a bundle when Spyglass Improvements is installed.
-
+- Snowballs inflict Chilled (CoFH Core) when they hit a mob.
+- Tom's Simple Storage can now be searched in a way that should be more familiar to EMI users.
+    - Searches aren't treated as one big regex anymore, but instead as several smaller regexes split on spaces.
+    - Tags are searchable now using the prefix `#` (see note)
+    - Tooltips aren't searched by default anymore, the prefix `$` has to be used (see note)
+    - Tooltips are loaded more consistently, always searching through shift-only descriptions, but never through `F3-H` advanced tooltips.
+    - The searched tooltip text isn't as spotty as it was before for mod-added tooltip texts.

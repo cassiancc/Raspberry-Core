@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "clash:swept_axe",
+      "required": false
+    }
+  ]
+}

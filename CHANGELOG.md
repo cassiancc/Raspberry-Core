@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Modded melee weapons can now be enchanted with weapon enchantments. (Clash, Raspberry Flavoured)
+- Tom's Simple Storage can now be searched in a way that should be more familiar to EMI users. (@SarahIsWeird)
+
+### Fixed
+- Unintentional dep on CoFH Core
+- Backported Soap recipe fix from 1.20 (Supplementaries)
+
+## [1.5] - 2025-05-13
+
+### Added
 - Storage block for Ash (Supplementaries).
 - Ashball items, which can be thrown to inflict blindness. Not obtainable in survival without changing loot tables.
 - Particles for Snowballs, which can be disabled in the config.
@@ -21,12 +31,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tangle roots show that they're shearable. (Dynamic Crosshair)
 - Deployers not being able to use modded shears. (Create) (SarahIsWeird)
 
-## [1.4] - 2024-05-07
+## [1.4] - 2025-05-07
 
 ### Fixed
 - Issue with Useful Spyglass's keybind.
 
-## [1.3] - 2024-05-07
+## [1.3] - 2025-05-07
 
 ### Added
 - Snow layer block that obeys gravity.
@@ -48,20 +58,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Overlay functionality, as it is now part of Immersive Overlays.
 
-## [1.2] - 2024-04-04
+## [1.2] - 2025-04-04
 
 ### Fixed
 - Magnetic and Recovery compasses can now display a coordinate overlay.
 - Lit Ash and Silt stoves now have correct textures by Kayla_the_Bee and ProbablyEkho.
 - Tether warp now shows the correct tablet in EMI.
 
-## [1.1] - 2024-04-03
+## [1.1] - 2025-04-03
 
 ### Fixed
 - Crash when viewing flowerbeds.
 - Swift Sneak being applied to boots instead of leggings.
 
-## [1.0] - 2024-04-03
+## [1.0] - 2025-04-03
 
 ### Added
 - Added Cheery and Moody Wildflowers, new flowerbed blocks textured and modelled by ProbablyEkho and inspired by the Spring to Life drop.
@@ -84,7 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Screenshot Viewer no longer causes a crash when paused via F3-Esc.
 - Swapping gliders with armour functions again.
 
-## [0.1.13] - 2024-03-26
+## [0.1.13] - 2025-03-26
 
 ### Added
 - Pointed Dripstone stalactites can now convert Dripstone blocks below into Rock Salt blocks.
@@ -95,7 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Farmer's Delight EMI integration is now translated correctly.
 - Raspberry Core Stoves are now valid workstations in EMI.
 
-## [0.1.12] - 2024-03-20
+## [0.1.12] - 2025-03-20
 
 ### Added
 - Direct compatibility between Farmer's Delight and EMI based off [the work of MerchantCalico](https://github.com/vectorwing/FarmersDelight/pull/971).
@@ -108,12 +118,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Further safety fixes for Create blastproofing.
 - Further fixes for disabled items.
 
-## [0.1.11] - 2024-02-27
+## [0.1.11] - 2025-02-27
 
 ### Fixed
 - Crashes from making item entities blastproof.
 
-## [0.1.10] - 2024-02-27
+## [0.1.10] - 2025-02-27
 
 ### Added
 - Dynamic Crosshair can now show what shears can be used on and what they can mine.
@@ -132,7 +142,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Kinetic damage should no longer cause a server crash.
 - Ender Torches (Endergetic Expansion) now give the correct particles.
 
-## [0.1.4] - 2024-04-18
+## [0.1.4] - 2025-04-18
 
 ### Added
 - Ash Ovens, crafted from Ash Bricks (Supplementaries).
