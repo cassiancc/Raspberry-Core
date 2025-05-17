@@ -8,6 +8,7 @@
     "spyglass_improvements.MinecraftMixin"
   ],
   "mixins": [
+    "ArmorStandMixin",
     "CampfireBlockMixin",
     "CoconutSliceItemMixin",
     "FoxMixin",
@@ -26,6 +27,7 @@
     "aquaculture.TackleBoxBlockEntityMixin",
     "aquaculture.TackleBoxContainerMixin",
     "caverns_and_chasms.BrazierBlockMixin",
+    "cofh_core.CoreEnchantmentsMixin",
     "cofh_core.EffectEventsMixin",
     "cofh_core.SnowballMixin",
     "create.AllFluidsMixin",
@@ -42,10 +44,13 @@
     "farmersdelight.StoveBlockMixin",
     "naturalist.SnakeMixin",
     "quark.ExpandedItemInteractionsModuleMixin",
+    "quark.QuickArmorSwappingModuleMixin",
     "spyglass_improvements.EventsHandlerMixin",
     "sullysmod.SMPlayerEventsMixin",
     "supplementaries.BombItemMixin",
     "supplementaries.RakedGravelBlockMixin",
+    "toms_storage.AbstractStorageTerminalScreenMixin",
+    "toms_storage.StorageTerminalMenuMixin",
     "vc_gliders.GliderItemMixin",
     "vc_gliders.GliderUtilMixin"
   ],
