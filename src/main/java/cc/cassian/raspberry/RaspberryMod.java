@@ -3,10 +3,7 @@ package cc.cassian.raspberry;
 import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.compat.*;
 import cc.cassian.raspberry.config.ModConfig;
-import cc.cassian.raspberry.registry.RaspberryBlocks;
-import cc.cassian.raspberry.registry.RaspberryEntityTypes;
-import cc.cassian.raspberry.registry.RaspberryItems;
-import cc.cassian.raspberry.registry.RasperryMobEffects;
+import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
@@ -49,6 +46,7 @@ public final class RaspberryMod {
             RaspberryItems.ITEMS.register(eventBus);
             RasperryMobEffects.MOB_EFFECTS.register(eventBus);
             RaspberryEntityTypes.ENTITIES.register(eventBus);
+            RaspberrySoundEvents.SOUNDS.register(eventBus);
         }
         // Register event bus listeners.
         MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
