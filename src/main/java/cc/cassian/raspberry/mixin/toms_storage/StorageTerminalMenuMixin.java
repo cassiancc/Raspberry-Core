@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.toms_storage;
 
+import cc.cassian.raspberry.misc.toms_storage.StorageTerminalHelper;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tom.storagemod.gui.StorageTerminalMenu;
@@ -8,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Mixin(value = StorageTerminalMenu.class, remap = false)
 public abstract class StorageTerminalMenuMixin {
@@ -20,11 +22,7 @@ public abstract class StorageTerminalMenuMixin {
     @Shadow
     protected abstract void setSlotContents(int id, StoredItemStack stack);
 
-    @WrapMethod(method = "scrollTo")
-    private void scrollTo(float arg, Operation<Void> original) {
-        // I'm not even going to try to understand this method, or to clean it up
-        // much. We just store a reference to the list and use only that to prevent
-        // race conditions with the processing thread swapping out the sorted list.
+    private void setItemsUnsafe(float arg) {
         List<StoredItemStack> itemList = this.itemListClientSorted;
 
         int i = (itemList.size() + 9 - 1) / 9 - this.lines;
@@ -42,6 +40,18 @@ public abstract class StorageTerminalMenuMixin {
                     this.setSlotContents(l + k * 9, null);
                 }
             }
+        }
+    }
+
+    @WrapMethod(method = "scrollTo")
+    private void scrollTo(float arg, Operation<Void> original) {
+        ReentrantReadWriteLock.ReadLock readLock = StorageTerminalHelper.rwLock.readLock();
+
+        try {
+            readLock.lock();
+            setItemsUnsafe(arg);
+        } finally {
+            readLock.unlock();
         }
     }
 }

@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.toms_storage;
 
+import cc.cassian.raspberry.misc.toms_storage.StorageTerminalHelper;
 import cc.cassian.raspberry.misc.toms_storage.filters.AnyFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.ModIdFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.TagFilter;
@@ -29,6 +30,7 @@ import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -135,27 +137,33 @@ public abstract class AbstractStorageTerminalScreenMixin {
         Predicate<StoredItemStack> queryPredicate = buildQueryPredicate(query);
         menu.itemListClientSorted.clear();
 
-        tooltipLoadingExecutor.submit(() -> {
-            List<StoredItemStack> syncedList = Collections.synchronizedList(new ArrayList<>());
+        List<StoredItemStack> syncedList = Collections.synchronizedList(new ArrayList<>());
 
-            TooltipCacheLoader.setFakeShiftLock(true);
-            menu.itemListClient.parallelStream()
-                            .filter(queryPredicate)
-                            .forEach(syncedList::add);
-            TooltipCacheLoader.setFakeShiftLock(false);
+        TooltipCacheLoader.setFakeShiftLock(true);
+        menu.itemListClient.parallelStream()
+                        .filter(queryPredicate)
+                        .forEach(syncedList::add);
+        TooltipCacheLoader.setFakeShiftLock(false);
 
-            syncedList.sort(menu.noSort ? this.sortComp : this.comparator);
+        syncedList.sort(menu.noSort ? this.sortComp : this.comparator);
+        ReentrantReadWriteLock.WriteLock writeLock = StorageTerminalHelper.rwLock.writeLock();
+
+        try {
+            writeLock.lock();
             menu.itemListClientSorted = syncedList;
+        } finally {
+            // Can't really raise any exceptions, but you never know.
+            writeLock.unlock();
+        }
 
-            if (!this.searchLast.equals(query)) {
-                this.resetScroll(menu, query);
-            } else {
-                menu.scrollTo(this.currentScroll);
-            }
+        if (!this.searchLast.equals(query)) {
+            this.resetScroll(menu, query);
+        } else {
+            menu.scrollTo(this.currentScroll);
+        }
 
-            this.refreshItemList = false;
-            this.searchLast = query;
-        });
+        this.refreshItemList = false;
+        this.searchLast = query;
     }
 
     @Inject(method = "updateSearch()V", at = @At("HEAD"), cancellable = true)
