@@ -58,6 +58,10 @@
 
  "config.raspberry.config.searchContainers": "Allow items in bundles/containers",
 
+ "config.raspberry.config.emi_tablets": "Add EMI integration to RF tablets.",
+ "config.raspberry.config.toms_hideBeacon": "Hide beacon info in Tom's Simple Storage.",
+
+
  "emi.category.raspberry.anvil": "Runic Etching",
  "emi.category.raspberry.beacon_base": "Beacon Base Blocks",
  "emi.category.raspberry.beacon_payment": "Beacon Payments",

@@ -38,7 +38,8 @@ public class ModConfig {
     public boolean foxes_noRabbitDrops = true;
     public boolean noRabbitFootDrops = true;
     public boolean raspberry_beacon_interaction = false;
-
+    public boolean emi_tablets = true;
+    public boolean toms_hideBeacon = true;
 
     public static void load() {
         if (!Files.exists(configPath())) {

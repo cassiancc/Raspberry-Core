@@ -1,5 +1,7 @@
 package cc.cassian.raspberry.mixin.toms_storage;
 
+import cc.cassian.raspberry.config.ModConfig;
+import cc.cassian.raspberry.misc.toms_storage.StorageTerminalHelper;
 import cc.cassian.raspberry.misc.toms_storage.filters.AnyFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.ModIdFilter;
 import cc.cassian.raspberry.misc.toms_storage.filters.TagFilter;
@@ -10,6 +12,8 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.tom.storagemod.gui.AbstractStorageTerminalScreen;
 import com.tom.storagemod.gui.PlatformEditBox;
 import com.tom.storagemod.gui.StorageTerminalMenu;
@@ -29,6 +33,7 @@ import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -58,6 +63,8 @@ public abstract class AbstractStorageTerminalScreenMixin {
 
     @Shadow
     protected abstract void onUpdateSearch(String text);
+
+    @Shadow public abstract void receive(CompoundTag tag);
 
     private static final ListeningExecutorService tooltipLoadingExecutor =
             MoreExecutors.listeningDecorator(Executors.newWorkStealingPool());
@@ -135,27 +142,33 @@ public abstract class AbstractStorageTerminalScreenMixin {
         Predicate<StoredItemStack> queryPredicate = buildQueryPredicate(query);
         menu.itemListClientSorted.clear();
 
-        tooltipLoadingExecutor.submit(() -> {
-            List<StoredItemStack> syncedList = Collections.synchronizedList(new ArrayList<>());
+        List<StoredItemStack> syncedList = Collections.synchronizedList(new ArrayList<>());
 
-            TooltipCacheLoader.setFakeShiftLock(true);
-            menu.itemListClient.parallelStream()
-                            .filter(queryPredicate)
-                            .forEach(syncedList::add);
-            TooltipCacheLoader.setFakeShiftLock(false);
+        TooltipCacheLoader.setFakeShiftLock(true);
+        menu.itemListClient.parallelStream()
+                        .filter(queryPredicate)
+                        .forEach(syncedList::add);
+        TooltipCacheLoader.setFakeShiftLock(false);
 
-            syncedList.sort(menu.noSort ? this.sortComp : this.comparator);
+        syncedList.sort(menu.noSort ? this.sortComp : this.comparator);
+        ReentrantReadWriteLock.WriteLock writeLock = StorageTerminalHelper.rwLock.writeLock();
+
+        try {
+            writeLock.lock();
             menu.itemListClientSorted = syncedList;
+        } finally {
+            // Can't really raise any exceptions, but you never know.
+            writeLock.unlock();
+        }
 
-            if (!this.searchLast.equals(query)) {
-                this.resetScroll(menu, query);
-            } else {
-                menu.scrollTo(this.currentScroll);
-            }
+        if (!this.searchLast.equals(query)) {
+            this.resetScroll(menu, query);
+        } else {
+            menu.scrollTo(this.currentScroll);
+        }
 
-            this.refreshItemList = false;
-            this.searchLast = query;
-        });
+        this.refreshItemList = false;
+        this.searchLast = query;
     }
 
     @Inject(method = "updateSearch()V", at = @At("HEAD"), cancellable = true)
@@ -175,8 +188,11 @@ public abstract class AbstractStorageTerminalScreenMixin {
     }
 
     @SuppressWarnings("DefaultAnnotationParam") // We need to re-enable remapping for this method!
-    @Redirect(method = "render", at = @At(value = "FIELD", target = "Lcom/tom/storagemod/gui/StorageTerminalMenu;beaconLvl:I", opcode = Opcodes.GETFIELD), remap = true)
-    private int fakeBeaconLevel(StorageTerminalMenu menu) {
-        return 0; // Beacons? No, not around here. :^)
+    @WrapOperation(method = "render", at = @At(value = "FIELD", target = "Lcom/tom/storagemod/gui/StorageTerminalMenu;beaconLvl:I", opcode = Opcodes.GETFIELD), remap = true)
+    private int fakeBeaconLevel(StorageTerminalMenu instance, Operation<Integer> original) {
+        if (ModConfig.get().toms_hideBeacon) {
+            return 0; // Beacons? No, not around here. :^)
+        }
+        return original.call(instance);
     }
 }
