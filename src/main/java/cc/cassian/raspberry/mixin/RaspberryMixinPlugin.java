@@ -61,6 +61,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("cofh_core", mixinClassName)){
             return false;
         }
+        else if (checkMixin("oreganized", mixinClassName)){
+            return false;
+        }
         return true;
     }
 
