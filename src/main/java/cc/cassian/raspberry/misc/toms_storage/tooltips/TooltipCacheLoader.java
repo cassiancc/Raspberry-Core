@@ -49,7 +49,7 @@ public class TooltipCacheLoader extends CacheLoader<StoredItemStack, List<String
         List<Component> defaultTooltips = stack.getTooltipLines(client.player, TooltipFlag.Default.NORMAL);
 
         List<ClientTooltipComponent> components = ForgeHooksClient.gatherTooltipComponents(stack, defaultTooltips, 0,
-                Integer.MAX_VALUE, Integer.MAX_VALUE, null, client.font);
+                Integer.MAX_VALUE, Integer.MAX_VALUE, null);
 
         isFakeShifting.set(false);
         return components;
@@ -61,7 +61,7 @@ public class TooltipCacheLoader extends CacheLoader<StoredItemStack, List<String
             if (!(component instanceof ClientTextTooltip textTooltip)) continue;
 
             StringifyFormattedCharSink sink = new StringifyFormattedCharSink();
-            textTooltip.text.accept(sink);
+//            textTooltip.text.accept(sink);
             tooltipLines.add(sink.toString());
         }
 

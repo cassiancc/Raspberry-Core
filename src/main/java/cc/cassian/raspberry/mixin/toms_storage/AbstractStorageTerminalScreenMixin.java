@@ -15,7 +15,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.tom.storagemod.gui.AbstractStorageTerminalScreen;
-import com.tom.storagemod.gui.PlatformEditBox;
+import com.tom.storagemod.platform.PlatformEditBox;
 import com.tom.storagemod.gui.StorageTerminalMenu;
 import com.tom.storagemod.util.IAutoFillTerminal;
 import com.tom.storagemod.util.StoredItemStack;

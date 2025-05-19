@@ -49,8 +49,6 @@
     "sullysmod.SMPlayerEventsMixin",
     "supplementaries.BombItemMixin",
     "supplementaries.RakedGravelBlockMixin",
-    "toms_storage.AbstractStorageTerminalScreenMixin",
-    "toms_storage.StorageTerminalMenuMixin",
     "vc_gliders.GliderItemMixin",
     "vc_gliders.GliderUtilMixin"
   ],

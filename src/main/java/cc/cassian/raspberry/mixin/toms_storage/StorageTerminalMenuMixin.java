@@ -17,10 +17,10 @@ public abstract class StorageTerminalMenuMixin {
     public List<StoredItemStack> itemListClientSorted;
 
     @Shadow
-    protected int lines;
+    private int lines;
 
     @Shadow
-    protected abstract void setSlotContents(int id, StoredItemStack stack);
+    public abstract void setSlotContents(int id, StoredItemStack stack);
 
     private void setItemsUnsafe(float arg) {
         List<StoredItemStack> itemList = this.itemListClientSorted;
