@@ -3,6 +3,7 @@ package cc.cassian.raspberry.compat;
 import com.teamabnormals.caverns_and_chasms.core.registry.CCBlocks;
 import com.teamabnormals.caverns_and_chasms.core.registry.CCItems;
 import com.teamabnormals.caverns_and_chasms.core.registry.CCParticleTypes;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -15,6 +16,10 @@ public class CavernsAndChasmsCompat {
 
     public static Item getBarometer() {
         return CCItems.BAROMETER.get();
+    }
+
+    public static ParticleOptions getSilverSpark() {
+        return CCParticleTypes.MIME_SPARK.get();
     }
 
     public static Block getCupricCandle() {

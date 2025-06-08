@@ -2,6 +2,7 @@ package cc.cassian.raspberry.compat.emi;
 
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.RaspberryMod;
+import cc.cassian.raspberry.compat.BrewinAndChewinCompat;
 import cc.cassian.raspberry.config.ModConfig;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
@@ -33,6 +34,9 @@ public class EmiCompat implements EmiPlugin {
             emiRegistry.addWorkstation(EmiCompat.BEACON_PAYMENT, EmiStack.of(Items.BEACON));
             emiRegistry.addCategory(BEACON_PAYMENT);
             EmiBeaconPaymentRecipe.addBeaconRecipe(emiRegistry);
+        }
+        if (ModCompat.BREWINANDCHEWIN) {
+            BrewinAndChewinCompat.registerEmi(emiRegistry);
         }
     }
 

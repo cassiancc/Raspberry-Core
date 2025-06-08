@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:ores/silver",
+    "#forge:storage_blocks/raw_silver",
+    "#forge:storage_blocks/silver",
+    {
+      "id": "#spelunkery:silver_ores",
+      "required": false
+    }
+  ]
+}

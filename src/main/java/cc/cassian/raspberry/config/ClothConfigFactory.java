@@ -45,6 +45,11 @@ public class ClothConfigFactory {
                         .setSaveConsumer(fieldSetter(ModConfig.get(), field))
                         .setDefaultValue((int) fieldGet(DEFAULT_VALUES, field)).build());
             }
+            else if (field.getType() == double.class) {
+                category.addEntry(entryBuilder.startDoubleField(fieldName(field), fieldGet(ModConfig.get(), field))
+                        .setSaveConsumer(fieldSetter(ModConfig.get(), field))
+                        .setDefaultValue((double) fieldGet(DEFAULT_VALUES, field)).build());
+            }
         }
         builder.setSavingRunnable(ModConfig::save);
         return builder.build();

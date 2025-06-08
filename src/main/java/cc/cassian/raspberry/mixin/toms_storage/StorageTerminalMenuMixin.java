@@ -1,6 +1,6 @@
 package cc.cassian.raspberry.mixin.toms_storage;
 
-import cc.cassian.raspberry.misc.toms_storage.StorageTerminalHelper;
+import cc.cassian.raspberry.compat.toms_storage.StorageTerminalHelper;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tom.storagemod.gui.StorageTerminalMenu;

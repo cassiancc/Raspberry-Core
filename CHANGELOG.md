@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Direct EMI integration for Brewin and Chewin.
+- Backported Auditory Continued sounds for various eating sounds.
+- Backport of Sage Brush to 1.19.2.
+
+### Changed
+- Knight Jump can no longer be used in water, preventing accidental durability loss. (Mining Master)
+
+### Fixed
+- Cartographer's Quills not having names set correctly. (Supplementaries)
+- Respiration tablet recipe using Iron Helmets instead of the helmet tag (EMI, Raspberry Flavoured)
+- Disabled Controllable JEI compatibility mixin when EMI is present.
+
+## [1.6] - 2025-05-19
+
+### Added
 - Modded melee weapons can now be enchanted with weapon enchantments. (Clash, Raspberry Flavoured)
 - Tom's Simple Storage can now be searched in a way that should be more familiar to EMI users. (@SarahIsWeird)
 

@@ -1,14 +1,19 @@
 package cc.cassian.raspberry;
 
 
+import cc.cassian.raspberry.registry.RaspberrySoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ItemStack;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
+import static cc.cassian.raspberry.registry.RaspberryTags.*;
 
 public class ModHelpers {
 
@@ -67,4 +72,24 @@ public class ModHelpers {
         }
     }
 
+    public static SoundEvent getSoundForItem(ItemStack stack, SoundEvent original) {
+        if (stack.is(CRUNCHY_FRUIT_SOUNDS)) {
+            return RaspberrySoundEvents.CRUNCHY_FRUIT_SOUNDS.get();
+        } else if (stack.is(DRIED_KELP_SOUNDS)) {
+            return RaspberrySoundEvents.DRIED_KELP_SOUNDS.get();
+        } else if (stack.is(SOFT_FRUIT_SOUNDS)) {
+            return RaspberrySoundEvents.SOFT_FRUIT_SOUNDS.get();
+        } else if (stack.is(STEW_SOUNDS)) {
+            return RaspberrySoundEvents.STEW_SOUNDS.get();
+        } else if (stack.is(VEGETABLE_SOUNDS)) {
+            return RaspberrySoundEvents.VEGETABLE_SOUNDS.get();
+        } else if (stack.is(GENERIC_SOUNDS)) {
+            return SoundEvents.GENERIC_EAT;
+        } else if (stack.is(DRINK_SOUNDS)) {
+            return SoundEvents.GENERIC_DRINK;
+        } else if (stack.is(HONEY_SOUNDS)) {
+            return SoundEvents.HONEY_DRINK;
+        }
+        return original;
+    }
 }

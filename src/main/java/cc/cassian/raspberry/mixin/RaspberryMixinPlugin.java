@@ -22,46 +22,79 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (checkMixin("environmental", mixinClassName)){
+        if (checkMixin("alloyed", mixinClassName)){
             return false;
         }
-        else if (checkMixin("create", mixinClassName)){
+        else if (checkMixin("aquaculture", mixinClassName)){
             return false;
         }
-        else if (checkMixin("farmersdelight", mixinClassName)){
-            return false;
-        }
-        else if (checkMixin("naturalist", mixinClassName)){
-            return false;
-        }
-        else if (checkMixin("upgrade_aquatic", mixinClassName)){
-            return false;
-        }
-        else if (checkMixin("sullysmod", mixinClassName)){
+        else if (checkMixin("brewinandchewin", mixinClassName)){
             return false;
         }
         else if (checkMixin("caverns_and_chasms", mixinClassName)){
             return false;
         }
-        else if (checkMixin("vc_gliders", mixinClassName)){
-            return false;
-        }
-        else if (checkMixin("endergetic", mixinClassName)){
-            return false;
-        }
-        else if (checkMixin("alloyed", mixinClassName)){
-            return false;
-        }
-        else if (checkMixin("spyglass_improvements", mixinClassName)){
-            return false;
-        }
-        else if (checkMixin("toms_storage", mixinClassName)){
+        else if (checkMixin("clash", mixinClassName)){
             return false;
         }
         else if (checkMixin("cofh_core", mixinClassName)){
             return false;
         }
+        else if (checkMixin("create", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("dynamiccrosshair", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("endergetic", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("environmental", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("farmersdelight", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("map_atlases", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("miningmaster", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("naturalist", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("oreganized", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("quark", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("screenshot_viewer", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("spelunkery", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("spyglass_improvements", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("sullysmod", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("supplementaries", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("survivality", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("toms_storage", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("upgrade_aquatic", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("vc_gliders", mixinClassName)){
             return false;
         }
         return true;

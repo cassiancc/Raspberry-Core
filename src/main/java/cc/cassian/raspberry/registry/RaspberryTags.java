@@ -27,6 +27,7 @@ public class RaspberryTags {
     public static final TagKey<Block> KNIVES_SHOULD_USE = createBlockTag("useable/knives");
     public static final TagKey<Block> AXES_SHOULD_USE = createBlockTag("useable/axes");
     public static final TagKey<Block> HOES_SHOULD_USE = createBlockTag("useable/hoes");
+    public static final TagKey<Block> MIRROR_DETECTABLES = createBlockTag("mirror_detectables");
 
     public static final TagKey<Block> INTERACTABLE_METAL_DOORS = createBlockTag("interactable_metal_doors");
 
@@ -35,6 +36,15 @@ public class RaspberryTags {
     public static final TagKey<Item> HORSE_FOOD = createItemTag("horse_food");
     public static final TagKey<Item> CONTAINERS = createItemTag("container");
     public static final TagKey<Item> TROWEL_BLACKLIST = createItemTag("trowel_blacklist");
+
+    public static final TagKey<Item> CRUNCHY_FRUIT_SOUNDS = createItemTag("sounds/crunchy_fruit");
+    public static final TagKey<Item> DRIED_KELP_SOUNDS = createItemTag("sounds/dried_kelp");
+    public static final TagKey<Item> SOFT_FRUIT_SOUNDS = createItemTag("sounds/soft_fruit");
+    public static final TagKey<Item> STEW_SOUNDS = createItemTag("sounds/stew");
+    public static final TagKey<Item> VEGETABLE_SOUNDS = createItemTag("sounds/vegetable");
+    public static final TagKey<Item> GENERIC_SOUNDS = createItemTag("sounds/generic");
+    public static final TagKey<Item> DRINK_SOUNDS = createItemTag("sounds/drink");
+    public static final TagKey<Item> HONEY_SOUNDS = createItemTag("sounds/honey");
 
     private static TagKey<Block> createBlockTag(String id) {
         return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), locate(id));

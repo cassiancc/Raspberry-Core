@@ -30,4 +30,5 @@ public final class ModCompat {
     public static final boolean TOMS_STORAGE = ModList.get().isLoaded("toms_storage");
 
     public static final boolean BLUEPRINT = ModList.get().isLoaded("blueprint");
+    public static final boolean BREWINANDCHEWIN = ModList.get().isLoaded("brewinandchewin");
 }

@@ -1,7 +1,7 @@
 package cc.cassian.raspberry.compat;
 
 import cc.cassian.raspberry.ModCompat;
-import cc.cassian.raspberry.registry.RasperryMobEffects;
+import cc.cassian.raspberry.registry.RaspberryMobEffects;
 import cofh.core.init.CoreMobEffects;
 import fr.anto.bettercopper.utils.CustomArmorMaterials;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,7 +31,7 @@ public class CopperizedCompat {
             if (copperCount >= 0) {
                 if (!ModCompat.COFH_CORE)
                     player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20, copperCount, false, false, false));
-                player.addEffect(new MobEffectInstance(RasperryMobEffects.AFTERSHOCK.get(), 6000, copperCount, false, false, true));
+                player.addEffect(new MobEffectInstance(RaspberryMobEffects.AFTERSHOCK.get(), 6000, copperCount, false, false, true));
             }
         }
 

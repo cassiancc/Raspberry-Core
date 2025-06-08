@@ -47,14 +47,12 @@ public class RaspberryCakeBlock extends Block {
     public static final IntegerProperty CANDLE_TYPE;
     public static final BooleanProperty LIT;
     protected static final VoxelShape[] SHAPE_BY_BITE;
-    public final Supplier<Item> cakeSlice;
     public final String cakeSliceItemID;
     private static final Iterable<Vec3> PARTICLE_OFFSETS;
 
     public RaspberryCakeBlock(Properties properties, String cakeSlice) {
         super(properties);
         this.cakeSliceItemID = cakeSlice;
-        this.cakeSlice = null;
         this.registerDefaultState(this.stateDefinition.any().setValue(BITES, 0).setValue(CANDLE_TYPE, 0).setValue(LIT, false));
     }
 
@@ -95,12 +93,7 @@ public class RaspberryCakeBlock extends Block {
     }
 
     public ItemStack getCakeSliceItem() {
-        if (this.cakeSlice != null) {
-            return new ItemStack(this.cakeSlice.get());
-        }
-        else {
-            return ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.cakeSliceItemID)).getDefaultInstance();
-        }
+       return ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.cakeSliceItemID)).getDefaultInstance();
     }
 
     public int getMaxBites() {

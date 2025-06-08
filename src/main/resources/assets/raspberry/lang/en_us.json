@@ -17,8 +17,9 @@
  "block.raspberry.ash_block": "Ash Block",
  "lore.raspberry.ash_block": "A solid block of Ash.",
  "item.raspberry.ashball": "Ashball",
- "lore.raspberry.ashball": "An item that can be thrown to inflict Blidness. Dropped when digging Ash.",
+ "lore.raspberry.ashball": "An item that can be thrown to inflict Blindness. Dropped when digging Ash.",
  "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
+ "raspberry.subtitles.player.attack.silver_hit": "Mirror connects",
 
  "block.raspberry.cake": "Cake",
  "block.raspberry.chocolate_cake": "Chocolate Cake",
@@ -61,13 +62,18 @@
  "config.raspberry.config.emi_tablets": "Add EMI integration to RF tablets.",
  "config.raspberry.config.toms_hideBeacon": "Hide beacon info in Tom's Simple Storage.",
 
-
  "emi.category.raspberry.anvil": "Runic Etching",
  "emi.category.raspberry.beacon_base": "Beacon Base Blocks",
  "emi.category.raspberry.beacon_payment": "Beacon Payments",
  "emi.category.farmersdelight.cooking": "Cooking",
  "emi.category.farmersdelight.cutting": "Cutting Board",
  "emi.category.farmersdelight.decomposition": "Decomposition",
+ "emi.category.brewinandchewin.fermenting": "Fermenting",
+
+ "emi.brewinandchewin.fermenting.hot": "Requires at least two heat sources placed against the Keg.",
+ "emi.brewinandchewin.fermenting.warm": "Requires at least one heat source placed against the Keg.",
+ "emi.brewinandchewin.fermenting.cold": "Requires at least one cold source placed against the Keg.",
+ "emi.brewinandchewin.fermenting.frigid": "Requires at least two cold sources placed against the Keg.",
 
  "emi.raspberry.beacon_base.amplifier": "Increases the amplifier of the primary effects to %s when used to construct the beacon.",
  "emi.raspberry.beacon_payment.amplifier": "Extends Beacon range by %s blocks when used to activate the beacon.",

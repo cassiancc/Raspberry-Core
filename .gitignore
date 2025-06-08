@@ -118,5 +118,6 @@ run/
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 !libs/ecologics-forge-1.19.2-2.1.11.jar
+!libs/sage_brush-1.19.2-0.1.0-all.jar
 
 kubejs/

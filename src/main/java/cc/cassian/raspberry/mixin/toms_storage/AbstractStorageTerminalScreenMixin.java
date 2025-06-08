@@ -1,12 +1,12 @@
 package cc.cassian.raspberry.mixin.toms_storage;
 
 import cc.cassian.raspberry.config.ModConfig;
-import cc.cassian.raspberry.misc.toms_storage.StorageTerminalHelper;
-import cc.cassian.raspberry.misc.toms_storage.filters.AnyFilter;
-import cc.cassian.raspberry.misc.toms_storage.filters.ModIdFilter;
-import cc.cassian.raspberry.misc.toms_storage.filters.TagFilter;
-import cc.cassian.raspberry.misc.toms_storage.filters.TooltipFilter;
-import cc.cassian.raspberry.misc.toms_storage.tooltips.TooltipCacheLoader;
+import cc.cassian.raspberry.compat.toms_storage.StorageTerminalHelper;
+import cc.cassian.raspberry.compat.toms_storage.filters.AnyFilter;
+import cc.cassian.raspberry.compat.toms_storage.filters.ModIdFilter;
+import cc.cassian.raspberry.compat.toms_storage.filters.TagFilter;
+import cc.cassian.raspberry.compat.toms_storage.filters.TooltipFilter;
+import cc.cassian.raspberry.compat.toms_storage.tooltips.TooltipCacheLoader;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -25,7 +25,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nonnull;

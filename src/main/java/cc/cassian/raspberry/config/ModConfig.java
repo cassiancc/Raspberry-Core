@@ -40,6 +40,11 @@ public class ModConfig {
     public boolean raspberry_beacon_interaction = false;
     public boolean emi_tablets = true;
     public boolean toms_hideBeacon = true;
+    public int mirrorSearchRadius = 24;
+    public int mirrorVerticalSearchRadius = 12;
+    public int mirrorParticleSearchRadius = 48;
+    public int mirrorVerticalParticleSearchRadius = 24;
+    public double mirrorVolumeModifier = 0.4;
 
     public static void load() {
         if (!Files.exists(configPath())) {

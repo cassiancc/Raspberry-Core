@@ -4,5 +4,54 @@
     "random/bow"
   ],
   "subtitle": "raspberry.subtitles.entity.ashball.throw"
+  },
+  "entity.dried_kelp.eat": {
+    "sounds": [
+      "raspberry:eat_dried_kelp1",
+      "raspberry:eat_dried_kelp2",
+      "raspberry:eat_dried_kelp3"
+    ],
+    "subtitle": "subtitles.entity.generic.eat"
+  },
+  "entity.soft_fruit.eat": {
+    "sounds": [
+      "raspberry:eat_soft_fruit1",
+      "raspberry:eat_soft_fruit2",
+      "raspberry:eat_soft_fruit3"
+    ],
+    "subtitle": "subtitles.entity.generic.eat"
+  },
+  "entity.crunchy_fruit.eat": {
+    "sounds": [
+      "raspberry:eat_crunchy_fruit1",
+      "raspberry:eat_crunchy_fruit2",
+      "raspberry:eat_crunchy_fruit3"
+    ],
+    "subtitle": "subtitles.entity.generic.eat"
+  },
+  "entity.stew.eat": {
+    "sounds": [
+      "raspberry:eat_stew1",
+      "raspberry:eat_stew2",
+      "raspberry:eat_stew3"
+    ],
+    "subtitle": "subtitles.entity.generic.eat"
+  },
+  "entity.vegetable.eat": {
+    "sounds": [
+      "raspberry:eat_vegetable1",
+      "raspberry:eat_vegetable2",
+      "raspberry:eat_vegetable3"
+    ],
+    "subtitle": "subtitles.entity.generic.eat"
+  },
+  "entity.player.attack.silver_hit": {
+    "sounds": [
+      "raspberry:silver_hit1",
+      "raspberry:silver_hit2",
+      "raspberry:silver_hit3",
+      "raspberry:silver_hit4"
+    ],
+    "subtitle": "raspberry.subtitles.player.attack.silver_hit"
   }
 }
