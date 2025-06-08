@@ -47,6 +47,7 @@ public final class RaspberryMod {
             RasperryMobEffects.MOB_EFFECTS.register(eventBus);
             RaspberryEntityTypes.ENTITIES.register(eventBus);
             RaspberrySoundEvents.SOUNDS.register(eventBus);
+            eventBus.addListener(RaspberryCreativePlacements::set);
         }
         // Register event bus listeners.
         MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
