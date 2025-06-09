@@ -257,7 +257,7 @@ dependencies {
 //    modImplementation("curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version")
 //    modImplementation("curse.maven:cerbons-better-beacons-921066:$better_beacons_version")
 
-
+    modImplementation("curse.maven:mining-master-534956:5540513")
     //1.20
     modImplementation "maven.modrinth:better-copper-armor-and-tools:1.2-1.20.1"
 

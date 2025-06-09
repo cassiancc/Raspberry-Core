@@ -38,7 +38,7 @@ public class RaspberryParticleTypes {
 
         @SubscribeEvent
         public static void registerParticleTypes(RegisterParticleProvidersEvent event) {
-            event.register((ParticleType)RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
+            event.registerSpriteSet((ParticleType)RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
         }
     }
 

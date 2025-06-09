@@ -45,11 +45,12 @@ public final class RaspberryMod {
         if (ModCompat.FARMERS_DELIGHT && ModCompat.SUPPLEMENTARIES) {
             RaspberryBlocks.register(eventBus);
             RaspberryItems.ITEMS.register(eventBus);
-            RasperryMobEffects.MOB_EFFECTS.register(eventBus);
+            RaspberryMobEffects.MOB_EFFECTS.register(eventBus);
             RaspberryEntityTypes.ENTITIES.register(eventBus);
             RaspberrySoundEvents.SOUNDS.register(eventBus);
             eventBus.addListener(RaspberryCreativePlacements::set);
         }
+        RaspberryParticleTypes.PARTICLE_TYPES.register(eventBus);
         // Register event bus listeners.
         MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityInteract);
