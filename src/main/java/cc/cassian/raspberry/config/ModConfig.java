@@ -45,6 +45,8 @@ public class ModConfig {
     public int mirrorParticleSearchRadius = 48;
     public int mirrorVerticalParticleSearchRadius = 24;
     public double mirrorVolumeModifier = 0.4;
+    public boolean sunSensitiveRaiders = false;
+    public boolean mapsWorkInInventory = false;
 
     public static void load() {
         if (!Files.exists(configPath())) {

@@ -8,16 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Direct EMI integration for Brewin and Chewin.
+- Ported EMI integration from Create Fabric to Forge.
 - Backported Auditory Continued sounds for various eating sounds.
-- Backport of Sage Brush to 1.19.2.
+- Raiders now burn in daylight. (disabled by default)
+- Maps now work in the inventory (disabled by default)
 
 ### Changed
 - Knight Jump can no longer be used in water, preventing accidental durability loss. (Mining Master)
+- Useful Spyglass EMI integration has been updated to support 0.6.1 instead of 0.4.0.
 
 ### Fixed
 - Cartographer's Quills not having names set correctly. (Supplementaries)
-- Respiration tablet recipe using Iron Helmets instead of the helmet tag (EMI, Raspberry Flavoured)
+- Respiration tablet recipe using Iron Helmets instead of the helmet tag. (EMI, Raspberry Flavoured)
 - Disabled Controllable JEI compatibility mixin when EMI is present.
+- Ashballs can now be dispensed.
+- Controllers can now be used to Knight Jump (Controllable, Mining Master).
 
 ## [1.6] - 2025-05-19
 

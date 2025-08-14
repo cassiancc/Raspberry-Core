@@ -31,4 +31,6 @@ public final class ModCompat {
 
     public static final boolean BLUEPRINT = ModList.get().isLoaded("blueprint");
     public static final boolean BREWINANDCHEWIN = ModList.get().isLoaded("brewinandchewin");
+    public static final boolean EMI = ModList.get().isLoaded("emi");
+    public static final boolean CONTROLLABLE = ModList.get().isLoaded("controllable");
 }

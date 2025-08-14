@@ -84,7 +84,9 @@ public final class RaspberryMod {
                 ComposterBlock.COMPOSTABLES.put(foliageBlock.getB().get(), 0.3f);
             }
         }
-
+        if (ModCompat.SUPPLEMENTARIES) {
+            SupplementariesCompat.register();
+        }
     }
 
     @SubscribeEvent

@@ -21,12 +21,16 @@ public class ClothConfigFactory {
         ConfigCategory generalCategory = builder.getOrCreateCategory(Component.translatable("config.raspberry.title"));
         ConfigCategory gliderCategory = builder.getOrCreateCategory(Component.translatable("config.raspberry.gliders"));
         ConfigCategory aquacultureCategory = builder.getOrCreateCategory(Component.translatable("config.raspberry.aquaculture"));
+        ConfigCategory horseCategory = builder.getOrCreateCategory(Component.translatable("config.raspberry.horses"));
+        ConfigCategory oreganizedCategory = builder.getOrCreateCategory(Component.translatable("config.raspberry.oreganized"));
 
 
         for (var field : ModConfig.class.getFields()) {
             ConfigCategory category;
             if (field.getName().contains("gliders")) category = gliderCategory;
             else if (field.getName().contains("aquaculture")) category = aquacultureCategory;
+            else if (field.getName().contains("horse")) category = horseCategory;
+            else if (field.getName().contains("mirror")) category = oreganizedCategory;
             else category = generalCategory;
 
             if (field.getType() == boolean.class) {

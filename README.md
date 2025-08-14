@@ -48,6 +48,7 @@ If you are thinking about using the code or assets from Raspberry Core, please n
 
 ## Credits
 - Contains code from [MerchantCalico's fork](https://github.com/MehVahdJukaar/FarmersDelightRefabricated) of [Farmer's Delight](https://modrinth.com/mod/farmers-delight), used under its [MIT License](https://github.com/MehVahdJukaar/FarmersDelightRefabricated/blob/feat/1.20/emi/LICENSE).
+- Contains code from [Create Fabric](https://github.com/Fabricators-of-Create/Create), used under its [MIT License](https://github.com/MehVahdJukaar/FarmersDelightRefabricated/blob/feat/1.20/emi/LICENSE).
 - Contains sounds from [Auditory Continued](https://modrinth.com/mod/auditory-continued), used under its [MIT License](https://github.com/ItsSyfe/auditory-continued).
 
 This repository contains a compiled JAR of Ecologics to allow for the mod to be compiled against, with the copyrighted assets removed. Ecologics code is available under its [MIT License](https://github.com/samedifferent/Ecologics/blob/1.19-crossplatform/LICENSE).

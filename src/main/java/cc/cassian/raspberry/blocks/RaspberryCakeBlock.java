@@ -10,6 +10,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -161,6 +162,7 @@ public class RaspberryCakeBlock extends Block {
                 level.removeBlock(pos, false);
             }
 
+            playerIn.awardStat(Stats.EAT_CAKE_SLICE);
             level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
             return InteractionResult.SUCCESS;
         }
