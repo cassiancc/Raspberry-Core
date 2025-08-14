@@ -58,7 +58,6 @@
     "minecraft.ScreenMixin",
     "minecraft.SpreadingSnowyDirtBlockMixin",
     "minecraft.ThrowableProjectileMixin",
-    "miningmaster.KnightJumpEnchantmentMixin",
     "naturalist.SnakeMixin",
     "oreganized.SilverMirrorItemMixin",
     "quark.ExpandedItemInteractionsModuleMixin",

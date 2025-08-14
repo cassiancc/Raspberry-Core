@@ -137,11 +137,11 @@ public class RaspberryBlocks {
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             RED_MOSS = registerBlock("red_moss_block",
-            ()-> new RedMossBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).color(MaterialColor.COLOR_RED)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new RedMossBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).mapColor(MapColor.COLOR_RED)));
 
     public static Pair<RegistryObject<Block>, RegistryObject<BlockItem>>
             RED_MOSS_CARPET = registerBlock("red_moss_carpet",
-            ()-> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).color(MaterialColor.COLOR_RED)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).mapColor(MapColor.COLOR_RED)));
 
 
     private static BlockBehaviour.Properties flowerBedProperties() {
