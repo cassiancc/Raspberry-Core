@@ -53,7 +53,7 @@ public class GliderUtilMixin {
 
     @Inject(method = "isGlidingWithActiveGlider", remap = false, at = @At(value = "TAIL"), cancellable = true)
     private static void theDeadCantGlide(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
-        if (!livingEntity.isAlive())
+        if (!livingEntity.isAlive() || livingEntity.isPassenger())
             cir.setReturnValue(false);
     }
 

@@ -4,6 +4,10 @@
     {
       "id": "aquaculture:leech",
       "required": false
+    },
+    {
+      "id": "raspberry:firefly",
+      "required": false
     }
   ]
 }

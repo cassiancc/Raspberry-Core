@@ -82,54 +82,54 @@ public class EmiBeaconBaseRecipe implements EmiRecipe {
         emiRegistry.addRecipe(new EmiBeaconBaseRecipe());
     }
 
-    public static final Map<String, Integer> BEACON_BASE_BLOCKS = Map.ofEntries(
-            Map.entry( "copperandtuffbackport:chiseled_copper", 0),
-            Map.entry("copperandtuffbackport:waxed_chiseled_copper", 0),
-            Map.entry( "copperandtuffbackport:exposed_chiseled_copper", 0),
-            Map.entry( "copperandtuffbackport:waxed_exposed_chiseled_copper", 0),
-            Map.entry( "copperandtuffbackport:weathered_chiseled_copper", 0),
-            Map.entry( "copperandtuffbackport:waxed_weathered_chiseled_copper", 0),
-            Map.entry( "copperandtuffbackport:oxidized_chiseled_copper", 0),
-            Map.entry( "copperandtuffbackport:waxed_oxidized_chiseled_copper", 0),
-            Map.entry( "spelunkery:cinnabar_block", 0),
+    public static final LinkedHashMap<String, Integer> BEACON_BASE_BLOCKS = beaconBaseBlocks();
 
-            Map.entry("create:zinc_block", 1),
-            Map.entry( "twigs:polished_amethyst", 1),
-            Map.entry( "oreganized:lead_block", 1),
-            Map.entry( "minecraft:iron_block", 1),
+    private static LinkedHashMap<String, Integer> beaconBaseBlocks() {
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+        map.put( "copperandtuffbackport:chiseled_copper", 0);
+        map.put("copperandtuffbackport:waxed_chiseled_copper", 0);
+        map.put( "copperandtuffbackport:exposed_chiseled_copper", 0);
+        map.put( "copperandtuffbackport:waxed_exposed_chiseled_copper", 0);
+        map.put( "copperandtuffbackport:weathered_chiseled_copper", 0);
+        map.put( "copperandtuffbackport:waxed_weathered_chiseled_copper", 0);
+        map.put( "copperandtuffbackport:oxidized_chiseled_copper", 0);
+        map.put( "copperandtuffbackport:waxed_oxidized_chiseled_copper", 0);
+        map.put( "spelunkery:cinnabar_block", 0);
 
-            Map.entry( "minecraft:gold_block", 2),
+        map.put("create:zinc_block", 1);
+        map.put( "twigs:polished_amethyst", 1);
+        map.put( "oreganized:lead_block", 1);
+        map.put( "minecraft:iron_block", 1);
 
-            Map.entry("create:brass_block", 3),
-            Map.entry( "minecraft:diamond_block", 3),
-            Map.entry("kubejs:rose_gold_block", 3),
-            Map.entry( "kubejs:bronze_block", 3),
+        map.put( "minecraft:gold_block", 2);
 
-            Map.entry("oreganized:silver_block", 4),
+        map.put("create:brass_block", 3);
+        map.put( "minecraft:diamond_block", 3);
+        map.put("kubejs:rose_gold_block", 3);
+        map.put( "kubejs:bronze_block", 3);
 
-            Map.entry("architects_palette:ender_pearl_block", 5),
+        map.put("oreganized:silver_block", 4);
 
-            Map.entry("caverns_and_chasms:echo_block", 6),
-            Map.entry( "oreganized:electrum_block", 6),
+        map.put("architects_palette:ender_pearl_block", 5);
 
-            Map.entry( "caverns_and_chasms:necromium_block", 7),
-            Map.entry( "minecraft:netherite_block", 8)
+        map.put("caverns_and_chasms:echo_block", 6);
+        map.put( "oreganized:electrum_block", 6);
 
-
-            );
+        map.put( "caverns_and_chasms:necromium_block", 7);
+        map.put( "minecraft:netherite_block", 8);
+        return map;
+    }
 
     private static final List<EmiStack> BLOCKS;
 
     static {
         ArrayList<EmiStack> blocks = new ArrayList<>();
-        Set<String> strings = BEACON_BASE_BLOCKS.keySet();
-        for (String string : strings) {
-            Item value = ForgeRegistries.ITEMS.getValue(new ResourceLocation(string));
+        for (String string : BEACON_BASE_BLOCKS.keySet()) {
+            Item value = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(string));
             if (value != null) {
                 blocks.add(EmiStack.of(value.getDefaultInstance()));
             }
         }
         BLOCKS = blocks;
-
     }
 }

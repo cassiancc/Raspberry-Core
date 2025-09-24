@@ -7,16 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Fireflies from Naturalist can now be captured with Bug Nets.
+- Rose Gold Bombs, which deal knockback without inflicting damage.
+
+### Changed
+- Haste is now exponential.
+- Haste no longer causes the player's arm to stop moving at high levels.
+- EMI beacon base recipe page is now sorted.
+- EMI integration for Create is now disabled by default due to conflicts with RF.
+- Raiders with banners can now be disabled via the config.
+
+### Fixed
+- Players who manage to enter a boat while gliding will no longer be stuck in the boat.
+- Witches no longer burn in daylight.
+- Raiders no longer tick twice as fast as they should.
+- Another fix for misbehaving Thrashers.
+
+## [1.7]
+
+### Added
+- Direct EMI integration for Brewin and Chewin.
+- Ported EMI integration from Create Fabric to Forge.
 - Backported Auditory Continued sounds for various eating sounds.
 - Raiders now burn in daylight. (disabled by default)
 - Maps now work in the inventory (disabled by default)
 
 ### Changed
+- Knight Jump can no longer be used in water, preventing accidental durability loss. (Mining Master)
 - Useful Spyglass EMI integration has been updated to support 0.6.1 instead of 0.4.0.
 
 ### Fixed
+- Cartographer's Quills not having names set correctly. (Supplementaries)
+- Respiration tablet recipe using Iron Helmets instead of the helmet tag. (EMI, Raspberry Flavoured)
+- Disabled Controllable JEI compatibility mixin when EMI is present.
 - Ashballs can now be dispensed.
-- Crash with Gliders not present.
+- Controllers can now be used to Knight Jump (Controllable, Mining Master).
 
 ## [1.6] - 2025-05-19
 

@@ -12,6 +12,7 @@ Raspberry Core is a client and server mod for Forge 1.20.1. While it was created
 - [Farmer's Delight](https://modrinth.com/mod/farmers-delight) is required.
 - [Blueprint](https://modrinth.com/mod/blueprint) is required.
 - [Supplementaries](https://modrinth.com/mod/supplementaries) is required.
+- [Naturalist](https://modrinth.com/mod/naturalist) is required.
 
 #### Optional Dependencies
 - [Cloth Config](https://modrinth.com/mod/cloth-config) is recommended to configure the mod.

@@ -208,7 +208,7 @@ dependencies {
 
     // Recipe viewers
     modImplementation("maven.modrinth:emi:$emi_version+$minecraft_version+forge")
-    modCompileOnly("maven.modrinth:jei:$jei_version-forge")
+    modImplementation("maven.modrinth:jei:$jei_version-forge")
 
     // Farmer's Delight and its addons
     modImplementation("maven.modrinth:farmers-delight:$farmers_delight_version")
@@ -228,7 +228,7 @@ dependencies {
     modImplementation("software.bernie.geckolib:geckolib-forge-$geckolib_version")
     modImplementation("maven.modrinth:supplementaries:$supplementaries_version-forge")
     modImplementation("maven.modrinth:moonlight:$moonlight_lib_version-forge")
-    modImplementation("maven.modrinth:naturalist:$naturalist_version")
+    modImplementation("curse.maven:naturalist-627986:$naturalist_version")
     modImplementation("maven.modrinth:another-furniture:$another_furniture_version")
     modImplementation("maven.modrinth:oreganized:$oreganized_version")
     modImplementation("maven.modrinth:spelunkery:$spelunkery_version-forge")

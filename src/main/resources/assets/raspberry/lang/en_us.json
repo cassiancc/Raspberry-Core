@@ -18,7 +18,14 @@
  "lore.raspberry.ash_block": "A solid block of Ash.",
  "item.raspberry.ashball": "Ashball",
  "lore.raspberry.ashball": "An item that can be thrown to inflict Blindness. Dropped when digging Ash.",
- "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
+  "item.raspberry.firefly": "Firefly",
+  "lore.raspberry.firefly": "A firefly, plucked from the sky with a Bug Net. Place it down to release it!",
+
+  "item.raspberry.rose_gold_bomb": "Rose Gold Bomb",
+  "lore.raspberry.rose_gold_bomb": "A weak bomb that deals no damage, but knocks entities around.",
+
+
+  "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
  "raspberry.subtitles.player.attack.silver_hit": "Mirror connects",
 
  "block.raspberry.cake": "Cake",
@@ -70,6 +77,9 @@
  "config.raspberry.config.mirrorVolumeModifier": "Mirror volume modifier",
  "config.raspberry.horses": "Horses",
  "config.raspberry.oreganized": "Oreganized",
+  "config.raspberry.config.bannerlessRaiders": "Raiders no longer have banners",
+  "config.raspberry.config.better_haste": "Exponential Haste",
+  "config.raspberry.config.rose_gold_bomb_knockback": "Rose Gold Bomb Knockback",
 
 
  "emi.category.raspberry.anvil": "Runic Etching",

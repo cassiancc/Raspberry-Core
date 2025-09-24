@@ -4,6 +4,7 @@ import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.PatrollingMonster;
+import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,8 @@ public abstract class RaiderMixin extends PatrollingMonster {
 
     @Inject(method = "aiStep", at = @At(value = "HEAD"))
     public void burnInDaylight(CallbackInfo ci) {
-        if (this.isAlive()) {
+        var e = (Raider) (Object) this;
+        if (this.isAlive() && !(e instanceof Witch)) {
             boolean flag = ModConfig.get().sunSensitiveRaiders && this.isSunBurnTick();
             if (flag) {
                 ItemStack itemstack = this.getItemBySlot(EquipmentSlot.HEAD);
@@ -41,7 +43,5 @@ public abstract class RaiderMixin extends PatrollingMonster {
                 }
             }
         }
-
-        super.aiStep();
     }
 }
