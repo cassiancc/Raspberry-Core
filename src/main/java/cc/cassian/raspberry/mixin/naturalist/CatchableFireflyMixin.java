@@ -1,9 +1,9 @@
 package cc.cassian.raspberry.mixin.naturalist;
 
 import cc.cassian.raspberry.registry.RaspberryItems;
-import com.starfish_studios.naturalist.entity.Firefly;
-import com.starfish_studios.naturalist.helper.ItemHelper;
-import com.starfish_studios.naturalist.registry.NaturalistRegistry;
+import com.starfish_studios.naturalist.common.entity.Firefly;
+import com.starfish_studios.naturalist.common.helper.ItemHelper;
+import com.starfish_studios.naturalist.core.registry.NaturalistItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -27,7 +27,7 @@ public class CatchableFireflyMixin {
         if (entity instanceof Firefly) {
             ItemStack itemStack = player.getItemInHand(hand);
 
-            if (itemStack.getItem().equals(NaturalistRegistry.BUG_NET.get()) && entity.isAlive()) {
+            if (itemStack.getItem().equals(NaturalistItems.BUG_NET.get()) && entity.isAlive()) {
                 ItemStack caughtItemStack = RaspberryItems.FIREFLY.get().getDefaultInstance();
                 itemStack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(hand));
 
@@ -37,7 +37,7 @@ public class CatchableFireflyMixin {
                 } else {
                     ItemHelper.spawnItemOnEntity(player, caughtItemStack);
                     player.playSound(SoundEvents.ITEM_PICKUP, 0.3F, 1.0F);
-                    if (!entity.level.isClientSide) {
+                    if (!entity.level().isClientSide()) {
                         CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, caughtItemStack);
                     }
 

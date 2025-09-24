@@ -125,7 +125,7 @@ public class EmiBeaconBaseRecipe implements EmiRecipe {
     static {
         ArrayList<EmiStack> blocks = new ArrayList<>();
         for (String string : BEACON_BASE_BLOCKS.keySet()) {
-            Item value = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(string));
+            Item value = ForgeRegistries.ITEMS.getValue(new ResourceLocation(string));
             if (value != null) {
                 blocks.add(EmiStack.of(value.getDefaultInstance()));
             }

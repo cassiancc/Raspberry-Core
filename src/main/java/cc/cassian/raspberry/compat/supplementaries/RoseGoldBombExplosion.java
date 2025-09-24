@@ -2,11 +2,11 @@ package cc.cassian.raspberry.compat.supplementaries;
 
 import cc.cassian.raspberry.config.ModConfig;
 import com.google.common.collect.Sets;
+import com.ordana.spelunkery.events.NetworkHandler;
 import net.mehvahdjukaar.moonlight.api.platform.ForgeHelper;
 import net.mehvahdjukaar.supplementaries.common.entities.BombEntity;
 import net.mehvahdjukaar.supplementaries.common.misc.explosion.BombExplosion;
 import net.mehvahdjukaar.supplementaries.common.network.ClientBoundSendKnockbackPacket;
-import net.mehvahdjukaar.supplementaries.common.network.NetworkHandler;
 import net.mehvahdjukaar.supplementaries.integration.CompatHandler;
 import net.mehvahdjukaar.supplementaries.integration.FlanCompat;
 import net.minecraft.core.BlockPos;
@@ -28,8 +28,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,13 +42,13 @@ public class RoseGoldBombExplosion extends BombExplosion {
     private final double z;
     private final float radius;
 
-    public RoseGoldBombExplosion(Level world, @Nullable Entity entity, @Nullable ExplosionDamageCalculator context, double x, double y, double z, float radius, BombEntity.BombType bombType, BlockInteraction interaction) {
-        super(world, entity, context, x, y, z, radius, bombType, interaction);
+    public RoseGoldBombExplosion(Level world, @Nullable Entity entity, @Nullable ExplosionDamageCalculator context, double x, double y, double z, BombEntity.BombType bombType, Explosion.BlockInteraction interaction) {
+        super(world, entity, context, x, y, z, bombType, interaction);
         this.level = world;
         this.x = x;
         this.y = y;
         this.z = z;
-        this.radius = radius;
+        this.radius = 4;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class RoseGoldBombExplosion extends BombExplosion {
         Set<BlockPos> set;
         Player var10000;
         label154: {
-            this.level.gameEvent(this.getExploder(), GameEvent.EXPLODE, new BlockPos(this.x, this.y, this.z));
+            this.level.gameEvent(this.getExploder(), GameEvent.EXPLODE, new BlockPos((int) this.x, (int) this.y, (int) this.z));
             set = Sets.newHashSet();
             Entity var5 = this.getExploder();
             if (var5 instanceof Projectile pr) {

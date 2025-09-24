@@ -1,7 +1,7 @@
 package cc.cassian.raspberry.mixin.naturalist;
 
 import cc.cassian.raspberry.config.ModConfig;
-import com.starfish_studios.naturalist.platform.forge.CommonPlatformHelperImpl;
+import com.starfish_studios.naturalist.core.platform.forge.CommonPlatformHelperImpl;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;

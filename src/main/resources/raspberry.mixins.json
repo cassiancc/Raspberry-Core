@@ -5,8 +5,7 @@
   "minVersion": "0.8",
   "client": [
     "naturalist.GlowGoopItemMixin",
-    "spyglass_improvements.MinecraftMixin",
-    "miningmaster.KnightJumpEnchantmentMixin"
+    "spyglass_improvements.MinecraftMixin"
   ],
   "mixins": [
     "vc_gliders.ArmorStandMixin",
@@ -67,8 +66,6 @@
     "naturalist.CaughtMobItemMixin",
     "naturalist.SnakeMixin",
     "naturalist.StackableMobItemsMixin",
-    "oreganized.EnchantmentHelperMixin",
-    "oreganized.EntityMixin",
     "oreganized.SilverMirrorItemMixin",
     "quark.ExpandedItemInteractionsModuleMixin",
     "quark.QuickArmorSwappingModuleMixin",

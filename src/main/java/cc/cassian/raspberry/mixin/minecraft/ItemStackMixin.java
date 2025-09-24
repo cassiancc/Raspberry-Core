@@ -24,11 +24,11 @@ public abstract class ItemStackMixin {
             if (SpelunkeryCompat.checkDimensionalTears(arg, arg2))
                 cir.setReturnValue(true);
         }
-        if (ModCompat.NATURALIST) {
-            if (NaturalistCompat.match(arg, arg2)) {
-                cir.setReturnValue(true);
-            }
-        }
+//        if (ModCompat.NATURALIST) {
+//            if (NaturalistCompat.match(arg, arg2)) {
+//                cir.setReturnValue(true);
+//            }
+//        }
 
     }
 }
