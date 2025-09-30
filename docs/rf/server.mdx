@@ -36,7 +36,7 @@ If you ever need to update the pack, just repeat the process by running `packwiz
 [Docker Minecraft Server](https://docker-minecraft-server.readthedocs.io/en/latest/) has native support for modpacks distributed via Packwiz. Assuming you have Docker installed, you can run the following command to automatically download and run a Raspberry Flavoured server.
 
 ```bash
-docker run -d -v /path/on/host:/data -e TYPE=FORGE -e EULA=TRUE \
+docker run -d -v /path/on/host:/data -e TYPE=FORGE -e EULA=TRUE -e VERSION=1.19.2 \
     -e "PACKWIZ_URL=https://asphodel.cc/packwiz/Ports/Curse/Raspberry-Server/pack.toml" \
     itzg/minecraft-server
 ```
