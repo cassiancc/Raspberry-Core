@@ -1,0 +1,7 @@
+{
+	"parent": "raspberry:block/brick_counter_full",
+	"textures": {
+		"side": "raspberry:block/silt_brick_counter_side",
+        "bottom": "twigs:block/silt_bricks"
+	}
+}

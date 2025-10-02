@@ -1,0 +1,26 @@
+{
+  "variants": {    
+    "facing=east,shape=inner_left": {"model": "raspberry:block/ash_brick_counter_inner", "y": 270, "uvlock": true },
+    "facing=east,shape=inner_right": {"model": "raspberry:block/ash_brick_counter_inner" },
+    "facing=east,shape=outer_left": {"model": "raspberry:block/ash_brick_counter_outer", "y": 270, "uvlock": true },
+    "facing=east,shape=outer_right": {"model": "raspberry:block/ash_brick_counter_outer" },
+    "facing=east,shape=straight": {"model": "raspberry:block/ash_brick_counter" },
+    "facing=up,shape=straight": {"model": "raspberry:block/ash_brick_counter_full" },
+    "facing=down,shape=straight": {"model": "raspberry:block/ash_brick_counter_full" },
+    "facing=north,shape=inner_left": {"model": "raspberry:block/ash_brick_counter_inner", "y": 180, "uvlock": true },
+    "facing=north,shape=inner_right": {"model": "raspberry:block/ash_brick_counter_inner", "y": 270, "uvlock": true },
+    "facing=north,shape=outer_left": {"model": "raspberry:block/ash_brick_counter_outer", "y": 180, "uvlock": true },
+    "facing=north,shape=outer_right": {"model": "raspberry:block/ash_brick_counter_outer", "y": 270, "uvlock": true },
+    "facing=north,shape=straight": {"model": "raspberry:block/ash_brick_counter", "y": 270, "uvlock": true },
+    "facing=south,shape=inner_left": {"model": "raspberry:block/ash_brick_counter_inner" },
+    "facing=south,shape=inner_right": {"model": "raspberry:block/ash_brick_counter_inner", "y": 90, "uvlock": true },
+    "facing=south,shape=outer_left": {"model": "raspberry:block/ash_brick_counter_outer" },
+    "facing=south,shape=outer_right": {"model": "raspberry:block/ash_brick_counter_outer", "y": 90, "uvlock": true },
+    "facing=south,shape=straight": {"model": "raspberry:block/ash_brick_counter", "y": 90, "uvlock": true },
+    "facing=west,shape=inner_left": {"model": "raspberry:block/ash_brick_counter_inner", "y": 90, "uvlock": true },
+    "facing=west,shape=inner_right": {"model": "raspberry:block/ash_brick_counter_inner", "y": 180, "uvlock": true },
+    "facing=west,shape=outer_left": {"model": "raspberry:block/ash_brick_counter_outer", "y": 90, "uvlock": true },
+    "facing=west,shape=outer_right": {"model": "raspberry:block/ash_brick_counter_outer", "y": 180, "uvlock": true },
+    "facing=west,shape=straight": {"model": "raspberry:block/ash_brick_counter", "y": 180, "uvlock": true }
+  }
+}
