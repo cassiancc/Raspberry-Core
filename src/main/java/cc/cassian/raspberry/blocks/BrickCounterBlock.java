@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.StairsShape;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
@@ -65,10 +66,12 @@ public class BrickCounterBlock extends Block implements SimpleWaterloggedBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SHAPE, StairsShape.STRAIGHT).setValue(WATERLOGGED, false));
     }
 
+    @Override
     public boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
 
+    @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (isFullBlock(state)) {
             return Block.box(0,0,0,16,16,16);
@@ -80,6 +83,7 @@ public class BrickCounterBlock extends Block implements SimpleWaterloggedBlock {
         return state.getValue(SHAPE).ordinal() * 4 + state.getValue(FACING).get2DDataValue();
     }
 
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos blockpos = context.getClickedPos();
         FluidState fluidstate = context.getLevel().getFluidState(blockpos);
@@ -87,6 +91,7 @@ public class BrickCounterBlock extends Block implements SimpleWaterloggedBlock {
         return blockstate.setValue(SHAPE, getStairsShape(blockstate, context.getLevel(), blockpos));
     }
 
+    @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
         if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
@@ -141,10 +146,12 @@ public class BrickCounterBlock extends Block implements SimpleWaterloggedBlock {
         return state.getValue(FACING).getAxis() == Axis.Y;
     }
 
+    @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
+    @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         Direction direction = state.getValue(FACING);
         StairsShape stairsshape = state.getValue(SHAPE);
@@ -195,14 +202,22 @@ public class BrickCounterBlock extends Block implements SimpleWaterloggedBlock {
         return super.mirror(state, mirror);
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, SHAPE, WATERLOGGED);
     }
 
+    @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
+    @Override
+    public boolean canPlaceLiquid(BlockGetter level, BlockPos pos, BlockState state, Fluid fluid) {
+        return !(Boolean)state.getValue(BlockStateProperties.WATERLOGGED) && fluid == Fluids.WATER && !isFullBlock(state);
+    }
+
+    @Override
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
         return false;
     }
