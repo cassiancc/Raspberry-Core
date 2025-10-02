@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "II",
+    "##",
+    "##"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "#": {
+      "item": "supplementaries:ash_brick"
+    }
+  },
+  "result": {
+    "item": "raspberry:ash_brick_counter",
+    "count": 4
+  }
+}
