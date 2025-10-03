@@ -73,6 +73,9 @@ public class BrickCounterBlock extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (state.getValue(FACING) == Direction.UP) {
+            return Block.box(0,12,0,16,16,16);
+        }
         if (isFullBlock(state)) {
             return Block.box(0,0,0,16,16,16);
         }
@@ -143,7 +146,7 @@ public class BrickCounterBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     public static boolean isFullBlock(BlockState state) {
-        return state.getValue(FACING).getAxis() == Axis.Y;
+        return state.getValue(FACING) == Direction.DOWN;
     }
 
     @Override
