@@ -32,6 +32,7 @@
     "create.GogglesItemMixin",
     "create.MountedStorageMixin",
     "create.WrenchItemMixin",
+    "create.MechanicalCrafterMixin",
     "dynamiccrosshair.VanillaBlockHandlerMixin",
     "ecologics.CoconutSliceItemMixin",
     "endergetic.EnderWallTorchMixin",
