@@ -75,6 +75,8 @@
     "oreganized.EnchantmentHelperMixin",
     "oreganized.EntityMixin",
     "oreganized.SilverMirrorItemMixin",
+    "quark.CrateBlacklistMixin",
+    "quark.CrateContainerBlacklistMixin",
     "quark.DoubleDoorOpeningModuleMixin",
     "quark.ExpandedItemInteractionsModuleMixin",
     "quark.QuickArmorSwappingModuleMixin",
