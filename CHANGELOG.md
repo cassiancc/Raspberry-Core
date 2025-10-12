@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Brick counters, as well as Silt and Ash brick variations, a new type of block for decorating your kitchen (@Kobber, @Kayla_the_Bee)
 - Copper Armour now has unique sounds, backported from 1.21.9. (Copperized)
 - Additional blocks now connect to Posts. (Quark, Supplementaries, Farmer's Delight)
-- Added blacklist tag to Quark Oddities Storage Crate. (`raspberry:crate_blacklist`) (@evanbones)
+- Added blacklist tag to Quark Oddities Storage Crate (`raspberry:crate_blacklist`). (@evanbones)
 - Fallback translations for RF advancements.
 
 ### Changed
