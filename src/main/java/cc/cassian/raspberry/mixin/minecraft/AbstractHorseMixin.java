@@ -2,7 +2,9 @@ package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryTags;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.item.ItemStack;
@@ -45,5 +47,18 @@ public abstract class AbstractHorseMixin extends Mob {
             return 1.1f;
         }
         return value;
+    }
+
+    @Shadow
+    private boolean allowStandSliding;
+    @Shadow public abstract boolean isTamed();
+    @Shadow public abstract LivingEntity getControllingPassenger();
+
+    @ModifyReturnValue(method = "isStanding", at = @At("RETURN"))
+    private boolean horseNoBucking(boolean original) {
+        if (ModConfig.get().horses_noBuck && allowStandSliding && isTamed() && getControllingPassenger() != null) {
+            return false;
+        }
+        return original;
     }
 }

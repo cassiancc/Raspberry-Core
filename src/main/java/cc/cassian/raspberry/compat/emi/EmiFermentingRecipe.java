@@ -41,9 +41,6 @@ public class EmiFermentingRecipe implements EmiRecipe {
         this.inputItems = ingredients;
 
         this.fluidItem = fluidItem;
-        if (this.fluidItem != null) {
-            this.inputItems.remove(this.inputItems.size()-1);
-        }
         this.output = output;
         if (!container.isEmpty()) {
             this.container = container;
@@ -97,8 +94,8 @@ public class EmiFermentingRecipe implements EmiRecipe {
         widgetHolder.addAnimatedTexture(backgroundImage, 48, 28, 33, 9, 176, 28, fermentTime, true, false, false);
         // frigid
         if (temperature == 1) {
-            widgetHolder.addTexture(backgroundImage, 176, 0, 7, 3, 48, 23).tooltipText(List.of(Component.translatable("emi.brewinandchewin.fermenting.frigid")));
-            widgetHolder.addTexture(backgroundImage, 182, 0, 7, 3, 54, 23).tooltipText(List.of(Component.translatable("emi.brewinandchewin.fermenting.frigid")));
+            widgetHolder.addTexture(backgroundImage, 47, 23, 7, 3, 176, 0).tooltipText(List.of(Component.translatable("emi.brewinandchewin.fermenting.frigid")));
+            widgetHolder.addTexture(backgroundImage, 54, 23, 7, 3, 182, 0).tooltipText(List.of(Component.translatable("emi.brewinandchewin.fermenting.frigid")));
         }
         // cold
         if (temperature == 2) {

@@ -193,8 +193,8 @@ dependencies {
     modImplementation("maven.modrinth:mining-master:1.19.2-4.1.4")
     modImplementation("maven.modrinth:useful-spyglass:0.6.1-1.19.2")
     modImplementation("maven.modrinth:additional-enchantments:1.1.5")
-    modImplementation("maven.modrinth:domestication-innovation:1.6.1")
-    modImplementation("curse.maven:citadel-331936:4556677") // dependency of domestication innovation
+    modCompileOnly("maven.modrinth:domestication-innovation:1.6.1")
+    modCompileOnly("curse.maven:citadel-331936:4556677") // dependency of domestication innovation
 
     modImplementation("maven.modrinth:ferrite-core:CtXsUUz6")
 

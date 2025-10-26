@@ -8,9 +8,6 @@ import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
 import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,10 +22,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import oshi.util.tuples.Pair;
 
 import static cc.cassian.raspberry.registry.RaspberryBlocks.FOLIAGE_BLOCKS;
 
@@ -88,8 +83,8 @@ public final class RaspberryMod {
         if (ModCompat.QUARK) {
             QuarkCompat.register();
         }
-        for (Pair<RegistryObject<Block>, RegistryObject<BlockItem>> foliageBlock : FOLIAGE_BLOCKS) {
-            ComposterBlock.COMPOSTABLES.put(foliageBlock.getB().get(), 0.3f);
+        for (BlockSupplier foliageBlock : FOLIAGE_BLOCKS) {
+            ComposterBlock.COMPOSTABLES.put(foliageBlock.getBlockSupplier().get(), 0.3f);
         }
         if (ModCompat.SUPPLEMENTARIES) {
             SupplementariesCompat.register();

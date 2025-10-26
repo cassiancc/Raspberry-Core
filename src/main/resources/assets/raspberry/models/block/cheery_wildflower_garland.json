@@ -1,0 +1,29 @@
+{
+  "render_type": "cutout",
+  "textures": {
+    "1": "raspberry:block/cheery_wildflower_garland",
+    "particle": "#1"
+  },
+  "elements": [
+    {
+      "from": [0, 8, 0.1],
+      "to": [16, 16, 0.1],
+      "shade": false,
+      "rotation": {"angle": 0, "axis": "y", "origin": [0, 0, -0.7]},
+      "faces": {
+        "north": {"uv": [16, 0, 0, 8], "texture": "#1"},
+        "south": {"uv": [0, 0, 16, 8], "texture": "#1"}
+      }
+    },
+    {
+      "from": [0, 8, 0.8],
+      "to": [16, 16, 0.8],
+      "shade": false,
+      "rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0.3]},
+      "faces": {
+        "north": {"uv": [16, 8, 0, 16], "texture": "#1"},
+        "south": {"uv": [0, 8, 16, 16], "texture": "#1"}
+      }
+    }
+  ]
+}

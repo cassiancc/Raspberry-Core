@@ -1,0 +1,56 @@
+{
+  "multipart": [
+    {
+      "apply": [{
+        "model": "raspberry:block/playful_wildflower_garland"
+      },{
+        "model": "raspberry:block/playful_wildflower_garland_alt"
+      }],
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": [{
+        "model": "raspberry:block/playful_wildflower_garland",
+        "uvlock": true,
+        "y": 90
+      },{
+        "model": "raspberry:block/playful_wildflower_garland_alt",
+        "uvlock": true,
+        "y": 90
+      }],
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": [{
+        "model": "raspberry:block/playful_wildflower_garland",
+        "uvlock": true,
+        "y": 180
+      },{
+        "model": "raspberry:block/playful_wildflower_garland_alt",
+        "uvlock": true,
+        "y": 180
+      }],
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": [{
+        "model": "raspberry:block/playful_wildflower_garland",
+        "uvlock": true,
+        "y": 270
+      },{
+        "model": "raspberry:block/playful_wildflower_garland_alt",
+        "uvlock": true,
+        "y": 270
+      }],
+      "when": {
+        "west": "true"
+      }
+    }
+  ]
+}

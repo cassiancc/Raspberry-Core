@@ -1,0 +1,6 @@
+{
+  "parent": "raspberry:block/cheery_wildflower_garland_head",
+  "textures": {
+    "side": "raspberry:item/moody_wildflower_garland"
+  }
+}

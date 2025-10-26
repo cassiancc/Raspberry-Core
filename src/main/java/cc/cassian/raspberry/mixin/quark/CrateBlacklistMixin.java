@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.mixin.quark;
 
 import cc.cassian.raspberry.compat.QuarkCompat;
+import cc.cassian.raspberry.registry.RaspberryTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -16,12 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = ItemStackHandler.class, remap = false)
 public abstract class CrateBlacklistMixin {
 
-    @Unique
-    private static final TagKey<Item> raspberry$CRATE_BLACKLIST = ItemTags.create(new ResourceLocation("raspberry", "crate_blacklist"));
-
     @Inject(method = "isItemValid", at = @At("HEAD"), cancellable = true, remap = false)
     private void raspberry$preventBlacklistedItemsValid(int slot, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (QuarkCompat.isCrateItemHandler((ItemStackHandler) (Object) this) && stack.is(raspberry$CRATE_BLACKLIST)) {
+        if (QuarkCompat.isCrateItemHandler((ItemStackHandler) (Object) this) && stack.is(RaspberryTags.CRATE_BLACKLIST)) {
             cir.setReturnValue(false);
         }
     }
@@ -29,7 +27,7 @@ public abstract class CrateBlacklistMixin {
     @Inject(method = "insertItem", at = @At("HEAD"), cancellable = true, remap = false)
     private void raspberry$preventBlacklistedItemsInsert(int slot, ItemStack stack, boolean simulate,
                                                          CallbackInfoReturnable<ItemStack> cir) {
-        if (QuarkCompat.isCrateItemHandler((ItemStackHandler) (Object) this) && stack.is(raspberry$CRATE_BLACKLIST)) {
+        if (QuarkCompat.isCrateItemHandler((ItemStackHandler) (Object) this) && stack.is(RaspberryTags.CRATE_BLACKLIST)) {
             cir.setReturnValue(stack);
         }
     }

@@ -15,6 +15,10 @@
  "block.raspberry.moody_wildflowers": "Moody Wildflowers",
  "block.raspberry.pink_petals": "Playful Wildflowers",
   "block.raspberry.hopeful_wildflowers": "Hopeful Wildflowers",
+ "block.raspberry.cheery_wildflower_garland": "Cheery Flower Garland",
+ "block.raspberry.moody_wildflower_garland": "Moody Flower Garland",
+ "block.raspberry.playful_wildflower_garland": "Playful Flower Garland",
+ "block.raspberry.hopeful_wildflower_garland": "Hopeful Flower Garland",
   "block.raspberry.clovers": "Clovers",
  "block.raspberry.snow": "Snow",
  "lore.raspberry.snow": "A block that drops Snowballs when broken with a shovel.",
@@ -30,6 +34,10 @@
 
   "block.raspberry.red_moss_block": "Red Moss Block",
   "block.raspberry.red_moss_carpet": "Red Moss Carpet",
+
+  "raspberry.tooltip.cat_food.when_feeding": "When fed to a tamed Cat:",
+  "item.raspberry.cat_food": "Cat Food",
+  "lore.raspberry.cat_food": "A foodstuff meant for your cat! ",
 
 
   "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
@@ -71,6 +79,7 @@
  "config.raspberry.config.aftershock": "Enable Aftershock effect from lightning strikes",
  "config.raspberry.config.create_blastproofing": "Disable Create blasting destroying items.",
  "config.raspberry.config.horses_noWander": "Prevent Horse Wandering",
+ "config.raspberry.config.horses_noBuck": "Prevent Horse Bucking",
  "config.raspberry.config.horses_stepHeight": "Increase Horse Step Height",
 
  "config.raspberry.config.searchContainers": "Allow items in bundles/containers",
@@ -89,6 +98,14 @@
   "config.raspberry.config.bannerlessRaiders": "Raiders no longer have banners",
   "config.raspberry.config.better_haste": "Exponential Haste",
   "config.raspberry.config.rose_gold_bomb_knockback": "Rose Gold Bomb Knockback",
+  "config.raspberry.config.rose_gold_arrow_knockback": "Rose Gold Arrow Knockback",
+  "config.raspberry.config.rose_gold_arrow_velocity": "Rose Gold Arrow Velocity",
+  "config.raspberry.config.raspberryCartEngine": "Implement Audaki Cart Engine",
+  "config.raspberry.config.unified_wrenches": "Merge Create/Supplementaries Wrenches",
+  "config.raspberry.config.saferKnightJump": "Prevent damage from Knight Jump 50% of the time",
+  "config.raspberry.config.naturalist_stackableItems": "Stack items from Naturalist",
+  "config.raspberry.config.create_emi": "Create Mod EMI Integration",
+  "config.raspberry.config.mapsWorkInInventory": "Maps work in inventory, not just in hand",
 
 
  "emi.category.raspberry.anvil": "Runic Etching",
@@ -544,5 +561,4 @@
   "advancements.rf.machines.mechanical_saw.description": "Place down a mechanical saw to cut blocks up or use it to chop down trees in one fell swoop - sawing sturdy alloy is the most resource efficient way to make shafts, by the way!",
   "advancements.rf.machines.mechanical_drill.title": "I Repeat, This is a Drill!",
   "advancements.rf.machines.mechanical_drill.description": "Place down a mechanical drill to start mining blocks automatically - time to invest in a giant tunnel bore!"
-
 }

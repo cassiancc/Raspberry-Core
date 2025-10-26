@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "raspberry:item/playful_wildflower_garland"
+  },
+  "overrides": [
+    {
+      "model": "raspberry:item/playful_wildflower_garland_head",
+      "predicate": {
+        "raspberry:equipped": 1.0
+      }
+    }
+  ]
+}

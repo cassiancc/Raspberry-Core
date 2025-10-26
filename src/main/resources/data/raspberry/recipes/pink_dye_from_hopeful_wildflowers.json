@@ -3,9 +3,14 @@
   "category": "misc",
   "group": "pink_dye",
   "ingredients": [
-    {
-      "item": "raspberry:hopeful_wildflowers"
-    }
+    [
+      {
+        "item": "raspberry:hopeful_wildflowers"
+      },
+      {
+        "item": "raspberry:hopeful_wildflower_garland"
+      }
+    ]
   ],
   "result": {
     "count": 1,

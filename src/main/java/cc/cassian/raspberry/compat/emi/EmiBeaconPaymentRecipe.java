@@ -29,18 +29,18 @@ public class EmiBeaconPaymentRecipe extends EmiBeaconBaseRecipe {
     }
 
     @Override
-    public List<EmiStack> getOutputs() {
+    public List<EmiIngredient> getInputs() {
         return BLOCKS;
     }
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        widgets.addGeneratedSlot((r) -> getInputs().get(0), 123, 54, 0);
+        widgets.addSlot(getInputs().get(0), 54, 0);
         int x = 0;
         int y = 25;
         int i = 1;
         for (Map.Entry<String, Integer> s : BEACON_PAYMENTS.entrySet()) {
-            widgets.addGeneratedSlot((r) -> ingredient(s.getKey()), EmiUtil.RANDOM.nextInt(), x, y).recipeContext(this).appendTooltip(Component.translatable("emi.raspberry.beacon_payment.amplifier", s.getValue()).withStyle(ChatFormatting.YELLOW));
+            widgets.addSlot(ingredient(s.getKey()), x, y).recipeContext(this).appendTooltip(Component.translatable("emi.raspberry.beacon_payment.amplifier", s.getValue()).withStyle(ChatFormatting.YELLOW));
             if (i != 7) {
                 x+=18;
             }
@@ -92,15 +92,15 @@ public class EmiBeaconPaymentRecipe extends EmiBeaconBaseRecipe {
             Map.entry("spelunkery:cinnabar", 7)
             );
 
-    private static final List<EmiStack> BLOCKS;
+    private static final List<EmiIngredient> BLOCKS;
 
     static {
-        ArrayList<EmiStack> blocks = new ArrayList<>();
+        ArrayList<EmiIngredient> blocks = new ArrayList<>();
         Set<String> strings = BEACON_PAYMENTS.keySet();
         for (String string : strings) {
             Item value = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(string));
             if (value != null) {
-                blocks.add(EmiStack.of(value.getDefaultInstance()));
+                blocks.add(EmiIngredient.of(Ingredient.of(value.getDefaultInstance())));
             }
         }
         BLOCKS = blocks;

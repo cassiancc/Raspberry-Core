@@ -35,6 +35,8 @@ public class RaspberryTags {
 
     public static final TagKey<Item> HORSE_FOOD = createItemTag("horse_food");
     public static final TagKey<Item> CONTAINERS = createItemTag("container");
+
+    public static final TagKey<Item> CRATE_BLACKLIST = createItemTag("crate_blacklist");
     public static final TagKey<Item> TROWEL_BLACKLIST = createItemTag("trowel_blacklist");
 
     public static final TagKey<Item> CRUNCHY_FRUIT_SOUNDS = createItemTag("sounds/crunchy_fruit");
@@ -46,6 +48,8 @@ public class RaspberryTags {
     public static final TagKey<Item> DRINK_SOUNDS = createItemTag("sounds/drink");
     public static final TagKey<Item> HONEY_SOUNDS = createItemTag("sounds/honey");
     public static final TagKey<Item> REPAIRS_IN_DARKNESS = createItemTag("repairs_in_darkness");
+
+    public static final TagKey<EntityType<?>> CAT_FOOD_USERS = createEntityTypeTag("cat_food_users");
 
     private static TagKey<Block> createBlockTag(String id) {
         return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), locate(id));

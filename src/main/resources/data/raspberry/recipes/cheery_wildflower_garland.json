@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "raspberry:cheery_wildflowers"
+    }
+  },
+  "result": {
+    "item": "raspberry:cheery_wildflower_garland",
+    "count": 3
+  }
+}

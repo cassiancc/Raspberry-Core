@@ -1,0 +1,6 @@
+{
+  "parent": "raspberry:block/cheery_wildflower_garland",
+  "textures": {
+      "1": "raspberry:block/hopeful_wildflower_garland_alt"
+  }
+}

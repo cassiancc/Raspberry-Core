@@ -22,11 +22,11 @@ import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 public class RaspberyFeatures {
 
-    public static final SimpleWeightedRandomList.Builder<?> list = SimpleWeightedRandomList.builder().add(Blocks.FLOWERING_AZALEA.defaultBlockState(), 4).add(Blocks.AZALEA.defaultBlockState(), 7).add(RaspberryBlocks.RED_MOSS_CARPET.getA().get().defaultBlockState(), 25).add(Blocks.GRASS.defaultBlockState(), 50).add(Blocks.TALL_GRASS.defaultBlockState(), 10);
+    public static final SimpleWeightedRandomList.Builder<?> list = SimpleWeightedRandomList.builder().add(Blocks.FLOWERING_AZALEA.defaultBlockState(), 4).add(Blocks.AZALEA.defaultBlockState(), 7).add(RaspberryBlocks.RED_MOSS_CARPET.defaultBlockState(), 25).add(Blocks.GRASS.defaultBlockState(), 50).add(Blocks.TALL_GRASS.defaultBlockState(), 10);
 
     public static final Holder<ConfiguredFeature<SimpleBlockConfiguration, ?>> RED_MOSS_VEGETATION = FeatureUtils.register("red_moss_vegetation", Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider((SimpleWeightedRandomList.Builder<BlockState>) list)));
 
-    public static final Holder<ConfiguredFeature<VegetationPatchConfiguration, ?>> RED_MOSS_PATCH_BONEMEAL = register("red_moss_patch_bonemeal", Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.MOSS_REPLACEABLE, BlockStateProvider.simple(RaspberryBlocks.RED_MOSS.getA().get()), PlacementUtils.inlinePlaced(RED_MOSS_VEGETATION), CaveSurface.FLOOR, ConstantInt.of(1), 0.0F, 5, 0.6F, UniformInt.of(1, 2), 0.75F));
+    public static final Holder<ConfiguredFeature<VegetationPatchConfiguration, ?>> RED_MOSS_PATCH_BONEMEAL = register("red_moss_patch_bonemeal", Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.MOSS_REPLACEABLE, BlockStateProvider.simple(RaspberryBlocks.RED_MOSS.getBlock()), PlacementUtils.inlinePlaced(RED_MOSS_VEGETATION), CaveSurface.FLOOR, ConstantInt.of(1), 0.0F, 5, 0.6F, UniformInt.of(1, 2), 0.75F));
 
 
     public static <FC extends FeatureConfiguration, F extends Feature<FC>> Holder<ConfiguredFeature<FC, ?>> register(String name, F feature, FC config) {

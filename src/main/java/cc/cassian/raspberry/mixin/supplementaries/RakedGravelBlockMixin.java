@@ -25,12 +25,12 @@ public class RakedGravelBlockMixin {
             at = @At(value = "HEAD"),
     cancellable = true, remap = false)
     private static void turnToCorrectGravel(BlockState state, Level world, BlockPos pos, CallbackInfo ci) {
-        if (state.is(RaspberryBlocks.getBlock(RaspberryBlocks.RAKED_BLACKSTONE_GRAVEL))) {
-            world.setBlockAndUpdate(pos, pushEntitiesUp(state, RaspberryBlocks.getBlock(RaspberryBlocks.BLACKSTONE_GRAVEL).defaultBlockState(), world, pos));
+        if (state.is(RaspberryBlocks.RAKED_BLACKSTONE_GRAVEL.getBlock())) {
+            world.setBlockAndUpdate(pos, pushEntitiesUp(state, RaspberryBlocks.BLACKSTONE_GRAVEL.getBlock().defaultBlockState(), world, pos));
             ci.cancel();
         }
-        else if (state.is(RaspberryBlocks.getBlock(RaspberryBlocks.RAKED_DEEPSLATE_GRAVEL))) {
-            world.setBlockAndUpdate(pos, pushEntitiesUp(state, RaspberryBlocks.getBlock(RaspberryBlocks.DEEPSLATE_GRAVEL).defaultBlockState(), world, pos));
+        else if (state.is(RaspberryBlocks.RAKED_DEEPSLATE_GRAVEL.getBlock())) {
+            world.setBlockAndUpdate(pos, pushEntitiesUp(state, RaspberryBlocks.DEEPSLATE_GRAVEL.getBlock().defaultBlockState(), world, pos));
             ci.cancel();
         }
     }

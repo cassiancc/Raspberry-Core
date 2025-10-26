@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.compat;
 
 import cc.cassian.raspberry.compat.emi.EmiFermentingRecipe;
+import cc.cassian.raspberry.mixin.brewinandchewin.KegRecipeMixin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
@@ -15,7 +16,7 @@ public class BrewinAndChewinCompat {
 
     public static void registerEmi(EmiRegistry emiRegistry) {
         for (KegRecipe recipe : emiRegistry.getRecipeManager().getAllRecipesFor(BCRecipeTypes.FERMENTING.get())) {
-            emiRegistry.addRecipe(new EmiFermentingRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeBookTab(), recipe.getIngredients(), recipe.getFluidItem(), recipe.getResultItem(), recipe.getOutputContainer(), recipe.getExperience(), recipe.getFermentTime(), recipe.getTemperature()));
+            emiRegistry.addRecipe(new EmiFermentingRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeBookTab(), ((KegRecipeMixin) recipe).getInputItems(), recipe.getFluidItem(), recipe.getResultItem(), recipe.getOutputContainer(), recipe.getExperience(), recipe.getFermentTime(), recipe.getTemperature()));
         }
         emiRegistry.addCategory(FERMENTING);
         emiRegistry.addWorkstation(FERMENTING, EmiStack.of(BCItems.KEG.get()));

@@ -36,8 +36,8 @@ public class RaspberryGravelBlock extends GravelBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         Block block;
         if (player.getItemInHand(hand).getItem() instanceof HoeItem) {
-            if (state.is(RaspberryBlocks.getBlock(RaspberryBlocks.DEEPSLATE_GRAVEL))) {
-                level.setBlock(pos, RakedGravelBlock.getConnectedState(RaspberryBlocks.getBlock(RaspberryBlocks.RAKED_DEEPSLATE_GRAVEL).defaultBlockState(), level, pos, player.getDirection()), 0);
+            if (state.is(RaspberryBlocks.DEEPSLATE_GRAVEL.getBlock())) {
+                level.setBlock(pos, RakedGravelBlock.getConnectedState(RaspberryBlocks.RAKED_DEEPSLATE_GRAVEL.defaultBlockState(), level, pos, player.getDirection()), 0);
                 if (!level.isClientSide) {
                     ServerPlayer serverPlayer = (ServerPlayer) player;
                     serverPlayer.getItemInHand(hand).hurtAndBreak(1, player, item ->
@@ -46,8 +46,8 @@ public class RaspberryGravelBlock extends GravelBlock {
                 player.playSound(SoundEvents.HOE_TILL);
                 return InteractionResult.SUCCESS;
             }
-            else if (state.is(RaspberryBlocks.getBlock(RaspberryBlocks.BLACKSTONE_GRAVEL))) {
-                level.setBlock(pos, RakedGravelBlock.getConnectedState(RaspberryBlocks.getBlock(RaspberryBlocks.RAKED_BLACKSTONE_GRAVEL).defaultBlockState(), level, pos, player.getDirection()), 0);
+            else if (state.is(RaspberryBlocks.DEEPSLATE_GRAVEL.getBlock())) {
+                level.setBlock(pos, RakedGravelBlock.getConnectedState(RaspberryBlocks.RAKED_BLACKSTONE_GRAVEL.defaultBlockState(), level, pos, player.getDirection()), 0);
                 if (!level.isClientSide) {
                     ServerPlayer serverPlayer = (ServerPlayer) player;
                     serverPlayer.getItemInHand(hand).hurtAndBreak(1, player, item ->

@@ -133,7 +133,7 @@ public class HuntWormGoal extends Goal {
         if (wormblocks.size() > 0) {
             BlockPos wormpos = wormblocks.get(this.seeker.getRandom().nextInt(wormblocks.size()));
 
-            this.seeker.level.setBlock(wormpos, RaspberryBlocks.WORMY_DIRT.getA().get().defaultBlockState(), 3);
+            this.seeker.level.setBlock(wormpos, RaspberryBlocks.WORMY_DIRT.defaultBlockState(), 3);
             this.data.setValue(RaspberryData.HAS_WORM_TARGET, true);
             this.data.setValue(RaspberryData.WORM_POS, wormpos);
 
@@ -144,7 +144,7 @@ public class HuntWormGoal extends Goal {
     }
 
     private boolean isWorm(Level worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos).getBlock() == RaspberryBlocks.WORMY_DIRT.getA().get();
+        return worldIn.getBlockState(pos).getBlock() == RaspberryBlocks.WORMY_DIRT.getBlock();
     }
 
     private boolean isSuitableForWorm(Level worldIn, BlockPos pos) {

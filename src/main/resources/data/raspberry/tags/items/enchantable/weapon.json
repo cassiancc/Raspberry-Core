@@ -20,6 +20,10 @@
     {
       "id": "oreganized:silver_mirror",
       "required": false
+    },
+    {
+      "id": "farmersdelight:skillet",
+      "required": false
     }
   ]
 }

@@ -51,7 +51,9 @@ If `run.bat` and `run.sh` are not generated automatically by the update script, 
 
 ## Why can't it find user_jvm_args.txt?
 
-This error is usually only seen when the server does not have Java 17 or above installed. Minecraft 1.18 and above require Java 17, so you'll need to install an [updated version of Java](https://adoptium.net/) to be able to run the server. The latest release will work, currently this is Java 21. Make sure you check the box to update the JAVA_HOME environment variable when you install, or it might default to an older version of Java.
+This error is usually only seen when the server does not have Java 17 or 21 installed. Minecraft 1.18 and above require Java 17, so you'll need to install an [updated version of Java](https://adoptium.net/) to be able to run the server. The latest release will work, currently this is Java 21. Make sure you check the box to update the JAVA_HOME environment variable when you install, or it might default to an older version of Java.
+
+Note that Java 25 or higher is not supported and will cause a crash as well.
 
 ## I'm using a hosting provider, but the command fails saying it can't find Java?
 
