@@ -36,6 +36,9 @@ import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
 public class RaspberryBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
 
+    public static final RegistryObject<Block> TEMPORARY_COBWEB = BLOCKS.register("temporary_cobweb",
+            ()-> new TemporaryCobwebBlock(BlockBehaviour.Properties.copy(Blocks.COBWEB)));
+
     public static BlockSupplier
             SILT_STOVE = registerBlock("silt_stove",
             ()-> new StoveBlock(BlockBehaviour.Properties.copy(ModBlocks.STOVE.get())), FarmersDelight.CREATIVE_TAB);
