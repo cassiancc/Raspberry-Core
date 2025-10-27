@@ -16,23 +16,14 @@ public class CobwebProjectileEntityMixin {
     private void spawnTemporaryCobweb(double x, double y, double z, CallbackInfo ci) {
         CobwebProjectileEntity projectile = (CobwebProjectileEntity) (Object) this;
 
-        // Only proceed on server side
         if (!projectile.level.isClientSide) {
-            // Get the block position where the cobweb should spawn
             BlockPos pos = new BlockPos(x, y, z);
-
-            // Check if the position is air or replaceable
             BlockState currentState = projectile.level.getBlockState(pos);
             if (currentState.isAir() || currentState.getMaterial().isReplaceable()) {
-                // Place our temporary cobweb block
                 projectile.level.setBlock(pos, RaspberryBlocks.TEMPORARY_COBWEB.get().defaultBlockState(), 3);
             }
-
-            // Play the original sound
             projectile.playSound(com.infamous.dungeons_mobs.mod.ModSoundEvents.SPIDER_WEB_IMPACT.get(), 1.0F, 1.0F);
         }
-
-        // Cancel the original method to prevent spawning the SimpleTrapEntity
         ci.cancel();
     }
 }
