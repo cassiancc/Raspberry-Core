@@ -37,6 +37,7 @@
     "create.MechanicalCrafterMixin",
     "create.MountedStorageMixin",
     "create.WrenchItemMixin",
+    "dungeons_mobs.CobwebProjectileEntityMixin",
     "dynamiccrosshair.VanillaBlockHandlerMixin",
     "ecologics.CoconutSliceItemMixin",
     "endergetic.EnderWallTorchMixin",
