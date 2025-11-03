@@ -53,5 +53,16 @@
       "raspberry:silver_hit4"
     ],
     "subtitle": "raspberry.subtitles.player.attack.silver_hit"
+  },
+  "item.armor.equip_copper": {
+    "sounds": [
+      "raspberry:equip_copper1",
+      "raspberry:equip_copper2",
+      "raspberry:equip_copper3",
+      "raspberry:equip_copper4",
+      "raspberry:equip_copper5",
+      "raspberry:equip_copper6"
+    ],
+    "subtitle": "subtitles.item.armor.equip_copper"
   }
 }

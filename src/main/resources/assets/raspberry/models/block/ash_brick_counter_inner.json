@@ -1,0 +1,7 @@
+{
+	"parent": "raspberry:block/brick_counter_inner",
+	"textures": {
+		"side": "raspberry:block/ash_brick_counter_side",
+        "bottom": "supplementaries:blocks/ash_bricks"
+	}
+}

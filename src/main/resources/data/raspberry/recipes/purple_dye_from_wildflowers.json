@@ -3,9 +3,14 @@
   "category": "misc",
   "group": "purple_dye",
   "ingredients": [
-    {
-      "item": "raspberry:moody_wildflowers"
-    }
+    [
+      {
+        "item": "raspberry:moody_wildflowers"
+      },
+      {
+        "item": "raspberry:moody_wildflower_garland"
+      }
+    ]
   ],
   "result": {
     "count": 1,

@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
+    "miningmaster.KnightJumpEnchantmentMixin",
     "naturalist.GlowGoopItemMixin",
     "spyglass_improvements.MinecraftMixin"
   ],
@@ -55,12 +56,14 @@
     "minecraft.ItemStackMixin",
     "minecraft.LevelSummaryMixin",
     "minecraft.MapItemMixin",
+    "minecraft.MinecartChestMixin",
     "minecraft.NoBannersMixin",
     "minecraft.PigMixin",
     "minecraft.RaiderMixin",
     "minecraft.ScreenMixin",
     "minecraft.SpreadingSnowyDirtBlockMixin",
     "minecraft.ThrowableProjectileMixin",
+    "miningmaster.DamageKnightJumpPacketMixin",
     "naturalist.CatchableFireflyMixin",
     "naturalist.CaterpillarMixin",
     "naturalist.CaughtMobItemMixin",

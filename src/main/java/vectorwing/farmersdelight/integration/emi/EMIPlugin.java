@@ -49,8 +49,8 @@ public class EMIPlugin implements EmiPlugin {
         registry.addCategory(FDRecipeCategories.CUTTING);
         registry.addCategory(FDRecipeCategories.DECOMPOSITION);
 
-        registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.ASH_STOVE.getB().get()));
-        registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.SILT_STOVE.getB().get()));
+        registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.ASH_STOVE.getBlock()));
+        registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.SILT_STOVE.getBlock()));
 
         registry.addWorkstation(FDRecipeCategories.COOKING, FDRecipeWorkstations.COOKING_POT);
         registry.addWorkstation(FDRecipeCategories.CUTTING, FDRecipeWorkstations.CUTTING_BOARD);

@@ -34,6 +34,7 @@ public class ModConfig {
     public boolean create_blastproofing = true;
     public boolean searchContainers = true;
     public boolean horses_noWander = true;
+    public boolean horses_noBuck = true;
     public boolean horses_stepHeight = true;
     public boolean foxes_noRabbitDrops = true;
     public boolean noRabbitFootDrops = true;
@@ -52,6 +53,12 @@ public class ModConfig {
     public boolean bannerlessRaiders = false;
     public boolean naturalist_stackableItems = true;
     public double rose_gold_bomb_knockback = 1.5;
+    public int rose_gold_arrow_knockback = 2;
+    public double rose_gold_arrow_velocity = 1.5;
+    public boolean unified_wrenches = false;
+    public boolean saferKnightJump = true;
+    public boolean raspberryCartEngine = true;
+    public boolean dungeons_mobs_revised_cobwebs;
 
     public static void load() {
         if (!Files.exists(configPath())) {

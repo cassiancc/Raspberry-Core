@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Hopeful Wildflowers, a new flower bed block (textures by ProbablyEkho).
+- Wildflower Garlands, placeable on walls or worn as flower crowns, crafted out of wildflowers (textures and implementation by Kobber, based on existing textures)
+- Brick counters, as well as Silt and Ash brick variations, a new type of block for decorating your kitchen (@Kobber, @Kayla_the_Bee)
+- Copper Armour now has unique sounds, backported from 1.21.9. (Copperized)
+- Additional blocks now connect to Posts. (Quark, Supplementaries, Farmer's Delight)
+- Added blacklist tag to Quark Oddities Storage Crate (`raspberry:crate_blacklist`). (@evanbones)
+- Fallback translations for RF advancements.
+- Horses no longer buck.
+- Knight Jump now has a 50% chance to not consume durability.
+- A port of [Audaki Cart Engine](https://modrinth.com/mod/audaki-cart-engine) to Forge - Minecart speed has now been buffed to 34 meters per second. This should not affect Minecart Contraptions as this buff only applies to carts with players in them.
+- Skillets can now be enchanted with melee weapon enchantments. (Farmer's Delight)
+- Create Wrench functionality has been added to the Supplementaries Wrench (disabled by default).
+
+### Changed
+- Clovers are now replaceable.
+- Renamed Pink Petals to Playful Wildflowers.
+- Reworked the cobweb projectile from Dungeons Mobs to be less janky and instead use a temporary vanilla Cobweb block (@evanbones)
+
+### Fixed
+- Missing translation keys and incorrect models on unfinished content.
+- Corrected Brewin' and Chewin' EMI integration to no longer show incorrect recipes.
+- Beacon EMI integration shows inputs correctly.
+
+## [1.8.1] - 2025-09-24
+
+### Fixed
+- A crash on multiplayer servers.
+
+## [1.8] - 2025-09-22
+
+### Added
 - Fireflies from Naturalist can now be captured with Bug Nets.
 - Rose Gold Bombs, which deal knockback without inflicting damage.
 
@@ -23,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Raiders no longer tick twice as fast as they should.
 - Another fix for misbehaving Thrashers.
 
-## [1.7]
+## [1.7] - 2025-08-14
 
 ### Added
 - Direct EMI integration for Brewin and Chewin.

@@ -3,9 +3,14 @@
   "category": "misc",
   "group": "yellow_dye",
   "ingredients": [
-    {
-      "item": "raspberry:cheery_wildflowers"
-    }
+    [
+      {
+        "item": "raspberry:cheery_wildflowers"
+      },
+      {
+        "item": "raspberry:cheery_wildflower_garland"
+      }
+    ]
   ],
   "result": {
     "count": 1,

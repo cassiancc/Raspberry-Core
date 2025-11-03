@@ -234,6 +234,8 @@ dependencies {
     modImplementation("maven.modrinth:spelunkery:$spelunkery_version-forge")
     modImplementation("maven.modrinth:sullysmod:$sullys_version")
     modCompileOnly("maven.modrinth:twigs:$twigs_version")
+    modImplementation("curse.maven:dungeons-mobs-428883:$dungeons_mobs_version")
+    modImplementation("curse.maven:dungeons-libraries-550941:$dungeons_libraries_version") // dependency of dungeons mobs
     modImplementation("maven.modrinth:quark:$quark_version")
     modImplementation("maven.modrinth:zeta:$zeta_version")
 //    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")

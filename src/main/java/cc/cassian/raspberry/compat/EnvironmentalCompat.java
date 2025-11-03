@@ -88,7 +88,7 @@ public class EnvironmentalCompat {
             int huntingtime = data.getValue(RaspberryData.WORM_HUNTING_TIME);
             BlockPos wormpos = data.getValue(RaspberryData.WORM_POS);
 
-            if (huntingtime == 0 || (data.getValue(RaspberryData.HAS_WORM_TARGET) && level.getBlockState(wormpos).getBlock() != RaspberryBlocks.WORMY_DIRT.getA().get())) {
+            if (huntingtime == 0 || (data.getValue(RaspberryData.HAS_WORM_TARGET) && level.getBlockState(wormpos).getBlock() != RaspberryBlocks.WORMY_DIRT.getBlock())) {
                 data.setValue(RaspberryData.HAS_WORM_TARGET, false);
                 if (huntingtime > 0) data.setValue(RaspberryData.WORM_HUNTING_TIME, Math.max(-400, -huntingtime));
             } else {

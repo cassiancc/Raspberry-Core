@@ -11,8 +11,13 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.violetmoon.quark.content.tweaks.module.GoldToolsHaveFortuneModule;
+import vazkii.quark.content.building.block.PaperLanternBlock;
+import vazkii.quark.addons.oddities.capability.CrateItemHandler;
+import vazkii.quark.content.tools.entity.TorchArrow;
+import vazkii.quark.content.tools.module.TorchArrowModule;
+import vazkii.quark.content.tweaks.module.GoldToolsHaveFortuneModule;
 
 import java.util.Locale;
 
@@ -34,5 +39,17 @@ public class QuarkCompat {
         }
 
         return false;
+    }
+
+    public static boolean isPaperLantern(BlockState downState) {
+        return downState.getBlock() instanceof PaperLanternBlock;
+    }
+
+    public static boolean isCrateItemHandler(ItemStackHandler obj) {
+        return obj instanceof CrateItemHandler;
+    }
+
+    public static void register() {
+     
     }
 }

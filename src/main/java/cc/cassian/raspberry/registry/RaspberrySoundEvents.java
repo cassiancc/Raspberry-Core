@@ -22,6 +22,8 @@ public class RaspberrySoundEvents {
 
     public static final RegistryObject<SoundEvent> SILVER_HIT = register("entity.player.attack.silver_hit");
 
+    public static final RegistryObject<SoundEvent> COPPER_EQUIP = register("item.armor.equip_copper");
+
     private static RegistryObject<SoundEvent> register(String key) {
         return SOUNDS.register(key, ()-> SoundEvent.createVariableRangeEvent(locate(key)));
     }

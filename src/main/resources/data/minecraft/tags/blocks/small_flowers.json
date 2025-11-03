@@ -12,6 +12,10 @@
         {
             "id": "raspberry:pink_petals",
             "required": false
+        },
+        {
+          "id": "raspberry:hopeful_wildflowers",
+          "required": false
         }
     ]
 }
