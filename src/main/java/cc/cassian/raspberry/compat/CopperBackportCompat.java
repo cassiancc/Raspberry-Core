@@ -13,7 +13,7 @@ import static cc.cassian.raspberry.registry.RaspberryBlocks.registerBlock;
 public class CopperBackportCompat {
     public static BlockSupplier registerGrateBlock(BlockBehaviour.Properties properties) {
         return registerBlock("lead_grate",
-                ()-> new GrateBlock(properties), CreativeModeTab.TAB_BUILDING_BLOCKS);
+                ()-> new GrateBlock(properties));
     }
 
 }

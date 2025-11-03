@@ -4,10 +4,12 @@ import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.blocks.*;
 import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.AshLayerBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.RakedGravelBlock;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,10 +21,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import oshi.util.tuples.Pair;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
-import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.ArrayList;
 import java.util.function.Supplier;
@@ -68,23 +68,23 @@ public class RaspberryBlocks {
 
     public static BlockSupplier
             CHEERFUL_WILDFLOWERS = registerBlock("cheery_wildflowers",
-            ()-> new FlowerBedBlock(flowerBedProperties(false)), CreativeModeTab.TAB_DECORATIONS);
+            ()-> new FlowerBedBlock(flowerBedProperties(false)));
 
     public static BlockSupplier
             PINK_PETALS = registerBlock("pink_petals",
-            ()-> new FlowerBedBlock(flowerBedProperties(false)), CreativeModeTab.TAB_DECORATIONS);
+            ()-> new FlowerBedBlock(flowerBedProperties(false)));
 
     public static BlockSupplier
             CLOVERS = registerBlock("clovers",
-            ()-> new FlowerBedBlock(flowerBedProperties(true)), CreativeModeTab.TAB_DECORATIONS);
+            ()-> new FlowerBedBlock(flowerBedProperties(true)));
 
     public static BlockSupplier
             MOODY_WILDFLOWERS = registerBlock("moody_wildflowers",
-            ()-> new FlowerBedBlock(flowerBedProperties(false)), CreativeModeTab.TAB_DECORATIONS);
+            ()-> new FlowerBedBlock(flowerBedProperties(false)));
 
     public static BlockSupplier
             HOPEFUL_WILDFLOWERS = registerBlock("hopeful_wildflowers",
-            ()-> new FlowerBedBlock(flowerBedProperties(false)), CreativeModeTab.TAB_DECORATIONS);
+            ()-> new FlowerBedBlock(flowerBedProperties(false)));
 
     public static  RegistryObject<Block>
             CHEERY_WILDFLOWER_GARLAND = RaspberryBlocks.BLOCKS.register("cheery_wildflower_garland", ()-> new FlowerGarlandBlock(flowerBedProperties(false)));
@@ -160,24 +160,24 @@ public class RaspberryBlocks {
 
     public static BlockSupplier
             BRICK_COUNTER = registerBlock("brick_counter",
-            ()-> new BrickCounterBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new BrickCounterBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
 
     public static BlockSupplier
             SILT_BRICK_COUNTER = registerBlock("silt_brick_counter",
-            ()-> new BrickCounterBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new BrickCounterBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
 
     public static BlockSupplier
             ASH_BRICK_COUNTER = registerBlock("ash_brick_counter",
-            ()-> new BrickCounterBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            ()-> new BrickCounterBlock(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
 
     public static BlockSupplier
             RED_MOSS_CARPET = registerBlock("red_moss_carpet",
             ()-> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).mapColor(MapColor.COLOR_RED)));
 
     private static BlockBehaviour.Properties flowerBedProperties(boolean replaceable) {
-        var material = Material.PLANT;
-        if (replaceable) material = Material.REPLACEABLE_PLANT;
-        return BlockBehaviour.Properties.of(material).noCollission().sound(SoundType.FLOWERING_AZALEA);
+        var material = BlockBehaviour.Properties.of();
+        if (replaceable) material = material.replaceable();
+        return material.noCollission().sound(SoundType.FLOWERING_AZALEA);
     }
 
     public static final ArrayList<BlockSupplier> FOLIAGE_BLOCKS = new ArrayList<>();
@@ -197,7 +197,7 @@ public class RaspberryBlocks {
     }
 
     public static BlockSupplier registerLeadGrate() {
-        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of(Material.HEAVY_METAL).noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL);
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of().noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL);
         if (ModCompat.COPPER_BACKPORT) {
             return CopperBackportCompat.registerGrateBlock(properties);
         }
@@ -205,9 +205,9 @@ public class RaspberryBlocks {
                 ()-> new Block(properties));
     }
 
-    public static BlockSupplier registerBlock(String blockID, Supplier<Block> blockSupplier, CreativeModeTab tab) {
+    public static BlockSupplier registerBlock(String blockID, Supplier<Block> blockSupplier) {
         final var block = BLOCKS.register(blockID, blockSupplier);
-        final var item = RaspberryItems.ITEMS.register(blockID, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+        final var item = RaspberryItems.ITEMS.register(blockID, () -> new BlockItem(block.get(), new Item.Properties()));
         return new BlockSupplier(blockID, block, item);
     }
 }

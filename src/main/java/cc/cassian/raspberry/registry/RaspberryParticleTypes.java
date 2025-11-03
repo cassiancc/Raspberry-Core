@@ -47,11 +47,11 @@ public class RaspberryParticleTypes {
 
         @SubscribeEvent
         public static void registerParticleTypes(RegisterParticleProvidersEvent event) {
-            event.register((ParticleType)RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
-            event.register(RaspberryParticleTypes.CHEERY_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.register(RaspberryParticleTypes.PLAYFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.register(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.register(RaspberryParticleTypes.MOODY_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.registerSpriteSet((ParticleType)RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.CHEERY_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.PLAYFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.MOODY_PETAL.get(), FlowerPetalParticle.Provider::new);
         }
     }
 

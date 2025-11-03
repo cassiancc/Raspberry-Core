@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.client;
 
+import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.registry.BlockSupplier;
 import cc.cassian.raspberry.client.registry.RaspberryItemProperties;

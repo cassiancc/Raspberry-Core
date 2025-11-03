@@ -27,7 +27,7 @@ public class FlowerGarlandEvent {
 
     public static void tick(Player player) {
         Item headItem = player.getItemBySlot(EquipmentSlot.HEAD).getItem();
-        if (headItem instanceof FlowerGarlandItem && player.isOnGround()) {
+        if (headItem instanceof FlowerGarlandItem && player.onGround()) {
             UUID playerId = player.getUUID();
             Vec3 playerPos = player.position();
 
@@ -46,7 +46,7 @@ public class FlowerGarlandEvent {
                 if (particle != null) {
                     int particleCount = player.getRandom().nextFloat() <= 0.5 ? 1 : 2;
                     for (int i = 0; i < particleCount; i++) {
-                        player.level.addParticle(
+                        player.level().addParticle(
                             particle,
                             playerPos.x() + (movement.x/2),
                             playerPos.y()+1 + player.getRandom().nextFloat() * 0.4,

@@ -1,7 +1,6 @@
 package cc.cassian.raspberry.mixin.miningmaster;
 
 import cc.cassian.raspberry.ModCompat;
-import cc.cassian.raspberry.compat.controllable.ControllableCompat;
 import cc.cassian.raspberry.config.ModConfig;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

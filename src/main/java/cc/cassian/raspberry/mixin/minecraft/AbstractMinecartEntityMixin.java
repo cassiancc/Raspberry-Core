@@ -235,7 +235,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity {
     @Unique
     protected void raspberryCore$modifiedMoveAlongTrack(BlockPos startPos, BlockState state) {
 
-        Level level = this.getLevel();
+        Level level = this.level();
 
         final double tps = 20.;
         final double maxSpeed = 34. / tps;

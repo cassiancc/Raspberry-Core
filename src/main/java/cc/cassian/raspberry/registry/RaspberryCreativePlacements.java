@@ -8,23 +8,23 @@ import vectorwing.farmersdelight.common.registry.ModCreativeTabs;
 public class RaspberryCreativePlacements {
     public static void set(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(ModCreativeTabs.TAB_FARMERS_DELIGHT.getKey())) {
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.ASH_STOVE));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.SILT_STOVE));
+            event.accept(RaspberryBlocks.ASH_STOVE.getBlock());
+            event.accept(RaspberryBlocks.SILT_STOVE.getBlock());
         }
         else if (event.getTabKey().equals(CreativeModeTabs.NATURAL_BLOCKS)) {
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.WORMY_DIRT));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.CLOVERS));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.CHEERFUL_WILDFLOWERS));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.MOODY_WILDFLOWERS));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.PINK_PETALS));
+            event.accept(RaspberryBlocks.WORMY_DIRT.getBlock());
+            event.accept(RaspberryBlocks.CLOVERS.getBlock());
+            event.accept(RaspberryBlocks.CHEERFUL_WILDFLOWERS.getBlock());
+            event.accept(RaspberryBlocks.MOODY_WILDFLOWERS.getBlock());
+            event.accept(RaspberryBlocks.PINK_PETALS.getBlock());
         }
         else if (event.getTabKey().equals(CreativeModeTabs.BUILDING_BLOCKS)) {
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.ASH_BLOCK));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.LEAD_GRATE));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.BLACKSTONE_GRAVEL));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.DEEPSLATE_GRAVEL));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.RAKED_BLACKSTONE_GRAVEL));
-            event.accept(RaspberryBlocks.getItem(RaspberryBlocks.RAKED_DEEPSLATE_GRAVEL));
+            event.accept(RaspberryBlocks.ASH_BLOCK.getBlock());
+            event.accept(RaspberryBlocks.LEAD_GRATE.getBlock());
+            event.accept(RaspberryBlocks.BLACKSTONE_GRAVEL.getBlock());
+            event.accept(RaspberryBlocks.DEEPSLATE_GRAVEL.getBlock());
+            event.accept(RaspberryBlocks.RAKED_BLACKSTONE_GRAVEL.getBlock());
+            event.accept(RaspberryBlocks.RAKED_DEEPSLATE_GRAVEL.getBlock());
         }
         else if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {
             event.accept(RaspberryItems.ASHBALL);
