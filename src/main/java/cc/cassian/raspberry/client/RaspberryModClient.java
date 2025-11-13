@@ -77,6 +77,7 @@ public class RaspberryModClient {
         event.register(RaspberryMod.locate("block/moody_wildflowers_potted"));
         event.register(RaspberryMod.locate("block/playful_wildflowers_potted"));
         event.register(RaspberryMod.locate("block/hopeful_wildflowers_potted"));
+        event.register(RaspberryMod.locate("block/clovers_potted"));
     }
 
 

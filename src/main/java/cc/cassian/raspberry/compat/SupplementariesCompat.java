@@ -31,5 +31,6 @@ public class SupplementariesCompat {
         FlowerPotHandler.registerCustomFlower(RaspberryBlocks.PINK_PETALS.getItemSupplier().get(), RaspberryMod.locate("block/playful_wildflowers_potted"));
         FlowerPotHandler.registerCustomFlower(RaspberryBlocks.MOODY_WILDFLOWERS.getItemSupplier().get(), RaspberryMod.locate("block/moody_wildflowers_potted"));
         FlowerPotHandler.registerCustomFlower(RaspberryBlocks.HOPEFUL_WILDFLOWERS.getItemSupplier().get(), RaspberryMod.locate("block/hopeful_wildflowers_potted"));
+        FlowerPotHandler.registerCustomFlower(RaspberryBlocks.CLOVERS.getItemSupplier().get(), RaspberryMod.locate("block/clovers_potted"));
     }
 }
