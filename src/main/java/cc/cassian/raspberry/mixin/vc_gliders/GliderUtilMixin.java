@@ -3,7 +3,10 @@ package cc.cassian.raspberry.mixin.vc_gliders;
 import cc.cassian.raspberry.config.ModConfig;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -15,6 +18,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GliderUtil.class)
 public class GliderUtilMixin {
+
+    @WrapOperation(
+            method = "onTickPlayerGlide",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;setDamageValue(I)V")
+    )
+    private static void fixUnbreaking(ItemStack instance, int damage, Operation<Void> original, @Local ServerPlayer player, @Local int damageAmount) {
+        instance.hurtAndBreak(damageAmount, player, (player1)->{
+            player1.broadcastBreakEvent(EquipmentSlot.CHEST);
+        });
+    }
+
     @WrapOperation(
             method = "lightningLogic",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isRainingAt(Lnet/minecraft/core/BlockPos;)Z")
