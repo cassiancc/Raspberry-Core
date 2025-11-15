@@ -10,7 +10,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -40,20 +42,31 @@ public class SwapArrowEntity extends AbstractArrow {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        super.onHitEntity(result);
-
         Entity target = result.getEntity();
         Entity shooter = this.getOwner();
 
-        if (target instanceof LivingEntity && shooter instanceof ServerPlayer) {
-            Vec3 playerPos = shooter.position();
-            Vec3 targetPos = target.position();
+        if (!this.level.isClientSide()) {
+            if (shooter instanceof LivingEntity && shooter != target) {
+                if (target instanceof ArmorStand stand && shooter instanceof ServerPlayer player) {
+                    for (EquipmentSlot slot : new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
+                        ItemStack playerItem = player.getItemBySlot(slot).copy();
+                        ItemStack standItem = stand.getItemBySlot(slot).copy();
 
-            target.teleportTo(playerPos.x, playerPos.y, playerPos.z);
-            shooter.teleportTo(targetPos.x, targetPos.y, targetPos.z);
+                        player.setItemSlot(slot, standItem);
+                        stand.setItemSlot(slot, playerItem);
+                    }
+                }
+                if (target instanceof LivingEntity) {
+                    Vec3 playerPos = shooter.position();
+                    Vec3 targetPos = target.position();
 
-            this.level.playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
-            this.level.playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    target.teleportTo(playerPos.x, playerPos.y, playerPos.z);
+                    shooter.teleportTo(targetPos.x, targetPos.y, targetPos.z);
+
+                    this.level.playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level.playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                }
+            }
         }
 
         this.discard();
