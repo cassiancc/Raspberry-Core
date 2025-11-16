@@ -28,6 +28,9 @@
  "lore.raspberry.ashball": "An item that can be thrown to inflict Blindness. Dropped when digging Ash.",
   "item.raspberry.firefly": "Firefly",
   "lore.raspberry.firefly": "A firefly, plucked from the sky with a Bug Net. Place it down to release it!",
+  "block.raspberry.fine_wood": "Fine Wood",
+  "block.raspberry.fine_wood_stairs": "Fine Wood Stairs",
+  "block.raspberry.fine_wood_slab": "Fine Wood Slab",
 
   "item.raspberry.rose_gold_bomb": "Rose Gold Bomb",
   "lore.raspberry.rose_gold_bomb": "A weak bomb that deals no damage, but knocks entities around.",
