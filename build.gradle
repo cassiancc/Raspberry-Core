@@ -250,7 +250,8 @@ dependencies {
     modImplementation("maven.modrinth:spyglass-improvements:${spyglass_improvements_version}")
     modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of spyglass improvements
     modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
-//    modImplementation("curse.maven:controllable-317269:4445137")
+    // modImplementation("curse.maven:controllable-317269:4445137")
+    modCompileOnly("maven.modrinth:cooks-collection:Fqq6FIl0")
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
 //    modImplementation("maven.modrinth:mmmmmmmmmmmm:1.7.2-forge")

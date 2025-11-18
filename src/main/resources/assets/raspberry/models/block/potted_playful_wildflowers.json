@@ -1,0 +1,6 @@
+{
+	"parent": "raspberry:block/potted_cheery_wildflowers",
+	"textures": {
+		"3": "raspberry:block/playful_wildflowers_potted"
+	}
+}

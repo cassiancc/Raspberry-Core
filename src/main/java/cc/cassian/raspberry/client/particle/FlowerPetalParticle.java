@@ -18,7 +18,7 @@ public class FlowerPetalParticle extends TextureSheetParticle {
     protected FlowerPetalParticle(ClientLevel level, double x, double y, double z,
                                   double vx, double vy, double vz) {
         super(level, x, y, z, vx, vy, vz);
-        this.lifetime = 200 + this.random.nextInt(20);
+        this.lifetime = 100 + this.random.nextInt(20);
         this.gravity = 0.01F;
         this.yd = -0.08F;
         this.xd = (-0.5 + this.random.nextFloat()) / 10;

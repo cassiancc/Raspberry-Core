@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Hopeful Wildflowers, a new flower bed block (textures by ProbablyEkho).
-- Wildflower Garlands, placeable on walls or worn as flower crowns, crafted out of wildflowers (textures and implementation by Kobber, based on existing textures)
+- Wildflower Garlands, placeable on walls or worn as flower crowns, crafted out of wildflowers (textures and implementation by Kobber, based on existing textures by ProbablyEkho)
+- Wildflowers can now be placed in Flower Pots.
 - Brick counters, as well as Silt and Ash brick variations, a new type of block for decorating your kitchen (@Kobber, @Kayla_the_Bee)
+- Swap Arrows, which swap the position of an entity with the target.
+- Pancakes (Supplementaries) can now be topped with Lemons (Cook's Collection)
 - Copper Armour now has unique sounds, backported from 1.21.9. (Copperized)
 - Additional blocks now connect to Posts. (Quark, Supplementaries, Farmer's Delight)
 - Added blacklist tag to Quark Oddities Storage Crate (`raspberry:crate_blacklist`). (@evanbones)
@@ -19,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A port of [Audaki Cart Engine](https://modrinth.com/mod/audaki-cart-engine) to Forge - Minecart speed has now been buffed to 34 meters per second. This should not affect Minecart Contraptions as this buff only applies to carts with players in them.
 - Skillets can now be enchanted with melee weapon enchantments. (Farmer's Delight)
 - Create Wrench functionality has been added to the Supplementaries Wrench (disabled by default).
+- Pancakes can now be topped with Lemons, consuming a Lemon Pancake will give you Adrenaline.
+- Pancakes with condiments now give additional nutrition and Sugar Rush when consumed.
 
 ### Changed
 - Clovers are now replaceable.
@@ -29,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Missing translation keys and incorrect models on unfinished content.
 - Corrected Brewin' and Chewin' EMI integration to no longer show incorrect recipes.
 - Beacon EMI integration shows inputs correctly.
+- Gliders now respond to Unbreaking.
+- Wildflowers now have unique models when placed in pots (Supplementaries).
 
 ## [1.8.1] - 2025-09-24
 

@@ -1,12 +1,15 @@
 package cc.cassian.raspberry;
 
+import cc.cassian.raspberry.client.RaspberryModClient;
 import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.compat.*;
 import cc.cassian.raspberry.config.ModConfig;
+import cc.cassian.raspberry.entity.SwapArrowEntity;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
 import cc.cassian.raspberry.events.FlowerGarlandEvent;
 import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,6 +17,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -54,12 +58,12 @@ public final class RaspberryMod {
         MinecraftForge.EVENT_BUS.addListener(this::onEntityInteract);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityJoinLevel);
         MinecraftForge.EVENT_BUS.addListener(this::onLivingUpdate);
+        MinecraftForge.EVENT_BUS.addListener(this::onLivingHurt);
         eventBus.addListener(RaspberryMod::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
         if (FMLEnvironment.dist.isClient()) {
-            // Register config
-            registerModsPage(context);
+            RaspberryModClient.init(context);
         }
         if (ModCompat.BLUEPRINT)
             RaspberryData.registerData();
@@ -86,6 +90,8 @@ public final class RaspberryMod {
         if (ModCompat.SUPPLEMENTARIES) {
             SupplementariesCompat.register();
         }
+
+        event.enqueueWork(RaspberryBlocks::addPottedPlants);
     }
 
     @SubscribeEvent
@@ -99,15 +105,6 @@ public final class RaspberryMod {
         if (ModCompat.COPPERIZED && ModCompat.COFH_CORE)
             CopperizedCompat.resist(event);
         DarknessRepairEvent.tick(event.player);
-        FlowerGarlandEvent.tick(event.player);
-    }
-
-    /**
-	 * Integrate Cloth Config screen (if mod present) with Forge mod menu.
-	 */
-    public static void registerModsPage(ModLoadingContext context) {
-        if (ModCompat.CLOTH_CONFIG)
-            context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(ModConfigFactory::createScreen));
     }
 
     @SubscribeEvent
@@ -132,5 +129,14 @@ public final class RaspberryMod {
     public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
         if (ModCompat.ENVIRONMENTAL)
             EnvironmentalCompat.onLivingUpdate(event);
+    }
+
+    @SubscribeEvent
+    public void onLivingHurt(LivingHurtEvent event) {
+        DamageSource source = event.getSource();
+        if (source.getDirectEntity() instanceof SwapArrowEntity) {
+            // Copies the way Caverns and Chasms make Blunt Arrows deal no damage
+            event.setAmount(0.0F);
+        }
     }
 }
