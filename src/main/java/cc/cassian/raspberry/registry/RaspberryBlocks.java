@@ -4,6 +4,7 @@ import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.blocks.*;
 import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
+import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.AshLayerBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.PancakeBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.RakedGravelBlock;
@@ -12,11 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CarpetBlock;
-import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -193,6 +190,15 @@ public class RaspberryBlocks {
     public static Supplier<Block>
             LEMON_PANCAKE = registerBlock("lemon_pancake",
             ()-> new LemonPancakeBlock(BlockBehaviour.Properties.copy(ModRegistry.PANCAKE.get())));
+
+    public static BlockSupplier FINE_WOOD = registerBlock("fine_wood",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+    public static BlockSupplier FINE_WOOD_STAIRS = registerBlock("fine_wood" + "_stairs",
+            () -> new ModStairBlock(FINE_WOOD.getBlockSupplier(), BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+    public static BlockSupplier FINE_WOOD_SLAB = registerBlock("fine_wood" + "_slab",
+            () -> new DirectionalSlabBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+    public static BlockSupplier FINE_WOOD_WALL = registerBlock("fine_wood" + "_wall",
+            () -> new FineWoodWall(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
     private static BlockBehaviour.Properties flowerBedProperties(boolean replaceable) {
         var material = Material.PLANT;

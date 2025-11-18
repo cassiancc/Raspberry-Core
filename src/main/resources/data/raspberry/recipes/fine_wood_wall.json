@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "raspberry:fine_wood"
+    }
+  },
+  "result": {
+    "item": "raspberry:fine_wood_wall",
+    "count": 6
+  }
+}
