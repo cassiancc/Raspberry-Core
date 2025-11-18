@@ -65,7 +65,6 @@
     "sullysmod.SMPlayerEventsMixin",
     "supplementaries.BombItemMixin",
     "supplementaries.CandleHolderBlockMixin",
-    "supplementaries.CartographersQuillItemMixin",
     "supplementaries.PancakeBlockMixin",
     "supplementaries.RakedGravelBlockMixin",
     "toms_storage.AbstractStorageTerminalScreenMixin",

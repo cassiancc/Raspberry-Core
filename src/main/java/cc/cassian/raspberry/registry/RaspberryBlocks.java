@@ -38,7 +38,7 @@ public class RaspberryBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
     public static final Map<ResourceLocation, RegistryObject<Block>> POTTED_PLANTS = new HashMap<>();
 
-    public static final Supplier<Block> TEMPORARY_COBWEB = registerBlock("temporary_cobweb",
+    public static final Supplier<Block> TEMPORARY_COBWEB = registerBlockWithoutItem("temporary_cobweb",
             ()-> new TemporaryCobwebBlock(BlockBehaviour.Properties.copy(Blocks.COBWEB)));
 
     public static BlockSupplier
@@ -187,7 +187,7 @@ public class RaspberryBlocks {
             ()-> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).mapColor(MapColor.COLOR_RED)));
 
     public static Supplier<Block>
-            LEMON_PANCAKE = registerBlock("lemon_pancake",
+            LEMON_PANCAKE = registerBlockWithoutItem("lemon_pancake",
             ()-> new LemonPancakeBlock(BlockBehaviour.Properties.copy(ModRegistry.PANCAKE.get())));
 
     private static BlockBehaviour.Properties flowerBedProperties(boolean replaceable) {
@@ -227,7 +227,7 @@ public class RaspberryBlocks {
         return new BlockSupplier(blockID, block, item);
     }
 
-    public static Supplier<Block> registerBlock(String blockID, Supplier<Block> blockSupplier) {
+    public static Supplier<Block> registerBlockWithoutItem(String blockID, Supplier<Block> blockSupplier) {
         return BLOCKS.register(blockID, blockSupplier);
     }
 

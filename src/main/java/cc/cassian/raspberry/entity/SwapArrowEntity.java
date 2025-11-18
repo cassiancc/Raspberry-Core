@@ -2,9 +2,10 @@ package cc.cassian.raspberry.entity;
 
 import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RaspberryParticleTypes;
-import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
+import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -45,7 +46,7 @@ public class SwapArrowEntity extends AbstractArrow {
         Entity target = result.getEntity();
         Entity shooter = this.getOwner();
 
-        if (!this.level.isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (shooter instanceof LivingEntity && shooter != target) {
                 if (target instanceof ArmorStand stand && shooter instanceof ServerPlayer player) {
                     for (EquipmentSlot slot : new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
@@ -63,8 +64,8 @@ public class SwapArrowEntity extends AbstractArrow {
                     target.teleportTo(playerPos.x, playerPos.y, playerPos.z);
                     shooter.teleportTo(targetPos.x, targetPos.y, targetPos.z);
 
-                    this.level.playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    this.level.playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level().playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level().playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
             }
         }
@@ -96,7 +97,7 @@ public class SwapArrowEntity extends AbstractArrow {
             // Ground particles
             float particleMovement = 0.01F;
             if (this.random.nextFloat() <= 0.01) {
-                this.level.addParticle(ParticleTypes.REVERSE_PORTAL, this.getX(), this.getY() + 0.1, this.getZ(), (this.random.nextDouble() - 0.5) * particleMovement, this.random.nextDouble() * particleMovement, (this.random.nextDouble() - 0.5) * particleMovement);
+                this.level().addParticle(ParticleTypes.REVERSE_PORTAL, this.getX(), this.getY() + 0.1, this.getZ(), (this.random.nextDouble() - 0.5) * particleMovement, this.random.nextDouble() * particleMovement, (this.random.nextDouble() - 0.5) * particleMovement);
             }
         } else {
             // Air particles
@@ -124,7 +125,7 @@ public class SwapArrowEntity extends AbstractArrow {
                         Vec3 pos = this.position();
                         pos = pos.subtract(dX * i / particlesPerTick,dY * i / particlesPerTick,dZ * i / particlesPerTick );
                         pos = pos.add(rotated.scale(radius));
-                        this.level.addParticle(
+                        this.level().addParticle(
                                 RaspberryParticleTypes.SWAP_ARROW_PORTAL.get(),
                                 pos.x,
                                 pos.y,
@@ -137,7 +138,7 @@ public class SwapArrowEntity extends AbstractArrow {
                 }
             } else if (this.random.nextFloat() <= 0.5) {
                 float particleMovement = 0.02F;
-                this.level.addParticle(ParticleTypes.REVERSE_PORTAL, this.getX() - dX, this.getY() - dY, this.getZ() - dZ, (this.random.nextDouble() - 0.5) * particleMovement, (this.random.nextDouble() - 0.5) * particleMovement, (this.random.nextDouble() - 0.5) * particleMovement);
+                this.level().addParticle(ParticleTypes.REVERSE_PORTAL, this.getX() - dX, this.getY() - dY, this.getZ() - dZ, (this.random.nextDouble() - 0.5) * particleMovement, (this.random.nextDouble() - 0.5) * particleMovement, (this.random.nextDouble() - 0.5) * particleMovement);
             }
         }
     }
@@ -148,7 +149,7 @@ public class SwapArrowEntity extends AbstractArrow {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
-        return PlatformHelper.getEntitySpawnPacket(this);
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return PlatHelper.getEntitySpawnPacket(this);
     }
 }

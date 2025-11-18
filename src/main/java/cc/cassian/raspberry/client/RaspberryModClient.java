@@ -23,6 +23,7 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -30,9 +31,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod.EventBusSubscriber(modid = RaspberryMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RaspberryModClient {
 
-    public static void init(FMLJavaModLoadingContext context) {
+    public static void init() {
         // Register config
-        registerModsPage(context);
+        registerModsPage(ModLoadingContext.get());
         MinecraftForge.EVENT_BUS.addListener(RaspberryModClient::clickTick);
     }
 
@@ -85,7 +86,7 @@ public class RaspberryModClient {
     /**
      * Integrate Cloth Config screen (if mod present) with Forge mod menu.
      */
-    public static void registerModsPage(FMLJavaModLoadingContext context) {
+    public static void registerModsPage(ModLoadingContext context) {
         if (ModCompat.CLOTH_CONFIG)
             context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(ModConfigFactory::createScreen));
     }

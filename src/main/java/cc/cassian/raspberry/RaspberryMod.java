@@ -63,7 +63,7 @@ public final class RaspberryMod {
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
         if (FMLEnvironment.dist.isClient()) {
-            RaspberryModClient.init(context);
+            RaspberryModClient.init();
         }
         if (ModCompat.BLUEPRINT)
             RaspberryData.registerData();
