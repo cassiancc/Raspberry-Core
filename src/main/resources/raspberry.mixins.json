@@ -59,6 +59,7 @@
     "minecraft.AbstractMinecartEntityMixin",
     "minecraft.CampfireBlockMixin",
     "minecraft.EnchantmentMixin",
+    "minecraft.FoliageColorMixin",
     "minecraft.FoxMixin",
     "minecraft.HasteHandMixin",
     "minecraft.HasteIsGoodMixin",
