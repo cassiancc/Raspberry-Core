@@ -1,9 +1,11 @@
 package cc.cassian.raspberry.mixin.naturalist;
 
 import cc.cassian.raspberry.registry.RaspberryItems;
+import com.starfish_studios.naturalist.Naturalist;
 import com.starfish_studios.naturalist.common.entity.Firefly;
 import com.starfish_studios.naturalist.common.helper.ItemHelper;
-import com.starfish_studios.naturalist.core.registry.NaturalistItems;
+import com.starfish_studios.naturalist.core.registry.NaturalistRecipes;
+import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -27,7 +29,7 @@ public class CatchableFireflyMixin {
         if (entity instanceof Firefly) {
             ItemStack itemStack = player.getItemInHand(hand);
 
-            if (itemStack.getItem().equals(NaturalistItems.BUG_NET.get()) && entity.isAlive()) {
+            if (itemStack.getItem().equals(NaturalistRegistry.BUG_NET.get()) && entity.isAlive()) {
                 ItemStack caughtItemStack = RaspberryItems.FIREFLY.get().getDefaultInstance();
                 itemStack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(hand));
 
