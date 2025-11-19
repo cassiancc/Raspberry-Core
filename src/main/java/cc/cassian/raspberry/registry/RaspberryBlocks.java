@@ -188,13 +188,13 @@ public class RaspberryBlocks {
             ()-> new LemonPancakeBlock(BlockBehaviour.Properties.copy(ModRegistry.PANCAKE.get())));
 
     public static BlockSupplier FINE_WOOD = registerBlock("fine_wood",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)));
     public static BlockSupplier FINE_WOOD_STAIRS = registerBlock("fine_wood" + "_stairs",
-            () -> new ModStairBlock(FINE_WOOD.getBlockSupplier(), BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            () -> new ModStairBlock(FINE_WOOD.getBlockSupplier(), BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)));
     public static BlockSupplier FINE_WOOD_SLAB = registerBlock("fine_wood" + "_slab",
-            () -> new DirectionalSlabBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            () -> new DirectionalSlabBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)));
     public static BlockSupplier FINE_WOOD_WALL = registerBlock("fine_wood" + "_wall",
-            () -> new FineWoodWall(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+            () -> new FineWoodWall(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)));
 
     private static BlockBehaviour.Properties flowerBedProperties(boolean replaceable) {
         var material = BlockBehaviour.Properties.of();
