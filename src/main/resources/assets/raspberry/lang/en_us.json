@@ -31,6 +31,7 @@
   "block.raspberry.fine_wood": "Fine Wood",
   "block.raspberry.fine_wood_stairs": "Fine Wood Stairs",
   "block.raspberry.fine_wood_slab": "Fine Wood Slab",
+  "block.raspberry.fine_wood_wall": "Fine Wood Wall",
 
   "item.raspberry.rose_gold_bomb": "Rose Gold Bomb",
   "lore.raspberry.rose_gold_bomb": "A weak bomb that deals no damage, but knocks entities around.",

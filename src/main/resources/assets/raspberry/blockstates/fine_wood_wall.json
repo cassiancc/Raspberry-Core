@@ -2,7 +2,6 @@
   "multipart": [
     {
       "when": {
-        "up": "true",
         "north": "none",
         "east": "none",
         "west": "none",
@@ -15,10 +14,10 @@
     {
       "when": {
         "OR": [
-          {"up": "true", "north": "low|tall", "east": "low|tall"},
-          {"up": "true", "east": "low|tall", "south": "low|tall"},
-          {"up": "true", "south": "low|tall", "west": "low|tall"},
-          {"up": "true", "west": "low|tall", "north": "low|tall"}
+          {"north": "low|tall", "east": "low|tall"},
+          {"east": "low|tall", "south": "low|tall"},
+          {"south": "low|tall", "west": "low|tall"},
+          {"west": "low|tall", "north": "low|tall"}
         ]
       },
       "apply": {

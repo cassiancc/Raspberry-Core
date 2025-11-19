@@ -1,6 +1,5 @@
 {
 	"format_version": "1.9.0",
-    "parent": "block/block",
 	"textures": {
 		"0": "raspberry:block/fine_wood_end",
 		"1": "raspberry:block/fine_wood_side",
