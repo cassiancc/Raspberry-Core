@@ -11,7 +11,7 @@ public class FoliageColorMixin {
     @WrapMethod(method = "getBirchColor")
     private static int mixin(Operation<Integer> original) {
         if (ModConfig.get().disableBirchLeafTinting)
-            return -1;
+            return 0xffffff;
         return original.call();
     }
 }
