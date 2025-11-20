@@ -6,8 +6,11 @@ import cc.cassian.raspberry.registry.RaspberryEntityTypes;
 import cc.cassian.raspberry.registry.RaspberryItems;
 import net.mehvahdjukaar.moonlight.api.entity.ImprovedProjectileEntity;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
+import net.mehvahdjukaar.moonlight.api.platform.network.Message;
 import net.mehvahdjukaar.supplementaries.common.entities.BombEntity;
 import net.mehvahdjukaar.supplementaries.common.misc.explosion.BombExplosion;
+import net.mehvahdjukaar.supplementaries.common.network.ClientBoundExplosionPacket;
+import net.mehvahdjukaar.supplementaries.common.network.ModNetwork;
 import net.mehvahdjukaar.supplementaries.common.utils.MiscUtils;
 import net.mehvahdjukaar.supplementaries.configs.CommonConfigs;
 import net.mehvahdjukaar.supplementaries.integration.CompatHandler;
@@ -21,10 +24,12 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -93,46 +98,32 @@ public class RoseGoldBombEntity extends ImprovedProjectileEntity {
         }
     }
 
-    @Override
     public void handleEntityEvent(byte id) {
         switch (id) {
-            default -> super.handleEntityEvent(id);
-            case 3 -> {
-                spawnBreakParticles();
+            case 3:
+                this.spawnBreakParticles();
                 this.discard();
-            }
-            case 10 -> {
-                spawnBreakParticles();
-                if (MiscUtils.FESTIVITY.isBirthday()) {
-                    this.spawnParticleInASphere(ModParticles.CONFETTI_PARTICLE.get(), 55, 0.3f);
-                } else {
-                    level().addParticle(ModParticles.BOMB_EXPLOSION_PARTICLE_EMITTER.get(), this.getX(), this.getY() + 1, this.getZ(),
-                            BombEntity.BombType.NORMAL.getRadius(), 0, 0);
-                }
-                this.spawnParticleInASphere(ParticleTypes.CRIT, 100, 5f);
+                break;
+            case 10:
+                this.spawnBreakParticles();
+                this.discard();
+                break;
+            case 67:
+                RandomSource random = this.level().getRandom();
 
-                this.discard();
-            }
-            case 68 -> level().addParticle(ParticleTypes.FLASH, this.getX(), this.getY() + 1, this.getZ(), 0, 0, 0);
-            case 67 -> {
-                RandomSource random = level().getRandom();
-                for (int i = 0; i < 10; ++i) {
-                    level().addParticle(ParticleTypes.SMOKE, this.getX() + 0.25f - random.nextFloat() * 0.5f, this.getY() + 0.45f - random.nextFloat() * 0.5f, this.getZ() + 0.25f - random.nextFloat() * 0.5f, 0, 0.005, 0);
+                for(int i = 0; i < 10; ++i) {
+                    this.level().addParticle(ParticleTypes.SMOKE, this.getX() + (double)0.25F - (double)(random.nextFloat() * 0.5F), this.getY() + (double)0.45F - (double)(random.nextFloat() * 0.5F), this.getZ() + (double)0.25F - (double)(random.nextFloat() * 0.5F), (double)0.0F, 0.005, (double)0.0F);
                 }
+
                 this.active = false;
-            }
+                break;
+            case 68:
+                this.level().addParticle(ParticleTypes.SONIC_BOOM, this.getX(), this.getY(), this.getZ(), (double)0.0F, (double)0.0F, (double)0.0F);
+                break;
+            default:
+                super.handleEntityEvent(id);
         }
-    }
 
-    private void spawnParticleInASphere(ParticleOptions type, int amount, float speed) {
-        double d = (Math.PI * 2) / amount;
-        for (float d22 = 0; d22 < (Math.PI * 2D); d22 += d) {
-            Vec3 v = new Vec3(speed, 0, 0);
-            v = v.yRot(d22 + random.nextFloat() * 0.3f);
-            v = v.zRot((float) ((random.nextFloat()) * Math.PI));
-            this.level().addParticle(type, this.getX(), this.getY() + 1, this.getZ(), v.x, v.y, v.z);
-            //this.level.addParticle(ParticleTypes.SPIT, x, y, z, Math.cos(d22) * -10.0D, 0.0D, Math.sin(d22) * -10.0D);
-        }
     }
 
     @Override
@@ -237,45 +228,39 @@ public class RoseGoldBombEntity extends ImprovedProjectileEntity {
     protected void updateRotation() {
     }
 
-    //createMiniExplosion
-    @Override
     public void reachedEndOfLife() {
-        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.NETHERITE_BLOCK_BREAK, SoundSource.NEUTRAL, 1.5F, 1.5f);
-
-        if (!this.level().isClientSide) {
+        Level level = this.level();
+        level.playSound((Player)null, this.getX(), this.getY(), this.getZ(), SoundEvents.NETHERITE_BLOCK_BREAK, SoundSource.NEUTRAL, 1.5F, 1.5F);
+        if (!level.isClientSide) {
             if (this.active) {
                 this.createExplosion();
-                //spawn particles
-                this.level().broadcastEntityEvent(this, (byte) 10);
+                level.broadcastEntityEvent(this, (byte)10);
             } else {
-                this.level().broadcastEntityEvent(this, (byte) 3);
+                level.broadcastEntityEvent(this, (byte)3);
             }
+
             this.discard();
         }
 
-        //client one is discarded when the event is recieved otherwise sometimes particles dont spawn
     }
 
     private void createExplosion() {
-        try {
-            boolean breaks = false;
+        boolean breaks = false;
 
-            if (this.superCharged) {
-                //second explosion when supercharged
-                this.level().explode(this, this.getX(), this.getY(), this.getZ(), 6f, breaks, breaks ? Level.ExplosionInteraction.TNT : Level.ExplosionInteraction.NONE);
-            }
-
-            BombExplosion explosion = new BombExplosion(this.level(), this,
-                    new RoseGoldBombExplosion.RoseGoldBombExplosionDamageCalculator(),
-                    this.getX(), this.getY() + 0.25, this.getZ(),
-                    BombEntity.BombType.NORMAL, Explosion.BlockInteraction.KEEP);
-
-            explosion.explode();
-            explosion.finalizeExplosion(true);
-        }catch (Exception e){
-            this.discard();
-            RaspberryMod.LOGGER.error("Something went wrong while exploding a bomb:", e);
-            throw e;
+        if (this.superCharged) {
+            this.level().explode(this, this.getX(), this.getY(), this.getZ(), 6.0F, breaks, Level.ExplosionInteraction.NONE);
         }
+
+        BombExplosion explosion = new RoseGoldBombExplosion(this.level(), this, new RoseGoldBombExplosion.RoseGoldBombExplosionDamageCalculator(), this.getX(), this.getY() + (double)0.25F, this.getZ(), BombEntity.BombType.NORMAL, Explosion.BlockInteraction.KEEP);
+        explosion.explode();
+        explosion.finalizeExplosion(true);
+
+        for(Player p : this.level().players()) {
+            if (p.distanceToSqr(this) < (double)4096.0F && p instanceof ServerPlayer sp) {
+                Message message = ClientBoundExplosionPacket.bomb(explosion, p);
+                ModNetwork.CHANNEL.sendToClientPlayer(sp, message);
+            }
+        }
+
     }
 }
