@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Clovers are now replaceable.
 - Renamed Pink Petals to Playful Wildflowers.
 - Reworked the cobweb projectile from Dungeons Mobs to be less janky and instead use a temporary vanilla Cobweb block (@evanbones)
+- Silenced warnings from adding removed entities.
 
 ### Fixed
 - Missing translation keys and incorrect models on unfinished content.
