@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
+    "create.MechanicalCrafterMixin",
     "miningmaster.KnightJumpEnchantmentMixin",
     "naturalist.GlowGoopItemMixin",
     "spyglass_improvements.MinecraftMixin"
@@ -34,7 +35,6 @@
     "create.DeployerHandlerMixin",
     "create.FanProcessingMixin",
     "create.GogglesItemMixin",
-    "create.MechanicalCrafterMixin",
     "create.MountedStorageMixin",
     "create.WrenchItemMixin",
     "dungeons_mobs.CobwebProjectileEntityMixin",

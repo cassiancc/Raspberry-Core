@@ -111,6 +111,8 @@
   "config.raspberry.config.naturalist_stackableItems": "Stack items from Naturalist",
   "config.raspberry.config.create_emi": "Create Mod EMI Integration",
   "config.raspberry.config.mapsWorkInInventory": "Maps work in inventory, not just in hand",
+  "config.raspberry.config.jadeRequiresScoping": "Jade requires the player to look through spyglass",
+  "config.raspberry.config.disableBirchLeafTinting": "Disable birch leaf tinting",
 
 
  "emi.category.raspberry.anvil": "Runic Etching",

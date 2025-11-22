@@ -55,7 +55,7 @@ public class ModConfig {
     public boolean unified_wrenches = false;
     public boolean saferKnightJump = true;
     public boolean raspberryCartEngine = true;
-    public boolean dungeons_mobs_revised_cobwebs;
+    public boolean dungeons_mobs_revised_cobwebs = true;
     public boolean disableBirchLeafTinting = true;
     public boolean jadeRequiresScoping = true;
 
