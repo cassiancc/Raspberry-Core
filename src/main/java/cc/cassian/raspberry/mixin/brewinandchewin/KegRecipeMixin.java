@@ -8,6 +8,6 @@ import umpaz.brewinandchewin.common.crafting.KegRecipe;
 
 @Mixin(KegRecipe.class)
 public interface KegRecipeMixin {
-    @Accessor("inputItems")
+    @Accessor(value = "inputItems", remap = false)
     NonNullList<Ingredient> getInputItems();
 }

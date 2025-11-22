@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 
 @Mixin(DamageKnightJumpPacket.class)
 public class DamageKnightJumpPacketMixin {
-    @WrapMethod(method = "lambda$handle$1")
+    @WrapMethod(method = "lambda$handle$1", remap = false)
     private static void durabilityDropChance(Supplier context, DamageKnightJumpPacket message, Operation<Void> original) {
         Random random = new Random();
         if (random.nextBoolean() || !ModConfig.get().saferKnightJump) {

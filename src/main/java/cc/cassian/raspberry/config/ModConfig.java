@@ -57,6 +57,7 @@ public class ModConfig {
     public boolean raspberryCartEngine = true;
     public boolean dungeons_mobs_revised_cobwebs;
     public boolean disableBirchLeafTinting = true;
+    public boolean jadeRequiresScoping = true;
 
     public static void load() {
         if (!Files.exists(configPath())) {

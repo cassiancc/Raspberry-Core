@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CartographersQuillItemMixin {
     @Final
     @Mutable
-    @Shadow
+    @Shadow(remap = false)
     public static String TAG_NAME;
 
     @Inject(method = "<init>", at = @At(value = "RETURN"))

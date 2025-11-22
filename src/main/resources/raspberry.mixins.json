@@ -54,6 +54,8 @@
     "farmersdelight.NetherStoveBlockMixin",
     "farmersdelight.RichSoilFarmlandBlockMixin",
     "farmersdelight.StoveBlockMixin",
+    "jade.OverlayRendererMixin",
+    "jade.RayTracingMixin",
     "map_atlases.MapCollectionMixin",
     "minecraft.AbstractHorseMixin",
     "minecraft.AbstractMinecartEntityMixin",

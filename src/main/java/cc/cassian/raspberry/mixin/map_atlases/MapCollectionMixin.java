@@ -14,7 +14,7 @@ import java.util.Set;
 @Mixin(MapCollection.class)
 @Debug(export = true)
 public abstract class MapCollectionMixin {
-    @Shadow @Final private Set<Integer> ids;
+    @Shadow(remap = false) @Final private Set<Integer> ids;
 
     @Inject(method = "serializeNBT", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;<init>()V"), cancellable = true)
     private void mixin(CallbackInfoReturnable<CompoundTag> cir) {
