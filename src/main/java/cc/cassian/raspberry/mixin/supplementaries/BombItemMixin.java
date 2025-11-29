@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BombItem.class)
 public class BombItemMixin {
-    @Shadow @Final private BombEntity.BombType type;
+    @Shadow(remap = false) @Final private BombEntity.BombType type;
 
     @Inject(
             method = "getRarity",

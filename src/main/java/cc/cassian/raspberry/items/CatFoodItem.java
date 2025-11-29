@@ -2,7 +2,6 @@ package cc.cassian.raspberry.items;
 
 import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RaspberryTags;
-import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -17,7 +16,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +36,7 @@ import java.util.List;
 import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
 
 public class CatFoodItem extends ConsumableItem {
-    public static final List<MobEffectInstance> EFFECTS = List.of(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 6000, 0), new MobEffectInstance(MobEffects.DAMAGE_BOOST, 6000, 0), new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 6000, 0));;
+    public static final List<MobEffectInstance> EFFECTS = List.of(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 6000, 0), new MobEffectInstance(MobEffects.DAMAGE_BOOST, 6000, 0), new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 6000, 0));
 
     public CatFoodItem(Item.Properties properties) {
         super(properties);
@@ -68,9 +67,10 @@ public class CatFoodItem extends ConsumableItem {
         }
     }
 
+    @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
-        if (target instanceof Wolf wolf) {
-            if (wolf.isAlive() && wolf.isTame()) {
+        if (target instanceof Cat cat) {
+            if (cat.isAlive() && cat.isTame()) {
                 return InteractionResult.SUCCESS;
             }
         }

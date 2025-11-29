@@ -4,6 +4,7 @@ import cc.cassian.raspberry.compat.QuarkCompat;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.CandleHolderBlock;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.apache.commons.lang3.text.WordUtils;
 import vectorwing.farmersdelight.common.block.CookingPotBlock;
 import vectorwing.farmersdelight.common.block.state.CookingPotSupport;
 
@@ -25,7 +27,12 @@ public class ModHelpers {
 
     // Automatically generate translation keys for config options.
     public static Component fieldName(Field field) {
-        return Component.translatable("config."+MOD_ID+".config." + field.getName());
+        var key = "config."+MOD_ID+".config." + field.getName();
+        if (I18n.exists(key)) {
+            return Component.translatable(key);
+        } else {
+            return Component.literal(WordUtils.capitalizeFully(field.getName()));
+        }
     }
 
     // Get the current value of a config field.

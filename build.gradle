@@ -126,6 +126,7 @@ dependencies {
     modImplementation("com.teamabnormals:blueprint:$blueprint_version")
     modCompileOnly("maven.modrinth:endergetic:$endergetic_version")
     modImplementation("maven.modrinth:buzzier-bees:$buzzier_bees_version")
+    modImplementation("maven.modrinth:autumnity:$autumnity_version")
 
     // Recipe viewers
     modImplementation("maven.modrinth:emi:$emi_version+$minecraft_version+forge")
