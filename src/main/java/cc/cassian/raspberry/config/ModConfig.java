@@ -59,8 +59,8 @@ public class ModConfig {
     public boolean saferKnightJump = true;
     public boolean raspberryCartEngine = true;
     public boolean dungeons_mobs_revised_cobwebs = true;
-    public boolean disableBirchLeafTinting = true;
-    public boolean jadeRequiresScoping = true;
+    public boolean disableBirchLeafTinting = false;
+    public boolean jadeRequiresScoping = false;
 
     public static void load() {
         if (!Files.exists(configPath())) {

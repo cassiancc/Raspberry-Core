@@ -177,7 +177,8 @@ dependencies {
     modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
     // modImplementation("curse.maven:controllable-317269:4445137")
     modCompileOnly("maven.modrinth:cooks-collection:Fqq6FIl0")
-//    // mods for testing purposes
+    modCompileOnly("maven.modrinth:jade:$jade_version")
+    // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
     modImplementation("maven.modrinth:mmmmmmmmmmmm:zAahRq2q")
 
