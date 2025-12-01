@@ -15,6 +15,11 @@ loom {
     forge {
         mixinConfig 'raspberry.mixins.json'
     }
+    mixin {
+        afterEvaluate {
+            defaultRefmapName = "raspberry.refmap.json"
+        }
+    }
 }
 
 wiki {
