@@ -1,14 +1,11 @@
 package cc.cassian.raspberry.registry;
 
+import cc.cassian.raspberry.ModCompat;
+import cc.cassian.raspberry.compat.NaturalistCompat;
 import cc.cassian.raspberry.items.*;
-import com.starfish_studios.naturalist.Naturalist;
-import com.starfish_studios.naturalist.item.forge.CaughtMobItem;
-import com.starfish_studios.naturalist.registry.NaturalistEntityTypes;
-import com.starfish_studios.naturalist.registry.NaturalistSoundEvents;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -21,7 +18,16 @@ public class RaspberryItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     public static Supplier<Item> ASHBALL = registerItem("ashball", () -> new AshballItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
-    public static Supplier<Item> FIREFLY = registerItem("firefly", () -> new CaughtMobItem(NaturalistEntityTypes.FIREFLY, ()-> Fluids.EMPTY, NaturalistSoundEvents.SNAIL_FORWARD, new Item.Properties().tab(Naturalist.TAB)));
+    public static Supplier<Item> FIREFLY = registerFireflyItem();
+
+    private static Supplier<Item> registerFireflyItem() {
+        if (ModCompat.NATURALIST) {
+            return NaturalistCompat.registerFireflyItem();
+        } else {
+            return RaspberryItems.registerItem("firefly", () -> new Item(new Item.Properties()));
+        }
+    }
+
     public static Supplier<Item> ROSE_GOLD_BOMB = registerItem("rose_gold_bomb", () -> new RoseGoldBombItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static Supplier<Item> SWAP_ARROW = registerItem("swap_arrow", () -> new SwapArrowItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static Supplier<Item> CAT_FOOD = registerItem("cat_food", () -> new CatFoodItem(new Item.Properties().craftRemainder(Items.BOWL).tab(CreativeModeTab.TAB_FOOD)));
