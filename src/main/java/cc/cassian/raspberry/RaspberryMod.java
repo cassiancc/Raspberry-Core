@@ -1,19 +1,17 @@
 package cc.cassian.raspberry;
 
 import cc.cassian.raspberry.client.RaspberryModClient;
-import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.compat.*;
 import cc.cassian.raspberry.compat.oreganized.OreganizedEvents;
 import cc.cassian.raspberry.compat.oreganized.network.RaspberryOreganizedNetwork;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.entity.SwapArrowEntity;
+import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
-import cc.cassian.raspberry.events.FlowerGarlandEvent;
 import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.block.ComposterBlock;
-import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -100,14 +98,12 @@ public final class RaspberryMod {
 
     @SubscribeEvent
     public static void lightningTick(EntityStruckByLightningEvent event) {
-        if (ModCompat.COPPERIZED && !ModCompat.COFH_CORE && ModConfig.get().aftershock)
-            CopperizedCompat.electrify(event);
+        if (!ModCompat.COFH_CORE && ModConfig.get().aftershock)
+            AftershockEvent.electrify(event);
     }
 
     @SubscribeEvent
     public static void playerTick(TickEvent.PlayerTickEvent event) {
-        if (ModCompat.COPPERIZED && ModCompat.COFH_CORE)
-            CopperizedCompat.resist(event);
         DarknessRepairEvent.tick(event.player);
     }
 

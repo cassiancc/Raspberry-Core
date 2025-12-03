@@ -68,6 +68,7 @@
     "minecraft.ItemMixin",
     "minecraft.ItemStackMixin",
     "minecraft.LevelSummaryMixin",
+    "minecraft.LivingEntityMixin",
     "minecraft.MapItemMixin",
     "minecraft.MinecartChestMixin",
     "minecraft.NoBannersMixin",

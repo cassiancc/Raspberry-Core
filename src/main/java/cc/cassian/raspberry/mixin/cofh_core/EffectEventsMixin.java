@@ -1,7 +1,7 @@
 package cc.cassian.raspberry.mixin.cofh_core;
 
 import cc.cassian.raspberry.ModCompat;
-import cc.cassian.raspberry.compat.CopperizedCompat;
+import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.config.ModConfig;
 import cofh.core.event.EffectEvents;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -17,6 +17,6 @@ public class EffectEventsMixin {
     @Inject(method = "handleEntityStruckByLightningEvent", at = @At(value = "HEAD"), remap = false)
     private static void mixin(EntityStruckByLightningEvent event, CallbackInfo ci) {
         if (ModCompat.COPPERIZED && ModConfig.get().aftershock)
-            CopperizedCompat.electrify(event);
+            AftershockEvent.electrify(event);
     }
 }
