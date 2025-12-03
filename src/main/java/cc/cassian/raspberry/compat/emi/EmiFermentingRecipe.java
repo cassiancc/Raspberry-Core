@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.client.recipebook.KegRecipeBookTab;
 
+import java.util.Collections;
 import java.util.List;
 
 public class EmiFermentingRecipe implements EmiRecipe {
@@ -91,7 +92,7 @@ public class EmiFermentingRecipe implements EmiRecipe {
         // background
         widgetHolder.addTexture(backgroundImage, 0, 0, 117, 57, 29,16 );
         // arrow
-        widgetHolder.addAnimatedTexture(backgroundImage, 48, 28, 33, 9, 176, 28, fermentTime*20, true, false, false).tooltipText(List.of(Component.literal("Ferments in %d minutes".formatted(fermentTime / 120))));
+        widgetHolder.addAnimatedTexture(backgroundImage, 48, 28, 33, 9, 176, 28, fermentTime*20, true, false, false).tooltipText(addFermentingTime((fermentTime / 1200)));
         // frigid
         if (temperature == 1) {
             widgetHolder.addTexture(backgroundImage, 47, 23, 7, 3, 176, 0).tooltipText(List.of(Component.translatable("emi.brewinandchewin.fermenting.frigid")));
@@ -135,5 +136,13 @@ public class EmiFermentingRecipe implements EmiRecipe {
 
         widgetHolder.addSlot(EmiIngredient.of(Ingredient.of(this.output)), 92, 38);
 
+    }
+
+    private List<Component> addFermentingTime(int i) {
+        if (i == 1) {
+            return Collections.singletonList(Component.translatable("emi.cooking.time_minute", i));
+        } else {
+            return Collections.singletonList(Component.translatable("emi.cooking.time_minutes", i));
+        }
     }
 }
