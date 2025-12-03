@@ -18,6 +18,8 @@ public class RaspberryTags {
     public static final TagKey<Item> ENCHANTABLE_WEAPON = createItemTag("enchantable/weapon");
     public static final TagKey<Item> ENCHANTABLE_HEARTFELT = createItemTag("enchantable/heartfelt");
 
+    public static final TagKey<Item> COPPER_ARMOR = createItemTag("copper_armor");
+
     public static final TagKey<Item> HAS_KINETIC_DAMAGE = createItemTag( "has_kinetic_damage");
 
     public static final TagKey<Item> WORM_SEEKER_ITEMS = createItemTag( "worm_seeker_items");

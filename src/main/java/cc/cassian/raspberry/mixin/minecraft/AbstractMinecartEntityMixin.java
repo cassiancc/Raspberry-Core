@@ -162,12 +162,6 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
-/*
- AbstractMinecart is extending VehicleEntity
- But this is only available from 1.20.3
- So we stay with extends Entity for now
- */
-
 @Mixin(AbstractMinecart.class)
 public abstract class AbstractMinecartEntityMixin extends Entity {
 
@@ -237,16 +231,12 @@ public abstract class AbstractMinecartEntityMixin extends Entity {
 
         Level level = this.level();
 
-        final double tps = 20.;
-        final double maxSpeed = 34. / tps;
-        final double maxMomentum = maxSpeed * 5.;
-        final double vanillaMaxSpeed = 8. / tps;
-        final double vanillaMaxMomentum = 40. / tps;
+        final double tps = 20.0;
+        final double maxSpeed = ModConfig.get().raspberryCartMaxSpeed / tps;
+        final double maxMomentum = maxSpeed * 5.0;
+        final double vanillaMaxSpeed = 8.0 / tps;
+        final double vanillaMaxMomentum = 40.0 / tps;
 
-        /*
-         From 1.18 resetFallDistance() is used, but for backwards compatibility we copied the code
-         So far (2024-05-25) no different code is executed in that function
-         */
         resetFallDistance();
 
         double thisX = this.getX();

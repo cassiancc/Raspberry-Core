@@ -6,10 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Maximum minecart speed is configurable.
+- Copper Horse Armor now grants Lightning Resistance and Aftershock. (Copperized)
+- Other Copper Armour mods can now grant Aftershock.
+
 ### Changed
 - Removed hard dependency on Naturalist.
 - Gliders can now be enchanted with Heartfelt (Mining Master)
-- Fermenting EMI integration now shows how long it takes to ferment (Brewin' & Chewin')
+- Fermenting EMI integration now shows how long it takes to ferment. (Brewin' & Chewin')
 
 ### Fixed
 - EMI plugin not being registered when mods are missing.

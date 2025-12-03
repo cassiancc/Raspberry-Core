@@ -106,6 +106,7 @@
   "config.raspberry.config.rose_gold_arrow_knockback": "Rose Gold Arrow Knockback",
   "config.raspberry.config.rose_gold_arrow_velocity": "Rose Gold Arrow Velocity",
   "config.raspberry.config.raspberryCartEngine": "Implement Audaki Cart Engine",
+  "config.raspberry.config.raspberryMaxSpeed": "Maximum Minecart Speed",
   "config.raspberry.config.unified_wrenches": "Merge Create/Supplementaries Wrenches",
   "config.raspberry.config.saferKnightJump": "Prevent damage from Knight Jump 50% of the time",
   "config.raspberry.config.naturalist_stackableItems": "Stack items from Naturalist",
@@ -114,6 +115,8 @@
   "config.raspberry.config.jadeRequiresScoping": "Jade requires the player to look through spyglass",
   "config.raspberry.config.disableBirchLeafTinting": "Disable birch leaf tinting",
 
+  "emi.cooking.time_minute": "%s Minute",
+  "emi.cooking.time_minutes": "%s Minutes",
 
  "emi.category.raspberry.anvil": "Runic Etching",
  "emi.category.raspberry.beacon_base": "Beacon Base Blocks",
