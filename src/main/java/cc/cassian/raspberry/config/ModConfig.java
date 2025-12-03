@@ -55,6 +55,7 @@ public class ModConfig {
     public boolean unified_wrenches = false;
     public boolean saferKnightJump = true;
     public boolean raspberryCartEngine = true;
+    public double raspberryCartMaxSpeed = 34.0;
     public boolean dungeons_mobs_revised_cobwebs = true;
     public boolean disableBirchLeafTinting = true;
     public boolean jadeRequiresScoping = true;

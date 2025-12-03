@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Maximum minecart speed is configurable
+
 ### Changed
 - Removed hard dependency on Naturalist.
 - Gliders can now be enchanted with Heartfelt (Mining Master)
