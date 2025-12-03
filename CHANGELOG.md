@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Removed hard dependency on Naturalist.
+- Gliders can now be enchanted with Heartfelt (Mining Master)
+- Fermenting EMI integration now shows how long it takes to ferment (Brewin' & Chewin')
+
+### Fixed
+- EMI plugin not being registered when mods are missing.
+
+## [1.9]
+
 ### Added
 - Hopeful Wildflowers, a new flower bed block (textures by ProbablyEkho).
 - Wildflower Garlands, placeable on walls or worn as flower crowns, crafted out of wildflowers (textures and implementation by Kobber, based on existing textures by ProbablyEkho)

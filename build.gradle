@@ -104,6 +104,14 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+        content {
+            includeGroup "dev.emi"
+        }
+    }
+
     maven { url = "https://maven.bawnorton.com/releases" } // MixinSquared
     maven { url = "https://maven.enjarai.dev/mirrors" } // MixinSquared Mirror
     maven { // Curios
@@ -134,8 +142,8 @@ dependencies {
     modImplementation("maven.modrinth:autumnity:$autumnity_version")
 
     // Recipe viewers
-    modImplementation("maven.modrinth:emi:$emi_version+$minecraft_version+forge")
-    modImplementation("maven.modrinth:jei:$jei_version-forge")
+    modImplementation("dev.emi:emi-forge:${emi_version}+$minecraft_version")
+//    modImplementation("maven.modrinth:jei:$jei_version-forge")
 
     // Farmer's Delight and its addons
     modImplementation("maven.modrinth:farmers-delight:$farmers_delight_version")

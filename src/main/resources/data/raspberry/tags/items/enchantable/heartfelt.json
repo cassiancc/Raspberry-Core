@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "vc_gliders:paraglider_wood",
+      "required": false
+    },
+    {
+      "id": "vc_gliders:paraglider_iron",
+      "required": false
+    },
+    {
+      "id": "vc_gliders:paraglider_gold",
+      "required": false
+    },
+    {
+      "id": "vc_gliders:paraglider_diamond",
+      "required": false
+    },
+    {
+      "id": "vc_gliders:paraglider_netherite",
+      "required": false
+    }
+  ]
+}

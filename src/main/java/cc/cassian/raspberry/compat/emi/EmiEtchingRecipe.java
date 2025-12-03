@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 
-public class EmiEtchingRecipe extends EmiSmithingRecipe {
+public class EmiEtchingRecipe extends EmiAbstractSmithingRecipe {
 
     public EmiEtchingRecipe(EmiIngredient input1, EmiStack input2, EmiStack output, ResourceLocation id) {
         super(input1, input2, output, id);
@@ -66,8 +66,4 @@ public class EmiEtchingRecipe extends EmiSmithingRecipe {
             "pink",
             "rainbow"
     };
-
-
-
-
 }
