@@ -1,36 +1,18 @@
 package cc.cassian.raspberry.compat.emi;
 
 import cc.cassian.raspberry.RaspberryMod;
-import cofh.ensorcellation.init.EnsorcEnchantments;
-import com.brokenkeyboard.usefulspyglass.UsefulSpyglass;
-import com.github.alexthe668.domesticationinnovation.server.enchantment.DIEnchantmentRegistry;
-import com.github.alexthe668.domesticationinnovation.server.item.DIItemRegistry;
-import com.simibubi.create.AllItems;
-import com.teamabnormals.allurement.core.registry.AllurementEnchantments;
-import de.cadentem.additional_enchantments.registry.AEEnchantments;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.infernalstudios.miningmaster.init.MMEnchantments;
-import vectorwing.farmersdelight.common.registry.ModEnchantments;
-import vectorwing.farmersdelight.common.registry.ModItems;
-import vectorwing.farmersdelight.common.tag.ForgeTags;
 
-public class EmiEtchingRecipe extends EmiSmithingRecipe {
+public class EmiEtchingRecipe extends EmiAbstractSmithingRecipe {
 
     public EmiEtchingRecipe(EmiIngredient input1, EmiStack input2, EmiStack output, ResourceLocation id) {
         super(input1, input2, output, id);
@@ -82,8 +64,4 @@ public class EmiEtchingRecipe extends EmiSmithingRecipe {
             "pink",
             "rainbow"
     };
-
-
-
-
 }

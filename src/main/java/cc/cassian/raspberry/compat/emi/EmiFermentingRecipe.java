@@ -91,7 +91,7 @@ public class EmiFermentingRecipe implements EmiRecipe {
         // background
         widgetHolder.addTexture(backgroundImage, 0, 0, 117, 57, 29,16 );
         // arrow
-        widgetHolder.addAnimatedTexture(backgroundImage, 48, 28, 33, 9, 176, 28, fermentTime, true, false, false);
+        widgetHolder.addAnimatedTexture(backgroundImage, 48, 28, 33, 9, 176, 28, fermentTime*20, true, false, false).tooltipText(List.of(Component.literal("Ferments in %d minutes".formatted(fermentTime / 120))));
         // frigid
         if (temperature == 1) {
             widgetHolder.addTexture(backgroundImage, 47, 23, 7, 3, 176, 0).tooltipText(List.of(Component.translatable("emi.brewinandchewin.fermenting.frigid")));
