@@ -16,6 +16,7 @@ public class RaspberryTags {
     public static final TagKey<Item> GOOD_BAIT = createItemTag("good_bait");
 
     public static final TagKey<Item> ENCHANTABLE_WEAPON = createItemTag("enchantable/weapon");
+    public static final TagKey<Item> ENCHANTABLE_HEARTFELT = createItemTag("enchantable/heartfelt");
 
     public static final TagKey<Item> HAS_KINETIC_DAMAGE = createItemTag( "has_kinetic_damage");
 

@@ -78,6 +78,7 @@
     "minecraft.SpreadingSnowyDirtBlockMixin",
     "minecraft.ThrowableProjectileMixin",
     "miningmaster.DamageKnightJumpPacketMixin",
+    "miningmaster.HeartfeltEnchantmentMixin",
     "naturalist.CatchableFireflyMixin",
     "naturalist.CaterpillarMixin",
     "naturalist.CaughtMobItemMixin",
