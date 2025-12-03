@@ -1,13 +1,9 @@
 package cc.cassian.raspberry.compat.emi;
 
 import cc.cassian.raspberry.RaspberryMod;
-import cofh.ensorcellation.init.EnsorcEnchantments;
-import com.github.alexthe668.domesticationinnovation.server.enchantment.DIEnchantmentRegistry;
-import com.github.alexthe668.domesticationinnovation.server.item.DIItemRegistry;
 import com.simibubi.create.AllItems;
-import com.teamabnormals.allurement.core.registry.AllurementEnchantments;
-import de.cadentem.additional_enchantments.registry.AEEnchantments;
 import dev.emi.emi.EmiUtil;
+import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
@@ -16,6 +12,13 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
     public EmiSmithingRecipe(EmiIngredient input1, EmiStack input2, EmiStack output, ResourceLocation id) {
         super(input1, input2, output, id);
     }
-
+/*
     public static void addEnchantments(EmiRegistry emiRegistry) {
         final var EVERLASTING = get("everlasting");
         final var AQUATIC = get("aquatic");
@@ -312,7 +315,7 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
                 "swift_crossbow");
 
     }
-
+*/
     private static Item getLeggings() {
         return Items.DIAMOND_LEGGINGS;
     }
@@ -360,6 +363,6 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
     }
 
     public static Item get(String id) {
-        return Registry.ITEM.get(tablet(id));
+        return ForgeRegistries.ITEMS.getValue(tablet(id));
     }
 }
