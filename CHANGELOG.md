@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Maximum minecart speed is configurable.
 - Copper Horse Armor now grants Lightning Resistance and Aftershock. (Copperized)
 - Other Copper Armour mods can now grant Aftershock.
+- An atlas item that can open Xaero's World Map. (experimental content)
 
 ### Changed
 - Removed hard dependency on Naturalist.
