@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - EMI plugin not being registered when mods are missing.
+- Temporary cobwebs not obeying Bracewalk (Additional Enchantments)
 
 ## [1.9]
 
