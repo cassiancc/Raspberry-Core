@@ -42,9 +42,6 @@ public class RaspberryBlocks {
     public static final Supplier<Block> TEMPORARY_COBWEB = registerBlock("temporary_cobweb",
             ()-> new TemporaryCobwebBlock(BlockBehaviour.Properties.copy(Blocks.COBWEB)));
 
-    public static final RegistryObject<Block> TEMPORARY_COBWEB = BLOCKS.register("temporary_cobweb",
-            ()-> new TemporaryCobwebBlock(BlockBehaviour.Properties.copy(Blocks.COBWEB)));
-
     public static BlockSupplier
             SILT_STOVE = registerBlock("silt_stove",
             ()-> new StoveBlock(BlockBehaviour.Properties.copy(ModBlocks.STOVE.get())), FarmersDelight.CREATIVE_TAB);
