@@ -54,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Beacon EMI integration shows inputs correctly.
 - Gliders now respond to Unbreaking.
 - Wildflowers now have unique models when placed in pots (Supplementaries).
+- Fixed default Enderman animations from [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) (@evanbones) 
 
 ## [1.8.1] - 2025-09-24
 
