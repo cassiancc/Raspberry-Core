@@ -169,6 +169,9 @@ dependencies {
     modImplementation("maven.modrinth:twigs:$twigs_version")
     modImplementation("curse.maven:dungeons-mobs-428883:$dungeons_mobs_version")
     modImplementation("curse.maven:dungeons-libraries-550941:$dungeons_libraries_version") // dependency of dungeons mobs
+    modImplementation("curse.maven:enderman-overhaul-574409:$enderman_overhaul_version")
+    modImplementation("curse.maven:resourceful-config-714059:$resourceful_config_version") // dependency of enderman overhaul
+    modImplementation("curse.maven:resourceful-lib-570073:$resourceful_lib_version") // dependency of enderman overhaul
     modImplementation("maven.modrinth:quark:$quark_version")
     modImplementation("maven.modrinth:autoreglib:$autoreglib_version") // dependency of quark
     modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")

@@ -41,6 +41,7 @@
     "dynamiccrosshair.VanillaBlockHandlerMixin",
     "ecologics.CoconutSliceItemMixin",
     "endergetic.EnderWallTorchMixin",
+    "endermanoverhaul.ReplacedEndermanMixin",
     "environmental.AbstractSkeletonMixin",
     "environmental.ArmorItemMixin",
     "environmental.MobMixin",

@@ -36,6 +36,7 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 - [Sully's Mod](https://modrinth.com/mod/sullysmod) is optional.
 - [Upgrade Aquatic](https://modrinth.com/mod/upgrade-aquatic) is optional.
 - [Dungeons Mobs](https://www.curseforge.com/minecraft/mc-mods/dungeons-mobs) is optional.
+- [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) is optional.
 
 ## Features
 
