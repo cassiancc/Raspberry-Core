@@ -5,6 +5,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.WebBlock;
@@ -20,7 +22,7 @@ public class TemporaryCobwebBlock extends WebBlock {
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, level, pos, oldState, isMoving);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             level.scheduleTick(pos, this, LIFETIME_TICKS);
         }
     }
@@ -33,7 +35,7 @@ public class TemporaryCobwebBlock extends WebBlock {
     @Override
     public float getDestroyProgress(BlockState state, Player player, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
         ItemStack heldItem = player.getMainHandItem();
-        if (heldItem.getItem() instanceof net.minecraft.world.item.SwordItem || heldItem.getItem() instanceof net.minecraft.world.item.ShearsItem) {
+        if (heldItem.getItem() instanceof SwordItem || heldItem.getItem() instanceof ShearsItem) {
             return 0.15F;
         }
         return super.getDestroyProgress(state, player, level, pos);
