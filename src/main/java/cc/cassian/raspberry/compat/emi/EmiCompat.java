@@ -20,6 +20,7 @@ public class EmiCompat implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry emiRegistry) {
+        RaspberryMod.LOGGER.info("Initializing EMI Integration");
         if (ModConfig.get().emi_tablets && ModCompat.CREATE && ModCompat.DOMESTICATION_INNOVATION && ModCompat.ENSORCELLATION && ModCompat.SUPPLEMENTARIES && ModCompat.ALLUREMENT) {
             EmiSmithingRecipe.addEnchantments(emiRegistry);
         }

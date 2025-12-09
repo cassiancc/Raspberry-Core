@@ -1,0 +1,85 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "north": "none",
+        "east": "none",
+        "west": "none",
+        "south": "none"
+      },
+      "apply": {
+        "model": "raspberry:block/fine_wood_wall_post"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"north": "low|tall", "east": "low|tall"},
+          {"east": "low|tall", "south": "low|tall"},
+          {"south": "low|tall", "west": "low|tall"},
+          {"west": "low|tall", "north": "low|tall"}
+        ]
+      },
+      "apply": {
+        "model": "raspberry:block/fine_wood_wall_corner"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"north": "low|tall", "south": "low|tall", "east": "none", "west": "none"},
+          {"north": "low|tall", "south": "none", "east": "none", "west": "none"},
+          {"north": "none", "south": "low|tall", "east": "none", "west": "none"}
+        ]
+      },
+      "apply": {
+        "model": "raspberry:block/fine_wood_wall_middle"
+      }
+    },
+    {
+      "when": {
+        "OR": [
+          {"north": "none", "south": "none", "east": "low|tall", "west": "low|tall"},
+          {"north": "none", "south": "none", "east": "low|tall", "west": "none"},
+          {"north": "none", "south": "none", "east": "none", "west": "low|tall"}
+        ]
+      },
+      "apply": {
+        "model": "raspberry:block/fine_wood_wall_middle",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "north": "low|tall"
+      },
+      "apply": {
+        "model": "raspberry:block/fine_wood_wall_n"
+      }
+    },
+    {
+      "when": {
+        "east": "low|tall"
+      },
+      "apply": {
+        "model": "raspberry:block/fine_wood_wall_e"
+      }
+    },
+    {
+      "when": {
+        "south": "low|tall"
+      },
+      "apply": {
+        "model": "raspberry:block/fine_wood_wall_s"
+      }
+    },
+    {
+      "when": {
+        "west": "low|tall"
+      },
+      "apply": {
+        "model": "raspberry:block/fine_wood_wall_w"
+      }
+    }
+  ]
+}

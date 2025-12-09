@@ -1,0 +1,9 @@
+{
+	"parent": "supplementaries:block/pancakes/pancake_2",
+	"textures": {
+		"0": "raspberry:block/pancake_side_lemon",
+		"1": "raspberry:block/pancake_top_lemon",
+		"2": "supplementaries:blocks/pancake_bottom",
+		"particle": "raspberry:block/pancake_side_lemon"
+	}
+}

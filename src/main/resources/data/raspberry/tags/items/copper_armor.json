@@ -1,0 +1,144 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:copper_helmet",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_leggings",
+      "required": false
+    },
+    {
+      "id": "minecraft:copper_boots",
+      "required": false
+    },
+    {
+      "id": "copperized:copper_horse_armor",
+      "required": false
+    },
+    {
+      "id": "copperized:copper_helmet",
+      "required": false
+    },
+    {
+      "id": "lemonade:copper_helmet",
+      "required": false
+    },
+    {
+      "id": "lemonade:copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "lemonade:copper_leggings",
+      "required": false
+    },
+    {
+      "id": "lemonade:copper_boots",
+      "required": false
+    },
+    {
+      "id": "copperized:copper_helmet",
+      "required": false
+    },
+    {
+      "id": "copperized:copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "copperized:copper_leggings",
+      "required": false
+    },
+    {
+      "id": "copperized:copper_boots",
+      "required": false
+    },
+    {
+      "id": "exlinecopperequipment:copper_helmet",
+      "required": false
+    },
+    {
+      "id": "exlinecopperequipment:copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "exlinecopperequipment:copper_leggings",
+      "required": false
+    },
+    {
+      "id": "exlinecopperequipment:copper_boots",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:copper_helmet",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:copper_leggings",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:copper_boots",
+      "required": false
+    },
+
+    {
+      "id": "purecoppertools:exposed_copper_helmet",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:exposed_copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:exposed_copper_leggings",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:exposed_copper_boots",
+      "required": false
+    },
+
+    {
+      "id": "purecoppertools:weathered_copper_helmet",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:weathered_copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:weathered_copper_leggings",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:weathered_copper_boots",
+      "required": false
+    },
+
+    {
+      "id": "purecoppertools:oxidized_copper_helmet",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:oxidized_copper_chestplate",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:oxidized_copper_leggings",
+      "required": false
+    },
+    {
+      "id": "purecoppertools:oxidized_copper_boots",
+      "required": false
+    }
+  ]
+}

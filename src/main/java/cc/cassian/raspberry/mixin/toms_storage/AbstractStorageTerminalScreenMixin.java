@@ -187,7 +187,7 @@ public abstract class AbstractStorageTerminalScreenMixin {
     }
 
     @SuppressWarnings("DefaultAnnotationParam") // We need to re-enable remapping for this method!
-    @WrapOperation(method = "render", at = @At(value = "FIELD", target = "Lcom/tom/storagemod/gui/StorageTerminalMenu;beaconLvl:I", opcode = Opcodes.GETFIELD), remap = true)
+    @WrapOperation(method = "render", at = @At(value = "FIELD", target = "Lcom/tom/storagemod/gui/StorageTerminalMenu;beaconLvl:I", remap = false, opcode = Opcodes.GETFIELD), remap = true)
     private int fakeBeaconLevel(StorageTerminalMenu instance, Operation<Integer> original) {
         if (ModConfig.get().toms_hideBeacon) {
             return 0; // Beacons? No, not around here. :^)

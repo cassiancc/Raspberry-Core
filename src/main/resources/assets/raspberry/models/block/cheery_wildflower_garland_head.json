@@ -1,25 +1,51 @@
 {
-  "parent":"block/block",
-  "textures": {
-    "side": "raspberry:item/cheery_wildflower_garland"
-  },
-  "elements": [
-    {
-      "from": [0, 0, 0],
-      "to": [16, 16, 16],
-      "faces": {
-        "north": {"uv": [0, 0, 16, 16], "texture": "#side"},
-        "east": {"uv": [0, 0, 16, 16], "texture": "#side"},
-        "south": {"uv": [0, 0, 16, 16], "texture": "#side"},
-        "west": {"uv": [0, 0, 16, 16], "texture": "#side"}
-      }
-    }
-  ],
-  "gui_light": "front",
-  "display": {
-    "gui": {
-      "rotation": [0, 0, 0],
-      "scale": [1, 1, 1]
-    }
-  }
+	"parent": "block/block",
+	"textures": {
+		"side": "raspberry:item/cheery_wildflower_garland",
+		"front": "raspberry:item/cheery_wildflower_garland"
+	},
+	"elements": [
+		{
+			"name": "front",
+			"from": [0, 0, 0],
+			"to": [16, 16, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
+				"south": {"uv": [16, 0, 0, 16], "texture": "#front"}
+			}
+		},
+		{
+			"name": "left",
+			"from": [16, 0, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"west": {"uv": [16, 0, 0, 16], "texture": "#side"}
+			}
+		},
+		{
+			"name": "back",
+			"from": [0, 0, 16],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#front"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#front"}
+			}
+		},
+		{
+			"name": "right",
+			"from": [0, 0, 0],
+			"to": [0, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [16, 0, 0, 16], "texture": "#side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side"}
+			}
+		}
+	],
+	"gui_light": "front",
+	"display": {}
 }

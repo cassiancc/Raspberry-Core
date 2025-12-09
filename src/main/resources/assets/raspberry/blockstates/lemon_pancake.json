@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "pancakes=1,lemon_topping=false": {
+      "model": "supplementaries:block/pancakes/pancake_1"
+    },
+    "pancakes=2,lemon_topping=false": {
+      "model": "supplementaries:block/pancakes/pancake_2"
+    },
+    "pancakes=3,lemon_topping=false": {
+      "model": "supplementaries:block/pancakes/pancake_3"
+    },
+    "pancakes=4,lemon_topping=false": {
+      "model": "supplementaries:block/pancakes/pancake_4"
+    },
+    "pancakes=5,lemon_topping=false": {
+      "model": "supplementaries:block/pancakes/pancake_5"
+    },
+    "pancakes=6,lemon_topping=false": {
+      "model": "supplementaries:block/pancakes/pancake_6"
+    },
+    "pancakes=7,lemon_topping=false": {
+      "model": "supplementaries:block/pancakes/pancake_7"
+    },
+    "pancakes=8,lemon_topping=false": {
+      "model": "supplementaries:block/pancakes/pancake_8"
+    },
+    "pancakes=1,lemon_topping=true": {
+      "model": "raspberry:block/pancakes/pancake_1_lemon"
+    },
+    "pancakes=2,lemon_topping=true": {
+      "model": "raspberry:block/pancakes/pancake_2_lemon"
+    },
+    "pancakes=3,lemon_topping=true": {
+      "model": "raspberry:block/pancakes/pancake_3_lemon"
+    },
+    "pancakes=4,lemon_topping=true": {
+      "model": "raspberry:block/pancakes/pancake_4_lemon"
+    },
+    "pancakes=5,lemon_topping=true": {
+      "model": "raspberry:block/pancakes/pancake_5_lemon"
+    },
+    "pancakes=6,lemon_topping=true": {
+      "model": "raspberry:block/pancakes/pancake_6_lemon"
+    },
+    "pancakes=7,lemon_topping=true": {
+      "model": "raspberry:block/pancakes/pancake_7_lemon"
+    },
+    "pancakes=8,lemon_topping=true": {
+      "model": "raspberry:block/pancakes/pancake_8_lemon"
+    }
+  }
+}

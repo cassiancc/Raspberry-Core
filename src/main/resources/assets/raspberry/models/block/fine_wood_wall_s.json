@@ -1,0 +1,22 @@
+{
+	"format_version": "1.9.0",
+	"textures": {
+		"0": "raspberry:block/fine_wood_end",
+		"1": "raspberry:block/fine_wood_side",
+		"particle": "raspberry:block/fine_wood_end"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 12],
+			"to": [12, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 0, 15]},
+			"faces": {
+				"east": {"uv": [0, 12, 16, 16], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [0, 0, 8, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [0, 0, 8, 4], "rotation": 180, "texture": "#1"},
+				"down": {"uv": [8, 12, 16, 16], "texture": "#1"}
+			}
+		}
+	]
+}

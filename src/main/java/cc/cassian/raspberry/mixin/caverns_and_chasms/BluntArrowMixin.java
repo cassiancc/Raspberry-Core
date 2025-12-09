@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.mixin.caverns_and_chasms;
 
 import cc.cassian.raspberry.config.ModConfig;
+import com.teamabnormals.caverns_and_chasms.common.entity.projectile.BluntArrow;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +17,8 @@ public abstract class BluntArrowMixin {
             method = "onHitEntity", at = @At(value = "HEAD"))
     public void raspberry$setKnockback(EntityHitResult result, CallbackInfo ci) {
         var arrow = (AbstractArrow) (Object) this;
-        arrow.setKnockback(ModConfig.get().rose_gold_arrow_knockback);
+        if (arrow instanceof BluntArrow) {
+            arrow.setKnockback(ModConfig.get().rose_gold_arrow_knockback);
+        }
     }
 }

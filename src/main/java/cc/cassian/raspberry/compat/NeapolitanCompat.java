@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.compat;
 
 import com.teamabnormals.neapolitan.core.registry.NeapolitanMobEffects;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.ForgeMod;
 
@@ -11,5 +12,9 @@ public class NeapolitanCompat {
 
     public static void boostAgility() {
         NeapolitanMobEffects.AGILITY.get().addAttributeModifier(ForgeMod.STEP_HEIGHT_ADDITION.get(), STEP_HEIGHT_UUID.toString(), 0.4F, AttributeModifier.Operation.ADDITION);
+    }
+
+    public static MobEffect sugarRush() {
+        return NeapolitanMobEffects.SUGAR_RUSH.get();
     }
 }

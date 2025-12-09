@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 @Pseudo
 @Mixin(targets = "com.teammetallurgy.aquaculture.item.AquaFishingRodItem$FishingRodEquipmentHandler")
 public class FishingRodEquipmentHandlerMixin {
-    @Shadow @Final @Mutable
+    @Shadow(remap = false) @Final @Mutable
     private ItemStackHandler items;
 
     @Inject(method = "<init>", at = @At("RETURN"))

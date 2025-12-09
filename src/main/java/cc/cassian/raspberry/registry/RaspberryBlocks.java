@@ -4,16 +4,16 @@ import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.blocks.*;
 import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
+import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.AshLayerBlock;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.PancakeBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.RakedGravelBlock;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CarpetBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -29,12 +29,18 @@ import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
 
 public class RaspberryBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
+    public static final Map<ResourceLocation, RegistryObject<Block>> POTTED_PLANTS = new HashMap<>();
+
+    public static final Supplier<Block> TEMPORARY_COBWEB = registerBlock("temporary_cobweb",
+            ()-> new TemporaryCobwebBlock(BlockBehaviour.Properties.copy(Blocks.COBWEB)));
 
     public static final RegistryObject<Block> TEMPORARY_COBWEB = BLOCKS.register("temporary_cobweb",
             ()-> new TemporaryCobwebBlock(BlockBehaviour.Properties.copy(Blocks.COBWEB)));
@@ -89,6 +95,12 @@ public class RaspberryBlocks {
     public static BlockSupplier
             HOPEFUL_WILDFLOWERS = registerBlock("hopeful_wildflowers",
             ()-> new FlowerBedBlock(flowerBedProperties(false)), CreativeModeTab.TAB_DECORATIONS);
+
+    public static final RegistryObject<Block> POTTED_CHEERY_WILDFLOWERS = registerPottedPlant(CHEERFUL_WILDFLOWERS);
+    public static final RegistryObject<Block> POTTED_HOPEFUL_WILDFLOWERS = registerPottedPlant(HOPEFUL_WILDFLOWERS);
+    public static final RegistryObject<Block> POTTED_PLAYFUL_WILDFLOWERS = registerPottedPlant(PINK_PETALS);
+    public static final RegistryObject<Block> POTTED_MOODY_WILDFLOWERS = registerPottedPlant(MOODY_WILDFLOWERS);
+    public static final RegistryObject<Block> POTTED_CLOVERS = registerPottedPlant(CLOVERS);
 
     public static  RegistryObject<Block>
             CHEERY_WILDFLOWER_GARLAND = RaspberryBlocks.BLOCKS.register("cheery_wildflower_garland", ()-> new FlowerGarlandBlock(flowerBedProperties(false)));
@@ -178,6 +190,19 @@ public class RaspberryBlocks {
             RED_MOSS_CARPET = registerBlock("red_moss_carpet",
             ()-> new CarpetBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).color(MaterialColor.COLOR_RED)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
+    public static Supplier<Block>
+            LEMON_PANCAKE = registerBlock("lemon_pancake",
+            ()-> new LemonPancakeBlock(BlockBehaviour.Properties.copy(ModRegistry.PANCAKE.get())));
+
+    public static BlockSupplier FINE_WOOD = registerBlock("fine_wood",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+    public static BlockSupplier FINE_WOOD_STAIRS = registerBlock("fine_wood" + "_stairs",
+            () -> new ModStairBlock(FINE_WOOD.getBlockSupplier(), BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+    public static BlockSupplier FINE_WOOD_SLAB = registerBlock("fine_wood" + "_slab",
+            () -> new DirectionalSlabBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+    public static BlockSupplier FINE_WOOD_WALL = registerBlock("fine_wood" + "_wall",
+            () -> new FineWoodWall(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
+
     private static BlockBehaviour.Properties flowerBedProperties(boolean replaceable) {
         var material = Material.PLANT;
         if (replaceable) material = Material.REPLACEABLE_PLANT;
@@ -213,5 +238,24 @@ public class RaspberryBlocks {
         final var block = BLOCKS.register(blockID, blockSupplier);
         final var item = RaspberryItems.ITEMS.register(blockID, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
         return new BlockSupplier(blockID, block, item);
+    }
+
+    public static Supplier<Block> registerBlock(String blockID, Supplier<Block> blockSupplier) {
+        return BLOCKS.register(blockID, blockSupplier);
+    }
+
+
+    public static void addPottedPlants() {
+        RaspberryBlocks.POTTED_PLANTS.forEach(((FlowerPotBlock)Blocks.FLOWER_POT)::addPlant);
+    }
+
+    public static RegistryObject<Block> registerPottedPlant(BlockSupplier block) {
+        RegistryObject<Block> pottedBlock = RaspberryBlocks.BLOCKS.register("potted_" + block.getID(), () -> new FlowerPotBlock(
+            () -> (FlowerPotBlock) Blocks.FLOWER_POT,
+            block.getBlockSupplier(),
+            BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)
+        ));
+        RaspberryBlocks.POTTED_PLANTS.put(block.getItemSupplier().getId(), pottedBlock);
+        return pottedBlock;
     }
 }

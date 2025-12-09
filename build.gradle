@@ -106,6 +106,13 @@ repositories {
             includeGroup "local"
         }
     }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+        content {
+            includeGroup "dev.emi"
+        }
+    }
 
     maven { url = "https://maven.bawnorton.com/releases" } // MixinSquared
     maven { url = "https://maven.enjarai.dev/mirrors" } // MixinSquared Mirror
@@ -134,10 +141,11 @@ dependencies {
     modImplementation("com.teamabnormals:blueprint:$blueprint_version")
     modCompileOnly("maven.modrinth:endergetic:$endergetic_version")
     modImplementation("maven.modrinth:buzzier-bees:$buzzier_bees_version")
+    modImplementation("maven.modrinth:autumnity:$autumnity_version")
 
     // Recipe viewers
-    modImplementation("maven.modrinth:emi:$emi_version+$minecraft_version+forge")
-    modImplementation("maven.modrinth:jei:$jei_version-forge")
+    modImplementation("dev.emi:emi-forge:${emi_version}+$minecraft_version")
+//    modImplementation("maven.modrinth:jei:$jei_version-forge")
 
     // Farmer's Delight and its addons
     modImplementation("maven.modrinth:farmers-delight:$farmers_delight_version")
@@ -187,6 +195,11 @@ dependencies {
     modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of spyglass improvements
     modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
     modImplementation("curse.maven:controllable-317269:4445137")
+    modImplementation("maven.modrinth:cooks-collection:$cooks_collection_version")
+    modImplementation("maven.modrinth:jade:$jade_version")
+    modImplementation("maven.modrinth:xaeros-minimap:${xaeros_minimap_version}")
+    modImplementation("maven.modrinth:xaeros-world-map:${xaeros_worldmap_version}")
+
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:5138314")
     modImplementation("maven.modrinth:mmmmmmmmmmmm:1.7.2-forge")

@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "raspberry:block/fine_wood_horizontal",
+      "y": 90
+    },
+    "axis=y": {
+      "model": "raspberry:block/fine_wood"
+    },
+    "axis=z": {
+      "model": "raspberry:block/fine_wood_horizontal"
+    }
+  }
+}
