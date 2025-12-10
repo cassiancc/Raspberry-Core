@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Copper Horse Armor now grants Lightning Resistance and Aftershock. (Copperized)
 - Other Copper Armour mods can now grant Aftershock.
 - An atlas item that can open Xaero's World Map. (experimental content)
+- Option for ghasts to shoot dragon fireballs (disabled by default) (@evanbones) 
 
 ### Changed
 - Removed hard dependency on Naturalist.
@@ -20,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - EMI plugin not being registered when mods are missing.
 - Temporary cobwebs not obeying Bracewalk (Additional Enchantments)
+- Fixed default Enderman animations from [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) (@evanbones) 
 
 ## [1.9]
 
@@ -54,7 +56,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Beacon EMI integration shows inputs correctly.
 - Gliders now respond to Unbreaking.
 - Wildflowers now have unique models when placed in pots (Supplementaries).
-- Fixed default Enderman animations from [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) (@evanbones) 
 
 ## [1.8.1] - 2025-09-24
 

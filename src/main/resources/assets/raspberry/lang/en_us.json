@@ -89,7 +89,8 @@
  "config.raspberry.config.horses_noWander": "Prevent Horse Wandering",
  "config.raspberry.config.horses_noBuck": "Prevent Horse Bucking",
  "config.raspberry.config.horses_stepHeight": "Increase Horse Step Height",
-  "config.raspberry.config.dungeons_mobs_revised_cobwebs": "Less buggy cobweb entities",
+ "config.raspberry.config.dungeons_mobs_revised_cobwebs": "Less buggy cobweb entities",
+ "config.raspberry.config.ghastDragonFireball": "Change ghast projectile to dragon fireball",
 
  "config.raspberry.config.searchContainers": "Allow items in bundles/containers",
 
