@@ -173,7 +173,8 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Override
     public void setDelayedLeashHolderId(int id) {
         this.delayedLeashHolderId = id;
-        if (this.level != null) {
+        this.dropLeash(false, false);
+        if (this.level != null && id != 0) {
             Entity entity = this.level.getEntity(id);
             if (entity != null) {
                 this.setLeashedTo(entity, false);
