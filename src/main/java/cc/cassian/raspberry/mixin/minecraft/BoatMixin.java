@@ -41,7 +41,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Nullable
     private Entity leashHolder;
 
-@   Unique 
+    @Unique 
     private final InterpolationHandler interpolation = new InterpolationHandler(this, 3);
 
     @Unique
