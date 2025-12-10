@@ -91,6 +91,7 @@
  "config.raspberry.config.horses_stepHeight": "Increase Horse Step Height",
  "config.raspberry.config.dungeons_mobs_revised_cobwebs": "Less buggy cobweb entities",
  "config.raspberry.config.ghastDragonFireball": "Change ghast projectile to dragon fireball",
+ "config.raspberry.config.backportLeash": "Backport leash mechanics from the Chase the Skies drop",
 
  "config.raspberry.config.searchContainers": "Allow items in bundles/containers",
 

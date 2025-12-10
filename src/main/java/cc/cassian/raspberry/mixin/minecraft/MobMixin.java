@@ -8,10 +8,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import cc.cassian.raspberry.config.ModConfig;
+
 @Mixin(Mob.class)
 public abstract class MobMixin {
     @Inject(method = "canBeLeashed", at = @At("HEAD"), cancellable = true)
     private void raspberry$canBeLeashed(Player player, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!(this instanceof Enemy));
+        if (ModConfig.get().backportLeash) {
+            cir.setReturnValue(!(this instanceof Enemy));
+        }
     }
 }

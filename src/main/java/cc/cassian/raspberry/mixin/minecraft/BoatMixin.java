@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.common.api.leash.Leashable;
+import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSetEntityLinkPacket;
@@ -37,6 +38,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Unique
     @Nullable
     private Entity leashHolder;
+    
     @Unique
     @Nullable
     private CompoundTag leashInfoTag;
@@ -52,13 +54,21 @@ public abstract class BoatMixin extends Entity implements Leashable {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void raspberry$tickLeash(CallbackInfo ci) {
-        if (!this.level.isClientSide) {
+        if (!this.level.isClientSide && ModConfig.get().backportLeash) {
+            if (this.leashHolder != null) {
+                if (!this.isAlive() || !this.leashHolder.isAlive()) {
+                    this.dropLeash(true, true);
+                }
+            }
+
             Leashable.tickLeash(this);
         }
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void raspberry$saveLeash(CompoundTag compound, CallbackInfo ci) {
+        if (!ModConfig.get().backportLeash) return;
+
         if (this.leashHolder != null) {
             CompoundTag tag = new CompoundTag();
             if (this.leashHolder instanceof LivingEntity) {
@@ -77,6 +87,8 @@ public abstract class BoatMixin extends Entity implements Leashable {
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void raspberry$readLeash(CompoundTag compound, CallbackInfo ci) {
+        if (!ModConfig.get().backportLeash) return;
+
         if (compound.contains("Leash", 10)) {
             this.leashInfoTag = compound.getCompound("Leash");
         }
@@ -127,13 +139,6 @@ public abstract class BoatMixin extends Entity implements Leashable {
     }
 
     @Override
-    public void closeRangeLeashBehavior(Entity holder) {
-        Vec3 direction = holder.position().subtract(this.position()).normalize();
-        double speed = 0.05;
-        this.setDeltaMovement(this.getDeltaMovement().add(direction.scale(speed)));
-    }
-
-    @Override
     public void setDelayedLeashHolderId(int id) {
         this.delayedLeashHolderId = id;
         if (this.level != null) {
@@ -142,6 +147,11 @@ public abstract class BoatMixin extends Entity implements Leashable {
                 this.setLeashedTo(entity, false);
             }
         }
+    }
+
+    @Override
+    public Vec3 getLeashOffset() {
+        return new Vec3(0.0, 0.88F * this.getBbHeight(), 0.64F * this.getBbWidth());
     }
     
     @Inject(method = "tick", at = @At("HEAD"))

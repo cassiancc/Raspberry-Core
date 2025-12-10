@@ -22,6 +22,10 @@ public class LeashEvents {
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        if (!ModConfig.get().backportLeash) {
+            return;
+        }
+
         Player player = event.getEntity();
         Entity target = event.getTarget();
         ItemStack stack = event.getItemStack();

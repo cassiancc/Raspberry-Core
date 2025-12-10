@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.common.api.leash.Leashable;
+import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -31,6 +32,10 @@ public abstract class LeashBehaviorMixin extends Mob implements Leashable {
 
     @Inject(method = "tickLeash", at = @At("HEAD"), cancellable = true)
     private void raspberry$onTickLeash(CallbackInfo ci) {
+        if (!ModConfig.get().backportLeash) {
+                return;
+        }
+
         ci.cancel();
         super.tickLeash();
         Leashable.tickLeash(this);
