@@ -81,6 +81,7 @@
     "minecraft.LivingEntityMixin",
     "minecraft.MapItemMixin",
     "minecraft.MinecartChestMixin",
+    "minecraft.MobMixin",
     "minecraft.NoBannersMixin",
     "minecraft.PathfinderMobAccessor",
     "minecraft.PigMixin",
