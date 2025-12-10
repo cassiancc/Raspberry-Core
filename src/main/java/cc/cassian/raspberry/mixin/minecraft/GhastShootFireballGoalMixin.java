@@ -1,6 +1,8 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.config.ModConfig;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.projectile.DragonFireball;
@@ -10,7 +12,6 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(targets = "net.minecraft.world.entity.monster.Ghast$GhastShootFireballGoal")
 public class GhastShootFireballGoalMixin {
@@ -19,15 +20,16 @@ public class GhastShootFireballGoalMixin {
     @Final
     private Ghast ghast;
 
-    @Redirect(
+    @WrapOperation(
         method = "tick",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"
         )
     )
-    private boolean raspberry$swapGhastProjectile(Level level, Entity entity) {
+    private boolean raspberry$swapGhastProjectile(Level level, Entity entity, Operation<Boolean> original) {
         if (ModConfig.get().ghastDragonFireball && entity instanceof LargeFireball largeFireball) {
+            
             DragonFireball dragonFireball = new DragonFireball(
                 level, 
                 this.ghast, 
@@ -38,9 +40,9 @@ public class GhastShootFireballGoalMixin {
             
             dragonFireball.setPos(largeFireball.getX(), largeFireball.getY(), largeFireball.getZ());
             
-            return level.addFreshEntity(dragonFireball);
+            return original.call(level, dragonFireball);
         }
         
-        return level.addFreshEntity(entity);
+        return original.call(level, entity);
     }
 }
