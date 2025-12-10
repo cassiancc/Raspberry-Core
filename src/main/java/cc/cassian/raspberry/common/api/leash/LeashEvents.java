@@ -5,11 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 import cc.cassian.raspberry.config.ModConfig;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -97,7 +99,7 @@ public class LeashEvents {
     public static boolean shearOffAllLeashConnections(Entity entity, Player player) {
         boolean sheared = dropAllLeashConnections(entity, player);
         if (sheared && entity.level instanceof ServerLevel server) {
-            server.playSound(null, entity.blockPosition(), SoundEvents.SHEEP_SHEAR, net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 1.0f);
+            server.playSound(null, entity.blockPosition(), SoundEvents.SHEEP_SHEAR, SoundSource.PLAYERS, 1.0f, 1.0f);
         }
         return sheared;
     }
@@ -117,6 +119,10 @@ public class LeashEvents {
 
         if (dropConnections) {
             entity.gameEvent(GameEvent.SHEAR, player);
+            if (entity instanceof LeashFenceKnotEntity) {
+                entity.discard();
+            }
+
             return true;
         } else {
             return false;
