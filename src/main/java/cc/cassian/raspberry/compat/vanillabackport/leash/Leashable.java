@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 
-package cc.cassian.raspberry.common.api.leash;
+package cc.cassian.raspberry.compat.vanillabackport.leash;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

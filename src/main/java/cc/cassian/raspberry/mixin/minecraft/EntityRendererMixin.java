@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 package cc.cassian.raspberry.mixin.minecraft;
 
-import cc.cassian.raspberry.common.api.leash.LeashRenderer;
-import cc.cassian.raspberry.common.api.leash.Leashable;
+import cc.cassian.raspberry.compat.vanillabackport.leash.LeashRenderer;
+import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.culling.Frustum;

@@ -22,7 +22,7 @@ THE SOFTWARE.
  */
 
 
-package cc.cassian.raspberry.common.api.leash;
+package cc.cassian.raspberry.compat.vanillabackport.leash;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 package cc.cassian.raspberry.mixin.minecraft;
 
-import cc.cassian.raspberry.common.api.leash.InterpolationHandler;
-import cc.cassian.raspberry.common.api.leash.Leashable;
+import cc.cassian.raspberry.compat.vanillabackport.leash.InterpolationHandler;
+import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

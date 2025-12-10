@@ -22,10 +22,11 @@ THE SOFTWARE.
  */
 
 
-package cc.cassian.raspberry.common.api.leash;
+package cc.cassian.raspberry.compat.vanillabackport.leash;
 
 import java.util.List;
 
+import cc.cassian.raspberry.RaspberryMod;
 import org.jetbrains.annotations.Nullable;
 
 import cc.cassian.raspberry.config.ModConfig;
@@ -44,7 +45,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = "raspberry")
+@Mod.EventBusSubscriber(modid = RaspberryMod.MOD_ID)
 public class LeashEvents {
 
     @SubscribeEvent

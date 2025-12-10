@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 package cc.cassian.raspberry.mixin.minecraft;
 
-import cc.cassian.raspberry.common.api.leash.Leashable;
+import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ClientboundSetEntityLinkPacket;

@@ -22,7 +22,7 @@ THE SOFTWARE.
  */
 
 
-package cc.cassian.raspberry.common.api.leash;
+package cc.cassian.raspberry.compat.vanillabackport.leash;
 
 import net.minecraft.world.phys.Vec3;
 

@@ -22,7 +22,7 @@ THE SOFTWARE.
  */
 
 
-package cc.cassian.raspberry.common.api.leash;
+package cc.cassian.raspberry.compat.vanillabackport.leash;
 
 import cc.cassian.raspberry.mixin.minecraft.EntityRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
