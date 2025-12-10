@@ -40,7 +40,6 @@ public interface Leashable {
     );
 
     default Vec3 getLeashOffset(float partialTick) {
-        // TODO: check this
         return new Vec3(0, ((Entity)this).getEyeHeight() * 0.8F, 0); 
     }
 
@@ -105,7 +104,14 @@ public interface Leashable {
     }
 
     default void onElasticLeashPull(Entity entity) {
-        if (this instanceof PathfinderMob mob) ((PathfinderMobAccessor) this).callOnLeashDistance(mob.distanceTo(entity));
+        if (this instanceof PathfinderMob mob) {
+            ((PathfinderMobAccessor) this).callOnLeashDistance(mob.distanceTo(entity));
+        }
+        
+        Entity self = (Entity) this;
+        if (self.getDeltaMovement().y > -0.5D) {
+            self.fallDistance = 1.0F;
+        }
     }
 
     default double leashSnapDistance() {

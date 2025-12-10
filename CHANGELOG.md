@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Other Copper Armour mods can now grant Aftershock.
 - An atlas item that can open Xaero's World Map. (experimental content)
 - Option for ghasts to shoot dragon fireballs (disabled by default) (@evanbones) 
+- Backported leash mechanics from the Chase the Skies drop (@evanbones) 
 
 ### Changed
 - Removed hard dependency on Naturalist.

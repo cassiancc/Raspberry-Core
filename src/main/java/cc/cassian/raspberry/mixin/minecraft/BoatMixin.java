@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
+import cc.cassian.raspberry.common.api.leash.InterpolationHandler;
 import cc.cassian.raspberry.common.api.leash.Leashable;
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.core.BlockPos;
@@ -25,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.OptionalInt;
+import java.util.UUID;
 
 @Mixin(Boat.class)
 public abstract class BoatMixin extends Entity implements Leashable {
@@ -38,7 +40,10 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Unique
     @Nullable
     private Entity leashHolder;
-    
+
+@   Unique 
+    private final InterpolationHandler interpolation = new InterpolationHandler(this, 3);
+
     @Unique
     @Nullable
     private CompoundTag leashInfoTag;
@@ -52,9 +57,36 @@ public abstract class BoatMixin extends Entity implements Leashable {
         this.entityData.define(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
     }
 
+    @Unique
+    private void raspberry$restoreLeashFromSave() {
+        if (this.leashInfoTag != null && this.level instanceof ServerLevel serverLevel) {
+            if (this.leashInfoTag.hasUUID("UUID")) {
+                UUID uuid = this.leashInfoTag.getUUID("UUID");
+                Entity entity = serverLevel.getEntity(uuid);
+                if (entity != null) {
+                    this.setLeashedTo(entity, true);
+                    return;
+                }
+            } else if (this.leashInfoTag.contains("X", 99) && this.leashInfoTag.contains("Y", 99) && this.leashInfoTag.contains("Z", 99)) {
+                BlockPos pos = net.minecraft.nbt.NbtUtils.readBlockPos(this.leashInfoTag);
+                this.setLeashedTo(net.minecraft.world.entity.decoration.LeashFenceKnotEntity.getOrCreateKnot(this.level, pos), true);
+                return;
+            }
+
+            if (this.tickCount > 100) {
+                this.spawnAtLocation(Items.LEAD);
+                this.leashInfoTag = null;
+            }
+        }
+    }
+
     @Inject(method = "tick", at = @At("TAIL"))
     private void raspberry$tickLeash(CallbackInfo ci) {
         if (!this.level.isClientSide && ModConfig.get().backportLeash) {
+            if (this.leashInfoTag != null) {
+                this.raspberry$restoreLeashFromSave();
+            }
+            
             if (this.leashHolder != null) {
                 if (!this.isAlive() || !this.leashHolder.isAlive()) {
                     this.dropLeash(true, true);
@@ -149,11 +181,40 @@ public abstract class BoatMixin extends Entity implements Leashable {
         }
     }
 
+    @Inject(method = "lerpTo", at = @At("HEAD"), cancellable = true)
+    private void raspberry$lerpTo(double x, double y, double z, float yRot, float xRot, int lerpSteps, boolean teleport, CallbackInfo ci) {
+        if (ModConfig.get().backportLeash) {
+            ci.cancel();
+            this.interpolation.interpolateTo(new Vec3(x, y, z), yRot, xRot);
+        }
+    }
+
+    @Inject(method = "tickLerp", at = @At("HEAD"), cancellable = true)
+    private void raspberry$tickLerp(CallbackInfo ci) {
+        if (ModConfig.get().backportLeash) {
+            ci.cancel();
+            if (this.isControlledByLocalInstance()) {
+                this.interpolation.cancel();
+                this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
+            } 
+            
+            this.interpolation.interpolate();
+        }
+    }
+
     @Override
     public Vec3 getLeashOffset() {
         return new Vec3(0.0, 0.88F * this.getBbHeight(), 0.64F * this.getBbWidth());
     }
     
+    @Override
+    public void removeAfterChangingDimensions() {
+        super.removeAfterChangingDimensions();
+        if (ModConfig.get().backportLeash) {
+            this.dropLeash(true, false);
+        }
+    }
+
     @Inject(method = "tick", at = @At("HEAD"))
     private void raspberry$resolveLeash(CallbackInfo ci) {
         if (this.level.isClientSide && this.delayedLeashHolderId != 0 && this.getLeashHolder() == null) {

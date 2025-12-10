@@ -58,7 +58,7 @@ public class ModConfig {
     public double raspberryCartMaxSpeed = 34.0;
     public boolean dungeons_mobs_revised_cobwebs = true;
     public boolean ghastDragonFireball = false;
-    public boolean backportLeash = false;
+    public boolean backportLeash = true;
     public boolean disableBirchLeafTinting = true;
     public boolean jadeRequiresScoping = true;
 
