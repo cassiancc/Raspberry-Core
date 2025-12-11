@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - An atlas item that can open Xaero's World Map. (experimental content)
 - Option for ghasts to shoot dragon fireballs (disabled by default) (@evanbones) 
 - Backported leash mechanics from the Chase the Skies drop (@evanbones) 
+- Disabled workstations are now hidden from EMI.
 
 ### Changed
 - Removed hard dependency on Naturalist.

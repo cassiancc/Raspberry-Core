@@ -27,6 +27,7 @@ package cc.cassian.raspberry.compat.vanillabackport.leash;
 import java.util.List;
 
 import cc.cassian.raspberry.RaspberryMod;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 import cc.cassian.raspberry.config.ModConfig;
@@ -84,7 +85,7 @@ public class LeashEvents {
             }
         }
 
-        if (stack.is(Items.SHEARS) && shearOffAllLeashConnections(target, player)) {
+        if (stack.is(Tags.Items.SHEARS) && shearOffAllLeashConnections(target, player)) {
             stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(event.getHand()));
             event.setCancellationResult(InteractionResult.SUCCESS);
             event.setCanceled(true);

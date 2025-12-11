@@ -5,13 +5,13 @@
   "minVersion": "0.8",
   "client": [
     "create.MechanicalCrafterMixin",
-    "miningmaster.KnightJumpEnchantmentMixin",
-    "naturalist.GlowGoopItemMixin",
-    "spyglass_improvements.MinecraftMixin",
+    "minecraft.ClientPacketListenerMixin",
     "minecraft.EntityRendererAccessor",
     "minecraft.EntityRendererMixin",
     "minecraft.MobRendererMixin",
-    "minecraft.ClientPacketListenerMixin"
+    "miningmaster.KnightJumpEnchantmentMixin",
+    "naturalist.GlowGoopItemMixin",
+    "spyglass_improvements.MinecraftMixin"
   ],
   "mixins": [
     "alloyed.BlockEntityTypeMixin",
@@ -44,6 +44,7 @@
     "dungeons_mobs.CobwebProjectileEntityMixin",
     "dynamiccrosshair.VanillaBlockHandlerMixin",
     "ecologics.CoconutSliceItemMixin",
+    "emi.EmiRecipesMixin",
     "endergetic.EnderWallTorchMixin",
     "endermanoverhaul.ReplacedEndermanMixin",
     "environmental.AbstractSkeletonMixin",
