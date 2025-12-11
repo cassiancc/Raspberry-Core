@@ -18,7 +18,7 @@ import java.util.List;
 
 @Mixin(RecipeScreen.class)
 public class RecipeScreenMixin {
-    @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Ldev/emi/emi/api/recipe/EmiRecipeManager;getWorkstations(Ldev/emi/emi/api/recipe/EmiRecipeCategory;)Ljava/util/List;"), remap = false)
+    @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Ldev/emi/emi/api/recipe/EmiRecipeManager;getWorkstations(Ldev/emi/emi/api/recipe/EmiRecipeCategory;)Ljava/util/List;"))
     private static List<EmiIngredient> hideFuelFromRender(EmiRecipeManager instance, EmiRecipeCategory emiRecipeCategory, Operation<List<EmiIngredient>> original) {
        if (emiRecipeCategory != VanillaEmiRecipeCategories.FUEL) {
            return original.call(instance, emiRecipeCategory);
