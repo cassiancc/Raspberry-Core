@@ -5,6 +5,7 @@
   "minVersion": "0.8",
   "client": [
     "create.MechanicalCrafterMixin",
+    "emi.RecipeScreenMixin",
     "minecraft.ClientPacketListenerMixin",
     "minecraft.EntityRendererAccessor",
     "minecraft.EntityRendererMixin",

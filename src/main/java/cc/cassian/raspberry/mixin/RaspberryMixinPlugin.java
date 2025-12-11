@@ -55,6 +55,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("endergetic", mixinClassName)){
             return false;
         }
+        else if (checkMixin("emi", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("endermanoverhaul", mixinClassName)){
             return false;
         }
