@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disabled workstations are now hidden from EMI.
 - Fuel "workstations" are now hidden from EMI.
 - New option in the Music and Sounds settings to configure in-game music frequency. (@evanbones) 
+- Fences can be leashed together for decorative purposes (@evanbones) 
 - Swap arrows can be shot from dispensers and will swap the target with the dispenser block
 - Swap arrows now teleports targets into/out of vehicles like boats and minecarts
 

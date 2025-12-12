@@ -27,13 +27,13 @@ package cc.cassian.raspberry.compat.vanillabackport.leash;
 import java.util.List;
 
 import cc.cassian.raspberry.RaspberryMod;
-import net.minecraftforge.common.Tags;
-import org.jetbrains.annotations.Nullable;
-
+import cc.cassian.raspberry.compat.vanillabackport.leash.network.KnotConnectionSyncPacket;
 import cc.cassian.raspberry.config.ModConfig;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -41,10 +41,17 @@ import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.Nullable;
 
 @Mod.EventBusSubscriber(modid = RaspberryMod.MOD_ID)
 public class LeashEvents {
@@ -67,6 +74,14 @@ public class LeashEvents {
                     boolean attachedAny = false;
 
                     for (Leashable sourceMob : nearbyMobs) {
+                        if (sourceMob instanceof LeashFenceKnotEntity && target instanceof LeashFenceKnotEntity) {
+                            continue;
+                        }
+
+                        if (target instanceof Leashable targetLeashable && targetLeashable.getLeashHolder() == (Entity) sourceMob) {
+                            continue;
+                        }
+
                         if (sourceMob.canHaveALeashAttachedTo(target)) {
                             sourceMob.setLeashedTo(target, true);
                             attachedAny = true;
@@ -122,6 +137,47 @@ public class LeashEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onStartTracking(PlayerEvent.StartTracking event) {
+        if (!ModConfig.get().backportLeash) return;
+
+        Entity target = event.getTarget();
+        if (target instanceof LeashFenceKnotEntity knot && target instanceof KnotConnectionAccess access) {
+            KnotConnectionManager manager = access.raspberry$getConnectionManager();
+            
+            if (manager.hasConnections()) {
+                KnotConnectionSyncPacket packet = new KnotConnectionSyncPacket(knot.getId(), manager.getConnectedUuids());
+                packet.sendTo((net.minecraft.server.level.ServerPlayer) event.getEntity()); 
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (!ModConfig.get().backportLeash) return;
+        
+        BlockState state = event.getState();
+        if (!state.is(BlockTags.FENCES)) return;
+        
+        Level level = (Level) event.getLevel();
+        if (level.isClientSide) return;
+        
+        BlockPos pos = event.getPos();
+        
+        List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(
+            LeashFenceKnotEntity.class,
+            new AABB(pos),
+            knot -> knot.getPos().equals(pos)
+        );
+        
+        for (LeashFenceKnotEntity knot : knots) {
+            if (knot instanceof KnotConnectionAccess) {
+                KnotInteractionHelper.discardCustomConnections(knot, (Entity) event.getPlayer());
+            }
+            knot.discard();
+        }
+    }
+
     public static boolean shearOffAllLeashConnections(Entity entity, Player player) {
         boolean sheared = dropAllLeashConnections(entity, player);
         if (sheared && entity.level instanceof ServerLevel server) {
@@ -141,6 +197,11 @@ public class LeashEvents {
 
         for (Leashable leashable : leashed) {
             leashable.dropLeash(true, true);
+        }
+        
+        if (entity instanceof LeashFenceKnotEntity knot && entity instanceof KnotConnectionAccess) {
+            KnotInteractionHelper.discardCustomConnections(knot, (Entity) player);
+            dropConnections = true;
         }
 
         if (dropConnections) {

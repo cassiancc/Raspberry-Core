@@ -36,6 +36,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeashRenderer<T extends Entity> {
+    private static final float LEASH_THICKNESS = 0.075F;
     private final EntityRenderDispatcher dispatcher;
     @Nullable private List<LeashState> leashStates;
 
@@ -56,16 +58,32 @@ public class LeashRenderer<T extends Entity> {
         if (!isVisible) {
             AABB entityBox = entity.getBoundingBoxForCulling().inflate(0.5);
             if (Double.isNaN(entityBox.minX) || entityBox.getSize() == 0.0) {
-                 entityBox = new AABB(entity.getX() - 2.0, entity.getY() - 2.0, entity.getZ() - 2.0, entity.getX() + 2.0, entity.getY() + 2.0, entity.getZ() + 2.0);
+                 entityBox = new AABB(entity.getX() - 2.0, entity.getY() - 2.0, entity.getZ() - 2.0, 
+                                     entity.getX() + 2.0, entity.getY() + 2.0, entity.getZ() + 2.0);
             }
 
             if (camera.isVisible(entityBox)) {
                 return true;
-            } else if (entity instanceof Leashable leashable) {
+            } 
+            
+            if (entity instanceof Leashable leashable) {
                 Entity holder = leashable.getLeashHolder();
                 if (holder != null) {
                     AABB holderBox = holder.getBoundingBoxForCulling();
-                    return camera.isVisible(holderBox) || camera.isVisible(entityBox.minmax(holderBox));
+                    if (camera.isVisible(holderBox) || camera.isVisible(entityBox.minmax(holderBox))) {
+                        return true;
+                    }
+                }
+            }
+
+            if (entity instanceof KnotConnectionAccess access) {
+                List<LeashFenceKnotEntity> connectedKnots = access.raspberry$getConnectionManager()
+                    .getConnectedKnots((LeashFenceKnotEntity) entity);
+                for (LeashFenceKnotEntity knot : connectedKnots) {
+                    AABB knotBox = knot.getBoundingBoxForCulling();
+                    if (camera.isVisible(knotBox) || camera.isVisible(entityBox.minmax(knotBox))) {
+                        return true;
+                    }
                 }
             }
         }
@@ -87,6 +105,13 @@ public class LeashRenderer<T extends Entity> {
         float deltaY = (float) (state.end.y - state.start.y);
         float deltaZ = (float) (state.end.z - state.start.z);
 
+        if (state.isKnotToKnot && deltaY == 0.0F) {
+            float horizontalDistance = (float)Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+            float maxDroop = 0.15F;
+            float distanceScale = 0.05F;
+            state.droopAmount = maxDroop / (1.0F + horizontalDistance * distanceScale);
+        }
+
         float scaleFactor = (1.0F / Mth.sqrt(deltaX * deltaX + deltaZ * deltaZ)) * 0.05F / 2.0F;
 
         float offsetZ = deltaZ * scaleFactor;
@@ -99,11 +124,13 @@ public class LeashRenderer<T extends Entity> {
         Matrix4f matrices = stack.last().pose();
 
         for (int segment = 0; segment <= 24; segment++) {
-            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, 0.05F, 0.05F, offsetZ, offsetX, segment, false, state);
+            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, LEASH_THICKNESS, LEASH_THICKNESS, 
+                         offsetZ, offsetX, segment, false, state);
         }
 
         for (int segment = 24; segment >= 0; segment--) {
-            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, 0.05F, 0.0F, offsetZ, offsetX, segment, true, state);
+            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, LEASH_THICKNESS, 0.0F, 
+                         offsetZ, offsetX, segment, true, state);
         }
 
         stack.popPose();
@@ -122,85 +149,98 @@ public class LeashRenderer<T extends Entity> {
         int skyLight = (int) Mth.lerp(progress, state.startSkyLight, state.endSkyLight);
         int packedLight = LightTexture.pack(blockLight, skyLight);
 
-        float colorModifier = segment % 2 == (isInnerFace ? 1 : 0) ? 0.7f : 1.0f;
-        float red = 0.5f * colorModifier;
-        float green = 0.4f * colorModifier;
-        float blue = 0.3f * colorModifier;
+        boolean useSecondary = segment % 2 == (isInnerFace ? 1 : 0);
+
+        final float A_R = 112f / 255f;
+        final float A_G = 75f / 255f;
+        final float A_B = 42f  / 255f;
+
+        final float B_R = 79f / 255f;
+        final float B_G = 48f / 255f;
+        final float B_B = 26f / 255f;
+
+        float red   = useSecondary ? B_R : A_R;
+        float green = useSecondary ? B_G : A_G;
+        float blue  = useSecondary ? B_B : A_B;
 
         float posX = deltaX * progress;
         float posZ = deltaZ * progress;
-        float posY = state.slack
-            ? (deltaY > 0.0f
-            ? deltaY * progress * progress
-            : deltaY - deltaY * (1.0f - progress) * (1.0f - progress))
-            : deltaY * progress;
+        float posY;
+        
+        if (state.slack) {
+            posY = (deltaY > 0.0f
+                ? deltaY * progress * progress
+                : deltaY - deltaY * (1.0f - progress) * (1.0f - progress));
+        } else {
+            posY = deltaY * progress;
+        }
 
-        vertices.vertex(matrices, posX - offsetZ, posY + thickness2, posZ + offsetX).color(red, green, blue, 1.0f).uv2(packedLight).endVertex();
-        vertices.vertex(matrices, posX + offsetZ, posY + thickness1 - thickness2, posZ - offsetX).color(red, green, blue, 1.0f).uv2(packedLight).endVertex();
+        if (state.isKnotToKnot && state.droopAmount > 0) {
+            float droopFactor = progress * (1.0f - progress) * 4.0f;
+            posY -= state.droopAmount * droopFactor;
+        }
+
+        vertices.vertex(matrices, posX - offsetZ, posY + thickness2, posZ + offsetX)
+                .color(red, green, blue, 1.0f).uv2(packedLight).endVertex();
+        vertices.vertex(matrices, posX + offsetZ, posY + thickness1 - thickness2, posZ - offsetX)
+                .color(red, green, blue, 1.0f).uv2(packedLight).endVertex();
     }
 
     private void setupLeashRendering(T entity, float partialTicks) {
-        if (!(entity instanceof Leashable leashable)) {
-            this.leashStates = null;
-            return;
+        List<LeashState> collector = new ArrayList<>();
+
+        if (entity instanceof Leashable leashable) {
+            Entity leashHolder = leashable.getLeashHolder();
+            if (leashHolder != null) {
+                addLeashStates(entity, leashable, leashHolder, partialTicks, collector, false);
+            }
         }
 
-        Entity leashHolder = leashable.getLeashHolder();
-
-        if (leashHolder != null) {
-            float entityRotation = Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) * ((float) Math.PI / 180);
-            Vec3 leashOffset = ((Leashable) entity).getLeashOffset(partialTicks);
-
-            BlockPos entityPos = new BlockPos(entity.getEyePosition(partialTicks));
-            BlockPos holderPos = new BlockPos(leashHolder.getEyePosition(partialTicks));
-            int entityBlockLight = this.getBlockLightLevel(entity, entityPos);
-            int holderBlockLight = this.getBlockLightLevel(leashHolder, holderPos);
-            int entitySkyLight = entity.level.getBrightness(LightLayer.SKY, entityPos);
-            int holderSkyLight = entity.level.getBrightness(LightLayer.SKY, holderPos);
-
-            boolean handleHolderQuadLeash = leashHolder instanceof Leashable ext && ext.supportQuadLeashAsHolder();
-            boolean handleQuadLeash = leashable.supportQuadLeash();
-            boolean useQuadLeash = handleHolderQuadLeash && handleQuadLeash;
-            int leashCount = useQuadLeash ? 4 : 1;
-
-            if (this.leashStates == null || this.leashStates.size() != leashCount) {
-                this.leashStates = new ArrayList<>(leashCount);
-                for (int i = 0; i < leashCount; i++) {
-                    this.leashStates.add(new LeashState());
+        if (entity instanceof KnotConnectionAccess access && entity instanceof Leashable leashableSelf) {
+            List<LeashFenceKnotEntity> connectedKnots = access.raspberry$getConnectionManager()
+                .getConnectedKnots((LeashFenceKnotEntity) entity);
+            for (LeashFenceKnotEntity targetKnot : connectedKnots) {
+                if (entity.getUUID().compareTo(targetKnot.getUUID()) < 0) {
+                    addLeashStates(entity, leashableSelf, targetKnot, partialTicks, collector, true);
                 }
             }
+        }
 
-            if (useQuadLeash) {
-                float holderRotation = Mth.lerp(partialTicks, leashHolder.yRotO, leashHolder.getYRot()) * ((float) Math.PI / 180);
-                Vec3 holderPosition = leashHolder.getPosition(partialTicks);
-                Vec3[] entityOffsets = leashable.getQuadLeashOffsets();
-                Vec3[] holderOffsets = ((Leashable) leashHolder).getQuadLeashHolderOffsets();
+        this.leashStates = collector.isEmpty() ? null : collector;
+    }
 
-                for (int i = 0; i < leashCount; i++) {
-                    LeashState leashState = this.leashStates.get(i);
-                    leashState.offset = entityOffsets[i].yRot(-entityRotation);
-                    leashState.start = entity.getPosition(partialTicks).add(leashState.offset);
-                    leashState.end = holderPosition.add(holderOffsets[i].yRot(-holderRotation));
-                    leashState.startBlockLight = entityBlockLight;
-                    leashState.endBlockLight = holderBlockLight;
-                    leashState.startSkyLight = entitySkyLight;
-                    leashState.endSkyLight = holderSkyLight;
-                    leashState.slack = false;
-                }
-            } else {
-                Vec3 rotatedOffset = leashOffset.yRot(-entityRotation);
-                LeashState leashState = this.leashStates.get(0);
-                leashState.offset = rotatedOffset;
-                leashState.start = entity.getPosition(partialTicks).add(rotatedOffset);
-                leashState.end = leashHolder.getRopeHoldPosition(partialTicks);
-                leashState.startBlockLight = entityBlockLight;
-                leashState.endBlockLight = holderBlockLight;
-                leashState.startSkyLight = entitySkyLight;
-                leashState.endSkyLight = holderSkyLight;
-            }
+    private void addLeashStates(T entity, Leashable leashable, Entity target, float partialTicks, 
+                                List<LeashState> collector, boolean isKnotToKnot) {
+        float entityRotation = Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) * ((float) Math.PI / 180);
+        Vec3 leashOffset = leashable.getLeashOffset(partialTicks);
+
+        BlockPos entityPos = new BlockPos(entity.getEyePosition(partialTicks));
+        BlockPos holderPos = new BlockPos(target.getEyePosition(partialTicks));
+        int entityBlockLight = this.getBlockLightLevel(entity, entityPos);
+        int holderBlockLight = this.getBlockLightLevel(target, holderPos);
+        int entitySkyLight = entity.level.getBrightness(LightLayer.SKY, entityPos);
+        int holderSkyLight = entity.level.getBrightness(LightLayer.SKY, holderPos);
+
+        Vec3 rotatedOffset = leashOffset.yRot(-entityRotation);
+        LeashState leashState = new LeashState();
+        leashState.offset = rotatedOffset;
+        leashState.start = entity.getPosition(partialTicks).add(rotatedOffset);
+        
+        if (isKnotToKnot && target instanceof Leashable targetLeashable) {
+             float targetRotation = Mth.lerp(partialTicks, target.yRotO, target.getYRot()) * ((float) Math.PI / 180);
+             Vec3 targetOffset = targetLeashable.getLeashOffset(partialTicks).yRot(-targetRotation);
+             leashState.end = target.getPosition(partialTicks).add(targetOffset);
         } else {
-            this.leashStates = null;
+             leashState.end = target.getRopeHoldPosition(partialTicks);
         }
+        
+        leashState.startBlockLight = entityBlockLight;
+        leashState.endBlockLight = holderBlockLight;
+        leashState.startSkyLight = entitySkyLight;
+        leashState.endSkyLight = holderSkyLight;
+        leashState.slack = isKnotToKnot;
+        leashState.isKnotToKnot = isKnotToKnot;
+        collector.add(leashState);
     }
 
     private int getBlockLightLevel(Entity entity, BlockPos pos) {
