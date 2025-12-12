@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Backported leash mechanics from the Chase the Skies drop (@evanbones) 
 - Disabled workstations are now hidden from EMI.
 - Fuel "workstations" are now hidden from EMI.
+- Fences can be leashed together for decorative purposes (@evanbones) 
 - Swap arrows can be shot from dispensers and will swap the target with the dispenser block
 - Swap arrows now teleports targets into/out of vehicles like boats and minecarts
 
