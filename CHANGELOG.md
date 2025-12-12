@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Backported leash mechanics from the Chase the Skies drop (@evanbones) 
 - Disabled workstations are now hidden from EMI.
 - Fuel "workstations" are now hidden from EMI.
+- Swap arrows can be shot from dispensers and will swap the target with the dispenser block
+- Swap arrows now teleports targets into/out of vehicles like boats and minecarts
 
 ### Changed
 - Removed hard dependency on Naturalist.
@@ -25,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - EMI plugin not being registered when mods are missing.
 - Temporary cobwebs not obeying Bracewalk (Additional Enchantments)
 - Fixed default Enderman animations from [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) (@evanbones) 
+- Swap arrows getting discarded when hitting non-living entities like minecarts
 
 ## [1.9]
 
