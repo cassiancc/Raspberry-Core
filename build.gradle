@@ -42,12 +42,29 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
-    maven {
-        url = "https://maven.shedaniel.me/"
-        name = "shedaniel - cloth config"
+    // Cloth Config
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "shedaniel"
+                url = 'https://maven.shedaniel.me/'
+            }
+        }
+        filter {
+            includeGroup("me.shedaniel.cloth")
+        }
     }
-    maven {
-        url = "https://maven.teamabnormals.com/"
+    // Blueprint
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Team Abnormals"
+                url = 'https://maven.teamabnormals.com/'
+            }
+        }
+        filter {
+            includeGroup("com.teamabnormals")
+        }
     }
     exclusiveContent {
         forRepository {
@@ -59,66 +76,137 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-    maven {
-        url = "https://modmaven.dev/"
-        name = "Create"
+    // Create
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Create"
+                url = 'https://modmaven.dev/'
+            }
+        }
+        filter {
+            includeGroup("com.simibubi.create")
+            includeGroup("com.tterrag.registrate")
+            includeGroup("com.jozufozu.flywheel")
+        }
     }
     // GeckoLib
-    maven {
-        name = 'GeckoLib'
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'GeckoLib'
+                url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            }
+        }
+        filter {
+            includeGroup("software.bernie.geckolib")
+        }
     }
     // Parchment Mappings
-    maven {
-        name = 'ParchmentMC'
-        url = 'https://maven.parchmentmc.org'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'ParchmentMC'
+                url = 'https://maven.parchmentmc.org'
+            }
+        }
+        filter {
+            includeGroup("org.parchmentmc.data")
+        }
     }
     // Player Animator
-    maven {
-        name = "KosmX's maven"
-        url = 'https://maven.kosmx.dev/'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "KosmX's maven"
+                url = 'https://maven.kosmx.dev/'
+            }
+        }
+        filter {
+            includeGroup("dev.kosmx.player-anim")
+        }
     }
     // PalladiumCore
-    maven {
-        url 'https://repo.repsy.io/mvn/lucraft/threetag'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "ThreeTag"
+                url 'https://repo.repsy.io/mvn/lucraft/threetag'
+            }
+        }
+        filter {
+            includeGroup("net.threetag")
+        }
     }
-    maven {
-        url "https://maven.latvian.dev/releases"
-        content {
+    // KubeJS
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "KubeJS"
+                url = "https://maven.latvian.dev/releases"
+            }
+        }
+        filter {
             includeGroup "dev.latvian.mods"
             includeGroup "dev.latvian.apps"
         }
     }
-    maven {
-        url "https://maven.cassian.cc"
-    }
-
-    maven {
-        url 'https://jitpack.io'
-        content {
+    // JitPack
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "JitPack"
+                url = 'https://jitpack.io'
+            }
+        }
+        filter {
             includeGroup "com.github.rtyley"
+
         }
     }
-
+    // Local dependencies
     flatDir {
         dirs 'libs'
         content {
             includeGroup "local"
         }
     }
-    maven {
-        name = "TerraformersMC"
-        url = "https://maven.terraformersmc.com/"
-        content {
+    // EMI
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "TerraformersMC"
+                url = "https://maven.terraformersmc.com/"
+            }
+        }
+        filter {
             includeGroup "dev.emi"
+
         }
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "MixinSquared"
+                url = "https://maven.bawnorton.com/releases"
+            }
+        }
+        filter {
+            includeGroup("com.github.bawnorton.mixinsquared")
 
-    maven { url = "https://maven.bawnorton.com/releases" } // MixinSquared
-    maven { url = "https://maven.enjarai.dev/mirrors" } // MixinSquared Mirror
-    maven { // Curios
-        name = "Illusive Soulworks maven"
-        url = "https://maven.theillusivec4.top/"
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Illusive Soulworks maven"
+                url = "https://maven.theillusivec4.top/"
+            }
+        }
+        filter {
+            includeGroup("top.theillusivec4.curios")
+
+        }
     }
 }
 
