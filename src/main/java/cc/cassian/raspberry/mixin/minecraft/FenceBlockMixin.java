@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
+import cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionAccess;
 import cc.cassian.raspberry.compat.vanillabackport.leash.KnotInteractionHelper;
 import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import cc.cassian.raspberry.config.ModConfig;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.LeadItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -22,14 +24,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Mixin(FenceBlock.class)
-public class FenceBlockMixin {
+public abstract class FenceBlockMixin extends Block { 
+
+    public FenceBlockMixin(Properties properties) { super(properties); }
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    private void onUse(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, 
-                      BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
-        if (!ModConfig.get().backportLeash || level.isClientSide) return;
+    private void onUse(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+        if (!ModConfig.get().backportLeash) return;
 
-        if (player.getItemInHand(hand).getItem() instanceof net.minecraft.world.item.ShearsItem) {
+        if (level.isClientSide) {
+            KnotInteractionHelper.HeldEntities held = new KnotInteractionHelper.HeldEntities(player);
+            boolean hasLead = player.getItemInHand(hand).getItem() instanceof LeadItem;
+            if (!held.isEmpty() || hasLead) {
+                cir.setReturnValue(InteractionResult.SUCCESS);
+            }
             return;
         }
 
@@ -64,5 +72,26 @@ public class FenceBlockMixin {
                 cir.setReturnValue(result);
             }
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock()) && !level.isClientSide) {
+            
+            List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(
+                LeashFenceKnotEntity.class, 
+                new AABB(pos), 
+                knot -> knot.getPos().equals(pos)
+            );
+            
+            for (LeashFenceKnotEntity knot : knots) {
+                if (knot instanceof KnotConnectionAccess) {
+                    KnotInteractionHelper.discardCustomConnections(knot, null);
+                }
+                knot.discard(); 
+            }
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 }

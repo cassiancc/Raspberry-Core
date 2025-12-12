@@ -27,6 +27,7 @@ package cc.cassian.raspberry.compat.vanillabackport.leash;
 import java.util.List;
 
 import cc.cassian.raspberry.RaspberryMod;
+import cc.cassian.raspberry.compat.vanillabackport.leash.network.KnotConnectionSyncPacket;
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
@@ -45,6 +46,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -123,6 +125,21 @@ public class LeashEvents {
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
                 return;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onStartTracking(PlayerEvent.StartTracking event) {
+        if (!ModConfig.get().backportLeash) return;
+
+        Entity target = event.getTarget();
+        if (target instanceof LeashFenceKnotEntity knot && target instanceof KnotConnectionAccess access) {
+            KnotConnectionManager manager = access.raspberry$getConnectionManager();
+            
+            if (manager.hasConnections()) {
+                KnotConnectionSyncPacket packet = new KnotConnectionSyncPacket(knot.getId(), manager.getConnectedUuids());
+                packet.sendTo((net.minecraft.server.level.ServerPlayer) event.getEntity()); 
             }
         }
     }
