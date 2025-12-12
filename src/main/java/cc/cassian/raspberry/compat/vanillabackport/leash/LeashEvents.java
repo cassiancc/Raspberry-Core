@@ -78,6 +78,10 @@ public class LeashEvents {
                             continue;
                         }
 
+                        if (target instanceof Leashable targetLeashable && targetLeashable.getLeashHolder() == (Entity) sourceMob) {
+                            continue;
+                        }
+
                         if (sourceMob.canHaveALeashAttachedTo(target)) {
                             sourceMob.setLeashedTo(target, true);
                             attachedAny = true;
