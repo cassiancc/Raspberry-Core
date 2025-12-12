@@ -32,15 +32,6 @@ public abstract class FenceBlockMixin extends Block {
     private void onUse(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if (!ModConfig.get().backportLeash) return;
 
-        if (level.isClientSide) {
-            KnotInteractionHelper.HeldEntities held = new KnotInteractionHelper.HeldEntities(player);
-            boolean hasLead = player.getItemInHand(hand).getItem() instanceof LeadItem;
-            if (!held.isEmpty() || hasLead) {
-                cir.setReturnValue(InteractionResult.SUCCESS);
-            }
-            return;
-        }
-
         KnotInteractionHelper.HeldEntities held = new KnotInteractionHelper.HeldEntities(player);
         boolean hasLead = player.getItemInHand(hand).getItem() instanceof LeadItem;
 
@@ -51,6 +42,13 @@ public abstract class FenceBlockMixin extends Block {
             InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, knot);
             if (result != InteractionResult.PASS) {
                 cir.setReturnValue(result);
+            }
+            return;
+        }
+
+        if (level.isClientSide) {
+            if (!held.isEmpty() || hasLead) {
+                cir.setReturnValue(InteractionResult.SUCCESS);
             }
             return;
         }

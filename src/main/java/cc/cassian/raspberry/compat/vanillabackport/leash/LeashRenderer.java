@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeashRenderer<T extends Entity> {
+    private static final float LEASH_THICKNESS = 0.075F;
     private final EntityRenderDispatcher dispatcher;
     @Nullable private List<LeashState> leashStates;
 
@@ -123,12 +124,12 @@ public class LeashRenderer<T extends Entity> {
         Matrix4f matrices = stack.last().pose();
 
         for (int segment = 0; segment <= 24; segment++) {
-            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, 0.05F, 0.05F, 
+            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, LEASH_THICKNESS, LEASH_THICKNESS, 
                          offsetZ, offsetX, segment, false, state);
         }
 
         for (int segment = 24; segment >= 0; segment--) {
-            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, 0.05F, 0.0F, 
+            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, LEASH_THICKNESS, 0.0F, 
                          offsetZ, offsetX, segment, true, state);
         }
 
@@ -148,10 +149,19 @@ public class LeashRenderer<T extends Entity> {
         int skyLight = (int) Mth.lerp(progress, state.startSkyLight, state.endSkyLight);
         int packedLight = LightTexture.pack(blockLight, skyLight);
 
-        float colorModifier = segment % 2 == (isInnerFace ? 1 : 0) ? 0.7f : 1.0f;
-        float red = 0.5f * colorModifier;
-        float green = 0.4f * colorModifier;
-        float blue = 0.3f * colorModifier;
+        boolean useSecondary = segment % 2 == (isInnerFace ? 1 : 0);
+
+        final float A_R = 128f / 255f;
+        final float A_G = 86f / 255f;
+        final float A_B = 47f  / 255f;
+
+        final float B_R = 79f / 255f;
+        final float B_G = 48f / 255f;
+        final float B_B = 26f / 255f;
+
+        float red   = useSecondary ? B_R : A_R;
+        float green = useSecondary ? B_G : A_G;
+        float blue  = useSecondary ? B_B : A_B;
 
         float posX = deltaX * progress;
         float posZ = deltaZ * progress;

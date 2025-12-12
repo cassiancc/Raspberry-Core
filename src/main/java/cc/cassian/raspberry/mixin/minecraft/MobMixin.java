@@ -1,45 +1,37 @@
-/* The MIT License (MIT)
-
-Copyright (c) 2025 
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
- */
-
-
 package cc.cassian.raspberry.mixin.minecraft;
 
+import cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionManager;
+import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
+import cc.cassian.raspberry.config.ModConfig;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import cc.cassian.raspberry.config.ModConfig;
+import java.util.List;
 
 @Mixin(Mob.class)
 public abstract class MobMixin {
-    @Inject(method = "canBeLeashed", at = @At("HEAD"), cancellable = true)
-    private void raspberry$canBeLeashed(Player player, CallbackInfoReturnable<Boolean> cir) {
-        if (ModConfig.get().backportLeash) {
-            cir.setReturnValue(!(this instanceof Enemy));
+
+    @Inject(method = "dropLeash", at = @At("HEAD"))
+    private void raspberry$checkKnotOnUnleash(boolean broadcast, boolean dropItem, CallbackInfo ci) {
+        if (!ModConfig.get().backportLeash) return;
+
+        Mob mob = (Mob) (Object) this;
+        Entity holder = mob.getLeashHolder();
+
+        if (holder instanceof LeashFenceKnotEntity knot) {
+            List<Leashable> leashedEntities = Leashable.leashableLeashedTo(knot);
+            
+            boolean hasOtherVanilla = leashedEntities.stream().anyMatch(entity -> entity != mob);
+            boolean hasCustom = KnotConnectionManager.getManager(knot).hasConnections();
+            
+            if (!hasOtherVanilla && !hasCustom) {
+                knot.discard();
+            }
         }
     }
 }

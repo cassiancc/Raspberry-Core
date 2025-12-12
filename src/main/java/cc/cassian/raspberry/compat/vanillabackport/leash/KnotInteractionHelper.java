@@ -89,6 +89,7 @@ public class KnotInteractionHelper {
             } else if (hasLeadItem(player)) {
                 ((Leashable)knot).setLeashedTo(player, true);
                 knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
+                consumeLead(player); 
                 return InteractionResult.SUCCESS;
                 
             } else if (KnotConnectionManager.getManager(knot).hasConnections()) {
