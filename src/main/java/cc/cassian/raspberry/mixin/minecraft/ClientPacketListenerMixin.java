@@ -29,7 +29,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ClientboundSetEntityLinkPacket;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.Mob; 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,7 +43,7 @@ public class ClientPacketListenerMixin {
     @Inject(method = "handleEntityLinkPacket", at = @At("TAIL"))
     private void raspberry$onEntityLinkPacket(ClientboundSetEntityLinkPacket packet, CallbackInfo ci) {
         Entity entity = this.level.getEntity(packet.getSourceId());
-        if (entity instanceof Leashable leashable && entity instanceof Boat) {
+        if (entity instanceof Leashable leashable && !(entity instanceof Mob)) {
             leashable.setDelayedLeashHolderId(packet.getDestId());
         }
     }
