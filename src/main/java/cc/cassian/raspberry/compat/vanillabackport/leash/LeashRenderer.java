@@ -151,9 +151,9 @@ public class LeashRenderer<T extends Entity> {
 
         boolean useSecondary = segment % 2 == (isInnerFace ? 1 : 0);
 
-        final float A_R = 99f / 255f;
-        final float A_G = 59f / 255f;
-        final float A_B = 23f  / 255f;
+        final float A_R = 112f / 255f;
+        final float A_G = 75f / 255f;
+        final float A_B = 42f  / 255f;
 
         final float B_R = 79f / 255f;
         final float B_G = 48f / 255f;
