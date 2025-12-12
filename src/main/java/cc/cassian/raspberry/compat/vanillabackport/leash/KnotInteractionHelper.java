@@ -83,10 +83,6 @@ public class KnotInteractionHelper {
             return InteractionResult.SUCCESS;
             
         } else {
-            if (player.isShiftKeyDown()) {
-                return InteractionResult.SUCCESS;
-            }
-
             boolean created = false;
             
             for (LeashFenceKnotEntity heldKnot : held.knots) {

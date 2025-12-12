@@ -74,6 +74,10 @@ public class LeashEvents {
                     boolean attachedAny = false;
 
                     for (Leashable sourceMob : nearbyMobs) {
+                        if (sourceMob instanceof LeashFenceKnotEntity && target instanceof LeashFenceKnotEntity) {
+                            continue;
+                        }
+
                         if (sourceMob.canHaveALeashAttachedTo(target)) {
                             sourceMob.setLeashedTo(target, true);
                             attachedAny = true;
