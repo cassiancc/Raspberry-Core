@@ -1,31 +1,9 @@
-/* The MIT License (MIT)
-
-Copyright (c) 2025 
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
- */
-
-
 package cc.cassian.raspberry.mixin.minecraft;
 
+import cc.cassian.raspberry.client.renderer.LeashFilteringBufferSource;
 import cc.cassian.raspberry.compat.vanillabackport.leash.LeashRenderer;
 import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
+import cc.cassian.raspberry.config.ModConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -58,8 +36,15 @@ public abstract class EntityRendererMixin<T extends Entity> {
 
     @Inject(method = "render", at = @At("HEAD"))
     private void raspberry$renderLeash(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
+        if (!ModConfig.get().backportLeash) return; 
+
         if (entity instanceof Leashable) {
-            this.leashRenderer.render(entity, partialTick, poseStack, buffer);
+            MultiBufferSource renderBuffer = buffer;
+            if (buffer instanceof LeashFilteringBufferSource wrapped) {
+                renderBuffer = wrapped.getDelegate();
+            }
+            
+            this.leashRenderer.render(entity, partialTick, poseStack, renderBuffer);
         }
     }
 
