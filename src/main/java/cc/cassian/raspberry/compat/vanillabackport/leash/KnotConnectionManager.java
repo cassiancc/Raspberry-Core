@@ -25,7 +25,7 @@ public class KnotConnectionManager {
 
         for (LeashFenceKnotEntity knot : knots) {
             double d = self.distanceTo(knot);
-            if (d > 10.0 * 2) { 
+            if (d > 12.0) {
                 snappedAny = true;
                 removeConnection(self, knot);
                 self.spawnAtLocation(Items.LEAD);
@@ -117,6 +117,9 @@ public class KnotConnectionManager {
         
         for (UUID uuid : new ArrayList<>(connectedKnotUuids)) {
             Entity entity = serverLevel.getEntity(uuid);
+            
+            self.spawnAtLocation(Items.LEAD);
+
             if (entity instanceof LeashFenceKnotEntity knot) {
                 getManager(knot).connectedKnotUuids.remove(self.getUUID());
                 

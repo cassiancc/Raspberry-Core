@@ -83,9 +83,15 @@ public class KnotInteractionHelper {
             return InteractionResult.SUCCESS;
             
         } else {
+            if (player.isShiftKeyDown()) {
+                return InteractionResult.SUCCESS;
+            }
+
             boolean created = false;
             
             for (LeashFenceKnotEntity heldKnot : held.knots) {
+                if (heldKnot.distanceTo(knot) > 12.0) continue;
+
                 if (KnotConnectionManager.createConnection(heldKnot, knot)) {
                     created = true;
                     ((Leashable)heldKnot).dropLeash(true, false); 
@@ -101,8 +107,9 @@ public class KnotInteractionHelper {
             if (created) {
                 syncKnots(knot);
                 knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
-                return InteractionResult.SUCCESS;
             }
+            
+            return InteractionResult.SUCCESS;
         }
         
         return InteractionResult.PASS;
@@ -136,10 +143,18 @@ public class KnotInteractionHelper {
         
         for (LeashFenceKnotEntity other : connected) {
             KnotConnectionManager.removeConnection(knot, other);
+            
             if (player.distanceToSqr(other) <= 100.0) {
                 ((Leashable)other).setLeashedTo(player, true);
+                syncKnots(other);
+            } else {
+                other.spawnAtLocation(Items.LEAD);
+                if (shouldRemoveKnot(other)) {
+                    other.discard();
+                } else {
+                    syncKnots(other);
+                }
             }
-            syncKnots(other);
             break; 
         }
         
