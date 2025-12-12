@@ -101,10 +101,8 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
                 this.raspberry$restoreLeashFromSave();
             }
             
-            if (this.raspberry$leashHolder != null) {
-                if (!this.isAlive() || !this.raspberry$leashHolder.isAlive()) {
-                    this.dropLeash(true, true);
-                }
+            if (this.raspberry$leashHolder != null && !this.raspberry$leashHolder.isAlive()) {
+                this.raspberry$clearLeashHolder();
             }
 
             Leashable.tickLeash(this);
@@ -118,6 +116,25 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
                 this.setLeashedTo(entity, false);
                 this.raspberry$delayedLeashHolderId = 0;
             }
+        }
+    }
+
+    @Unique
+    private void raspberry$clearLeashHolder() {
+        this.raspberry$leashHolder = null;
+        this.raspberry$leashInfoTag = null;
+        this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+        
+        if (this.level instanceof ServerLevel serverLevel) {
+            serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
+        }
+        
+        LeashFenceKnotEntity thisKnot = (LeashFenceKnotEntity)(Object)this;
+        boolean hasVanilla = !Leashable.leashableLeashedTo(thisKnot).isEmpty();
+        boolean hasCustom = raspberry$connectionManager.hasConnections();
+        
+        if (!hasVanilla && !hasCustom) {
+            this.discard();
         }
     }
 
@@ -188,21 +205,21 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
             this.raspberry$leashInfoTag = null;
             this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
 
-            if (!this.level.isClientSide && dropItem) {
-                this.spawnAtLocation(net.minecraft.world.item.Items.LEAD);
-            }
+            if (!this.level.isClientSide) {
+                if (dropItem) {
+                    this.spawnAtLocation(net.minecraft.world.item.Items.LEAD);
+                }
 
-            if (!this.level.isClientSide && broadcast && this.level instanceof ServerLevel serverLevel) {
-                serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
-            }
-            
-            // Explicitly check for connections using the local field to ensure accuracy
-            boolean hasCustom = raspberry$connectionManager.hasConnections();
-            boolean hasVanilla = !Leashable.leashableLeashedTo((LeashFenceKnotEntity)(Object)this).isEmpty();
-            
-            // Only discard if truly empty
-            if (!hasCustom && !hasVanilla) {
-                this.discard();
+                if (broadcast && this.level instanceof ServerLevel serverLevel) {
+                    serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
+                }
+                
+                boolean hasCustom = raspberry$connectionManager.hasConnections();
+                boolean hasVanilla = !Leashable.leashableLeashedTo((LeashFenceKnotEntity)(Object)this).isEmpty();
+                
+                if (!hasCustom && !hasVanilla) {
+                    this.discard();
+                }
             }
         }
     }

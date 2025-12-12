@@ -3,9 +3,11 @@ package cc.cassian.raspberry.compat.vanillabackport.leash.network;
 import cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionAccess;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +20,7 @@ public class KnotConnectionSyncPacket {
 
     public KnotConnectionSyncPacket(int entityId, Set<UUID> connectedUuids) {
         this.entityId = entityId;
-        this.connectedUuids = connectedUuids;
+        this.connectedUuids = new HashSet<>(connectedUuids);
     }
 
     public KnotConnectionSyncPacket(FriendlyByteBuf buf) {
@@ -40,11 +42,23 @@ public class KnotConnectionSyncPacket {
 
     public void handle(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            Entity entity = Minecraft.getInstance().level.getEntity(this.entityId);
-            if (entity instanceof LeashFenceKnotEntity knot && knot instanceof KnotConnectionAccess access) {
-                access.raspberry$getConnectionManager().setConnectedUuids(this.connectedUuids);
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.level == null) {
+                return;
+            }
+            
+            Entity entity = mc.level.getEntity(this.entityId);
+            if (entity instanceof LeashFenceKnotEntity && entity instanceof KnotConnectionAccess access) {
+                access.raspberry$getConnectionManager().setConnectedUuids(new HashSet<>(this.connectedUuids));
             }
         });
         context.get().setPacketHandled(true);
+    }
+    
+    public void sendTo(ServerPlayer player) {
+        cc.cassian.raspberry.network.RaspberryNetwork.CHANNEL.send(
+            PacketDistributor.PLAYER.with(() -> player), 
+            this
+        );
     }
 }

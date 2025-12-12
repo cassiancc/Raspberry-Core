@@ -1,7 +1,6 @@
 package cc.cassian.raspberry.compat.vanillabackport.leash;
 
 import cc.cassian.raspberry.compat.vanillabackport.leash.network.KnotConnectionSyncPacket;
-import cc.cassian.raspberry.network.RaspberryNetwork;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -10,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.LeadItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
 
@@ -18,13 +16,16 @@ public class KnotInteractionHelper {
 
     public static void syncKnots(LeashFenceKnotEntity knot) {
         if (knot.level.isClientSide) return;
+        
         KnotConnectionManager manager = KnotConnectionManager.getManager(knot);
         KnotConnectionSyncPacket packet = new KnotConnectionSyncPacket(knot.getId(), manager.getConnectedUuids());
         
-        RaspberryNetwork.CHANNEL.send(
-            PacketDistributor.TRACKING_ENTITY.with(() -> knot), 
-            packet
-        );
+        if (knot.level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            for (net.minecraft.server.level.ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(
+                new net.minecraft.world.level.ChunkPos(knot.blockPosition()), false)) {
+                packet.sendTo(player);
+            }
+        }
     }
 
     public static class HeldEntities {
@@ -63,12 +64,9 @@ public class KnotInteractionHelper {
                 return InteractionResult.CONSUME;
                 
             } else if (hasLeadItem(player)) {
-                if (knot.distanceToSqr(player) <= 100.0) {
-                    consumeLead(player);
-                    ((Leashable)knot).setLeashedTo(player, true);
-                    knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
-                    return InteractionResult.SUCCESS;
-                }
+                ((Leashable)knot).setLeashedTo(player, true);
+                knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
+                return InteractionResult.SUCCESS;
                 
             } else if (KnotConnectionManager.getManager(knot).hasConnections()) {
                 if (player.isShiftKeyDown()) {
@@ -101,7 +99,6 @@ public class KnotInteractionHelper {
             }
 
             if (created) {
-                consumeLead(player);
                 syncKnots(knot);
                 knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
                 return InteractionResult.SUCCESS;

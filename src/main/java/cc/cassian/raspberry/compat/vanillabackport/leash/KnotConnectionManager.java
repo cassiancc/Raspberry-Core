@@ -18,6 +18,8 @@ public class KnotConnectionManager {
     private final Set<UUID> connectedKnotUuids = new HashSet<>();
 
     public void checkDistance(LeashFenceKnotEntity self) {
+        if (self.level.isClientSide) return; 
+        
         List<LeashFenceKnotEntity> knots = this.getConnectedKnots(self);
         boolean snappedAny = false;
 
@@ -26,14 +28,12 @@ public class KnotConnectionManager {
             if (d > 10.0 * 2) { 
                 snappedAny = true;
                 removeConnection(self, knot);
-                if (!self.level.isClientSide) {
-                    self.spawnAtLocation(Items.LEAD);
-                    KnotInteractionHelper.syncKnots(knot);
-                }
+                self.spawnAtLocation(Items.LEAD);
+                KnotInteractionHelper.syncKnots(knot);
             }
         }
 
-        if (snappedAny && !self.level.isClientSide) {
+        if (snappedAny) {
             KnotInteractionHelper.syncKnots(self);
         }
     }
@@ -64,26 +64,34 @@ public class KnotConnectionManager {
     
     public List<LeashFenceKnotEntity> getConnectedKnots(LeashFenceKnotEntity self) {
         List<LeashFenceKnotEntity> connectedKnots = new ArrayList<>();
-        Iterator<UUID> iterator = connectedKnotUuids.iterator();
         Level level = self.level;
 
-        while (iterator.hasNext()) {
-            UUID uuid = iterator.next();
-            if (level instanceof ServerLevel serverLevel) {
+        if (level instanceof ServerLevel serverLevel) {
+            Iterator<UUID> iterator = connectedKnotUuids.iterator();
+            while (iterator.hasNext()) {
+                UUID uuid = iterator.next();
                 Entity entity = serverLevel.getEntity(uuid);
+                
                 if (entity instanceof LeashFenceKnotEntity knot && !knot.isRemoved()) {
                     connectedKnots.add(knot);
                 } else {
                     iterator.remove();
                 }
-            } else {
-                List<LeashFenceKnotEntity> entities = level.getEntitiesOfClass(LeashFenceKnotEntity.class, 
-                    new AABB(self.blockPosition()).inflate(50), e -> e.getUUID().equals(uuid));
+            }
+        } else {
+            for (UUID uuid : connectedKnotUuids) {
+                List<LeashFenceKnotEntity> entities = level.getEntitiesOfClass(
+                    LeashFenceKnotEntity.class, 
+                    new AABB(self.blockPosition()).inflate(50), 
+                    e -> e.getUUID().equals(uuid)
+                );
+                
                 if (!entities.isEmpty()) {
                     connectedKnots.add(entities.get(0));
                 }
             }
         }
+        
         return connectedKnots;
     }
     
@@ -105,11 +113,21 @@ public class KnotConnectionManager {
     }
     
     public void clearAllConnections(Level level, LeashFenceKnotEntity self) {
-        if (level instanceof ServerLevel serverLevel) {
-            for (UUID uuid : new ArrayList<>(connectedKnotUuids)) {
-                Entity entity = serverLevel.getEntity(uuid);
-                if (entity instanceof LeashFenceKnotEntity knot) {
-                    getManager(knot).connectedKnotUuids.remove(self.getUUID());
+        if (!(level instanceof ServerLevel serverLevel)) return;
+        
+        for (UUID uuid : new ArrayList<>(connectedKnotUuids)) {
+            Entity entity = serverLevel.getEntity(uuid);
+            if (entity instanceof LeashFenceKnotEntity knot) {
+                getManager(knot).connectedKnotUuids.remove(self.getUUID());
+                
+                boolean hasVanilla = !Leashable.leashableLeashedTo(knot).isEmpty();
+                boolean isBeingLeashed = knot instanceof Leashable leashable && leashable.getLeashHolder() != null;
+                boolean hasCustom = getManager(knot).hasConnections();
+                
+                if (!hasVanilla && !isBeingLeashed && !hasCustom) {
+                    KnotInteractionHelper.syncKnots(knot);
+                    knot.discard();
+                } else {
                     KnotInteractionHelper.syncKnots(knot);
                 }
             }

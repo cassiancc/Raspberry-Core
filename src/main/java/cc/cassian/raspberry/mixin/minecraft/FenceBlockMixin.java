@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.compat.vanillabackport.leash.KnotInteractionHelper;
+import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -38,18 +39,30 @@ public class FenceBlockMixin {
         List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(LeashFenceKnotEntity.class, new AABB(pos));
         LeashFenceKnotEntity knot = knots.isEmpty() ? null : knots.get(0);
 
-        if (knot == null) {
-            if (!held.isEmpty() || hasLead) {
-                knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
-                knot.playPlacementSound();
-            } else {
-                return;
+        if (knot != null) {
+            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, knot);
+            if (result != InteractionResult.PASS) {
+                cir.setReturnValue(result);
             }
+            return;
         }
 
-        InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, knot);
-        if (result != InteractionResult.PASS) {
-            cir.setReturnValue(result);
+        if (hasLead && held.isEmpty()) {
+            knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
+            knot.playPlacementSound();
+            ((Leashable)knot).setLeashedTo(player, true);
+            KnotInteractionHelper.consumeLead(player);
+            cir.setReturnValue(InteractionResult.SUCCESS);
+            return;
+        }
+
+        if (!held.isEmpty()) {
+            knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
+            knot.playPlacementSound();
+            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, knot);
+            if (result != InteractionResult.PASS) {
+                cir.setReturnValue(result);
+            }
         }
     }
 }
