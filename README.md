@@ -56,5 +56,6 @@ If you are thinking about using the code or assets from Raspberry Core, please n
 - Contains code from [Create Fabric](https://github.com/Fabricators-of-Create/Create), used under its [MIT License](https://github.com/MehVahdJukaar/FarmersDelightRefabricated/blob/feat/1.20/emi/LICENSE).
 - Contains sounds from [Auditory Continued](https://modrinth.com/mod/auditory-continued), used under its [MIT License](https://github.com/ItsSyfe/auditory-continued).
 - Contains code from [Vanilla Backport](https://github.com/ItsBlackGear/VanillaBackport), used under its [MIT License](https://github.com/ItsBlackGear/VanillaBackport/blob/1.20.1/LICENSE.txt).
+- Contains code from [Harou's Leashed Fences](https://github.com/martinkadlec0/harous-leashed-fences), used under its [MIT License](https://github.com/martinkadlec0/harous-leashed-fences/blob/1.21.11/LICENSE).
 
 This repository contains a compiled JAR of Ecologics to allow for the mod to be compiled against, with the copyrighted assets removed. Ecologics code is available under its [MIT License](https://github.com/samedifferent/Ecologics/blob/1.19-crossplatform/LICENSE).

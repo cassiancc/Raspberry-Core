@@ -21,11 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 
-
 package cc.cassian.raspberry.mixin.minecraft;
 
+import cc.cassian.raspberry.client.renderer.LeashFilteringBufferSource;
 import cc.cassian.raspberry.compat.vanillabackport.leash.LeashRenderer;
 import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
+import cc.cassian.raspberry.config.ModConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -58,8 +59,15 @@ public abstract class EntityRendererMixin<T extends Entity> {
 
     @Inject(method = "render", at = @At("HEAD"))
     private void raspberry$renderLeash(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
+        if (!ModConfig.get().backportLeash) return; 
+
         if (entity instanceof Leashable) {
-            this.leashRenderer.render(entity, partialTick, poseStack, buffer);
+            MultiBufferSource renderBuffer = buffer;
+            if (buffer instanceof LeashFilteringBufferSource wrapped) {
+                renderBuffer = wrapped.getDelegate();
+            }
+            
+            this.leashRenderer.render(entity, partialTick, poseStack, renderBuffer);
         }
     }
 

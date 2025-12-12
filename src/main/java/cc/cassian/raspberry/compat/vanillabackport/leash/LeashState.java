@@ -35,4 +35,6 @@ public class LeashState {
     public int startSkyLight = 15;
     public int endSkyLight = 15;
     public boolean slack = true;
+    public boolean isKnotToKnot = false;
+    public float droopAmount = 0.0f;
 }
