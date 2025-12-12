@@ -77,8 +77,37 @@ public class KnotInteractionHelper {
 
         if (held.isEmpty()) {
             HeldEntities heldByKnot = new HeldEntities(knot);
+            boolean isKnotLeashed = ((Leashable)knot).isLeashed();
+            boolean hasCustom = KnotConnectionManager.getManager(knot).hasConnections();
             
-            if (heldByKnot.hasMobs && !player.isShiftKeyDown()) {
+            if (player.isShiftKeyDown()) {
+                if (heldByKnot.hasMobs || hasCustom || isKnotLeashed) {
+                    knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
+
+                    for (Leashable mob : heldByKnot.mobs) {
+                        mob.dropLeash(true, false); 
+                        if (!player.getAbilities().instabuild) {
+                            if (mob instanceof Entity entity) {
+                                entity.spawnAtLocation(Items.LEAD);
+                            }
+                        }
+                    }
+
+                    if (hasCustom) {
+                        discardCustomConnections(knot, player);
+                    }
+
+                    if (isKnotLeashed) {
+                        ((Leashable)knot).dropLeash(true, true);
+                    }
+
+                    knot.discard();
+                    
+                    return InteractionResult.SUCCESS;
+                }
+            }
+            
+            if (heldByKnot.hasMobs) {
                 for (Leashable mob : heldByKnot.mobs) {
                     if (mob.canBeLeashed(player)) mob.setLeashedTo(player, true);
                 }
@@ -92,12 +121,8 @@ public class KnotInteractionHelper {
                 consumeLead(player); 
                 return InteractionResult.SUCCESS;
                 
-            } else if (KnotConnectionManager.getManager(knot).hasConnections()) {
-                if (player.isShiftKeyDown()) {
-                    discardCustomConnections(knot, player);
-                } else {
-                    pickupCustomConnections(knot, player);
-                }
+            } else if (hasCustom) {
+                pickupCustomConnections(knot, player);
                 knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
                 return InteractionResult.SUCCESS;
             }
