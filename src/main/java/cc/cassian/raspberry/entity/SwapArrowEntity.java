@@ -51,6 +51,7 @@ public class SwapArrowEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         Entity target = result.getEntity();
         Entity shooter = this.getOwner();
+        boolean didTeleport = false;
 
         if (!this.level.isClientSide()) {
             if (shooter instanceof LivingEntity && shooter != target) {
@@ -66,12 +67,25 @@ public class SwapArrowEntity extends AbstractArrow {
                 }
                 // Swap position
                 if (target instanceof LivingEntity) {
-                    Vec3 playerPos = shooter.position();
+                    Entity targetVehicle = target.getVehicle();
+                    Entity shooterVehicle = shooter.getVehicle();
+
+                    if (targetVehicle != null) target.stopRiding();
+                    if (shooterVehicle != null) shooter.stopRiding();
+
+                    Vec3 shooterPos = shooter.position();
                     Vec3 targetPos = target.position();
 
-                    target.teleportTo(playerPos.x, playerPos.y, playerPos.z);
+                    target.teleportTo(shooterPos.x, shooterPos.y, shooterPos.z);
                     shooter.teleportTo(targetPos.x, targetPos.y, targetPos.z);
 
+                    if (targetVehicle != null) {
+                        shooter.startRiding(targetVehicle, true);
+                    }
+                    if (shooterVehicle != null) {
+                        target.startRiding(shooterVehicle, true);
+                    }
+                    didTeleport = true;
                     this.level.playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                     this.level.playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
@@ -90,7 +104,6 @@ public class SwapArrowEntity extends AbstractArrow {
                             // If that is also occupied, give up and don't teleport.
                             return;
                         }
-
                     }
 
                     // Remove old dispenser
@@ -114,7 +127,7 @@ public class SwapArrowEntity extends AbstractArrow {
                             newDispenserEntity.setChanged();
                         }
                     }
-
+                    didTeleport = true;
                     this.level.playSound(null, dispenserPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                     this.level.playSound(null, targetPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
@@ -122,7 +135,19 @@ public class SwapArrowEntity extends AbstractArrow {
             }
         }
 
-        this.discard();
+        if (didTeleport) {
+            this.discard();
+        } else {
+            this.setDeltaMovement(this.getDeltaMovement().scale(-0.1));
+            this.setYRot(this.getYRot() + 180.0F);
+            this.yRotO += 180.0F;
+            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
+                if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                    this.spawnAtLocation(this.getPickupItem(), 0.1F);
+                }
+                this.discard();
+            }
+        }
     }
 
     private static Vec3 rotateAroundAxis(Vec3 vec, Vec3 axis, double angle) {
