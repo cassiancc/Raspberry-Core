@@ -9,6 +9,7 @@
     "minecraft.ClientPacketListenerMixin",
     "minecraft.EntityRendererAccessor",
     "minecraft.EntityRendererMixin",
+    "minecraft.EntityRenderDispatcherMixin",
     "minecraft.MobRendererMixin",
     "miningmaster.KnightJumpEnchantmentMixin",
     "naturalist.GlowGoopItemMixin",
