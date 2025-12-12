@@ -40,7 +40,7 @@ public abstract class SoundOptionsScreenMixin extends OptionsSubScreen {
             this.addRenderableWidget(CycleButton.builder(MusicFrequency::getDisplayName)
                     .withValues(MusicFrequency.values())
                     .withInitialValue(ModConfig.get().musicFrequency)
-                    .create(leftButtonX, this.raspberry_frequencyButtonY, 150, 20, Component.literal("Frequency"), (button, value) -> {
+                    .create(leftButtonX, this.raspberry_frequencyButtonY, 150, 20, Component.literal("Music Frequency"), (button, value) -> {
                         ModConfig.get().musicFrequency = value;
                         ModConfig.save();
                     }));
