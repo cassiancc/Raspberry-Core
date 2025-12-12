@@ -11,6 +11,8 @@
     "minecraft.EntityRendererMixin",
     "minecraft.EntityRenderDispatcherMixin",
     "minecraft.MobRendererMixin",
+    "minecraft.MusicManagerMixin",
+    "minecraft.SoundOptionsScreenMixin",
     "miningmaster.KnightJumpEnchantmentMixin",
     "naturalist.GlowGoopItemMixin",
     "spyglass_improvements.MinecraftMixin"

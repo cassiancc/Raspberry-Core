@@ -61,6 +61,7 @@ public class ModConfig {
     public boolean backportLeash = true;
     public boolean disableBirchLeafTinting = true;
     public boolean jadeRequiresScoping = true;
+    public MusicFrequency musicFrequency = MusicFrequency.DEFAULT;
 
     public static void load() {
         if (!Files.exists(configPath())) {
