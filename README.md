@@ -27,6 +27,7 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 - [Brewin and Chewin](https://www.curseforge.com/minecraft/mc-mods/brewin-and-chewin) is optional.
 - [Caverns and Chasms](https://modrinth.com/mod/caverns-and-chasms) is optional.
 - [Clash](https://www.curseforge.com/minecraft/mc-mods/clash) is optional.
+- [Connectible Chains](https://www.curseforge.com/minecraft/mc-mods/connectible-chains-forge) is optional.
 - [Create](https://modrinth.com/mod/create) is optional.
 - [Dungeons Mobs](https://www.curseforge.com/minecraft/mc-mods/dungeons-mobs) is optional.
 - [Dynamic Crosshair](https://modrinth.com/mod/dynamiccrosshair) is optional.

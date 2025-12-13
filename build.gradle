@@ -264,6 +264,7 @@ dependencies {
     modImplementation("curse.maven:aquaculture-60028:$aquaculture_version")
     modImplementation("curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version")
     modImplementation("curse.maven:copperized-567666:$copperized_version")
+    modImplementation("curse.maven:connectible-chains-forge-418514:$connectible_chains_version")
     modImplementation("software.bernie.geckolib:geckolib-forge-$geckolib_version")
     modImplementation("maven.modrinth:supplementaries:$supplementaries_version-forge")
     modImplementation("maven.modrinth:moonlight:$moonlight_lib_version-forge")
