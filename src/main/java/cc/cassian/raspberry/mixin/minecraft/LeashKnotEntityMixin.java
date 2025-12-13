@@ -264,6 +264,10 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         if (ModConfig.get().backportLeash && !this.level.isClientSide) {
             LeashFenceKnotEntity knot = (LeashFenceKnotEntity)(Object)this;
             raspberry$connectionManager.clearAllConnections(this.level, knot);
+
+            if (this.isLeashed()) {
+                this.dropLeash(true, true);
+            }
         }
     }
 }
