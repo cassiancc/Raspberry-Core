@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Swap arrows getting discarded when hitting non-living entities like minecarts.
 - Connectible Chains act more in-line with vanilla leads.
 - Allays can be duplicated using the Album Jukebox. (Etched)
+- Spiders now also check if players are trapped in temporary cobweb blocks. (Dungeons Mobs)
 
 ## [1.9]
 
