@@ -306,5 +306,9 @@
   "minecraft:music/game/imaginary_interlude": {
     "title": "Imaginary Interlude",
     "author": "C418"
+  },
+  "endergetic:music/game/end/poise_forest": {
+    "title": "Poise Forest",
+    "author": "Timinations"
   }
 }
