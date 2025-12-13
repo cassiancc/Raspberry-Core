@@ -75,7 +75,9 @@ public class KnotInteractionHelper {
         HeldEntities held = new HeldEntities(player);
         boolean isHoldingThisKnot = held.all.stream().anyMatch(l -> l == knot);
 
-        if (held.isEmpty()) {
+        boolean heldEmpty = held.isEmpty() || (held.all.size() == 1 && isHoldingThisKnot);
+
+        if (heldEmpty) {
             HeldEntities heldByKnot = new HeldEntities(knot);
             boolean isKnotLeashed = ((Leashable)knot).isLeashed();
             boolean hasCustom = KnotConnectionManager.getManager(knot).hasConnections();
@@ -114,8 +116,12 @@ public class KnotInteractionHelper {
                 knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
                 if (shouldRemoveKnot(knot)) knot.discard();
                 return InteractionResult.SUCCESS;
-                
-            } else if (isKnotLeashed) {
+
+            } else if (isHoldingThisKnot) {
+                ((Leashable)knot).dropLeash(true, true);
+                return InteractionResult.SUCCESS;
+
+            } else if (isKnotLeashed) { 
                 ((Leashable)knot).setLeashedTo(player, true);
                 knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
                 return InteractionResult.SUCCESS;
@@ -132,14 +138,12 @@ public class KnotInteractionHelper {
                 return InteractionResult.SUCCESS;
             }
             
-        } else if (isHoldingThisKnot) {
-            ((Leashable)knot).dropLeash(true, true);
-            return InteractionResult.SUCCESS;
-            
         } else {
             boolean created = false;
             
             for (LeashFenceKnotEntity heldKnot : held.knots) {
+                if (heldKnot == knot) continue; 
+
                 if (heldKnot.distanceTo(knot) > 12.0) continue;
 
                 if (KnotConnectionManager.createConnection(heldKnot, knot)) {
