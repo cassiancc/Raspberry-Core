@@ -36,6 +36,7 @@
     "cofh_core.CoreEnchantmentsMixin",
     "cofh_core.EffectEventsMixin",
     "cofh_core.SnowballMixin",
+    "connectiblechains.ChainKnotEntityBehaviorMixin",
     "controllable.ControllableMixin",
     "copperized.CopperizedArmorMaterialsMixin",
     "create.AllArmorMaterialsMixin",
