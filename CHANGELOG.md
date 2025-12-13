@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Temporary cobwebs not obeying Bracewalk (Additional Enchantments)
 - Fixed default Enderman animations from [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) (@evanbones) 
 - Swap arrows getting discarded when hitting non-living entities like minecarts
+- Allays can be duplicated using the Album Jukebox (Etched) (@evanbones)
 
 ## [1.9]
 

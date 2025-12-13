@@ -58,6 +58,8 @@
     "environmental.MobMixin",
     "environmental.WitherSkeletonMixin",
     "environmental.YakPantsItemMixin",
+    "etched.AlbumJukeboxBlockEntityMixin",
+    "etched.AllayMixin",
     "farmersdelight.BambooBlockMixin",
     "farmersdelight.BambooSaplingMixin",
     "farmersdelight.BlockEntityTypeMixin",
