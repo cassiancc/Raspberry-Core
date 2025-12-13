@@ -3,6 +3,9 @@ package cc.cassian.raspberry.blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
@@ -39,5 +42,14 @@ public class TemporaryCobwebBlock extends WebBlock {
             return 0.15F;
         }
         return super.getDestroyProgress(state, player, level, pos);
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (entity instanceof LivingEntity livingEntity && livingEntity.getMobType() == MobType.ARTHROPOD) {
+            return;
+        }
+        
+        super.entityInside(state, level, pos, entity);
     }
 }
