@@ -6,6 +6,8 @@
   "client": [
     "create.MechanicalCrafterMixin",
     "emi.RecipeScreenMixin",
+    "etched.EtchedRecordItemMixin",
+    "flywheel.FlwConfigMixin",
     "minecraft.ClientPacketListenerMixin",
     "minecraft.EntityRendererAccessor",
     "minecraft.EntityRendererMixin",
