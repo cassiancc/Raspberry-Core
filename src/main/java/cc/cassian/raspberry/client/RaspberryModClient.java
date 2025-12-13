@@ -4,6 +4,7 @@ import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.client.entity.renderer.SwapArrowRenderer;
+import cc.cassian.raspberry.client.music.MusicHandler;
 import cc.cassian.raspberry.events.FlowerGarlandEvent;
 import cc.cassian.raspberry.registry.BlockSupplier;
 import cc.cassian.raspberry.client.registry.RaspberryItemProperties;
@@ -19,6 +20,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -34,6 +36,11 @@ public class RaspberryModClient {
         // Register config
         registerModsPage(context);
         MinecraftForge.EVENT_BUS.addListener(RaspberryModClient::clickTick);
+    }
+
+    @SubscribeEvent
+    public static void registerReloadListeners(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(new MusicHandler());
     }
 
     @SubscribeEvent
@@ -60,6 +67,10 @@ public class RaspberryModClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(RaspberryBlocks.TEMPORARY_COBWEB.get(), RenderType.cutout());
+
+            Minecraft.getInstance()
+                .getSoundManager()
+                .addListener(new MusicEventListener());
         });
 
         RaspberryItemProperties.register();

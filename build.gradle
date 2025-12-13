@@ -76,6 +76,19 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    // Pollen
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "BlameJared"
+                url = "https://maven.blamejared.com/"
+            }
+        }
+        filter {
+            includeGroup("gg.moonflower")
+            includeGroup("gg.moonflower.pinwheel")
+        }
+    }
     // Create
     exclusiveContent {
         forRepository {
@@ -161,7 +174,6 @@ repositories {
         }
         filter {
             includeGroup "com.github.rtyley"
-
         }
     }
     // Local dependencies
@@ -193,7 +205,6 @@ repositories {
         }
         filter {
             includeGroup("com.github.bawnorton.mixinsquared")
-
         }
     }
     exclusiveContent {
@@ -205,7 +216,6 @@ repositories {
         }
         filter {
             includeGroup("top.theillusivec4.curios")
-
         }
     }
 }
@@ -287,6 +297,12 @@ dependencies {
     modImplementation("maven.modrinth:jade:$jade_version")
     modImplementation("maven.modrinth:xaeros-minimap:${xaeros_minimap_version}")
     modImplementation("maven.modrinth:xaeros-world-map:${xaeros_worldmap_version}")
+    modImplementation("curse.maven:etched-491890:${etched_version}")
+    modImplementation("curse.maven:pollen-544350:${pollen_version}") // dependency of etched
+    implementation "gg.moonflower:molang-compiler:3.0.1.5" // pollen dependency
+    implementation "gg.moonflower.pinwheel:pinwheel:1.2.0.3" // pollen dependency
+    forgeRuntimeLibrary "gg.moonflower:molang-compiler:3.0.1.5"
+    forgeRuntimeLibrary "gg.moonflower.pinwheel:pinwheel:1.2.0.3"
 
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:5138314")

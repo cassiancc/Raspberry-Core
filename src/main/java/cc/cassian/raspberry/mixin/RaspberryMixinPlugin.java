@@ -64,6 +64,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("environmental", mixinClassName)){
             return false;
         }
+        else if (checkMixin("etched", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("farmersdelight", mixinClassName)){
             return false;
         }
