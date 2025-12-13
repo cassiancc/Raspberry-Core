@@ -109,12 +109,17 @@ public class KnotInteractionHelper {
             
             if (heldByKnot.hasMobs) {
                 for (Leashable mob : heldByKnot.mobs) {
-                    if (mob.canBeLeashed(player)) mob.setLeashedTo(player, true);
+                    mob.setLeashedTo(player, true);
                 }
                 knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
                 if (shouldRemoveKnot(knot)) knot.discard();
-                return InteractionResult.CONSUME;
+                return InteractionResult.SUCCESS;
                 
+            } else if (isKnotLeashed) {
+                ((Leashable)knot).setLeashedTo(player, true);
+                knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
+                return InteractionResult.SUCCESS;
+
             } else if (hasLeadItem(player)) {
                 ((Leashable)knot).setLeashedTo(player, true);
                 knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
