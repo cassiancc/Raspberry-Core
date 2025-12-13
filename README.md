@@ -29,15 +29,16 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 - [Clash](https://www.curseforge.com/minecraft/mc-mods/clash) is optional.
 - [Connectible Chains](https://www.curseforge.com/minecraft/mc-mods/connectible-chains-forge) is optional.
 - [Create](https://modrinth.com/mod/create) is optional.
-- [The Endergetic Expansion](https://modrinth.com/mod/endergetic) is optional.
+- [Dungeons Mobs](https://www.curseforge.com/minecraft/mc-mods/dungeons-mobs) is optional.
 - [Dynamic Crosshair](https://modrinth.com/mod/dynamiccrosshair) is optional.
+- [The Endergetic Expansion](https://modrinth.com/mod/endergetic) is optional.
+- [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) is optional.
+- [Etched](https://www.curseforge.com/minecraft/mc-mods/etched) is optional.
 - [Gliders](https://modrinth.com/mod/gliders) is optional.
 - [Neapolitan](https://modrinth.com/mod/neapolitan) is optional.
 - [Quark](https://modrinth.com/mod/quark) is optional.
 - [Sully's Mod](https://modrinth.com/mod/sullysmod) is optional.
 - [Upgrade Aquatic](https://modrinth.com/mod/upgrade-aquatic) is optional.
-- [Dungeons Mobs](https://www.curseforge.com/minecraft/mc-mods/dungeons-mobs) is optional.
-- [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) is optional.
 
 ## Features
 
