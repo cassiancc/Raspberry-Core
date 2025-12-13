@@ -1,75 +1,61 @@
 package cc.cassian.raspberry.client.toast;
 
+import cc.cassian.raspberry.client.music.MusicHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class MusicToast implements Toast {
-    private final Component text;
-    private final ItemStack icon;
+    private final MusicHandler.MusicMetadata music;
+    private final ItemStack iconItem;
+    private final ResourceLocation iconTexture;
 
-    public MusicToast(Component text, ItemStack icon) {
-        this.text = text;
-        this.icon = icon;
+    public MusicToast(MusicHandler.MusicMetadata music, ItemStack icon) {
+        this.music = music;
+        this.iconItem = icon;
+        this.iconTexture = null;
+    }
+
+    public MusicToast(MusicHandler.MusicMetadata music, ResourceLocation icon) {
+        this.music = music;
+        this.iconItem = null;
+        this.iconTexture = icon;
     }
 
     @Override
     public Visibility render(PoseStack poseStack, ToastComponent toastComponent, long timeSinceLastVisible) {
-        if (timeSinceLastVisible > 5000) {
-            return Visibility.HIDE;
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, TEXTURE);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+
+        toastComponent.blit(poseStack, 0, 0, 0, 0, this.width(), this.height());
+
+        if (iconTexture != null) {
+            int iconSize = 20;
+            int iconX = 8;
+            int iconY = 6;
+
+            RenderSystem.setShaderTexture(0, iconTexture);
+            GuiComponent.blit(poseStack, iconX, iconY, 0, 0, iconSize, iconSize, iconSize, iconSize);
+        } else if (iconItem != null) {
+            toastComponent.getMinecraft().getItemRenderer().renderAndDecorateItem(iconItem, 8, 8);
         }
 
-        float alpha = 1.0f;
-        if (timeSinceLastVisible > 4000) {
-            alpha = 1.0f - ((timeSinceLastVisible - 4000) / 1000f);
-        }
-        
-        int alphaInt = (int) (alpha * 255) << 24;
+        int textLeft = 30;
+        boolean hasAuthor = !music.author().getString().isEmpty();
 
-        int x = 0; 
-        int y = 0;
-        int width = 160; 
-        int height = 32; 
-
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-
-        int colorBg = alphaInt | 0x202020; 
-        int colorBorder = alphaInt | 0xAAAAAA;
-
-        GuiComponent.fill(poseStack, x, y, x + width, y + height, colorBg);
-        
-        GuiComponent.fill(poseStack, x, y, x + width, y + 1, colorBorder);
-        GuiComponent.fill(poseStack, x, y + height - 1, x + width, y + height, colorBorder);
-        GuiComponent.fill(poseStack, x, y, x + 1, y + height, colorBorder);
-        GuiComponent.fill(poseStack, x + width - 1, y, x + width, y + height, colorBorder);
-
-        if (icon != null) {
-            poseStack.pushPose();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha); // Apply alpha to item
-            poseStack.translate(x + 8, y + 8, 0);
-            Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(icon, 0, 0);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F); // Reset
-            poseStack.popPose();
-        }
-
-        int textColor = alphaInt | 0xFFFFFF; 
-        
-        if (text.getString().contains(" - ")) {
-            String[] parts = text.getString().split(" - ", 2);
-            toastComponent.getMinecraft().font.draw(poseStack, parts[0], x + 30, y + 7, alphaInt | 0xFFFF00);
-            toastComponent.getMinecraft().font.draw(poseStack, parts[1], x + 30, y + 18, textColor);
+        if (hasAuthor) {
+            toastComponent.getMinecraft().font.draw(poseStack, music.title(), textLeft, 7, 0xFFFFFF00);
+            toastComponent.getMinecraft().font.draw(poseStack, music.author(), textLeft, 18, 0xFFFFFFFF);
         } else {
-            toastComponent.getMinecraft().font.draw(poseStack, text, x + 30, y + 12, textColor);
+            toastComponent.getMinecraft().font.draw(poseStack, music.title(), textLeft, 12, 0xFFFFFF00);
         }
 
-        return Visibility.SHOW;
+        return timeSinceLastVisible >= 5000L ? Visibility.HIDE : Visibility.SHOW;
     }
 }

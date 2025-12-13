@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fences can be leashed together for decorative purposes (@evanbones) 
 - Swap arrows can be shot from dispensers and will swap the target with the dispenser block
 - Swap arrows now teleports targets into/out of vehicles like boats and minecarts
+- New option in the Music and Sounds settings to enable music toasts. (@evanbones) 
 
 ### Changed
 - Removed hard dependency on Naturalist.
