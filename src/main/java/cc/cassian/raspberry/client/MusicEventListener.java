@@ -11,9 +11,10 @@ import net.minecraft.client.sounds.WeighedSoundEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.RecordItem;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.lang.reflect.Method;
 
 public class MusicEventListener implements SoundEventListener {
     private static final ResourceLocation GENERIC_ICON = new ResourceLocation("raspberry", "textures/gui/generic_icon.png");
@@ -28,34 +29,48 @@ public class MusicEventListener implements SoundEventListener {
 
         RaspberryMod.LOGGER.info("Music detected: " + sound.getSound().getLocation());
 
-        MusicHandler.MusicMetadata metadata;
-        
         if (sound.getSource() == SoundSource.RECORDS) {
             RecordItem discItem = findDiscBySound(sound);
-            ItemStack icon = new ItemStack(Items.JUKEBOX);
             
-            if (discItem != null) {
-                icon = new ItemStack(discItem);
-                metadata = MusicHandler.getDiscInfo(discItem);
-            } else {
-                metadata = new MusicHandler.MusicMetadata(net.minecraft.network.chat.Component.literal("Unknown Disc"), net.minecraft.network.chat.Component.empty());
+            if (discItem == null) {
+                return;
             }
+
+            ItemStack icon = new ItemStack(discItem);
+            MusicHandler.MusicMetadata metadata = MusicHandler.getDiscInfo(discItem);
             
             Minecraft.getInstance().getToasts().addToast(new MusicToast(metadata, icon));
             
         } else {
-            metadata = MusicHandler.getMusicInfo(sound.getSound().getLocation());
-            
+            MusicHandler.MusicMetadata metadata = MusicHandler.getMusicInfo(sound.getSound().getLocation());
             Minecraft.getInstance().getToasts().addToast(new MusicToast(metadata, GENERIC_ICON));
         }
     }
 
     private RecordItem findDiscBySound(SoundInstance sound) {
+        ResourceLocation playingLocation = sound.getLocation();
+
+        if (playingLocation.getNamespace().equals("etched")) {
+            try {
+                Object innerSound = sound.getSound();
+                if (innerSound != null && innerSound.getClass().getName().equals("gg.moonflower.etched.api.sound.AbstractOnlineSoundInstance$OnlineSound")) {
+                    Method getUrlMethod = innerSound.getClass().getMethod("getURL");
+                    String url = (String) getUrlMethod.invoke(innerSound);
+
+                    if (url != null && !url.contains("://")) {
+                        playingLocation = new ResourceLocation(url);
+                    }
+                }
+            } catch (Exception e) {
+                RaspberryMod.LOGGER.debug("Failed to extract Etched sound URL", e);
+            }
+        }
+
         for (RecordItem disc : ForgeRegistries.ITEMS.getValues().stream()
                 .filter(i -> i instanceof RecordItem)
                 .map(i -> (RecordItem) i)
                 .toList()) {
-            if (disc.getSound().getLocation().equals(sound.getLocation())) {
+            if (disc.getSound().getLocation().equals(playingLocation)) {
                 return disc;
             }
         }
