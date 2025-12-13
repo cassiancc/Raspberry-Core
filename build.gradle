@@ -301,6 +301,8 @@ dependencies {
     modImplementation("curse.maven:pollen-544350:${pollen_version}") // dependency of etched
     implementation "gg.moonflower:molang-compiler:3.0.1.5" // pollen dependency
     implementation "gg.moonflower.pinwheel:pinwheel:1.2.0.3" // pollen dependency
+    forgeRuntimeLibrary "gg.moonflower:molang-compiler:3.0.1.5"
+    forgeRuntimeLibrary "gg.moonflower.pinwheel:pinwheel:1.2.0.3"
 
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:5138314")
