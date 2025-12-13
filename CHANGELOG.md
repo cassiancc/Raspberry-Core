@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed hard dependency on Naturalist.
 - Gliders can now be enchanted with Heartfelt. (Mining Master)
 - Fermenting EMI integration now shows how long it takes to ferment. (Brewin' & Chewin')
-- Connectible Chains now load knot textures separately. (@evanbones)
+- Connectible Chains now load knot textures separately.
 
 ### Fixed
 - EMI plugin not being registered when mods are missing.
