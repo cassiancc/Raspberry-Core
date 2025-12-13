@@ -1,81 +1,310 @@
 {
-  "minecraft:music/game/calm1": { "title": "Minecraft", "author": "C418" },
-  "minecraft:music/game/calm2": { "title": "Clark", "author": "C418" },
-  "minecraft:music/game/calm3": { "title": "Sweden", "author": "C418" },
-  "minecraft:music/game/hal1": { "title": "Subwoofer Lullaby", "author": "C418" },
-  "minecraft:music/game/hal2": { "title": "Living Mice", "author": "C418" },
-  "minecraft:music/game/hal3": { "title": "Haggstrom", "author": "C418" },
-  "minecraft:music/game/hal4": { "title": "Danny", "author": "C418" },
-  "minecraft:music/game/nuance1": { "title": "Key", "author": "C418" },
-  "minecraft:music/game/nuance2": { "title": "Door", "author": "C418" },
-  "minecraft:music/game/piano1": { "title": "Dry Hands", "author": "C418" },
-  "minecraft:music/game/piano2": { "title": "Wet Hands", "author": "C418" },
-  "minecraft:music/game/piano3": { "title": "Mice on Venus", "author": "C418" },
-  "minecraft:music/game/creative/creative1": { "title": "Biome Fest", "author": "C418" },
-  "minecraft:music/game/creative/creative2": { "title": "Blind Spots", "author": "C418" },
-  "minecraft:music/game/creative/creative3": { "title": "Haunt Muskie", "author": "C418" },
-  "minecraft:music/game/creative/creative4": { "title": "Aria Math", "author": "C418" },
-  "minecraft:music/game/creative/creative5": { "title": "Dreiton", "author": "C418" },
-  "minecraft:music/game/creative/creative6": { "title": "Taswell", "author": "C418" },
-
-  "minecraft:music/game/key": { "title": "Key", "author": "C418" },
-  "minecraft:music/game/door": { "title": "Door", "author": "C418" },
-  "minecraft:music/game/subwoofer_lullaby": { "title": "Subwoofer Lullaby", "author": "C418" },
-  "minecraft:music/game/living_mice": { "title": "Living Mice", "author": "C418" },
-  "minecraft:music/game/moog_city": { "title": "Moog City", "author": "C418" },
-  "minecraft:music/game/haggstrom": { "title": "Haggstrom", "author": "C418" },
-  "minecraft:music/game/minecraft": { "title": "Minecraft", "author": "C418" },
-  "minecraft:music/game/oxygene": { "title": "Oxygène", "author": "C418" },
-  "minecraft:music/game/mice_on_venus": { "title": "Mice on Venus", "author": "C418" },
-  "minecraft:music/game/dry_hands": { "title": "Dry Hands", "author": "C418" },
-  "minecraft:music/game/wet_hands": { "title": "Wet Hands", "author": "C418" },
-  "minecraft:music/game/clark": { "title": "Clark", "author": "C418" },
-  "minecraft:music/game/chris": { "title": "Chris", "author": "C418" },
-  "minecraft:music/game/sweden": { "title": "Sweden", "author": "C418" },
-  "minecraft:music/game/danny": { "title": "Danny", "author": "C418" },
-
-  "minecraft:music/game/creative/aria_math": { "title": "Aria Math", "author": "C418" },
-  "minecraft:music/game/creative/biome_fest": { "title": "Biome Fest", "author": "C418" },
-  "minecraft:music/game/creative/blind_spots": { "title": "Blind Spots", "author": "C418" },
-  "minecraft:music/game/creative/dreiton": { "title": "Dreiton", "author": "C418" },
-  "minecraft:music/game/creative/haunt_muskie": { "title": "Haunt Muskie", "author": "C418" },
-  "minecraft:music/game/creative/taswell": { "title": "Taswell", "author": "C418" },
-
-  "minecraft:music/menu/menu1": { "title": "Mutation", "author": "C418" },
-  "minecraft:music/menu/menu2": { "title": "Moog City 2", "author": "C418" },
-  "minecraft:music/menu/menu3": { "title": "Beginning 2", "author": "C418" },
-  "minecraft:music/menu/menu4": { "title": "Floating Trees", "author": "C418" },
-
-  "minecraft:music/game/nether/ballad_of_the_cats": { "title": "Ballad of the Cats", "author": "C418" },
-  "minecraft:music/game/nether/concrete_halls": { "title": "Concrete Halls", "author": "C418" },
-  "minecraft:music/game/nether/dead_voxel": { "title": "Dead Voxel", "author": "C418" },
-  "minecraft:music/game/nether/warmth": { "title": "Warmth", "author": "C418" },
-  "minecraft:music/game/nether/crimson_forest/chrysopoeia": { "title": "Chrysopoeia", "author": "Lena Raine" },
-  "minecraft:music/game/nether/nether_wastes/rubedo": { "title": "Rubedo", "author": "Lena Raine" },
-  "minecraft:music/game/nether/soulsand_valley/so_below": { "title": "So Below", "author": "Lena Raine" },
-
-  "minecraft:music/game/end/boss": { "title": "Boss", "author": "C418" },
-  "minecraft:music/game/end/credits": { "title": "Alpha", "author": "C418" },
-  "minecraft:music/game/end/end": { "title": "The End", "author": "C418" },
-
-  "minecraft:music/game/ancestral_plane": { "title": "Ancestral Plane", "author": "Lena Raine" },
-  "minecraft:music/game/an_ordinary_day": { "title": "An Ordinary Day", "author": "Kumi Tanioka" },
-  "minecraft:music/game/comforting_memories": { "title": "Comforting Memories", "author": "Kumi Tanioka" },
-  "minecraft:music/game/floating_dream": { "title": "Floating Dream", "author": "Kumi Tanioka" },
-  "minecraft:music/game/infinite_amethyst": { "title": "Infinite Amethyst", "author": "Lena Raine" },
-  "minecraft:music/game/left_to_bloom": { "title": "Left to Bloom", "author": "Lena Raine" },
-  "minecraft:music/game/one_more_day": { "title": "One More Day", "author": "Lena Raine" },
-  "minecraft:music/game/stand_tall": { "title": "Stand Tall", "author": "Lena Raine" },
-  "minecraft:music/game/wending": { "title": "Wending", "author": "Lena Raine" },
-
-  "minecraft:music/game/swamp/aerie": { "title": "Aerie", "author": "Lena Raine" },
-  "minecraft:music/game/swamp/firebugs": { "title": "Firebugs", "author": "Lena Raine" },
-  "minecraft:music/game/swamp/labyrinthine": { "title": "Labyrinthine", "author": "Lena Raine" },
-  "minecraft:music/game/ancestry": { "title": "Ancestry", "author": "Lena Raine" },
-
-  "minecraft:music/game/a_familiar_room": { "title": "A Familiar Room", "author": "Aaron Cherof" },
-  "minecraft:music/game/bromeliad": { "title": "Bromeliad", "author": "Aaron Cherof" },
-  "minecraft:music/game/crescent_dunes": { "title": "Crescent Dunes", "author": "Aaron Cherof" },
-  "minecraft:music/game/echo_in_the_wind": { "title": "Echo in the Wind", "author": "Aaron Cherof" },
-  "minecraft:music/game/relic": { "title": "Relic", "author": "Aaron Cherof" }
+  "minecraft:music/game/creative/creative1": {
+    "title": "Blind Spots",
+    "author": "C418"
+  },
+  "minecraft:music/game/creative/creative2": {
+    "title": "Haunt Muskie",
+    "author": "C418"
+  },
+  "minecraft:music/game/creative/creative3": {
+    "title": "Aria Math",
+    "author": "C418"
+  },
+  "minecraft:music/game/creative/creative4": {
+    "title": "Dreiton",
+    "author": "C418"
+  },
+  "minecraft:music/game/creative/creative5": {
+    "title": "Taswell",
+    "author": "C418"
+  },
+  "minecraft:music/game/creative/creative6": {
+    "title": "Biome Fest",
+    "author": "C418"
+  },
+  "minecraft:music/game/creative/beginning": {
+    "title": "Beginning",
+    "author": "C418"
+  },
+  "minecraft:music/game/creative/moog_city": {
+    "title": "Moog City 2",
+    "author": "C418"
+  },
+  "minecraft:music/game/echo_in_the_wind": {
+    "title": "Echo in the Wind",
+    "author": "Aaron Cherof"
+  },
+  "minecraft:music/game/kronos": {
+    "title": "Kronos Island",
+    "author": "Tomoya Ohtani"
+  },
+  "minecraft:music/game/end/credits": {
+    "title": "Alpha",
+    "author": "C418"
+  },
+  "minecraft:music/game/end/boss": {
+    "title": "Boss",
+    "author": "C418"
+  },
+  "minecraft:music/game/end/end": {
+    "title": "The End",
+    "author": "C418"
+  },
+  "minecraft:music/game/calm1": {
+    "title": "Minecraft",
+    "author": "C418"
+  },
+  "minecraft:music/game/clark_chris": {
+    "title": "Clark",
+    "author": "C418"
+  },
+  "minecraft:music/game/calm3": {
+    "title": "Sweden",
+    "author": "C418"
+  },
+  "minecraft:music/game/comforting_memories": {
+    "title": "Comforting Memories",
+    "author": "Kumi Tanioka"
+  },
+  "minecraft:music/game/floating_dream": {
+    "title": "Floating Dream",
+    "author": "Kumi Tanioka"
+  },
+  "minecraft:music/game/hal1": {
+    "title": "Subwoofer Lullaby",
+    "author": "C418"
+  },
+  "minecraft:music/game/hal2": {
+    "title": "Living Mice",
+    "author": "C418"
+  },
+  "minecraft:music/game/hal3": {
+    "title": "Haggstrom",
+    "author": "C418"
+  },
+  "minecraft:music/game/hal4": {
+    "title": "Danny",
+    "author": "C418"
+  },
+  "minecraft:music/game/left_to_bloom": {
+    "title": "Left to Bloom",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/key_door": {
+    "title": "Key",
+    "author": "C418"
+  },
+  "minecraft:music/game/oxygene_equinoxe": {
+    "title": "Oxygene",
+    "author": "C418"
+  },
+  "minecraft:music/game/one_more_day": {
+    "title": "One More Day",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/piano1": {
+    "title": "Dry Hands",
+    "author": "C418"
+  },
+  "minecraft:music/game/piano2": {
+    "title": "Wet Hands",
+    "author": "C418"
+  },
+  "minecraft:music/game/piano3": {
+    "title": "Mice on Venus",
+    "author": "C418"
+  },
+  "minecraft:music/game/a_familiar_room": {
+    "title": "A Familiar Room",
+    "author": "Aaron Cherof"
+  },
+  "minecraft:music/game/bromeliad": {
+    "title": "Bromeliad",
+    "author": "Aaron Cherof"
+  },
+  "minecraft:music/game/gymnopedie": {
+    "title": "Gymnopedie",
+    "author": "Erik Satie"
+  },
+  "minecraft:music/game/trees": {
+    "title": "Trees",
+    "author": "Pedro Silva"
+  },
+  "minecraft:music/game/click": {
+    "title": "Click",
+    "author": "C418"
+  },
+  "minecraft:music/game/cliffside_hinson": {
+    "title": "Cliffside Hinson",
+    "author": "C418"
+  },
+  "minecraft:music/game/jayson_glove": {
+    "title": "Jayson Glove",
+    "author": "C418"
+  },
+  "minecraft:music/menu/menu1": {
+    "title": "Mutation",
+    "author": "C418"
+  },
+  "minecraft:music/menu/menu2": {
+    "title": "Moog City 2",
+    "author": "C418"
+  },
+  "minecraft:music/menu/menu3": {
+    "title": "Beginning 2",
+    "author": "C418"
+  },
+  "minecraft:music/menu/menu4": {
+    "title": "Floating Trees",
+    "author": "C418"
+  },
+  "minecraft:music/game/infinite_amethyst": {
+    "title": "Infinite Amethyst",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/swamp/aerie": {
+    "title": "Aerie",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/beta": {
+    "title": "Beta",
+    "author": "C418"
+  },
+  "minecraft:music/game/work_life_imbalance": {
+    "title": "Work Life Imbalance",
+    "author": "C418"
+  },
+  "minecraft:music/game/only_human": {
+    "title": "Only Human",
+    "author": "Olive Musique"
+  },
+  "minecraft:music/game/certitudes": {
+    "title": "Certitudes",
+    "author": "C418"
+  },
+  "minecraft:music/game/stilbruch": {
+    "title": "Stilbruch",
+    "author": "C418"
+  },
+  "minecraft:music/game/independent_accident": {
+    "title": "Independent Accident",
+    "author": "C418"
+  },
+  "minecraft:music/game/eld_unknown": {
+    "title": "Eld Unknown",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/buildup_errors": {
+    "title": "Buildup Errors",
+    "author": "C418"
+  },
+  "minecraft:music/game/halland": {
+    "title": "Halland",
+    "author": "Johan Johnson"
+  },
+  "minecraft:music/game/nether/nether1": {
+    "title": "Concrete Halls",
+    "author": "C418"
+  },
+  "minecraft:music/game/nether/nether2": {
+    "title": "Dead Voxel",
+    "author": "C418"
+  },
+  "minecraft:music/game/nether/nether3": {
+    "title": "Warmth",
+    "author": "C418"
+  },
+  "minecraft:music/game/nether/nether4": {
+    "title": "Ballad of the Cats",
+    "author": "C418"
+  },
+  "minecraft:music/game/nether/excuse": {
+    "title": "",
+    "author": "C418"
+  },
+  "minecraft:music/game/nether/intro": {
+    "title": "Intro",
+    "author": "C418"
+  },
+  "minecraft:music/game/nether/ki": {
+    "title": "Ki",
+    "author": "C418"
+  },
+  "minecraft:music/game/nether/soulsand_valley/so_below": {
+    "title": "So Below",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/nether/crimson_forest/chrysopoeia": {
+    "title": "Chrysopoeia",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/nether/nether_wastes/rubedo": {
+    "title": "Rubedo",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/nether/skewed_blues": {
+    "title": "Skewed Blues",
+    "author": "Raspmary"
+  },
+  "minecraft:music/game/nether/ams": {
+    "title": "Ams",
+    "author": "C418"
+  },
+  "minecraft:music/game/ancestry": {
+    "title": "Ancestry",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/an_ordinary_day": {
+    "title": "An Ordinary Day",
+    "author": "Kumi Tanioka"
+  },
+  "minecraft:music/game/wending": {
+    "title": "Wending",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/water/shuniji": {
+    "title": "Shuniji",
+    "author": "C418"
+  },
+  "minecraft:music/game/stand_tall": {
+    "title": "Stand Tall",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/flake": {
+    "title": "Flake",
+    "author": "C418"
+  },
+  "minecraft:music/game/kyoto": {
+    "title": "Kyoto",
+    "author": "C418"
+  },
+  "minecraft:music/game/dalarna": {
+    "title": "Dalarna",
+    "author": "Peter Hont"
+  },
+  "minecraft:music/game/swamp/firebugs": {
+    "title": "Firebugs",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/swamp/labyrinthine": {
+    "title": "Labyrinthine",
+    "author": "Lena Raine"
+  },
+  "minecraft:music/game/crescent_dunes": {
+    "title": "Crescent Dunes",
+    "author": "Aaron Cherof"
+  },
+  "minecraft:music/game/water/axolotl": {
+    "title": "Axolotl",
+    "author": "C418"
+  },
+  "minecraft:music/game/water/dragon_fish": {
+    "title": "Dragon Fish",
+    "author": "C418"
+  },
+  "minecraft:music/game/imaginary_interlude": {
+    "title": "Imaginary Interlude",
+    "author": "C418"
+  }
 }
