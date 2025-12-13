@@ -24,12 +24,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed hard dependency on Naturalist.
 - Gliders can now be enchanted with Heartfelt (Mining Master)
 - Fermenting EMI integration now shows how long it takes to ferment. (Brewin' & Chewin')
+- Connectible Chains now load knot textures separately. (@evanbones)
 
 ### Fixed
 - EMI plugin not being registered when mods are missing.
-- Temporary cobwebs not obeying Bracewalk (Additional Enchantments)
-- Fixed default Enderman animations from [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) (@evanbones) 
-- Swap arrows getting discarded when hitting non-living entities like minecarts
+- Temporary cobwebs not obeying Bracewalk. (Additional Enchantments)
+- Fixed default Enderman animations from Enderman Overhaul. (@evanbones) 
+- Swap arrows getting discarded when hitting non-living entities like minecarts.
 
 ## [1.9]
 
