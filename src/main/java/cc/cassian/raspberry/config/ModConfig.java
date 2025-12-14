@@ -62,6 +62,7 @@ public class ModConfig {
     public boolean disableBirchLeafTinting = true;
     public boolean jadeRequiresScoping = true;
     public MusicFrequency musicFrequency = MusicFrequency.DEFAULT;
+    public boolean showMusicToast = false;
 
     public static void load() {
         if (!Files.exists(configPath())) {

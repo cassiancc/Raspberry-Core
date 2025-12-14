@@ -40,6 +40,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("cofh_core", mixinClassName)){
             return false;
         }
+        else if (checkMixin("connectiblechains", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("copperized", mixinClassName)){
             return false;
         }
@@ -62,6 +65,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
             return false;
         }
         else if (checkMixin("environmental", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("etched", mixinClassName)){
             return false;
         }
         else if (checkMixin("farmersdelight", mixinClassName)){

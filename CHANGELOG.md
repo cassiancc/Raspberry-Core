@@ -11,25 +11,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Copper Horse Armor now grants Lightning Resistance and Aftershock. (Copperized)
 - Other Copper Armour mods can now grant Aftershock.
 - An atlas item that can open Xaero's World Map. (experimental content)
-- Option for ghasts to shoot dragon fireballs (disabled by default) (@evanbones) 
-- Backported leash mechanics from the Chase the Skies drop (@evanbones) 
+- Option for ghasts to shoot dragon fireballs (disabled by default).
+- Backported leash mechanics from the Chase the Skies drop.
 - Disabled workstations are now hidden from EMI.
 - Fuel "workstations" are now hidden from EMI.
-- New option in the Music and Sounds settings to configure in-game music frequency. (@evanbones) 
-- Fences can be leashed together for decorative purposes (@evanbones) 
-- Swap arrows can be shot from dispensers and will swap the target with the dispenser block
-- Swap arrows now teleports targets into/out of vehicles like boats and minecarts
+- New option in the Music and Sounds settings to configure in-game music frequency.
+- Fences can be leashed together for decorative purposes.
+- Swap arrows can be shot from dispensers and will swap the target with the dispenser block.
+- Swap arrows now teleports targets into/out of vehicles like boats and minecarts.
+- New option in the Music and Sounds settings to enable music toasts. 
 
 ### Changed
 - Removed hard dependency on Naturalist.
-- Gliders can now be enchanted with Heartfelt (Mining Master)
+- Gliders can now be enchanted with Heartfelt. (Mining Master)
 - Fermenting EMI integration now shows how long it takes to ferment. (Brewin' & Chewin')
+- Connectible Chains now load knot textures separately.
 
 ### Fixed
 - EMI plugin not being registered when mods are missing.
-- Temporary cobwebs not obeying Bracewalk (Additional Enchantments)
-- Fixed default Enderman animations from [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) (@evanbones) 
-- Swap arrows getting discarded when hitting non-living entities like minecarts
+- Temporary cobwebs not obeying Bracewalk. (Additional Enchantments)
+- Fixed default Enderman animations from Enderman Overhaul.
+- Swap arrows getting discarded when hitting non-living entities like minecarts.
+- Connectible Chains act more in-line with vanilla leads.
+- Allays can be duplicated using the Album Jukebox. (Etched)
 
 ## [1.9]
 
