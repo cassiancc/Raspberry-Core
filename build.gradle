@@ -294,6 +294,7 @@ dependencies {
     modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of spyglass improvements
     modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
     modImplementation("curse.maven:controllable-317269:4445137")
+    modImplementation("maven.modrinth:architects-palette:${architects_palette_version}")
     modImplementation("maven.modrinth:cooks-collection:$cooks_collection_version")
     modImplementation("maven.modrinth:jade:$jade_version")
     modImplementation("maven.modrinth:xaeros-minimap:${xaeros_minimap_version}")

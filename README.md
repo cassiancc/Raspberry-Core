@@ -24,6 +24,7 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 - [Oreganized](https://modrinth.com/mod/oreganized) is recommended.
 - [Aquaculture 2](https://modrinth.com/mod/aquaculture) is optional.
 - [Another Furniture](https://modrinth.com/mod/another-furniture) is optional.
+- [Architect's Palette](https://modrinth.com/mod/architects-palette) is optional.
 - [Brewin and Chewin](https://www.curseforge.com/minecraft/mc-mods/brewin-and-chewin) is optional.
 - [Caverns and Chasms](https://modrinth.com/mod/caverns-and-chasms) is optional.
 - [Clash](https://www.curseforge.com/minecraft/mc-mods/clash) is optional.
