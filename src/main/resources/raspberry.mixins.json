@@ -127,6 +127,7 @@
     "supplementaries.BombItemMixin",
     "supplementaries.CandleHolderBlockMixin",
     "supplementaries.CartographersQuillItemMixin",
+    "supplementaries.FaucetBlockTileMixin",
     "supplementaries.PancakeBlockMixin",
     "supplementaries.RakedGravelBlockMixin",
     "supplementaries.SoapClearMixin",

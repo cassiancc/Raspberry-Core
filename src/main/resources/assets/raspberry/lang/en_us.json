@@ -120,6 +120,7 @@
   "config.raspberry.config.mapsWorkInInventory": "Maps work in inventory, not just in hand",
   "config.raspberry.config.jadeRequiresScoping": "Jade requires the player to look through spyglass",
   "config.raspberry.config.disableBirchLeafTinting": "Disable birch leaf tinting",
+  "config.raspberry.config.disableFaucetSourceBlocks": "Disable waterlogged blocks as valid sources for Faucets",
 
   "emi.cooking.time_minute": "%s Minute",
   "emi.cooking.time_minutes": "%s Minutes",
