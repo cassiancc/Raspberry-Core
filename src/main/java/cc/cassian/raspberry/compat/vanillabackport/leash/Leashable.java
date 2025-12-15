@@ -82,6 +82,9 @@ public interface Leashable {
         }
     }
 
+    default void onLeashRemoved() {
+    }
+
     default void setLeashedTo(Entity entity, boolean sendAttachPacket) {
         if (this instanceof Mob mob) mob.setLeashedTo(entity, sendAttachPacket);
     }
@@ -96,7 +99,13 @@ public interface Leashable {
     }
 
     default void dropLeash(boolean broadcast, boolean dropItem) {
-        if (this instanceof Mob mob) mob.dropLeash(broadcast, dropItem);
+        if (this instanceof Mob mob) {
+            mob.dropLeash(broadcast, dropItem);
+            Entity holder = mob.getLeashHolder();
+            if (holder instanceof Leashable leashableHolder) {
+                leashableHolder.onLeashRemoved();
+            }
+        }
     }
 
     static <E extends Entity & Leashable> void tickLeash(E entity) {
