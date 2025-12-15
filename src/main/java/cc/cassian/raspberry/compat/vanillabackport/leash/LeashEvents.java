@@ -120,6 +120,10 @@ public class LeashEvents {
             }
 
             if (stack.is(Items.LEAD) && !(leashable.getLeashHolder() instanceof Player)) {
+                if (target instanceof LeashFenceKnotEntity) {
+                    return;
+                }
+
                 if (!target.level.isClientSide && leashable.canHaveALeashAttachedTo(player)) {
                     if (leashable.isLeashed()) {
                         leashable.dropLeash(true, true);
