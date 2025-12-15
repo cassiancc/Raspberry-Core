@@ -93,6 +93,10 @@ public class KnotInteractionHelper {
             }
             
             for (Leashable mob : held.mobs) {
+                if (((Leashable)knot).getLeashHolder() == (Entity) mob) {
+                    continue;
+                }
+
                 mob.setLeashedTo(knot, true);
                 created = true;
             }
