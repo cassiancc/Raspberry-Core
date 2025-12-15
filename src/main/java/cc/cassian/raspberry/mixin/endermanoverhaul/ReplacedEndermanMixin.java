@@ -20,6 +20,10 @@ public abstract class ReplacedEndermanMixin {
     @Nullable
     public abstract EnderMan getEndermanFromState(AnimationEvent<ReplacedEnderman> state);
 
+    /**
+     * @author evanbones
+     * @reason Fixed typo in orginal method that caused animations to not play correctly.
+     */
     @Overwrite(remap = false)
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(
