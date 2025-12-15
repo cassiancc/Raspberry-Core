@@ -135,6 +135,14 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
             Leashable.tickLeash(this);
             
             raspberry$connectionManager.checkDistance((LeashFenceKnotEntity)(Object)this);
+
+            LeashFenceKnotEntity thisKnot = (LeashFenceKnotEntity)(Object)this;
+            boolean hasVanilla = !Leashable.leashableLeashedTo(thisKnot).isEmpty();
+            boolean hasCustom = raspberry$connectionManager.hasConnections();
+            
+            if (!hasVanilla && !hasCustom && this.raspberry$leashHolder == null) {
+                this.discard();
+            }
         }
         
         if (this.level.isClientSide && this.raspberry$delayedLeashHolderId != 0 && this.getLeashHolder() == null) {
@@ -145,7 +153,6 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
             }
         }
     }
-
 
     @Unique
     private void raspberry$clearLeashHolder() {
