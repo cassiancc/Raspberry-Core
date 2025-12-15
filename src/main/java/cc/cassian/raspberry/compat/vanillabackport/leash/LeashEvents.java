@@ -66,10 +66,7 @@ public class LeashEvents {
         Entity target = event.getTarget();
         ItemStack stack = event.getItemStack();
         
-        boolean holdingKnot = !Leashable.leashableInArea(target.level, target.position(), 
-            l -> l.getLeashHolder() == player && l instanceof LeashFenceKnotEntity).isEmpty();
-
-        if (!target.level.isClientSide && (player.isSecondaryUseActive() || holdingKnot) && target instanceof Leashable leashable && leashable.canBeLeashed(player) && target.isAlive()) {
+        if (!target.level.isClientSide && player.isSecondaryUseActive() && target instanceof Leashable leashable && leashable.canBeLeashed(player) && target.isAlive()) {
             if (!(target instanceof LivingEntity living && living.isBaby())) {
                 List<Leashable> nearbyMobs = Leashable.leashableInArea(target.level, target.position(), l -> l.getLeashHolder() == player);
 
@@ -85,20 +82,10 @@ public class LeashEvents {
                             continue;
                         }
 
-                        boolean isKnotToMob = sourceMob instanceof LeashFenceKnotEntity;
-                        
-                        Leashable child = isKnotToMob ? (Leashable)target : sourceMob;
-                        Entity parent = isKnotToMob ? (Entity)sourceMob : target;
-
-                        if (child.canHaveALeashAttachedTo(parent)) {
-                            child.setLeashedTo(parent, true);
+                        if (sourceMob.canHaveALeashAttachedTo(target)) {
+                            sourceMob.setLeashedTo(target, true);
                             attachedAny = true;
-
-                            if (isKnotToMob && sourceMob.getLeashHolder() == player) {
-                                sourceMob.dropLeash(true, false);
-                            }
                         }
-    
                     }
 
                     if (attachedAny) {
