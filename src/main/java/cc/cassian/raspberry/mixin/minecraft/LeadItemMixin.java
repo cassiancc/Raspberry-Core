@@ -70,6 +70,18 @@ public class LeadItemMixin {
             cir.setReturnValue(result);
             return;
         }
-        
+
+        if (held.isEmpty() && knot == null) {
+            knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
+            knot.playPlacementSound();
+            
+            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(
+                player,
+                context.getHand(),
+                knot
+            );
+            cir.setReturnValue(result);
+            return;
+        }
     }
 }

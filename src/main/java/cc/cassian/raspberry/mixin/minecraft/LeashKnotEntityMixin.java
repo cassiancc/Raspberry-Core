@@ -71,13 +71,10 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
 
     @Unique
     @Nullable
-    private CompoundTag raspberry$leashInfoTag;
+    private CompoundTag raspberry$pendingLeashTag;
 
     @Unique
     private final KnotConnectionManager raspberry$connectionManager = new KnotConnectionManager();
-
-    @Unique
-    private int raspberry$tickCount = 0;
 
     @Override
     public KnotConnectionManager raspberry$getConnectionManager() {
@@ -92,57 +89,27 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         }
     }
 
-    @Unique
-    private void raspberry$restoreLeashFromSave() {
-        if (this.raspberry$leashInfoTag != null && this.level instanceof ServerLevel serverLevel) {
-            if (this.raspberry$leashInfoTag.hasUUID("UUID")) {
-                UUID uuid = this.raspberry$leashInfoTag.getUUID("UUID");
-                Entity entity = serverLevel.getEntity(uuid);
-                if (entity != null) {
-                    this.setLeashedTo(entity, true);
-                    return;
-                }
-            }
-
-            if (this.raspberry$tickCount > 100) {
-                this.raspberry$leashInfoTag = null;
-            }
-        }
-    }
-
     @Override 
     public String getEncodeId() { 
-        return EntityType.getKey(this.getType()).toString();
+        if (raspberry$connectionManager.hasConnections()) {
+            return EntityType.getKey(this.getType()).toString();
+        }
+        return null;
     }
 
     @Override
     public void tick() {
-        super.tick(); 
+        super.tick();
         
         if (!ModConfig.get().backportLeash) return;
         
-        this.raspberry$tickCount++;
-        
         if (!this.level.isClientSide) {
-            if (this.raspberry$leashInfoTag != null) {
-                this.raspberry$restoreLeashFromSave();
-            }
-            
             if (this.raspberry$leashHolder != null && !this.raspberry$leashHolder.isAlive()) {
                 this.raspberry$clearLeashHolder();
             }
 
             Leashable.tickLeash(this);
-            
             raspberry$connectionManager.checkDistance((LeashFenceKnotEntity)(Object)this);
-
-            LeashFenceKnotEntity thisKnot = (LeashFenceKnotEntity)(Object)this;
-            boolean hasVanilla = !Leashable.leashableLeashedTo(thisKnot).isEmpty();
-            boolean hasCustom = raspberry$connectionManager.hasConnections();
-            
-            if (!hasVanilla && !hasCustom && this.raspberry$leashHolder == null) {
-                this.discard();
-            }
         }
         
         if (this.level.isClientSide && this.raspberry$delayedLeashHolderId != 0 && this.getLeashHolder() == null) {
@@ -157,7 +124,7 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
     @Unique
     private void raspberry$clearLeashHolder() {
         this.raspberry$leashHolder = null;
-        this.raspberry$leashInfoTag = null;
+        this.raspberry$pendingLeashTag = null;
         this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
         
         if (this.level instanceof ServerLevel serverLevel) {
@@ -181,8 +148,8 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
             CompoundTag tag = new CompoundTag();
             tag.putUUID("UUID", this.raspberry$leashHolder.getUUID());
             compound.put("Leash", tag);
-        } else if (this.raspberry$leashInfoTag != null) {
-            compound.put("Leash", this.raspberry$leashInfoTag.copy());
+        } else if (this.raspberry$pendingLeashTag != null) {
+            compound.put("Leash", this.raspberry$pendingLeashTag.copy());
         }
         
         raspberry$connectionManager.writeToNbt(compound);
@@ -193,7 +160,7 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         if (!ModConfig.get().backportLeash) return;
 
         if (compound.contains("Leash", 10)) {
-            this.raspberry$leashInfoTag = compound.getCompound("Leash");
+            this.raspberry$pendingLeashTag = compound.getCompound("Leash");
         }
         
         raspberry$connectionManager.readFromNbt(compound);
@@ -215,6 +182,20 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
                 this.raspberry$leashHolder = this.level.getEntity(this.entityData.get(raspberry$DATA_ID_LEASH_HOLDER_ID).getAsInt());
             }
         }
+
+        if (this.raspberry$leashHolder == null && this.raspberry$pendingLeashTag != null && this.level instanceof ServerLevel serverLevel) {
+            if (this.raspberry$pendingLeashTag.hasUUID("UUID")) {
+                UUID uuid = this.raspberry$pendingLeashTag.getUUID("UUID");
+                Entity entity = serverLevel.getEntity(uuid);
+                if (entity != null) {
+                    this.setLeashedTo(entity, true);
+                    this.raspberry$pendingLeashTag = null;
+                }
+            } else {
+                this.raspberry$pendingLeashTag = null;
+            }
+        }
+
         return this.raspberry$leashHolder;
     }
 
@@ -223,7 +204,7 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         if (!ModConfig.get().backportLeash) return;
         
         this.raspberry$leashHolder = entity;
-        this.raspberry$leashInfoTag = null;
+        this.raspberry$pendingLeashTag = null;
         this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.of(entity.getId()));
 
         if (sendPacket && this.level instanceof ServerLevel serverLevel) {
@@ -237,7 +218,7 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         
         if (this.raspberry$leashHolder != null) {
             this.raspberry$leashHolder = null;
-            this.raspberry$leashInfoTag = null;
+            this.raspberry$pendingLeashTag = null;
             this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
 
             if (!this.level.isClientSide) {
