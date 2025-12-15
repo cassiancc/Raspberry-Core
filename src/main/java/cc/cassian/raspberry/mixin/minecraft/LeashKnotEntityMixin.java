@@ -289,9 +289,8 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         
         LeashFenceKnotEntity knot = (LeashFenceKnotEntity)(Object)this;
         InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
-        if (result != InteractionResult.PASS) {
-            cir.setReturnValue(result);
-        }
+        cir.setReturnValue(result);
+        return;
     }
 
     @Inject(method = "dropItem", at = @At("HEAD"))

@@ -88,6 +88,7 @@
     "minecraft.HasteIsGoodMixin",
     "minecraft.ItemMixin",
     "minecraft.ItemStackMixin",
+    "minecraft.LeadItemMixin",
     "minecraft.LeashBehaviorMixin",
     "minecraft.LeashKnotEntityMixin",
     "minecraft.LevelSummaryMixin",

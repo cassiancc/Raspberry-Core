@@ -77,71 +77,7 @@ public class KnotInteractionHelper {
         HeldEntities held = new HeldEntities(player);
         boolean isHoldingThisKnot = held.all.stream().anyMatch(l -> l == knot);
 
-        boolean heldEmpty = held.isEmpty() || (held.all.size() == 1 && isHoldingThisKnot);
-
-        if (heldEmpty) {
-            HeldEntities heldByKnot = new HeldEntities(knot);
-            boolean isKnotLeashed = ((Leashable)knot).isLeashed();
-            boolean hasCustom = KnotConnectionManager.getManager(knot).hasConnections();
-            boolean isShears = player.getItemInHand(hand).getItem() instanceof ShearsItem;
-            
-            if (player.isShiftKeyDown() || isShears) {
-                if (heldByKnot.hasMobs || hasCustom || isKnotLeashed) {
-                    knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
-
-                    for (Leashable mob : heldByKnot.mobs) {
-                        mob.dropLeash(true, false); 
-                        if (!player.getAbilities().instabuild) {
-                            if (mob instanceof Entity entity) {
-                                entity.spawnAtLocation(Items.LEAD);
-                            }
-                        }
-                    }
-
-                    if (hasCustom) {
-                        discardCustomConnections(knot, player);
-                    }
-
-                    if (isKnotLeashed) {
-                        ((Leashable)knot).dropLeash(true, true);
-                    }
-
-                    knot.discard();
-                    
-                    return InteractionResult.SUCCESS;
-                }
-            }
-            
-            if (heldByKnot.hasMobs) {
-                for (Leashable mob : heldByKnot.mobs) {
-                    mob.setLeashedTo(player, true);
-                }
-                knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
-                if (shouldRemoveKnot(knot)) knot.discard();
-                return InteractionResult.SUCCESS;
-
-            } else if (isHoldingThisKnot) {
-                ((Leashable)knot).dropLeash(true, true);
-                return InteractionResult.SUCCESS;
-
-            } else if (isKnotLeashed) { 
-                ((Leashable)knot).setLeashedTo(player, true);
-                knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
-                return InteractionResult.SUCCESS;
-
-            } else if (hasLeadItem(player)) {
-                ((Leashable)knot).setLeashedTo(player, true);
-                knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
-                consumeLead(player); 
-                return InteractionResult.SUCCESS;
-                
-            } else if (hasCustom) {
-                pickupCustomConnections(knot, player);
-                knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
-                return InteractionResult.SUCCESS;
-            }
-            
-        } else {
+        if (!held.isEmpty() && !(held.all.size() == 1 && isHoldingThisKnot)) {
             boolean created = false;
             
             for (LeashFenceKnotEntity heldKnot : held.knots) {
@@ -166,6 +102,67 @@ public class KnotInteractionHelper {
                 knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
             }
             
+            return InteractionResult.SUCCESS;
+        }
+
+        HeldEntities heldByKnot = new HeldEntities(knot);
+        boolean isKnotLeashed = ((Leashable)knot).isLeashed();
+        boolean hasCustom = KnotConnectionManager.getManager(knot).hasConnections();
+        boolean isShears = player.getItemInHand(hand).getItem() instanceof ShearsItem;
+        
+        if (player.isShiftKeyDown() || isShears) {
+            if (heldByKnot.hasMobs || hasCustom || isKnotLeashed) {
+                knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
+
+                for (Leashable mob : heldByKnot.mobs) {
+                    mob.dropLeash(true, false); 
+                    if (!player.getAbilities().instabuild) {
+                        if (mob instanceof Entity entity) {
+                            entity.spawnAtLocation(Items.LEAD);
+                        }
+                    }
+                }
+
+                if (hasCustom) {
+                    discardCustomConnections(knot, player);
+                }
+
+                if (isKnotLeashed) {
+                    ((Leashable)knot).dropLeash(true, true);
+                }
+
+                knot.discard();
+                
+                return InteractionResult.SUCCESS;
+            }
+        }
+        
+        if (heldByKnot.hasMobs) {
+            for (Leashable mob : heldByKnot.mobs) {
+                mob.setLeashedTo(player, true);
+            }
+            knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
+            if (shouldRemoveKnot(knot)) knot.discard();
+            return InteractionResult.SUCCESS;
+
+        } else if (isHoldingThisKnot) {
+            ((Leashable)knot).dropLeash(true, true);
+            return InteractionResult.SUCCESS;
+
+        } else if (isKnotLeashed) { 
+            ((Leashable)knot).setLeashedTo(player, true);
+            knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
+            return InteractionResult.SUCCESS;
+
+        } else if (hasLeadItem(player)) {
+            ((Leashable)knot).setLeashedTo(player, true);
+            knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
+            consumeLead(player); 
+            return InteractionResult.SUCCESS;
+            
+        } else if (hasCustom) {
+            pickupCustomConnections(knot, player);
+            knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
             return InteractionResult.SUCCESS;
         }
         

@@ -24,55 +24,41 @@ import java.util.List;
 @Mixin(FenceBlock.class)
 public abstract class FenceBlockMixin extends Block { 
 
-    public FenceBlockMixin(Properties properties) { super(properties); }
+    public FenceBlockMixin(Properties properties) { 
+        super(properties); 
+    }
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     private void onUse(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if (!ModConfig.get().backportLeash) return;
 
-        List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(LeashFenceKnotEntity.class, new AABB(pos));
-        LeashFenceKnotEntity knot = knots.isEmpty() ? null : knots.get(0);
-
-        if (knot != null) {
-            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
-            if (result != InteractionResult.PASS) {
-                cir.setReturnValue(result);
-            }
-            return;
-        }
-
-        if (level.isClientSide) {
-            KnotInteractionHelper.HeldEntities held = new KnotInteractionHelper.HeldEntities(player);
-            if (!held.isEmpty() || KnotInteractionHelper.hasLeadItem(player)) {
-                cir.setReturnValue(InteractionResult.SUCCESS);
-            }
-            return;
-        }
-
         KnotInteractionHelper.HeldEntities held = new KnotInteractionHelper.HeldEntities(player);
         
-        if (KnotInteractionHelper.hasLeadItem(player) && held.isEmpty()) {
-            knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
-            knot.playPlacementSound();
-            KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
+        if (held.isEmpty()) {
+            return; 
+        }
+        
+        if (level.isClientSide) {
             cir.setReturnValue(InteractionResult.SUCCESS);
             return;
         }
-
-        if (!held.isEmpty()) {
+        
+        List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(LeashFenceKnotEntity.class, new AABB(pos));
+        LeashFenceKnotEntity knot = knots.isEmpty() ? null : knots.get(0);
+        
+        if (knot == null) {
             knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
             knot.playPlacementSound();
-            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
-            if (result != InteractionResult.PASS) {
-                cir.setReturnValue(result);
-            }
         }
+        
+        InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
+        cir.setReturnValue(result);
+        return;
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock()) && !level.isClientSide) {
-            
             List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(
                 LeashFenceKnotEntity.class, 
                 new AABB(pos), 
