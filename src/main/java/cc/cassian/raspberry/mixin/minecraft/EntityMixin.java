@@ -1,6 +1,5 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
-import cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionAccess;
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,13 +16,9 @@ public abstract class EntityMixin {
     private void raspberry$getEncodeId(CallbackInfoReturnable<String> cir) {
         if (!ModConfig.get().backportLeash) return;
 
-        if ((Object)this instanceof LeashFenceKnotEntity knot) {
-            
-            if (knot instanceof KnotConnectionAccess access && access.raspberry$getConnectionManager().hasConnections()) {
-                cir.setReturnValue(EntityType.getKey(knot.getType()).toString());
-            } else {
-                cir.setReturnValue(null);
-            }
+        if ((Object)this instanceof LeashFenceKnotEntity) {
+            String id = EntityType.getKey(((Entity)(Object)this).getType()).toString();
+            cir.setReturnValue(id);
         }
     }
 }
