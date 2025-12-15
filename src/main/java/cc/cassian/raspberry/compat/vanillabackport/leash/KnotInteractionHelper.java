@@ -25,12 +25,14 @@ package cc.cassian.raspberry.compat.vanillabackport.leash;
 
 import cc.cassian.raspberry.compat.vanillabackport.leash.network.KnotConnectionSyncPacket;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.LeadItem;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 import java.util.List;
@@ -71,7 +73,7 @@ public class KnotInteractionHelper {
         public boolean isEmpty() { return all.isEmpty(); }
     }
 
-    public static InteractionResult handleKnotInteraction(Player player, LeashFenceKnotEntity knot) {
+    public static InteractionResult handleKnotInteraction(Player player, InteractionHand hand, LeashFenceKnotEntity knot) {
         HeldEntities held = new HeldEntities(player);
         boolean isHoldingThisKnot = held.all.stream().anyMatch(l -> l == knot);
 
@@ -81,8 +83,9 @@ public class KnotInteractionHelper {
             HeldEntities heldByKnot = new HeldEntities(knot);
             boolean isKnotLeashed = ((Leashable)knot).isLeashed();
             boolean hasCustom = KnotConnectionManager.getManager(knot).hasConnections();
+            boolean isShears = player.getItemInHand(hand).getItem() instanceof ShearsItem;
             
-            if (player.isShiftKeyDown()) {
+            if (player.isShiftKeyDown() || isShears) {
                 if (heldByKnot.hasMobs || hasCustom || isKnotLeashed) {
                     knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
 

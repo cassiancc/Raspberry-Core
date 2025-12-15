@@ -2,14 +2,12 @@ package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionAccess;
 import cc.cassian.raspberry.compat.vanillabackport.leash.KnotInteractionHelper;
-import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.LeadItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;
@@ -32,14 +30,11 @@ public abstract class FenceBlockMixin extends Block {
     private void onUse(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if (!ModConfig.get().backportLeash) return;
 
-        KnotInteractionHelper.HeldEntities held = new KnotInteractionHelper.HeldEntities(player);
-        boolean hasLead = player.getItemInHand(hand).getItem() instanceof LeadItem;
-
         List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(LeashFenceKnotEntity.class, new AABB(pos));
         LeashFenceKnotEntity knot = knots.isEmpty() ? null : knots.get(0);
 
         if (knot != null) {
-            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, knot);
+            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
             if (result != InteractionResult.PASS) {
                 cir.setReturnValue(result);
             }
@@ -47,17 +42,19 @@ public abstract class FenceBlockMixin extends Block {
         }
 
         if (level.isClientSide) {
-            if (!held.isEmpty() || hasLead) {
+            KnotInteractionHelper.HeldEntities held = new KnotInteractionHelper.HeldEntities(player);
+            if (!held.isEmpty() || KnotInteractionHelper.hasLeadItem(player)) {
                 cir.setReturnValue(InteractionResult.SUCCESS);
             }
             return;
         }
 
-        if (hasLead && held.isEmpty()) {
+        KnotInteractionHelper.HeldEntities held = new KnotInteractionHelper.HeldEntities(player);
+        
+        if (KnotInteractionHelper.hasLeadItem(player) && held.isEmpty()) {
             knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
             knot.playPlacementSound();
-            ((Leashable)knot).setLeashedTo(player, true);
-            KnotInteractionHelper.consumeLead(player);
+            KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
             cir.setReturnValue(InteractionResult.SUCCESS);
             return;
         }
@@ -65,14 +62,13 @@ public abstract class FenceBlockMixin extends Block {
         if (!held.isEmpty()) {
             knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
             knot.playPlacementSound();
-            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, knot);
+            InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
             if (result != InteractionResult.PASS) {
                 cir.setReturnValue(result);
             }
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock()) && !level.isClientSide) {
