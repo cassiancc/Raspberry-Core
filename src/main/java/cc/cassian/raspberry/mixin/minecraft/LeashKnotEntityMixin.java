@@ -89,14 +89,6 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         }
     }
 
-    @Override 
-    public String getEncodeId() { 
-        if (raspberry$connectionManager.hasConnections()) {
-            return EntityType.getKey(this.getType()).toString();
-        }
-        return null;
-    }
-
     @Override
     public void tick() {
         super.tick();
