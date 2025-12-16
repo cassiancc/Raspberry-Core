@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 
-
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.compat.vanillabackport.leash.InterpolationHandler;
@@ -66,7 +65,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Nullable
     private Entity raspberry$leashHolder;
 
-    @Unique 
+    @Unique
     private final InterpolationHandler raspberry$interpolation = new InterpolationHandler(this, 3);
 
     @Unique
@@ -111,7 +110,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
             if (this.raspberry$leashInfoTag != null) {
                 this.raspberry$restoreLeashFromSave();
             }
-            
+
             if (this.raspberry$leashHolder != null) {
                 if (!this.isAlive() || !this.raspberry$leashHolder.isAlive()) {
                     this.raspberry$dropLeash(true, true);
@@ -171,25 +170,29 @@ public abstract class BoatMixin extends Entity implements Leashable {
     public void raspberry$setLeashedTo(Entity entity, boolean sendPacket) {
         this.raspberry$leashHolder = entity;
         this.raspberry$leashInfoTag = null;
+        this.raspberry$delayedLeashHolderId = 0;
         this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.of(entity.getId()));
 
-        if (sendPacket && this.level instanceof ServerLevel serverLevel) {
+        if (sendPacket && !this.level.isClientSide && this.level instanceof ServerLevel serverLevel) {
             serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, entity));
         }
     }
 
     @Override
     public void raspberry$dropLeash(boolean broadcast, boolean dropItem) {
-        if (this.raspberry$leashHolder != null) {
-            this.raspberry$leashHolder = null;
-            this.raspberry$leashInfoTag = null;
-            this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+        boolean wasLeashed = this.raspberry$leashHolder != null;
 
-            if (!this.level.isClientSide && dropItem) {
+        this.raspberry$leashHolder = null;
+        this.raspberry$leashInfoTag = null;
+        this.raspberry$delayedLeashHolderId = 0;
+        this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+
+        if (!this.level.isClientSide && wasLeashed) {
+            if (dropItem) {
                 this.spawnAtLocation(Items.LEAD);
             }
 
-            if (!this.level.isClientSide && broadcast && this.level instanceof ServerLevel serverLevel) {
+            if (broadcast && this.level instanceof ServerLevel serverLevel) {
                 serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
             }
         }
@@ -198,11 +201,15 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Override
     public void raspberry$setDelayedLeashHolderId(int id) {
         this.raspberry$delayedLeashHolderId = id;
-        this.raspberry$dropLeash(false, false);
+
+        this.raspberry$leashHolder = null;
+        this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+
         if (id != 0) {
             Entity entity = this.level.getEntity(id);
             if (entity != null) {
                 this.raspberry$setLeashedTo(entity, false);
+                this.raspberry$delayedLeashHolderId = 0;
             }
         }
     }
@@ -222,8 +229,8 @@ public abstract class BoatMixin extends Entity implements Leashable {
             if (this.isControlledByLocalInstance()) {
                 this.raspberry$interpolation.cancel();
                 this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
-            } 
-            
+            }
+
             this.raspberry$interpolation.interpolate();
         }
     }
@@ -232,7 +239,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
     public @NotNull Vec3 getLeashOffset() {
         return new Vec3(0.0, 0.88F * this.getBbHeight(), 0.64F * this.getBbWidth());
     }
-    
+
     @Override
     public void removeAfterChangingDimensions() {
         super.removeAfterChangingDimensions();

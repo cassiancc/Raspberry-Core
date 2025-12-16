@@ -41,13 +41,13 @@ public class KnotInteractionHelper {
 
     public static void syncKnots(LeashFenceKnotEntity knot) {
         if (knot.level.isClientSide) return;
-        
+
         KnotConnectionManager manager = KnotConnectionManager.getManager(knot);
         KnotConnectionSyncPacket packet = new KnotConnectionSyncPacket(knot.getId(), manager.getConnectedUuids());
-        
+
         if (knot.level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
             for (net.minecraft.server.level.ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(
-                new net.minecraft.world.level.ChunkPos(knot.blockPosition()), false)) {
+                    new net.minecraft.world.level.ChunkPos(knot.blockPosition()), false)) {
                 packet.sendTo(player);
             }
         }
@@ -69,7 +69,7 @@ public class KnotInteractionHelper {
             this.hasMobs = !mobs.isEmpty();
             this.hasKnots = !knots.isEmpty();
         }
-        
+
         public boolean isEmpty() { return all.isEmpty(); }
     }
 
@@ -79,9 +79,9 @@ public class KnotInteractionHelper {
 
         if (!held.isEmpty() && !(held.all.size() == 1 && isHoldingThisKnot)) {
             boolean created = false;
-            
+
             for (LeashFenceKnotEntity heldKnot : held.knots) {
-                if (heldKnot == knot) continue; 
+                if (heldKnot == knot) continue;
 
                 if (heldKnot.distanceTo(knot) > 12.0) continue;
 
@@ -91,7 +91,7 @@ public class KnotInteractionHelper {
                     syncKnots(heldKnot);
                 }
             }
-            
+
             for (Leashable mob : held.mobs) {
                 if (((Leashable)knot).raspberry$getLeashHolder() == mob) {
                     continue;
@@ -105,7 +105,7 @@ public class KnotInteractionHelper {
                 syncKnots(knot);
                 knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
             }
-            
+
             return InteractionResult.SUCCESS;
         }
 
@@ -113,7 +113,7 @@ public class KnotInteractionHelper {
         boolean isKnotLeashed = ((Leashable)knot).raspberry$isLeashed();
         boolean hasCustom = KnotConnectionManager.getManager(knot).hasConnections();
         boolean isShears = player.getItemInHand(hand).getItem() instanceof ShearsItem;
-        
+
         if (player.isShiftKeyDown() || isShears) {
             if (heldByKnot.hasMobs || hasCustom || isKnotLeashed) {
                 knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
@@ -136,11 +136,11 @@ public class KnotInteractionHelper {
                 }
 
                 knot.discard();
-                
+
                 return InteractionResult.SUCCESS;
             }
         }
-        
+
         if (heldByKnot.hasMobs) {
             for (Leashable mob : heldByKnot.mobs) {
                 mob.raspberry$setLeashedTo(player, true);
@@ -153,7 +153,7 @@ public class KnotInteractionHelper {
             ((Leashable)knot).raspberry$dropLeash(true, true);
             return InteractionResult.SUCCESS;
 
-        } else if (isKnotLeashed) { 
+        } else if (isKnotLeashed) {
             ((Leashable)knot).raspberry$setLeashedTo(player, true);
             knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
             return InteractionResult.SUCCESS;
@@ -161,21 +161,21 @@ public class KnotInteractionHelper {
         } else if (hasLeadItem(player)) {
             ((Leashable)knot).raspberry$setLeashedTo(player, true);
             knot.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0f, 1.0f);
-            consumeLead(player); 
+            consumeLead(player);
             return InteractionResult.SUCCESS;
-            
+
         } else if (hasCustom) {
             pickupCustomConnections(knot, player);
             knot.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0f, 1.0f);
             return InteractionResult.SUCCESS;
         }
-        
+
         return InteractionResult.PASS;
     }
 
     public static boolean hasLeadItem(Player player) {
-        return player.getMainHandItem().getItem() instanceof LeadItem || 
-               player.getOffhandItem().getItem() instanceof LeadItem;
+        return player.getMainHandItem().getItem() instanceof LeadItem ||
+                player.getOffhandItem().getItem() instanceof LeadItem;
     }
 
     public static void consumeLead(Player player) {
@@ -187,7 +187,7 @@ public class KnotInteractionHelper {
             }
         }
     }
-    
+
     public static boolean shouldRemoveKnot(LeashFenceKnotEntity knot) {
         boolean hasVanilla = !Leashable.leashableLeashedTo(knot).isEmpty();
         boolean isLeashed = ((Leashable)knot).raspberry$getLeashHolder() != null;
@@ -198,10 +198,10 @@ public class KnotInteractionHelper {
     public static void pickupCustomConnections(LeashFenceKnotEntity knot, Player player) {
         KnotConnectionManager manager = KnotConnectionManager.getManager(knot);
         List<LeashFenceKnotEntity> connected = manager.getConnectedKnots(knot);
-        
+
         for (LeashFenceKnotEntity other : connected) {
             KnotConnectionManager.removeConnection(knot, other);
-            
+
             if (player.distanceToSqr(other) <= 100.0) {
                 ((Leashable)other).raspberry$setLeashedTo(player, true);
                 syncKnots(other);
@@ -213,28 +213,28 @@ public class KnotInteractionHelper {
                     syncKnots(other);
                 }
             }
-            break; 
+            break;
         }
-        
+
         if (shouldRemoveKnot(knot)) knot.discard();
         else syncKnots(knot);
     }
-    
+
     public static void discardCustomConnections(LeashFenceKnotEntity knot, Entity breaker) {
         KnotConnectionManager manager = KnotConnectionManager.getManager(knot);
         List<LeashFenceKnotEntity> connected = manager.getConnectedKnots(knot);
-        
+
         for (LeashFenceKnotEntity other : connected) {
             KnotConnectionManager.removeConnection(knot, other);
             if (shouldRemoveKnot(other)) other.discard();
             else syncKnots(other);
-            
+
             knot.spawnAtLocation(Items.LEAD);
         }
-        
+
         if (shouldRemoveKnot(knot)) knot.discard();
         else syncKnots(knot);
-        
+
         knot.gameEvent(GameEvent.BLOCK_DETACH, breaker);
     }
 }

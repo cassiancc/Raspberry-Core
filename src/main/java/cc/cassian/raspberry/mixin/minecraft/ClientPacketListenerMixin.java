@@ -35,24 +35,24 @@ public class ClientPacketListenerMixin {
         if (this.level == null) return;
 
         Entity entity = this.level.getEntity(packet.getSourceId());
-        
+
         if (entity instanceof Leashable leashable) {
             ci.cancel();
 
             int destId = packet.getDestId();
-            
+
             if (destId == 0) {
-                leashable.raspberry$dropLeash(true, false);
+                leashable.raspberry$dropLeash(false, false);
             } else {
                 if (entity instanceof Mob mob) {
                     ((MobAccessor) mob).raspberry$setDelayedLeashHolderId(destId);
                 } else {
                     leashable.raspberry$setDelayedLeashHolderId(destId);
                 }
-                
+
                 Entity target = this.level.getEntity(destId);
                 if (target != null) {
-                    leashable.raspberry$setLeashedTo(target, true);
+                    leashable.raspberry$setLeashedTo(target, false);
                 }
             }
         }
