@@ -22,6 +22,7 @@
   ],
   "mixins": [
     "alloyed.BlockEntityTypeMixin",
+    "architects_palette.TwistedTreeMixin",
     "aquaculture.AquaFishingBobberEntityMixin",
     "aquaculture.AquaFishingRodItemMixin",
     "aquaculture.BaitItemMixin",
