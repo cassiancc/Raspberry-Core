@@ -93,7 +93,7 @@ public class KnotInteractionHelper {
             }
             
             for (Leashable mob : held.mobs) {
-                if (((Leashable)knot).raspberry$getLeashHolder() == (Entity) mob) {
+                if (((Leashable)knot).raspberry$getLeashHolder() == mob) {
                     continue;
                 }
 

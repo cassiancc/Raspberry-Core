@@ -73,16 +73,15 @@ public class KnotConnectionManager {
         return addedA || addedB;
     }
     
-    public static boolean removeConnection(LeashFenceKnotEntity knotA, LeashFenceKnotEntity knotB) {
-        if (knotA == knotB) return false;
+    public static void removeConnection(LeashFenceKnotEntity knotA, LeashFenceKnotEntity knotB) {
+        if (knotA == knotB) return;
         
         KnotConnectionManager managerA = getManager(knotA);
         KnotConnectionManager managerB = getManager(knotB);
-        
-        boolean removedA = managerA.connectedKnotUuids.remove(knotB.getUUID());
-        boolean removedB = managerB.connectedKnotUuids.remove(knotA.getUUID());
-        
-        return removedA || removedB;
+
+        managerA.connectedKnotUuids.remove(knotB.getUUID());
+        managerB.connectedKnotUuids.remove(knotA.getUUID());
+
     }
     
     public List<LeashFenceKnotEntity> getConnectedKnots(LeashFenceKnotEntity self) {
@@ -130,11 +129,7 @@ public class KnotConnectionManager {
     public boolean hasConnections() {
         return !connectedKnotUuids.isEmpty();
     }
-    
-    public int getConnectionCount() {
-        return connectedKnotUuids.size();
-    }
-    
+
     public void clearAllConnections(Level level, LeashFenceKnotEntity self) {
         if (!(level instanceof ServerLevel serverLevel)) return;
         
@@ -175,8 +170,8 @@ public class KnotConnectionManager {
         connectedKnotUuids.clear();
         if (tag.contains(CONNECTIONS_NBT_KEY)) {
             ListTag list = tag.getList(CONNECTIONS_NBT_KEY, Tag.TAG_INT_ARRAY);
-            for (int i = 0; i < list.size(); i++) {
-                connectedKnotUuids.add(NbtUtils.loadUUID(list.get(i)));
+            for (Tag value : list) {
+                connectedKnotUuids.add(NbtUtils.loadUUID(value));
             }
         }
     }

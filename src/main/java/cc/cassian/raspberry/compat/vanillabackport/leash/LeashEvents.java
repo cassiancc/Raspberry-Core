@@ -78,7 +78,7 @@ public class LeashEvents {
                             continue;
                         }
 
-                        if (target instanceof Leashable targetLeashable && targetLeashable.raspberry$getLeashHolder() == (Entity) sourceMob) {
+                        if (leashable.raspberry$getLeashHolder() == sourceMob) {
                             continue;
                         }
 
@@ -136,7 +136,6 @@ public class LeashEvents {
                 }
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
-                return;
             }
         }
     }
@@ -176,7 +175,7 @@ public class LeashEvents {
         
         for (LeashFenceKnotEntity knot : knots) {
             if (knot instanceof KnotConnectionAccess) {
-                KnotInteractionHelper.discardCustomConnections(knot, (Entity) event.getPlayer());
+                KnotInteractionHelper.discardCustomConnections(knot, event.getPlayer());
             }
             knot.discard();
         }
@@ -204,7 +203,7 @@ public class LeashEvents {
         }
         
         if (entity instanceof LeashFenceKnotEntity knot && entity instanceof KnotConnectionAccess) {
-            KnotInteractionHelper.discardCustomConnections(knot, (Entity) player);
+            KnotInteractionHelper.discardCustomConnections(knot, player);
             dropConnections = true;
         }
 

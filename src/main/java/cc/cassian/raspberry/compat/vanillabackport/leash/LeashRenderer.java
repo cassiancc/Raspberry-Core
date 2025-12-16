@@ -124,12 +124,12 @@ public class LeashRenderer<T extends Entity> {
         Matrix4f matrices = stack.last().pose();
 
         for (int segment = 0; segment <= 24; segment++) {
-            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, LEASH_THICKNESS, LEASH_THICKNESS, 
+            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, LEASH_THICKNESS,
                          offsetZ, offsetX, segment, false, state);
         }
 
         for (int segment = 24; segment >= 0; segment--) {
-            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, LEASH_THICKNESS, 0.0F, 
+            addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, 0.0F,
                          offsetZ, offsetX, segment, true, state);
         }
 
@@ -139,7 +139,7 @@ public class LeashRenderer<T extends Entity> {
     private static void addVertexPair(
         VertexConsumer vertices, Matrix4f matrices,
         float deltaX, float deltaY, float deltaZ,
-        float thickness1, float thickness2,
+        float thickness2,
         float offsetZ, float offsetX,
         int segment, boolean isInnerFace, LeashState state
     ) {
@@ -182,7 +182,7 @@ public class LeashRenderer<T extends Entity> {
 
         vertices.vertex(matrices, posX - offsetZ, posY + thickness2, posZ + offsetX)
                 .color(red, green, blue, 1.0f).uv2(packedLight).endVertex();
-        vertices.vertex(matrices, posX + offsetZ, posY + thickness1 - thickness2, posZ - offsetX)
+        vertices.vertex(matrices, posX + offsetZ, posY + LeashRenderer.LEASH_THICKNESS - thickness2, posZ - offsetX)
                 .color(red, green, blue, 1.0f).uv2(packedLight).endVertex();
     }
 
