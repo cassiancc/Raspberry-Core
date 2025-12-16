@@ -71,7 +71,7 @@ public class LeadItemMixin {
             return;
         }
 
-        if (held.isEmpty() && knot == null) {
+        if (held.isEmpty()) {
             knot = LeashFenceKnotEntity.getOrCreateKnot(level, pos);
             knot.playPlacementSound();
             
@@ -81,7 +81,6 @@ public class LeadItemMixin {
                 knot
             );
             cir.setReturnValue(result);
-            return;
         }
     }
 }

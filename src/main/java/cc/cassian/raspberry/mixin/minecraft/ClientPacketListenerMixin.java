@@ -42,6 +42,9 @@ public class ClientPacketListenerMixin {
             int destId = packet.getDestId();
 
             if (destId == 0) {
+                if (entity instanceof Mob mob) {
+                    ((MobAccessor) mob).raspberry$setDelayedLeashHolderId(0);
+                }
                 leashable.raspberry$dropLeash(false, false);
             } else {
                 if (entity instanceof Mob mob) {

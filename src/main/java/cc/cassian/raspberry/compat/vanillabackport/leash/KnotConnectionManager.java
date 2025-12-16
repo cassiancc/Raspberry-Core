@@ -144,12 +144,10 @@ public class KnotConnectionManager {
                 boolean hasVanilla = !Leashable.leashableLeashedTo(knot).isEmpty();
                 boolean isBeingLeashed = knot instanceof Leashable leashable && leashable.raspberry$getLeashHolder() != null;
                 boolean hasCustom = getManager(knot).hasConnections();
-                
+
+                KnotInteractionHelper.syncKnots(knot);
                 if (!hasVanilla && !isBeingLeashed && !hasCustom) {
-                    KnotInteractionHelper.syncKnots(knot);
                     knot.discard();
-                } else {
-                    KnotInteractionHelper.syncKnots(knot);
                 }
             }
         }

@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -53,11 +54,10 @@ public abstract class FenceBlockMixin extends Block {
         
         InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
         cir.setReturnValue(result);
-        return;
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock()) && !level.isClientSide) {
             List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(
                 LeashFenceKnotEntity.class, 
