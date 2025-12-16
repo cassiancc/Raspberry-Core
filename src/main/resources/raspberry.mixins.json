@@ -80,6 +80,7 @@
     "minecraft.DragonFireballMixin",
     "minecraft.EnchantmentMixin",
     "minecraft.EntityAccessor",
+    "minecraft.EntityMixin",
     "minecraft.FenceBlockMixin",
     "minecraft.FoliageColorMixin",
     "minecraft.FoxMixin",

@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
 
-Copyright (c) 2025 
+Copyright (c) 2025
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -73,21 +73,10 @@ public class LeashEvents {
                     boolean attachedAny = false;
 
                     for (Leashable sourceEntity : nearbyEntities) {
-                        if (sourceEntity instanceof LeashFenceKnotEntity && target instanceof LeashFenceKnotEntity) {
-                            continue;
-                        }
-
-                        if (sourceEntity instanceof LeashFenceKnotEntity) {
-                            continue;
-                        }
-
-                        if (target instanceof LeashFenceKnotEntity) {
-                            continue;
-                        }
-
-                        if (leashable.raspberry$getLeashHolder() == sourceEntity) {
-                            continue;
-                        }
+                        if (sourceEntity instanceof LeashFenceKnotEntity && target instanceof LeashFenceKnotEntity) continue;
+                        if (sourceEntity instanceof LeashFenceKnotEntity) continue;
+                        if (target instanceof LeashFenceKnotEntity) continue;
+                        if (leashable.raspberry$getLeashHolder() == sourceEntity) continue;
 
                         if (sourceEntity.canHaveALeashAttachedTo(target)) {
                             sourceEntity.raspberry$setLeashedTo(target, true);
@@ -107,7 +96,6 @@ public class LeashEvents {
             }
         }
 
-        // Handle shears
         if (stack.is(Tags.Items.SHEARS) && shearOffAllLeashConnections(target, player)) {
             stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(event.getHand()));
             event.setCancellationResult(InteractionResult.SUCCESS);
@@ -115,7 +103,6 @@ public class LeashEvents {
             return;
         }
 
-        // Handle picking up leash from held entity
         if (target.isAlive() && target instanceof Leashable leashable) {
             if (leashable.raspberry$getLeashHolder() == player) {
                 if (!target.level.isClientSide) {
@@ -221,7 +208,6 @@ public class LeashEvents {
             if (entity instanceof LeashFenceKnotEntity) {
                 entity.discard();
             }
-
             return true;
         } else {
             return false;

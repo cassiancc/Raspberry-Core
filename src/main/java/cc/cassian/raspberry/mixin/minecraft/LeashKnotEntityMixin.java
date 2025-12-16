@@ -18,7 +18,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.   
+SOFTWARE.
 */
 
 package cc.cassian.raspberry.mixin.minecraft;
@@ -89,23 +89,6 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         }
     }
 
-    @Nullable
-    @Override
-    public String getEncodeId() {
-        if (ModConfig.get().backportLeash) {
-            return EntityType.getKey(this.getType()).toString();
-        }
-        return super.getEncodeId();
-    }
-
-    @Override
-    public boolean survives() {
-        if (ModConfig.get().backportLeash) {
-            return true;
-        }
-        return super.survives();
-    }
-
     @Override
     public void tick() {
         super.tick();
@@ -121,7 +104,6 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
             raspberry$connectionManager.checkDistance((LeashFenceKnotEntity)(Object)this);
         }
 
-        // Handle delayed leash holder (client-side resolution)
         if (this.raspberry$delayedLeashHolderId != 0 && this.raspberry$getLeashHolder() == null) {
             Entity entity = this.level.getEntity(this.raspberry$delayedLeashHolderId);
             if (entity != null) {
@@ -150,16 +132,13 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
     public void raspberry$dropLeash(boolean broadcast, boolean dropItem) {
         if (!ModConfig.get().backportLeash) return;
 
-        // Remember if we were leashed before clearing
         boolean wasLeashed = this.raspberry$leashHolder != null;
 
-        // Clear leash state on BOTH client and server
         this.raspberry$leashHolder = null;
         this.raspberry$pendingLeashTag = null;
         this.raspberry$delayedLeashHolderId = 0;
         this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
 
-        // Server-side only actions
         if (!this.level.isClientSide && wasLeashed) {
             if (dropItem) {
                 this.spawnAtLocation(Items.LEAD);
@@ -208,7 +187,6 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
     public Entity raspberry$getLeashHolder() {
         if (!ModConfig.get().backportLeash) return null;
 
-        // Client-side: resolve entity from ID
         if (this.level.isClientSide) {
             OptionalInt holderId = this.entityData.get(raspberry$DATA_ID_LEASH_HOLDER_ID);
             if (holderId.isEmpty()) {
@@ -219,7 +197,6 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
             return this.raspberry$leashHolder;
         }
 
-        // Server-side: restore from pending tag if needed
         if (this.raspberry$leashHolder == null && this.raspberry$pendingLeashTag != null && this.level instanceof ServerLevel serverLevel) {
             if (this.raspberry$pendingLeashTag.hasUUID("UUID")) {
                 UUID uuid = this.raspberry$pendingLeashTag.getUUID("UUID");
@@ -255,12 +232,9 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         if (!ModConfig.get().backportLeash) return;
 
         this.raspberry$delayedLeashHolderId = id;
-
-        // Clear current leash without dropping or broadcasting
         this.raspberry$leashHolder = null;
         this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
 
-        // Try to resolve immediately if entity is available
         if (id != 0) {
             Entity entity = this.level.getEntity(id);
             if (entity != null) {

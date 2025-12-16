@@ -99,8 +99,10 @@ public interface Leashable {
 
     default void raspberry$dropLeash(boolean broadcast, boolean dropItem) {
         if (this instanceof Mob mob) {
-            mob.dropLeash(broadcast, dropItem);
             Entity holder = mob.getLeashHolder();
+
+            mob.dropLeash(broadcast, dropItem);
+
             if (holder instanceof Leashable leashableHolder) {
                 leashableHolder.raspberry$onLeashRemoved();
             }
