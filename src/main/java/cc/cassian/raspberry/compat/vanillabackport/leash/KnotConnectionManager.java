@@ -147,7 +147,7 @@ public class KnotConnectionManager {
                 getManager(knot).connectedKnotUuids.remove(self.getUUID());
                 
                 boolean hasVanilla = !Leashable.leashableLeashedTo(knot).isEmpty();
-                boolean isBeingLeashed = knot instanceof Leashable leashable && leashable.getLeashHolder() != null;
+                boolean isBeingLeashed = knot instanceof Leashable leashable && leashable.raspberry$getLeashHolder() != null;
                 boolean hasCustom = getManager(knot).hasConnections();
                 
                 if (!hasVanilla && !isBeingLeashed && !hasCustom) {

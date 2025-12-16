@@ -67,7 +67,7 @@ public class LeashRenderer<T extends Entity> {
             } 
             
             if (entity instanceof Leashable leashable) {
-                Entity holder = leashable.getLeashHolder();
+                Entity holder = leashable.raspberry$getLeashHolder();
                 if (holder != null) {
                     AABB holderBox = holder.getBoundingBoxForCulling();
                     if (camera.isVisible(holderBox) || camera.isVisible(entityBox.minmax(holderBox))) {
@@ -190,7 +190,7 @@ public class LeashRenderer<T extends Entity> {
         List<LeashState> collector = new ArrayList<>();
 
         if (entity instanceof Leashable leashable) {
-            Entity leashHolder = leashable.getLeashHolder();
+            Entity leashHolder = leashable.raspberry$getLeashHolder();
             if (leashHolder != null) {
                 addLeashStates(entity, leashable, leashHolder, partialTicks, collector, false);
             }
@@ -212,7 +212,7 @@ public class LeashRenderer<T extends Entity> {
     private void addLeashStates(T entity, Leashable leashable, Entity target, float partialTicks, 
                                 List<LeashState> collector, boolean isKnotToKnot) {
         float entityRotation = Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) * ((float) Math.PI / 180);
-        Vec3 leashOffset = leashable.getLeashOffset(partialTicks);
+        Vec3 leashOffset = leashable.raspberry$getLeashOffset(partialTicks);
 
         BlockPos entityPos = new BlockPos(entity.getEyePosition(partialTicks));
         BlockPos holderPos = new BlockPos(target.getEyePosition(partialTicks));
@@ -228,7 +228,7 @@ public class LeashRenderer<T extends Entity> {
         
         if (isKnotToKnot && target instanceof Leashable targetLeashable) {
              float targetRotation = Mth.lerp(partialTicks, target.yRotO, target.getYRot()) * ((float) Math.PI / 180);
-             Vec3 targetOffset = targetLeashable.getLeashOffset(partialTicks).yRot(-targetRotation);
+             Vec3 targetOffset = targetLeashable.raspberry$getLeashOffset(partialTicks).yRot(-targetRotation);
              leashState.end = target.getPosition(partialTicks).add(targetOffset);
         } else {
              leashState.end = target.getRopeHoldPosition(partialTicks);

@@ -68,7 +68,7 @@ public class LeashEvents {
         
         if (!target.level.isClientSide && player.isSecondaryUseActive() && target instanceof Leashable leashable && leashable.canBeLeashed(player) && target.isAlive()) {
             if (!(target instanceof LivingEntity living && living.isBaby())) {
-                List<Leashable> nearbyMobs = Leashable.leashableInArea(target.level, target.position(), l -> l.getLeashHolder() == player);
+                List<Leashable> nearbyMobs = Leashable.leashableInArea(target.level, target.position(), l -> l.raspberry$getLeashHolder() == player);
 
                 if (!nearbyMobs.isEmpty()) {
                     boolean attachedAny = false;
@@ -78,12 +78,12 @@ public class LeashEvents {
                             continue;
                         }
 
-                        if (target instanceof Leashable targetLeashable && targetLeashable.getLeashHolder() == (Entity) sourceMob) {
+                        if (target instanceof Leashable targetLeashable && targetLeashable.raspberry$getLeashHolder() == (Entity) sourceMob) {
                             continue;
                         }
 
                         if (sourceMob.canHaveALeashAttachedTo(target)) {
-                            sourceMob.setLeashedTo(target, true);
+                            sourceMob.raspberry$setLeashedTo(target, true);
                             attachedAny = true;
                         }
                     }
@@ -108,9 +108,9 @@ public class LeashEvents {
         }
 
         if (target.isAlive() && target instanceof Leashable leashable) {
-            if (leashable.getLeashHolder() == player) {
+            if (leashable.raspberry$getLeashHolder() == player) {
                 if (!target.level.isClientSide) {
-                    leashable.dropLeash(true, !player.isCreative());
+                    leashable.raspberry$dropLeash(true, !player.isCreative());
                     target.level.gameEvent(GameEvent.ENTITY_INTERACT, target.position(), GameEvent.Context.of(player));
                     target.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0F, 1.0F);
                 }
@@ -119,17 +119,17 @@ public class LeashEvents {
                 return;
             }
 
-            if (stack.is(Items.LEAD) && !(leashable.getLeashHolder() instanceof Player)) {
+            if (stack.is(Items.LEAD) && !(leashable.raspberry$getLeashHolder() instanceof Player)) {
                 if (target instanceof LeashFenceKnotEntity) {
                     return;
                 }
 
                 if (!target.level.isClientSide && leashable.canHaveALeashAttachedTo(player)) {
-                    if (leashable.isLeashed()) {
-                        leashable.dropLeash(true, true);
+                    if (leashable.raspberry$isLeashed()) {
+                        leashable.raspberry$dropLeash(true, true);
                     }
 
-                    leashable.setLeashedTo(player, true);
+                    leashable.raspberry$setLeashedTo(player, true);
                     target.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0F, 1.0F);
 
                     if (!player.isCreative()) stack.shrink(1);
@@ -194,13 +194,13 @@ public class LeashEvents {
         List<Leashable> leashed = Leashable.leashableLeashedTo(entity);
         boolean dropConnections = !leashed.isEmpty();
 
-        if (entity instanceof Leashable leashable && leashable.isLeashed()) {
-            leashable.dropLeash(true, true);
+        if (entity instanceof Leashable leashable && leashable.raspberry$isLeashed()) {
+            leashable.raspberry$dropLeash(true, true);
             dropConnections = true;
         }
 
         for (Leashable leashable : leashed) {
-            leashable.dropLeash(true, true);
+            leashable.raspberry$dropLeash(true, true);
         }
         
         if (entity instanceof LeashFenceKnotEntity knot && entity instanceof KnotConnectionAccess) {
