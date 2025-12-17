@@ -1,3 +1,26 @@
+/* MIT License
+
+Copyright (c) 2025 Martin Kadlec
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.compat.vanillabackport.leash.*;
@@ -15,6 +38,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -36,8 +60,7 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
     }
 
     @Unique
-    private static final EntityDataAccessor<OptionalInt> raspberry$DATA_ID_LEASH_HOLDER_ID = 
-        SynchedEntityData.defineId(LeashFenceKnotEntity.class, EntityDataSerializers.OPTIONAL_UNSIGNED_INT);
+    private static final EntityDataAccessor<OptionalInt> raspberry$DATA_ID_LEASH_HOLDER_ID = SynchedEntityData.defineId(LeashKnotEntityMixin.class, EntityDataSerializers.OPTIONAL_UNSIGNED_INT);
 
     @Unique
     private int raspberry$delayedLeashHolderId;
@@ -48,17 +71,13 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
 
     @Unique
     @Nullable
-    private CompoundTag raspberry$leashInfoTag;
+    private CompoundTag raspberry$pendingLeashTag;
 
     @Unique
-    private final cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionManager raspberry$connectionManager = 
-        new cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionManager();
-
-    @Unique
-    private int raspberry$tickCount = 0;
+    private final KnotConnectionManager raspberry$connectionManager = new KnotConnectionManager();
 
     @Override
-    public cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionManager raspberry$getConnectionManager() {
+    public KnotConnectionManager raspberry$getConnectionManager() {
         return raspberry$connectionManager;
     }
 
@@ -70,71 +89,66 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         }
     }
 
-    @Unique
-    private void raspberry$restoreLeashFromSave() {
-        if (this.raspberry$leashInfoTag != null && this.level instanceof ServerLevel serverLevel) {
-            if (this.raspberry$leashInfoTag.hasUUID("UUID")) {
-                UUID uuid = this.raspberry$leashInfoTag.getUUID("UUID");
-                Entity entity = serverLevel.getEntity(uuid);
-                if (entity != null) {
-                    this.setLeashedTo(entity, true);
-                    return;
-                }
-            }
-
-            if (this.raspberry$tickCount > 100) {
-                this.raspberry$leashInfoTag = null;
-            }
-        }
-    }
-
     @Override
     public void tick() {
-        super.tick(); 
-        
+        super.tick();
+
         if (!ModConfig.get().backportLeash) return;
-        
-        this.raspberry$tickCount++;
-        
+
         if (!this.level.isClientSide) {
-            if (this.raspberry$leashInfoTag != null) {
-                this.raspberry$restoreLeashFromSave();
-            }
-            
             if (this.raspberry$leashHolder != null && !this.raspberry$leashHolder.isAlive()) {
-                this.raspberry$clearLeashHolder();
+                this.raspberry$dropLeash(true, false);
             }
 
             Leashable.tickLeash(this);
-            
             raspberry$connectionManager.checkDistance((LeashFenceKnotEntity)(Object)this);
         }
-        
-        if (this.level.isClientSide && this.raspberry$delayedLeashHolderId != 0 && this.getLeashHolder() == null) {
+
+        if (this.raspberry$delayedLeashHolderId != 0 && this.raspberry$getLeashHolder() == null) {
             Entity entity = this.level.getEntity(this.raspberry$delayedLeashHolderId);
             if (entity != null) {
-                this.setLeashedTo(entity, false);
+                this.raspberry$setLeashedTo(entity, false);
                 this.raspberry$delayedLeashHolderId = 0;
             }
         }
     }
 
-    @Unique
-    private void raspberry$clearLeashHolder() {
-        this.raspberry$leashHolder = null;
-        this.raspberry$leashInfoTag = null;
-        this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
-        
-        if (this.level instanceof ServerLevel serverLevel) {
-            serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
-        }
-        
-        LeashFenceKnotEntity thisKnot = (LeashFenceKnotEntity)(Object)this;
-        boolean hasVanilla = !Leashable.leashableLeashedTo(thisKnot).isEmpty();
+    @Override
+    public void raspberry$onLeashRemoved() {
+        if (!ModConfig.get().backportLeash) return;
+
+        LeashFenceKnotEntity self = (LeashFenceKnotEntity)(Object)this;
+
+        boolean hasVanilla = !Leashable.leashableLeashedTo(self).isEmpty();
         boolean hasCustom = raspberry$connectionManager.hasConnections();
-        
-        if (!hasVanilla && !hasCustom) {
-            this.discard();
+        boolean isLeashed = this.raspberry$isLeashed();
+
+        if (!hasVanilla && !hasCustom && !isLeashed) {
+            self.discard();
+        }
+    }
+
+    @Override
+    public void raspberry$dropLeash(boolean broadcast, boolean dropItem) {
+        if (!ModConfig.get().backportLeash) return;
+
+        boolean wasLeashed = this.raspberry$leashHolder != null;
+
+        this.raspberry$leashHolder = null;
+        this.raspberry$pendingLeashTag = null;
+        this.raspberry$delayedLeashHolderId = 0;
+        this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+
+        if (!this.level.isClientSide && wasLeashed) {
+            if (dropItem) {
+                this.spawnAtLocation(Items.LEAD);
+            }
+
+            if (broadcast && this.level instanceof ServerLevel serverLevel) {
+                serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
+            }
+
+            this.raspberry$onLeashRemoved();
         }
     }
 
@@ -146,10 +160,9 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
             CompoundTag tag = new CompoundTag();
             tag.putUUID("UUID", this.raspberry$leashHolder.getUUID());
             compound.put("Leash", tag);
-        } else if (this.raspberry$leashInfoTag != null) {
-            compound.put("Leash", this.raspberry$leashInfoTag.copy());
+        } else if (this.raspberry$pendingLeashTag != null) {
+            compound.put("Leash", this.raspberry$pendingLeashTag.copy());
         }
-        
         raspberry$connectionManager.writeToNbt(compound);
     }
 
@@ -158,105 +171,98 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
         if (!ModConfig.get().backportLeash) return;
 
         if (compound.contains("Leash", 10)) {
-            this.raspberry$leashInfoTag = compound.getCompound("Leash");
+            this.raspberry$pendingLeashTag = compound.getCompound("Leash");
         }
-        
         raspberry$connectionManager.readFromNbt(compound);
     }
 
     @Override
-    public boolean isLeashed() {
+    public boolean raspberry$isLeashed() {
         if (!ModConfig.get().backportLeash) return false;
         return this.entityData.get(raspberry$DATA_ID_LEASH_HOLDER_ID).isPresent();
     }
 
     @Nullable
     @Override
-    public Entity getLeashHolder() {
+    public Entity raspberry$getLeashHolder() {
         if (!ModConfig.get().backportLeash) return null;
-        
-        if (this.raspberry$leashHolder == null && this.entityData.get(raspberry$DATA_ID_LEASH_HOLDER_ID).isPresent()) {
-            if (this.level.isClientSide) {
-                this.raspberry$leashHolder = this.level.getEntity(this.entityData.get(raspberry$DATA_ID_LEASH_HOLDER_ID).getAsInt());
+
+        if (this.level.isClientSide) {
+            OptionalInt holderId = this.entityData.get(raspberry$DATA_ID_LEASH_HOLDER_ID);
+            if (holderId.isEmpty()) {
+                this.raspberry$leashHolder = null;
+            } else if (this.raspberry$leashHolder == null || this.raspberry$leashHolder.getId() != holderId.getAsInt()) {
+                this.raspberry$leashHolder = this.level.getEntity(holderId.getAsInt());
+            }
+            return this.raspberry$leashHolder;
+        }
+
+        if (this.raspberry$leashHolder == null && this.raspberry$pendingLeashTag != null && this.level instanceof ServerLevel serverLevel) {
+            if (this.raspberry$pendingLeashTag.hasUUID("UUID")) {
+                UUID uuid = this.raspberry$pendingLeashTag.getUUID("UUID");
+                Entity entity = serverLevel.getEntity(uuid);
+                if (entity != null) {
+                    this.raspberry$setLeashedTo(entity, true);
+                    this.raspberry$pendingLeashTag = null;
+                }
+            } else {
+                this.raspberry$pendingLeashTag = null;
             }
         }
+
         return this.raspberry$leashHolder;
     }
 
     @Override
-    public void setLeashedTo(Entity entity, boolean sendPacket) {
+    public void raspberry$setLeashedTo(Entity entity, boolean sendPacket) {
         if (!ModConfig.get().backportLeash) return;
-        
+
         this.raspberry$leashHolder = entity;
-        this.raspberry$leashInfoTag = null;
+        this.raspberry$pendingLeashTag = null;
+        this.raspberry$delayedLeashHolderId = 0;
         this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.of(entity.getId()));
 
-        if (sendPacket && this.level instanceof ServerLevel serverLevel) {
+        if (sendPacket && !this.level.isClientSide && this.level instanceof ServerLevel serverLevel) {
             serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, entity));
         }
     }
 
     @Override
-    public void dropLeash(boolean broadcast, boolean dropItem) {
+    public void raspberry$setDelayedLeashHolderId(int id) {
         if (!ModConfig.get().backportLeash) return;
-        
-        if (this.raspberry$leashHolder != null) {
-            this.raspberry$leashHolder = null;
-            this.raspberry$leashInfoTag = null;
-            this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
 
-            if (!this.level.isClientSide) {
-                if (dropItem) {
-                    this.spawnAtLocation(net.minecraft.world.item.Items.LEAD);
-                }
-
-                if (broadcast && this.level instanceof ServerLevel serverLevel) {
-                    serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
-                }
-                
-                boolean hasCustom = raspberry$connectionManager.hasConnections();
-                boolean hasVanilla = !Leashable.leashableLeashedTo((LeashFenceKnotEntity)(Object)this).isEmpty();
-                
-                if (!hasCustom && !hasVanilla) {
-                    this.discard();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void setDelayedLeashHolderId(int id) {
-        if (!ModConfig.get().backportLeash) return;
-        
         this.raspberry$delayedLeashHolderId = id;
-        this.dropLeash(false, false);
-        if (this.level != null && id != 0) {
+        this.raspberry$leashHolder = null;
+        this.entityData.set(raspberry$DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+
+        if (id != 0) {
             Entity entity = this.level.getEntity(id);
             if (entity != null) {
-                this.setLeashedTo(entity, false);
+                this.raspberry$setLeashedTo(entity, false);
+                this.raspberry$delayedLeashHolderId = 0;
             }
         }
     }
 
     @Override
-    public Vec3 getLeashOffset(float partialTick) {
+    public Vec3 raspberry$getLeashOffset(float partialTick) {
         return new Vec3(0.0, 0.2, 0.0);
     }
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
     private void raspberry$onInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-        if (!ModConfig.get().backportLeash || this.level.isClientSide) return;
-        
-        LeashFenceKnotEntity knot = (LeashFenceKnotEntity)(Object)this;
-        
-        if (player.getItemInHand(hand).getItem() instanceof net.minecraft.world.item.ShearsItem) {
+        if (!ModConfig.get().backportLeash) return;
+        if (this.level.isClientSide) {
+            cir.setReturnValue(InteractionResult.SUCCESS);
             return;
         }
-        
-        InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, knot);
-        if (result != InteractionResult.PASS) {
-            cir.setReturnValue(result);
-        }
+
+        LeashFenceKnotEntity knot = (LeashFenceKnotEntity)(Object)this;
+        InteractionResult result = KnotInteractionHelper.handleKnotInteraction(player, hand, knot);
+
+        this.raspberry$onLeashRemoved();
+
+        cir.setReturnValue(result);
     }
 
     @Inject(method = "dropItem", at = @At("HEAD"))
@@ -265,8 +271,8 @@ public abstract class LeashKnotEntityMixin extends HangingEntity implements Leas
             LeashFenceKnotEntity knot = (LeashFenceKnotEntity)(Object)this;
             raspberry$connectionManager.clearAllConnections(this.level, knot);
 
-            if (this.isLeashed()) {
-                this.dropLeash(true, true);
+            if (this.raspberry$isLeashed()) {
+                this.raspberry$dropLeash(true, true);
             }
         }
     }

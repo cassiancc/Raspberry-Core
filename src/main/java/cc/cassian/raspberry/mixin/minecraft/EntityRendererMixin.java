@@ -47,14 +47,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntityRendererMixin<T extends Entity> {
     
     @Unique 
-    private LeashRenderer<T> leashRenderer;
+    private LeashRenderer<T> raspberry$leashRenderer;
     
     @Shadow @Final 
     protected EntityRenderDispatcher entityRenderDispatcher;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void raspberry$init(EntityRendererProvider.Context context, CallbackInfo ci) {
-        this.leashRenderer = new LeashRenderer<>(this.entityRenderDispatcher);
+        this.raspberry$leashRenderer = new LeashRenderer<>(this.entityRenderDispatcher);
     }
 
     @Inject(method = "render", at = @At("HEAD"))
@@ -67,14 +67,14 @@ public abstract class EntityRendererMixin<T extends Entity> {
                 renderBuffer = wrapped.getDelegate();
             }
             
-            this.leashRenderer.render(entity, partialTick, poseStack, renderBuffer);
+            this.raspberry$leashRenderer.render(entity, partialTick, poseStack, renderBuffer);
         }
     }
 
     @Inject(method = "shouldRender", at = @At("TAIL"), cancellable = true)
     private void raspberry$shouldRenderLeash(T entity, Frustum camera, double camX, double camY, double camZ, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof Leashable) {
-            cir.setReturnValue(this.leashRenderer.shouldRender(entity, camera, cir.getReturnValue()));
+            cir.setReturnValue(this.raspberry$leashRenderer.shouldRender(entity, camera, cir.getReturnValue()));
         }
     }
 }

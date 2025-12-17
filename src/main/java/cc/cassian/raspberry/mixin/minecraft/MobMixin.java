@@ -23,7 +23,7 @@ public abstract class MobMixin {
     @Inject(method = "canBeLeashed", at = @At("HEAD"), cancellable = true)
     private void raspberry$canBeLeashed(Player player, CallbackInfoReturnable<Boolean> cir) {
         if (ModConfig.get().backportLeash) {
-            cir.setReturnValue(!((Object)this instanceof Enemy));
+            cir.setReturnValue(!(this instanceof Enemy));
         }   
     }
 

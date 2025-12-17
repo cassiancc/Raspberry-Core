@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
 
-Copyright (c) 2025 
+Copyright (c) 2025
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-
 
 package cc.cassian.raspberry.compat.vanillabackport.leash;
 
@@ -65,25 +64,22 @@ public class LeashEvents {
         Player player = event.getEntity();
         Entity target = event.getTarget();
         ItemStack stack = event.getItemStack();
-        
+
         if (!target.level.isClientSide && player.isSecondaryUseActive() && target instanceof Leashable leashable && leashable.canBeLeashed(player) && target.isAlive()) {
             if (!(target instanceof LivingEntity living && living.isBaby())) {
-                List<Leashable> nearbyMobs = Leashable.leashableInArea(target.level, target.position(), l -> l.getLeashHolder() == player);
+                List<Leashable> nearbyEntities = Leashable.leashableInArea(target.level, target.position(), l -> l.raspberry$getLeashHolder() == player);
 
-                if (!nearbyMobs.isEmpty()) {
+                if (!nearbyEntities.isEmpty()) {
                     boolean attachedAny = false;
 
-                    for (Leashable sourceMob : nearbyMobs) {
-                        if (sourceMob instanceof LeashFenceKnotEntity && target instanceof LeashFenceKnotEntity) {
-                            continue;
-                        }
+                    for (Leashable sourceEntity : nearbyEntities) {
+                        if (sourceEntity instanceof LeashFenceKnotEntity && target instanceof LeashFenceKnotEntity) continue;
+                        if (sourceEntity instanceof LeashFenceKnotEntity) continue;
+                        if (target instanceof LeashFenceKnotEntity) continue;
+                        if (leashable.raspberry$getLeashHolder() == sourceEntity) continue;
 
-                        if (target instanceof Leashable targetLeashable && targetLeashable.getLeashHolder() == (Entity) sourceMob) {
-                            continue;
-                        }
-
-                        if (sourceMob.canHaveALeashAttachedTo(target)) {
-                            sourceMob.setLeashedTo(target, true);
+                        if (sourceEntity.canHaveALeashAttachedTo(target)) {
+                            sourceEntity.raspberry$setLeashedTo(target, true);
                             attachedAny = true;
                         }
                     }
@@ -91,7 +87,7 @@ public class LeashEvents {
                     if (attachedAny) {
                         target.level.gameEvent(GameEvent.ENTITY_INTERACT, target.blockPosition(), GameEvent.Context.of(player));
                         target.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0F, 1.0F);
-                        
+
                         event.setCancellationResult(InteractionResult.SUCCESS);
                         event.setCanceled(true);
                         return;
@@ -108,9 +104,9 @@ public class LeashEvents {
         }
 
         if (target.isAlive() && target instanceof Leashable leashable) {
-            if (leashable.getLeashHolder() == player) {
+            if (leashable.raspberry$getLeashHolder() == player) {
                 if (!target.level.isClientSide) {
-                    leashable.dropLeash(true, !player.isCreative());
+                    leashable.raspberry$dropLeash(true, !player.isCreative());
                     target.level.gameEvent(GameEvent.ENTITY_INTERACT, target.position(), GameEvent.Context.of(player));
                     target.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0F, 1.0F);
                 }
@@ -119,20 +115,23 @@ public class LeashEvents {
                 return;
             }
 
-            if (stack.is(Items.LEAD) && !(leashable.getLeashHolder() instanceof Player)) {
+            if (stack.is(Items.LEAD) && !(leashable.raspberry$getLeashHolder() instanceof Player)) {
+                if (target instanceof LeashFenceKnotEntity) {
+                    return;
+                }
+
                 if (!target.level.isClientSide && leashable.canHaveALeashAttachedTo(player)) {
-                    if (leashable.isLeashed()) {
-                        leashable.dropLeash(true, true);
+                    if (leashable.raspberry$isLeashed()) {
+                        leashable.raspberry$dropLeash(true, true);
                     }
 
-                    leashable.setLeashedTo(player, true);
+                    leashable.raspberry$setLeashedTo(player, true);
                     target.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0F, 1.0F);
 
                     if (!player.isCreative()) stack.shrink(1);
                 }
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
-                return;
             }
         }
     }
@@ -144,10 +143,10 @@ public class LeashEvents {
         Entity target = event.getTarget();
         if (target instanceof LeashFenceKnotEntity knot && target instanceof KnotConnectionAccess access) {
             KnotConnectionManager manager = access.raspberry$getConnectionManager();
-            
+
             if (manager.hasConnections()) {
                 KnotConnectionSyncPacket packet = new KnotConnectionSyncPacket(knot.getId(), manager.getConnectedUuids());
-                packet.sendTo((net.minecraft.server.level.ServerPlayer) event.getEntity()); 
+                packet.sendTo((net.minecraft.server.level.ServerPlayer) event.getEntity());
             }
         }
     }
@@ -155,24 +154,24 @@ public class LeashEvents {
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         if (!ModConfig.get().backportLeash) return;
-        
+
         BlockState state = event.getState();
         if (!state.is(BlockTags.FENCES)) return;
-        
+
         Level level = (Level) event.getLevel();
         if (level.isClientSide) return;
-        
+
         BlockPos pos = event.getPos();
-        
+
         List<LeashFenceKnotEntity> knots = level.getEntitiesOfClass(
-            LeashFenceKnotEntity.class,
-            new AABB(pos),
-            knot -> knot.getPos().equals(pos)
+                LeashFenceKnotEntity.class,
+                new AABB(pos),
+                knot -> knot.getPos().equals(pos)
         );
-        
+
         for (LeashFenceKnotEntity knot : knots) {
             if (knot instanceof KnotConnectionAccess) {
-                KnotInteractionHelper.discardCustomConnections(knot, (Entity) event.getPlayer());
+                KnotInteractionHelper.discardCustomConnections(knot, event.getPlayer());
             }
             knot.discard();
         }
@@ -190,17 +189,17 @@ public class LeashEvents {
         List<Leashable> leashed = Leashable.leashableLeashedTo(entity);
         boolean dropConnections = !leashed.isEmpty();
 
-        if (entity instanceof Leashable leashable && leashable.isLeashed()) {
-            leashable.dropLeash(true, true);
+        if (entity instanceof Leashable leashable && leashable.raspberry$isLeashed()) {
+            leashable.raspberry$dropLeash(true, true);
             dropConnections = true;
         }
 
         for (Leashable leashable : leashed) {
-            leashable.dropLeash(true, true);
+            leashable.raspberry$dropLeash(true, true);
         }
-        
+
         if (entity instanceof LeashFenceKnotEntity knot && entity instanceof KnotConnectionAccess) {
-            KnotInteractionHelper.discardCustomConnections(knot, (Entity) player);
+            KnotInteractionHelper.discardCustomConnections(knot, player);
             dropConnections = true;
         }
 
@@ -209,7 +208,6 @@ public class LeashEvents {
             if (entity instanceof LeashFenceKnotEntity) {
                 entity.discard();
             }
-
             return true;
         } else {
             return false;
