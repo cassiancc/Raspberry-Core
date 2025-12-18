@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.10] - 2025-18-18
+## [1.10.1] - 2025-12-18
+
+### Fixed
+- Crash on dedicated server.
+
+## [1.10] - 2025-12-18
 
 ### Added
 - Maximum minecart speed is configurable.
