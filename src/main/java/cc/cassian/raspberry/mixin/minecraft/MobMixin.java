@@ -3,6 +3,7 @@ package cc.cassian.raspberry.mixin.minecraft;
 import cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionManager;
 import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import cc.cassian.raspberry.config.ModConfig;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
@@ -25,6 +26,20 @@ public abstract class MobMixin {
         if (ModConfig.get().backportLeash) {
             cir.setReturnValue(!(this instanceof Enemy));
         }   
+    }
+
+    @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
+    private void raspberry$fixLeashSaving(CompoundTag compound, CallbackInfo ci) {
+        if (!ModConfig.get().backportLeash) return;
+
+        Mob mob = (Mob) (Object) this;
+        Entity holder = mob.getLeashHolder();
+
+        if (holder != null && !(holder instanceof net.minecraft.world.entity.LivingEntity) && !(holder instanceof net.minecraft.world.entity.decoration.HangingEntity)) {
+            CompoundTag tag = new CompoundTag();
+            tag.putUUID("UUID", holder.getUUID());
+            compound.put("Leash", tag);
+        }
     }
 
     @Inject(method = "dropLeash", at = @At("HEAD"))

@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
 
-Copyright (c) 2025 
+Copyright (c) 2025
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Items;
@@ -127,13 +126,13 @@ public abstract class BoatMixin extends Entity implements Leashable {
 
         if (this.raspberry$leashHolder != null) {
             CompoundTag tag = new CompoundTag();
-            if (this.raspberry$leashHolder instanceof LivingEntity) {
-                tag.putUUID("UUID", this.raspberry$leashHolder.getUUID());
-            } else if (this.raspberry$leashHolder instanceof HangingEntity) {
-                BlockPos pos = ((HangingEntity) this.raspberry$leashHolder).getPos();
+            if (this.raspberry$leashHolder instanceof HangingEntity hangingEntity) {
+                BlockPos pos = hangingEntity.getPos();
                 tag.putInt("X", pos.getX());
                 tag.putInt("Y", pos.getY());
                 tag.putInt("Z", pos.getZ());
+            } else {
+                tag.putUUID("UUID", this.raspberry$leashHolder.getUUID());
             }
             compound.put("Leash", tag);
         } else if (this.raspberry$leashInfoTag != null) {
@@ -236,8 +235,12 @@ public abstract class BoatMixin extends Entity implements Leashable {
     }
 
     @Override
-    public @NotNull Vec3 getLeashOffset() {
+    public Vec3 raspberry$getLeashOffset(float partialTick) {
         return new Vec3(0.0, 0.88F * this.getBbHeight(), 0.64F * this.getBbWidth());
+    }
+
+    public @NotNull Vec3 getRopeHoldPosition(float partialTicks) {
+        return this.getPosition(partialTicks).add(0.0D, this.getEyeHeight() * 0.88D, 0.0D);
     }
 
     @Override
