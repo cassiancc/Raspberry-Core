@@ -3,7 +3,12 @@ package cc.cassian.raspberry.entity;
 import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RaspberryParticleTypes;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
+import cc.cassian.raspberry.registry.RaspberryTags;
+import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,6 +22,10 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
@@ -45,9 +54,11 @@ public class SwapArrowEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         Entity target = result.getEntity();
         Entity shooter = this.getOwner();
+        boolean didTeleport = false;
 
         if (!this.level().isClientSide()) {
             if (shooter instanceof LivingEntity && shooter != target) {
+                // Swap equipment with armor stand
                 if (target instanceof ArmorStand stand && shooter instanceof ServerPlayer player) {
                     for (EquipmentSlot slot : new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
                         ItemStack playerItem = player.getItemBySlot(slot).copy();
@@ -57,20 +68,90 @@ public class SwapArrowEntity extends AbstractArrow {
                         stand.setItemSlot(slot, playerItem);
                     }
                 }
+                // Swap position
                 if (target instanceof LivingEntity) {
-                    Vec3 playerPos = shooter.position();
+                    Entity targetVehicle = target.getVehicle();
+                    Entity shooterVehicle = shooter.getVehicle();
+
+                    if (targetVehicle != null) target.stopRiding();
+                    if (shooterVehicle != null) shooter.stopRiding();
+
+                    Vec3 shooterPos = shooter.position();
                     Vec3 targetPos = target.position();
 
-                    target.teleportTo(playerPos.x, playerPos.y, playerPos.z);
+                    target.teleportTo(shooterPos.x, shooterPos.y, shooterPos.z);
                     shooter.teleportTo(targetPos.x, targetPos.y, targetPos.z);
 
-                    this.level().playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    this.level().playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    if (targetVehicle != null) {
+                        shooter.startRiding(targetVehicle, true);
+                    }
+                    if (shooterVehicle != null && !target.getType().is(RaspberryTags.DISALLOWED_IN_BOATS)) {
+                        target.startRiding(shooterVehicle, true);
+                    }
+                    didTeleport = true;
+                    this.level.playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level.playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
+            } else if (this.getPersistentData().contains("DispenserSourcePosition") && target instanceof LivingEntity){
+                BlockPos dispenserPos = BlockPos.of(this.getPersistentData().getLong("DispenserSourcePosition"));
+                BlockState blockState = this.level.getBlockState(dispenserPos);
+
+                if (blockState.getBlock() instanceof DispenserBlock) {
+                    BlockEntity dispenserEntity = this.level.getBlockEntity(dispenserPos);
+                    BlockPos targetPos = target.blockPosition();
+
+                    // If there's already a block there, try above
+                    if (!level.isEmptyBlock(targetPos)) {
+                        targetPos = targetPos.above();
+                        if (!level.isEmptyBlock(targetPos)) {
+                            // If that is also occupied, give up and don't teleport.
+                            return;
+                        }
+                    }
+
+                    // Remove old dispenser
+                    this.level.removeBlockEntity(dispenserPos);
+                    this.level.removeBlock(dispenserPos, false);
+
+                    // Teleport player
+                    Vec3 dispenserVec3 = Vec3.atBottomCenterOf(dispenserPos);
+                    target.stopRiding();
+                    target.teleportTo(dispenserVec3.x, dispenserVec3.y, dispenserVec3.z);
+
+                    // Place copied dispenser
+                    Direction facing = blockState.getValue(DispenserBlock.FACING);
+                    this.level.setBlock(targetPos, blockState.setValue(DispenserBlock.FACING, facing.getOpposite()), Block.UPDATE_ALL);
+
+                    // Copy over blockentity data
+                    if (dispenserEntity != null) {
+                        CompoundTag tag = dispenserEntity.saveWithoutMetadata();
+                        BlockEntity newDispenserEntity = this.level.getBlockEntity(targetPos);
+                        if (newDispenserEntity != null) {
+                            newDispenserEntity.load(tag);
+                            newDispenserEntity.setChanged();
+                        }
+                    }
+                    didTeleport = true;
+                    this.level.playSound(null, dispenserPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level.playSound(null, targetPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                }
+
             }
         }
 
-        this.discard();
+        if (didTeleport) {
+            this.discard();
+        } else {
+            this.setDeltaMovement(this.getDeltaMovement().scale(-0.1));
+            this.setYRot(this.getYRot() + 180.0F);
+            this.yRotO += 180.0F;
+            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
+                if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                    this.spawnAtLocation(this.getPickupItem(), 0.1F);
+                }
+                this.discard();
+            }
+        }
     }
 
     private static Vec3 rotateAroundAxis(Vec3 vec, Vec3 axis, double angle) {

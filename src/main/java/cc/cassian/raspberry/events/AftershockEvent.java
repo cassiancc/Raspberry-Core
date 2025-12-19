@@ -4,11 +4,11 @@ import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.registry.RaspberryMobEffects;
 import cc.cassian.raspberry.registry.RaspberryTags;
 import cofh.core.init.CoreMobEffects;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
@@ -43,7 +43,7 @@ public class AftershockEvent {
      */
     public static void resist(LivingEntity entity) {
         int copperCount = 0;
-        if (entity instanceof LocalPlayer) {
+        if (entity instanceof Player player && player.isLocalPlayer()) {
             return;
         }
         for (ItemStack armorSlot : entity.getArmorSlots()) {

@@ -47,12 +47,29 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
-    maven {
-        url = "https://maven.shedaniel.me/"
-        name = "shedaniel - cloth config"
+    // Cloth Config
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "shedaniel"
+                url = 'https://maven.shedaniel.me/'
+            }
+        }
+        filter {
+            includeGroup("me.shedaniel.cloth")
+        }
     }
-    maven {
-        url = "https://maven.teamabnormals.com/"
+    // Blueprint
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Team Abnormals"
+                url = 'https://maven.teamabnormals.com/'
+            }
+        }
+        filter {
+            includeGroup("com.teamabnormals")
+        }
     }
     exclusiveContent {
         forRepository {
@@ -64,59 +81,144 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-    maven {
-        url = "https://modmaven.dev/"
-        name = "Create"
+    // Pollen
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "BlameJared"
+                url = "https://maven.blamejared.com/"
+            }
+        }
+        filter {
+            includeGroup("gg.moonflower")
+            includeGroup("gg.moonflower.pinwheel")
+        }
+    }
+    // Create
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Create"
+                url = 'https://modmaven.dev/'
+            }
+        }
+        filter {
+            includeGroup("com.simibubi.create")
+            includeGroup("com.tterrag.registrate")
+            includeGroup("com.jozufozu.flywheel")
+        }
     }
     // GeckoLib
-    maven {
-        name = 'GeckoLib'
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'GeckoLib'
+                url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            }
+        }
+        filter {
+            includeGroup("software.bernie.geckolib")
+        }
     }
     // Parchment Mappings
-    maven {
-        name = 'ParchmentMC'
-        url = 'https://maven.parchmentmc.org'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'ParchmentMC'
+                url = 'https://maven.parchmentmc.org'
+            }
+        }
+        filter {
+            includeGroup("org.parchmentmc.data")
+        }
     }
     // Player Animator
-    maven {
-        name = "KosmX's maven"
-        url = 'https://maven.kosmx.dev/'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "KosmX's maven"
+                url = 'https://maven.kosmx.dev/'
+            }
+        }
+        filter {
+            includeGroup("dev.kosmx.player-anim")
+        }
     }
     // PalladiumCore
-    maven {
-        url 'https://repo.repsy.io/mvn/lucraft/threetag'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "ThreeTag"
+                url 'https://repo.repsy.io/mvn/lucraft/threetag'
+            }
+        }
+        filter {
+            includeGroup("net.threetag")
+        }
     }
-    maven {
-        url "https://maven.latvian.dev/releases"
-        content {
+    // KubeJS
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "KubeJS"
+                url = "https://maven.latvian.dev/releases"
+            }
+        }
+        filter {
             includeGroup "dev.latvian.mods"
             includeGroup "dev.latvian.apps"
         }
     }
-
-    maven {
-        url 'https://jitpack.io'
-        content {
+    // JitPack
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "JitPack"
+                url = 'https://jitpack.io'
+            }
+        }
+        filter {
             includeGroup "com.github.rtyley"
         }
     }
+    // Local dependencies
     flatDir {
         dirs 'libs'
     }
-    maven {
-        name = "TerraformersMC"
-        url = "https://maven.terraformersmc.com/"
-        content {
+    // EMI
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "TerraformersMC"
+                url = "https://maven.terraformersmc.com/"
+            }
+        }
+        filter {
             includeGroup "dev.emi"
+
         }
     }
-
-    maven { url = "https://maven.bawnorton.com/releases" } // MixinSquared
-    maven { url = "https://maven.enjarai.dev/mirrors" } // MixinSquared Mirror
-    maven { // Curios
-        name = "Illusive Soulworks maven"
-        url = "https://maven.theillusivec4.top/"
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "MixinSquared"
+                url = "https://maven.bawnorton.com/releases"
+            }
+        }
+        filter {
+            includeGroup("com.github.bawnorton.mixinsquared")
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Illusive Soulworks maven"
+                url = "https://maven.theillusivec4.top/"
+            }
+        }
+        filter {
+            includeGroup("top.theillusivec4.curios")
+        }
     }
 }
 
@@ -158,8 +260,9 @@ dependencies {
 
     // Optional dependencies for mods with only mixin fixes
     modImplementation("curse.maven:aquaculture-60028:$aquaculture_version")
-    modCompileOnly("curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version")
-//    modImplementation("curse.maven:copperized-567666:$copperized_version")
+    modImplementation("curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version")
+    modImplementation("curse.maven:copperized-567666:$copperized_version")
+    modImplementation("curse.maven:connectible-chains-forge-418514:$connectible_chains_version")
     modImplementation("software.bernie.geckolib:geckolib-forge-$geckolib_version")
     implementation("com.eliotlash.mclib:mclib:20")
     forgeRuntimeLibrary("com.eliotlash.mclib:mclib:20")
@@ -171,9 +274,12 @@ dependencies {
     modImplementation("maven.modrinth:oreganized:$oreganized_version")
     modImplementation("maven.modrinth:spelunkery:$spelunkery_version-forge")
     modImplementation("maven.modrinth:sullysmod:$sullys_version")
-    modCompileOnly("maven.modrinth:twigs:$twigs_version")
-    modCompileOnly("curse.maven:dungeons-mobs-428883:$dungeons_mobs_version")
-    modCompileOnly("curse.maven:dungeons-libraries-550941:$dungeons_libraries_version") // dependency of dungeons mobs
+    modImplementation("maven.modrinth:twigs:$twigs_version")
+    modImplementation("curse.maven:dungeons-mobs-428883:$dungeons_mobs_version")
+    modImplementation("curse.maven:dungeons-libraries-550941:$dungeons_libraries_version") // dependency of dungeons mobs
+    modImplementation("curse.maven:enderman-overhaul-574409:$enderman_overhaul_version")
+    modImplementation("curse.maven:resourceful-config-714059:$resourceful_config_version") // dependency of enderman overhaul
+    modImplementation("curse.maven:resourceful-lib-570073:$resourceful_lib_version") // dependency of enderman overhaul
     modImplementation("maven.modrinth:quark:$quark_version")
     modImplementation("maven.modrinth:zeta:$zeta_version")
 //    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
@@ -188,9 +294,19 @@ dependencies {
     modImplementation("maven.modrinth:spyglass-improvements:${spyglass_improvements_version}")
     modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of spyglass improvements
     modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
-    // modImplementation("curse.maven:controllable-317269:4445137")
-    modCompileOnly("maven.modrinth:cooks-collection:Fqq6FIl0")
-    modCompileOnly("maven.modrinth:jade:$jade_version")
+    modImplementation("curse.maven:controllable-317269:4445137")
+    modImplementation("maven.modrinth:architects-palette:${architects_palette_version}")
+    modImplementation("maven.modrinth:cooks-collection:$cooks_collection_version")
+    modImplementation("maven.modrinth:jade:$jade_version")
+    modImplementation("maven.modrinth:xaeros-minimap:${xaeros_minimap_version}")
+    modImplementation("maven.modrinth:xaeros-world-map:${xaeros_worldmap_version}")
+    modImplementation("curse.maven:etched-491890:${etched_version}")
+    modImplementation("curse.maven:pollen-544350:${pollen_version}") // dependency of etched
+    implementation "gg.moonflower:molang-compiler:3.0.1.5" // pollen dependency
+    implementation "gg.moonflower.pinwheel:pinwheel:1.2.0.3" // pollen dependency
+    forgeRuntimeLibrary "gg.moonflower:molang-compiler:3.0.1.5"
+    forgeRuntimeLibrary "gg.moonflower.pinwheel:pinwheel:1.2.0.3"
+
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
     modImplementation("maven.modrinth:mmmmmmmmmmmm:zAahRq2q")

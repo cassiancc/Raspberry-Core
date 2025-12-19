@@ -60,8 +60,16 @@ public class ModConfig {
     public boolean raspberryCartEngine = true;
     public double raspberryCartMaxSpeed = 34.0;
     public boolean dungeons_mobs_revised_cobwebs = true;
-    public boolean disableBirchLeafTinting = false;
-    public boolean jadeRequiresScoping = false;
+    public boolean ghastDragonFireball = false;
+    public boolean backportLeash = true;
+    public boolean disableBirchLeafTinting = true;
+    public boolean jadeRequiresScoping = true;
+    public MusicFrequency musicFrequency = MusicFrequency.DEFAULT;
+    public boolean showMusicToast = false;
+    public boolean disableFaucetSourceBlocks = false;
+    public boolean betterJukeboxes = true;
+    public double jukeboxDistance = 64.0;
+    public boolean disablePenguinShedding = false;
 
     public static void load() {
         if (!Files.exists(configPath())) {

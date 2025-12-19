@@ -25,6 +25,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         if (checkMixin("alloyed", mixinClassName)){
             return false;
         }
+        else if (checkMixin("architects_palette", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("aquaculture", mixinClassName)){
             return false;
         }
@@ -38,6 +41,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
             return false;
         }
         else if (checkMixin("cofh_core", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("connectiblechains", mixinClassName)){
             return false;
         }
         else if (checkMixin("copperized", mixinClassName)){
@@ -55,10 +61,22 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("endergetic", mixinClassName)){
             return false;
         }
+        else if (checkMixin("emi", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("endermanoverhaul", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("environmental", mixinClassName)){
             return false;
         }
+        else if (checkMixin("etched", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("farmersdelight", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("geckolib3", mixinClassName)){
             return false;
         }
         else if (checkMixin("map_atlases", mixinClassName)){
