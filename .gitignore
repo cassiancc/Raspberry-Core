@@ -123,3 +123,4 @@ run/
 !libs/sage_brush-1.19.2-0.1.0-all.jar
 
 kubejs/
+.env
