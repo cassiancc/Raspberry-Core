@@ -31,6 +31,7 @@ import cc.cassian.raspberry.mixin.minecraft.PathfinderMobAccessor;
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
@@ -56,14 +57,14 @@ public interface Leashable {
     List<Vec3> ENTITY_ATTACHMENT_POINT = ImmutableList.of(new Vec3(0.0, 0.5, 0.5));
     List<Vec3> LEASHER_ATTACHMENT_POINT = ImmutableList.of(new Vec3(0.0, 0.5, 0.0));
     List<Vec3> SHARED_QUAD_ATTACHMENT_POINTS = ImmutableList.of(
-        new Vec3(-0.5, 0.5, 0.5),
-        new Vec3(-0.5, 0.5, -0.5),
-        new Vec3(0.5, 0.5, -0.5),
-        new Vec3(0.5, 0.5, 0.5)
+            new Vec3(-0.5, 0.5, 0.5),
+            new Vec3(-0.5, 0.5, -0.5),
+            new Vec3(0.5, 0.5, -0.5),
+            new Vec3(0.5, 0.5, 0.5)
     );
 
     default Vec3 raspberry$getLeashOffset(float partialTick) {
-        return new Vec3(0, ((Entity)this).getEyeHeight() * 0.8F, 0); 
+        return new Vec3(0, ((Entity)this).getEyeHeight() * 0.8F, 0);
     }
 
     default boolean raspberry$isLeashed() {
@@ -140,7 +141,7 @@ public interface Leashable {
         if (this instanceof PathfinderMob mob) {
             ((PathfinderMobAccessor) this).callOnLeashDistance(mob.distanceTo(entity));
         }
-        
+
         Entity self = (Entity) this;
         if (self.getDeltaMovement().y > -0.5D) {
             self.fallDistance = 1.0F;
@@ -189,12 +190,12 @@ public interface Leashable {
     default boolean checkElasticInteractions(Entity entity) {
         if (((Entity) this).getControllingPassenger() instanceof Player) return false;
 
-        boolean supportQuadLeash = entity instanceof Leashable holder && holder.supportQuadLeashAsHolder() && this.supportQuadLeash();
+        boolean supportQuadLeash = entity instanceof Leashable holder && holder.raspberry$supportQuadLeashAsHolder() && this.raspberry$supportQuadLeash();
         List<Wrench> wrenches = computeElasticInteraction(
-            (Entity & Leashable) this,
-            entity,
-            supportQuadLeash ? SHARED_QUAD_ATTACHMENT_POINTS : ENTITY_ATTACHMENT_POINT,
-            supportQuadLeash ? SHARED_QUAD_ATTACHMENT_POINTS : LEASHER_ATTACHMENT_POINT
+                (Entity & Leashable) this,
+                entity,
+                supportQuadLeash ? SHARED_QUAD_ATTACHMENT_POINTS : ENTITY_ATTACHMENT_POINT,
+                supportQuadLeash ? SHARED_QUAD_ATTACHMENT_POINTS : LEASHER_ATTACHMENT_POINT
         );
 
         if (wrenches.isEmpty()) {
@@ -203,11 +204,11 @@ public interface Leashable {
             Wrench wrench = Wrench.accumulate(wrenches).scale(supportQuadLeash ? 0.25 : 1.0);
             this.setRaspberry$angularMomentum(this.raspberry$angularMomentum() + 10.0 * wrench.torque());
             Vec3 offset = getHolderMovement(entity).subtract(getKnownMovement((Entity) this));
-            
+
             Vec3 currentMotion = ((Entity) this).getDeltaMovement();
             Vec3 deltaMovement = wrench.force().multiply(AXIS_SPECIFIC_ELASTICITY).add(offset.scale(0.11));
             ((Entity) this).setDeltaMovement(currentMotion.add(deltaMovement));
-            
+
             return true;
         }
     }
@@ -261,7 +262,7 @@ public interface Leashable {
         }
     }
 
-    default boolean supportQuadLeash() {
+    default boolean raspberry$supportQuadLeash() {
         Entity entity = (Entity) this;
         for (Predicate<Entity> filter : QUAD_LEASH_OFFSETS.keySet()) {
             if (filter.test(entity)) {
@@ -271,8 +272,23 @@ public interface Leashable {
         return false;
     }
 
-    default boolean supportQuadLeashAsHolder() {
+    default boolean raspberry$supportQuadLeashAsHolder() {
         return false;
+    }
+
+    default Vec3[] raspberry$getQuadLeashOffsets() {
+        Entity entity = (Entity) this;
+        for (Predicate<Entity> filter : QUAD_LEASH_OFFSETS.keySet()) {
+            if (filter.test(entity)) {
+                return QUAD_LEASH_OFFSETS.get(filter).apply(entity);
+            }
+        }
+
+        return createQuadLeashOffsets((Entity) this, 0.0, 0.5, 0.5, 0.5);
+    }
+
+    default Vec3[] raspberry$getQuadLeashHolderOffsets() {
+        return createQuadLeashOffsets((Entity) this, 0.0, 0.5, 0.5, 0.0);
     }
 
     static Vec3[] createQuadLeashOffsets(Entity entity, double forwardOffset, double sideOffset, double widthOffset, double heightOffset) {
@@ -283,10 +299,10 @@ public interface Leashable {
         double height = heightOffset * (double) entity.getBbHeight();
 
         return new Vec3[] {
-            new Vec3(-width, height, side + forward),
-            new Vec3(-width, height, -side + forward),
-            new Vec3(width, height, -side + forward),
-            new Vec3(width, height, side + forward)
+                new Vec3(-width, height, side + forward),
+                new Vec3(-width, height, -side + forward),
+                new Vec3(width, height, -side + forward),
+                new Vec3(width, height, side + forward)
         };
     }
 
@@ -302,13 +318,21 @@ public interface Leashable {
     static List<Leashable> leashableInArea(Level level, Vec3 pos, Predicate<Leashable> filter) {
         AABB area = AABB.ofSize(pos, 32.0, 32.0, 32.0);
         return level.getEntitiesOfClass(Entity.class, area, entity -> entity instanceof Leashable leashable && filter.test(leashable))
-            .stream()
-            .map(Leashable.class::cast)
-            .toList();
+                .stream()
+                .map(Leashable.class::cast)
+                .toList();
     }
 
     default double raspberry$angularMomentum() {
         return 0.0;
+    }
+
+    static float raspberry$getPreciseBodyRotation(Entity entity, float partialTicks) {
+        if (entity instanceof LivingEntity living) {
+            return Mth.lerp(partialTicks, living.yBodyRotO, living.yBodyRot);
+        } else {
+            return Mth.lerp(partialTicks, entity.yRotO, entity.getYRot());
+        }
     }
 
     default void setRaspberry$angularMomentum(double raspberry$angularMomentum) { }

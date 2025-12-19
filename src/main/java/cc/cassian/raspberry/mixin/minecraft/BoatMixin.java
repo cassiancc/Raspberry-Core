@@ -71,8 +71,21 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Nullable
     private CompoundTag raspberry$leashInfoTag;
 
+    @Unique
+    private double raspberry$angularMomentum;
+
     public BoatMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    public double raspberry$angularMomentum() {
+        return this.raspberry$angularMomentum;
+    }
+
+    @Override
+    public void setRaspberry$angularMomentum(double angularMomentum) {
+        this.raspberry$angularMomentum = angularMomentum;
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
@@ -260,5 +273,15 @@ public abstract class BoatMixin extends Entity implements Leashable {
                 this.raspberry$delayedLeashHolderId = 0;
             }
         }
+    }
+
+    @Override
+    public boolean raspberry$supportQuadLeash() {
+        return true;
+    }
+
+    @Override
+    public Vec3[] raspberry$getQuadLeashOffsets() {
+        return Leashable.createQuadLeashOffsets(this, 0.0, 0.64, 0.382, 0.88);
     }
 }
