@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Crash on dedicated server.
+- Music and sound settings being broken on 1.20.
 
 ## [1.10] - 2025-12-18
 

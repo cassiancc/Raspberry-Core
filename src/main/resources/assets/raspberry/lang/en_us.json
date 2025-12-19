@@ -126,6 +126,10 @@
   "config.raspberry.config.betterJukeboxes": "Playing music in a jukebox fades out vanilla music",
   "config.raspberry.config.disablePenguinShedding": "Disable Ecologics penguin feather shedding",
 
+  "raspberry.options.jukebox": "Jukebox Distance",
+  "raspberry.options.frequency": "Music Frequency",
+  "raspberry.options.toast": "Music Toast",
+
   "emi.cooking.time_minute": "%s Minute",
   "emi.cooking.time_minutes": "%s Minutes",
 

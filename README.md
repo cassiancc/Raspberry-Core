@@ -33,7 +33,6 @@ Raspberry Core is a client and server mod for Forge 1.20.1. While it was created
 - [Dungeons Mobs](https://www.curseforge.com/minecraft/mc-mods/dungeons-mobs) is optional.
 - [Dynamic Crosshair](https://modrinth.com/mod/dynamiccrosshair) is optional.
 - [The Endergetic Expansion](https://modrinth.com/mod/endergetic) is optional.
-- [Enderman Overhaul](https://www.curseforge.com/minecraft/mc-mods/enderman-overhaul) is optional.
 - [Etched](https://www.curseforge.com/minecraft/mc-mods/etched) is optional.
 - [Gliders](https://modrinth.com/mod/gliders) is optional.
 - [Neapolitan](https://modrinth.com/mod/neapolitan) is optional.

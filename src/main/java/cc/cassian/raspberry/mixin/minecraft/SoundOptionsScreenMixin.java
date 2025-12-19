@@ -2,94 +2,68 @@ package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.config.MusicFrequency;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.CycleButton;
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.screens.OptionsSubScreen;
-import net.minecraft.client.gui.screens.Screen;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.SoundOptionsScreen;
-import net.minecraft.client.Options;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.client.gui.widget.ForgeSlider;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Mixin(SoundOptionsScreen.class)
-public abstract class SoundOptionsScreenMixin extends OptionsSubScreen {
+public abstract class SoundOptionsScreenMixin {
 
-    @Unique
-    private int raspberry$frequencyButtonY = -1;
-
-    public SoundOptionsScreenMixin(Screen parent, Options options, Component title) {
-        super(parent, options, title);
-    }
-
-    @WrapOperation(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/Button$Builder;bounds(IIII)Lnet/minecraft/client/gui/components/Button$Builder;"))
-    private Button.Builder moveDoneButton(Button.Builder instance, int x, int y, int width, int height, Operation<Button.Builder> original) {
-        this.raspberry$frequencyButtonY = y;
-        return original.call(instance, x, y + 24, width, height);
-    }
-
-    @Inject(method = "init", at = @At("TAIL"))
-    private void addMusicControls(CallbackInfo ci) {
-        AbstractWidget voiceButton = null;
-        String voiceLabel = Component.translatable("soundCategory.voice").getString();
-
-        for (GuiEventListener child : this.children()) {
-            if (child instanceof AbstractWidget widget) {
-                if (widget.getMessage().getString().contains(voiceLabel)) {
-                    voiceButton = widget;
-                    break;
-                }
-            }
-        }
-
-        if (voiceButton != null) {
-            int sliderWidth = 150;
-            int sliderX = voiceButton.getX() + voiceButton.getWidth() + 10;
-            int sliderY = voiceButton.getY();
-
-            this.addRenderableWidget(new ForgeSlider(
-                    sliderX, sliderY, sliderWidth, 20,
-                    Component.literal("Jukebox Distance: "),
-                    Component.empty(),
-                    0.0, 256.0,
-                    ModConfig.get().jukeboxDistance,
-                    4.0,
-                    0,
-                    true
-            ) {
-                @Override
-                protected void applyValue() {
-                    ModConfig.get().jukeboxDistance = this.getValue();
+    @ModifyReturnValue(method = "getAllSoundOptionsExceptMaster", at = @At("RETURN"))
+    private OptionInstance<?>[] raspberry$appendJukeboxToSoundList(OptionInstance<?>[] original) {
+        OptionInstance<Integer> jukeboxOption = new OptionInstance<>(
+                "raspberry.options.jukebox",
+                OptionInstance.noTooltip(),
+                (label, val) -> Component.translatable("raspberry.options.jukebox").append(": " + val),
+                new OptionInstance.IntRange(0, 256),
+                (int) ModConfig.get().jukeboxDistance,
+                value -> {
+                    ModConfig.get().jukeboxDistance = value.doubleValue();
                     ModConfig.save();
                 }
-            });
-        }
+        );
 
-        if (this.raspberry$frequencyButtonY != -1) {
-            int leftButtonX = this.width / 2 - 155;
-            int rightButtonX = this.width / 2 + 5;
+        OptionInstance<?>[] newArray = Arrays.copyOf(original, original.length + 1);
+        newArray[original.length] = jukeboxOption;
 
-            this.addRenderableWidget(CycleButton.builder(MusicFrequency::getDisplayName)
-                    .withValues(MusicFrequency.values())
-                    .withInitialValue(ModConfig.get().musicFrequency)
-                    .create(leftButtonX, this.raspberry$frequencyButtonY, 150, 20, Component.literal("Music Frequency"), (button, value) -> {
-                        ModConfig.get().musicFrequency = value;
-                        ModConfig.save();
-                    }));
+        return newArray;
+    }
 
-            this.addRenderableWidget(CycleButton.onOffBuilder(ModConfig.get().showMusicToast)
-                    .create(rightButtonX, this.raspberry$frequencyButtonY, 150, 20, Component.literal("Music Toast"), (button, value) -> {
-                        ModConfig.get().showMusicToast = value;
-                        ModConfig.save();
-                    }));
-        }
+    @ModifyReturnValue(method = "buttonOptions", at = @At("RETURN"))
+    private static OptionInstance<?>[] raspberry$appendMiscOptions(OptionInstance<?>[] original) {
+        OptionInstance<MusicFrequency> frequencyOption = new OptionInstance<>(
+                "raspberry.options.frequency",
+                OptionInstance.noTooltip(),
+                (label, value) -> value.getDisplayName(),
+                new OptionInstance.Enum<>(List.of(MusicFrequency.values()), MusicFrequency.CODEC),
+                ModConfig.get().musicFrequency,
+                value -> {
+                    ModConfig.get().musicFrequency = value;
+                    ModConfig.save();
+                }
+        );
+
+        OptionInstance<Boolean> toastOption = OptionInstance.createBoolean(
+                "raspberry.options.toast",
+                OptionInstance.cachedConstantTooltip(Component.literal("Show a toast when music starts playing")),
+                (label, value) -> value ? Component.literal("ON") : Component.literal("OFF"),
+                ModConfig.get().showMusicToast,
+                value -> {
+                    ModConfig.get().showMusicToast = value;
+                    ModConfig.save();
+                }
+        );
+
+        OptionInstance<?>[] newArray = Arrays.copyOf(original, original.length + 2);
+        newArray[original.length] = frequencyOption;
+        newArray[original.length + 1] = toastOption;
+
+        return newArray;
     }
 }

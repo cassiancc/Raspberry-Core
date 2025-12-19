@@ -2,26 +2,23 @@ package cc.cassian.raspberry.config;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
 
 public enum MusicFrequency implements StringRepresentable {
-    DEFAULT("Default", 1.0f),
-    FREQUENT("Frequent", 0.5f),
-    CONSTANT("Constant", 0.0f);
+    DEFAULT("Default"),
+    FREQUENT("Frequent"),
+    CONSTANT("Constant");
 
     private final String name;
-    private final float delayMultiplier;
 
-    MusicFrequency(String name, float delayMultiplier) {
+    MusicFrequency(String name) {
         this.name = name;
-        this.delayMultiplier = delayMultiplier;
     }
 
-    public float getDelayMultiplier() {
-        return delayMultiplier;
-    }
+    public static final StringRepresentable.EnumCodec<MusicFrequency> CODEC = StringRepresentable.fromEnum(MusicFrequency::values);
 
     @Override
-    public String getSerializedName() {
+    public @NotNull String getSerializedName() {
         return this.name;
     }
 
