@@ -5,7 +5,9 @@ import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +37,7 @@ public abstract class MobMixin {
         Mob mob = (Mob) (Object) this;
         Entity holder = mob.getLeashHolder();
 
-        if (holder != null && !(holder instanceof net.minecraft.world.entity.LivingEntity) && !(holder instanceof net.minecraft.world.entity.decoration.HangingEntity)) {
+        if (holder != null && !(holder instanceof LivingEntity) && !(holder instanceof HangingEntity)) {
             CompoundTag tag = new CompoundTag();
             tag.putUUID("UUID", holder.getUUID());
             compound.put("Leash", tag);

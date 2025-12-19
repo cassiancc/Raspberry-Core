@@ -14,7 +14,6 @@
     "minecraft.EntityRendererMixin",
     "minecraft.MobRendererMixin",
     "minecraft.MusicManagerMixin",
-    "minecraft.SoundManagerMixin",
     "minecraft.SoundOptionsScreenMixin",
     "miningmaster.KnightJumpEnchantmentMixin",
     "naturalist.GlowGoopItemMixin",
