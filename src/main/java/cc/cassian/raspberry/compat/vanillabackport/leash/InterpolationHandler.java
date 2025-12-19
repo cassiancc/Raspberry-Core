@@ -73,7 +73,7 @@ public class InterpolationHandler {
             double progress = 1.0 / this.data.steps;
             if (this.previousTickPosition != null) {
                 Vec3 movement = this.entity.position().subtract(this.previousTickPosition);
-                if (this.entity.level.noCollision(this.entity, ((EntityAccessor) this.entity).getDimensions().makeBoundingBox(this.data.position.add(movement)))) {
+                if (this.entity.level().noCollision(this.entity, ((EntityAccessor) this.entity).getDimensions().makeBoundingBox(this.data.position.add(movement)))) {
                     this.data.addDelta(movement);
                 }
             }

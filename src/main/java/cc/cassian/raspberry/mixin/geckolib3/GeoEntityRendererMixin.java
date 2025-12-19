@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 @Mixin(GeoEntityRenderer.class)
-public class GeoEntityRendererMixin<T extends LivingEntity & IAnimatable> {
+public class GeoEntityRendererMixin<M extends LivingEntity & GeoAnimatable> {
 
     @Inject(
         method = "renderLeash",
@@ -22,8 +22,7 @@ public class GeoEntityRendererMixin<T extends LivingEntity & IAnimatable> {
         remap = false 
     )
     private <E extends Entity> void raspberry$cancelGeckoLeash(
-            T entity, float partialTick, PoseStack poseStack, 
-            MultiBufferSource bufferSource, E leashHolder, CallbackInfo ci
+            M mob, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, E leashHolder, CallbackInfo ci
     ) {
         if (ModConfig.get().backportLeash) {
             ci.cancel();

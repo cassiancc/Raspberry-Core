@@ -4,6 +4,7 @@ import architectspalette.content.worldgen.features.TwistedTree;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -28,10 +29,10 @@ public abstract class TwistedTreeMixin extends AbstractTreeGrower {
     public boolean growTree(ServerLevel level, ChunkGenerator generator, BlockPos pos, BlockState state, RandomSource random) {
         
         ResourceLocation featureId = new ResourceLocation("architects_palette", "twisted_tree");
-        ResourceKey<ConfiguredFeature<?, ?>> featureKey = ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, featureId);
+        ResourceKey<ConfiguredFeature<?, ?>> featureKey = ResourceKey.create(Registries.CONFIGURED_FEATURE, featureId);
 
-        Optional<Holder<ConfiguredFeature<?, ?>>> featureHolder = level.registryAccess()
-            .registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY)
+        Optional<Holder.Reference<ConfiguredFeature<?, ?>>> featureHolder = level.registryAccess()
+            .registryOrThrow(Registries.CONFIGURED_FEATURE)
             .getHolder(featureKey);
 
         if (featureHolder.isEmpty()) {

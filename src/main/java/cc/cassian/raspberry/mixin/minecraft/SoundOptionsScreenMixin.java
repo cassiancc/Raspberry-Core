@@ -30,10 +30,10 @@ public abstract class SoundOptionsScreenMixin extends OptionsSubScreen {
         super(parent, options, title);
     }
 
-    @WrapOperation(method = "init", at = @At(value = "NEW", target = "net/minecraft/client/gui/components/Button"))
-    private Button moveDoneButton(int x, int y, int width, int height, Component message, Button.OnPress onPress, Operation<Button> original) {
+    @WrapOperation(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/Button$Builder;bounds(IIII)Lnet/minecraft/client/gui/components/Button$Builder;"))
+    private Button.Builder moveDoneButton(Button.Builder instance, int x, int y, int width, int height, Operation<Button.Builder> original) {
         this.raspberry$frequencyButtonY = y;
-        return original.call(x, y + 24, width, height, message, onPress);
+        return original.call(instance, x, y + 24, width, height);
     }
 
     @Inject(method = "init", at = @At("TAIL"))
@@ -52,8 +52,8 @@ public abstract class SoundOptionsScreenMixin extends OptionsSubScreen {
 
         if (voiceButton != null) {
             int sliderWidth = 150;
-            int sliderX = voiceButton.x + voiceButton.getWidth() + 10;
-            int sliderY = voiceButton.y;
+            int sliderX = voiceButton.getX() + voiceButton.getWidth() + 10;
+            int sliderY = voiceButton.getY();
 
             this.addRenderableWidget(new ForgeSlider(
                     sliderX, sliderY, sliderWidth, 20,

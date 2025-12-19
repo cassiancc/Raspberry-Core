@@ -4,7 +4,6 @@ import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RaspberryParticleTypes;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import cc.cassian.raspberry.registry.RaspberryTags;
-import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -89,29 +88,29 @@ public class SwapArrowEntity extends AbstractArrow {
                         target.startRiding(shooterVehicle, true);
                     }
                     didTeleport = true;
-                    this.level.playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    this.level.playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level().playSound(null, shooter.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level().playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
             } else if (this.getPersistentData().contains("DispenserSourcePosition") && target instanceof LivingEntity){
                 BlockPos dispenserPos = BlockPos.of(this.getPersistentData().getLong("DispenserSourcePosition"));
-                BlockState blockState = this.level.getBlockState(dispenserPos);
+                BlockState blockState = this.level().getBlockState(dispenserPos);
 
                 if (blockState.getBlock() instanceof DispenserBlock) {
-                    BlockEntity dispenserEntity = this.level.getBlockEntity(dispenserPos);
+                    BlockEntity dispenserEntity = this.level().getBlockEntity(dispenserPos);
                     BlockPos targetPos = target.blockPosition();
 
                     // If there's already a block there, try above
-                    if (!level.isEmptyBlock(targetPos)) {
+                    if (!level().isEmptyBlock(targetPos)) {
                         targetPos = targetPos.above();
-                        if (!level.isEmptyBlock(targetPos)) {
+                        if (!level().isEmptyBlock(targetPos)) {
                             // If that is also occupied, give up and don't teleport.
                             return;
                         }
                     }
 
                     // Remove old dispenser
-                    this.level.removeBlockEntity(dispenserPos);
-                    this.level.removeBlock(dispenserPos, false);
+                    this.level().removeBlockEntity(dispenserPos);
+                    this.level().removeBlock(dispenserPos, false);
 
                     // Teleport player
                     Vec3 dispenserVec3 = Vec3.atBottomCenterOf(dispenserPos);
@@ -120,20 +119,20 @@ public class SwapArrowEntity extends AbstractArrow {
 
                     // Place copied dispenser
                     Direction facing = blockState.getValue(DispenserBlock.FACING);
-                    this.level.setBlock(targetPos, blockState.setValue(DispenserBlock.FACING, facing.getOpposite()), Block.UPDATE_ALL);
+                    this.level().setBlock(targetPos, blockState.setValue(DispenserBlock.FACING, facing.getOpposite()), Block.UPDATE_ALL);
 
                     // Copy over blockentity data
                     if (dispenserEntity != null) {
                         CompoundTag tag = dispenserEntity.saveWithoutMetadata();
-                        BlockEntity newDispenserEntity = this.level.getBlockEntity(targetPos);
+                        BlockEntity newDispenserEntity = this.level().getBlockEntity(targetPos);
                         if (newDispenserEntity != null) {
                             newDispenserEntity.load(tag);
                             newDispenserEntity.setChanged();
                         }
                     }
                     didTeleport = true;
-                    this.level.playSound(null, dispenserPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    this.level.playSound(null, targetPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level().playSound(null, dispenserPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    this.level().playSound(null, targetPos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
 
             }
@@ -145,7 +144,7 @@ public class SwapArrowEntity extends AbstractArrow {
             this.setDeltaMovement(this.getDeltaMovement().scale(-0.1));
             this.setYRot(this.getYRot() + 180.0F);
             this.yRotO += 180.0F;
-            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
+            if (!this.level().isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
                 if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }

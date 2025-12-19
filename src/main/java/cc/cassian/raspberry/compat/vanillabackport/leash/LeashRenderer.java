@@ -27,7 +27,6 @@ package cc.cassian.raspberry.compat.vanillabackport.leash;
 import cc.cassian.raspberry.mixin.minecraft.EntityRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -41,6 +40,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,9 +147,9 @@ public class LeashRenderer<T extends Entity> {
             return;
         }
 
-        float scaleFactor = Mth.fastInvSqrt(horizontalSq) * (LEASH_WIDTH / 2.0F);
-        float offsetZ = deltaZ * scaleFactor;
-        float offsetX = deltaX * scaleFactor;
+        double scaleFactor = Mth.fastInvSqrt(horizontalSq) * (LEASH_WIDTH / 2.0F);
+        double offsetZ = deltaZ * scaleFactor;
+        double offsetX = deltaX * scaleFactor;
 
         if (state.isKnotToKnot && deltaY == 0.0F) {
             float horizontalDistance = Mth.sqrt(horizontalSq);
@@ -159,12 +159,12 @@ public class LeashRenderer<T extends Entity> {
 
         for (int segment = 0; segment <= 24; segment++) {
             addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, LEASH_HEIGHT_THICKNESS,
-                    offsetZ, offsetX, segment, false, state);
+                    (float) offsetZ, (float) offsetX, segment, false, state);
         }
 
         for (int segment = 24; segment >= 0; segment--) {
             addVertexPair(vertices, matrices, deltaX, deltaY, deltaZ, 0.0F,
-                    offsetZ, offsetX, segment, true, state);
+                    (float) offsetZ, (float) offsetX, segment, true, state);
         }
 
         stack.popPose();
@@ -255,13 +255,13 @@ public class LeashRenderer<T extends Entity> {
             state.end = target.getRopeHoldPosition(partialTicks);
         }
 
-        BlockPos entityPos = new BlockPos(entity.getEyePosition(partialTicks));
-        BlockPos targetPos = new BlockPos(target.getEyePosition(partialTicks));
+        BlockPos entityPos = BlockPos.containing(entity.getEyePosition(partialTicks));
+        BlockPos targetPos = BlockPos.containing(target.getEyePosition(partialTicks));
 
         state.startBlockLight = this.getBlockLightLevel(entity, entityPos);
         state.endBlockLight = this.getBlockLightLevel(target, targetPos);
-        state.startSkyLight = entity.level.getBrightness(LightLayer.SKY, entityPos);
-        state.endSkyLight = entity.level.getBrightness(LightLayer.SKY, targetPos);
+        state.startSkyLight = entity.level().getBrightness(LightLayer.SKY, entityPos);
+        state.endSkyLight = entity.level().getBrightness(LightLayer.SKY, targetPos);
 
         state.slack = isKnotToKnot;
         state.isKnotToKnot = isKnotToKnot;

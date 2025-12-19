@@ -91,7 +91,7 @@ public abstract class LeashBehaviorMixin extends Mob implements Leashable {
 
     @Unique
     private void raspberry$restoreLeashFromSave(MobAccessor accessor, CompoundTag tag) {
-        if (this.level instanceof ServerLevel serverLevel) {
+        if (this.level() instanceof ServerLevel serverLevel) {
             if (tag.hasUUID("UUID")) {
                 UUID uuid = tag.getUUID("UUID");
                 Entity entity = serverLevel.getEntity(uuid);
@@ -103,7 +103,7 @@ public abstract class LeashBehaviorMixin extends Mob implements Leashable {
                 
             } else if (tag.contains("X", 99)) {
                 net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(tag.getInt("X"), tag.getInt("Y"), tag.getInt("Z"));
-                this.setLeashedTo(LeashFenceKnotEntity.getOrCreateKnot(this.level, pos), true);
+                this.setLeashedTo(LeashFenceKnotEntity.getOrCreateKnot(this.level(), pos), true);
                 accessor.raspberry$setLeashInfoTag(null);
             }
         }
@@ -111,7 +111,7 @@ public abstract class LeashBehaviorMixin extends Mob implements Leashable {
 
     @Unique
     private void raspberry$restoreLeashFromId(MobAccessor accessor, int id) {
-        Entity entity = this.level.getEntity(id);
+        Entity entity = this.level().getEntity(id);
         if (entity != null) {
             this.setLeashedTo(entity, true);
             accessor.raspberry$setDelayedLeashHolderId(0);

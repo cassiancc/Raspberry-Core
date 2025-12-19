@@ -95,7 +95,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
 
     @Unique
     private void raspberry$restoreLeashFromSave() {
-        if (this.raspberry$leashInfoTag != null && this.level instanceof ServerLevel serverLevel) {
+        if (this.raspberry$leashInfoTag != null && this.level() instanceof ServerLevel serverLevel) {
             if (this.raspberry$leashInfoTag.hasUUID("UUID")) {
                 UUID uuid = this.raspberry$leashInfoTag.getUUID("UUID");
                 Entity entity = serverLevel.getEntity(uuid);
@@ -105,7 +105,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
                 }
             } else if (this.raspberry$leashInfoTag.contains("X", 99) && this.raspberry$leashInfoTag.contains("Y", 99) && this.raspberry$leashInfoTag.contains("Z", 99)) {
                 BlockPos pos = net.minecraft.nbt.NbtUtils.readBlockPos(this.raspberry$leashInfoTag);
-                this.raspberry$setLeashedTo(net.minecraft.world.entity.decoration.LeashFenceKnotEntity.getOrCreateKnot(this.level, pos), true);
+                this.raspberry$setLeashedTo(net.minecraft.world.entity.decoration.LeashFenceKnotEntity.getOrCreateKnot(this.level(), pos), true);
                 return;
             }
 
@@ -118,7 +118,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void raspberry$tickLeash(CallbackInfo ci) {
-        if (!this.level.isClientSide && ModConfig.get().backportLeash) {
+        if (!this.level().isClientSide && ModConfig.get().backportLeash) {
             if (this.raspberry$leashInfoTag != null) {
                 this.raspberry$restoreLeashFromSave();
             }
@@ -171,8 +171,8 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Override
     public Entity raspberry$getLeashHolder() {
         if (this.raspberry$leashHolder == null && this.entityData.get(DATA_ID_LEASH_HOLDER_ID).isPresent()) {
-            if (this.level.isClientSide) {
-                this.raspberry$leashHolder = this.level.getEntity(this.entityData.get(DATA_ID_LEASH_HOLDER_ID).getAsInt());
+            if (this.level().isClientSide) {
+                this.raspberry$leashHolder = this.level().getEntity(this.entityData.get(DATA_ID_LEASH_HOLDER_ID).getAsInt());
             }
         }
         return this.raspberry$leashHolder;
@@ -185,7 +185,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
         this.raspberry$delayedLeashHolderId = 0;
         this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.of(entity.getId()));
 
-        if (sendPacket && !this.level.isClientSide && this.level instanceof ServerLevel serverLevel) {
+        if (sendPacket && !this.level().isClientSide && this.level() instanceof ServerLevel serverLevel) {
             serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, entity));
         }
     }
@@ -199,12 +199,12 @@ public abstract class BoatMixin extends Entity implements Leashable {
         this.raspberry$delayedLeashHolderId = 0;
         this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
 
-        if (!this.level.isClientSide && wasLeashed) {
+        if (!this.level().isClientSide && wasLeashed) {
             if (dropItem) {
                 this.spawnAtLocation(Items.LEAD);
             }
 
-            if (broadcast && this.level instanceof ServerLevel serverLevel) {
+            if (broadcast && this.level() instanceof ServerLevel serverLevel) {
                 serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
             }
         }
@@ -218,7 +218,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
         this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
 
         if (id != 0) {
-            Entity entity = this.level.getEntity(id);
+            Entity entity = this.level().getEntity(id);
             if (entity != null) {
                 this.raspberry$setLeashedTo(entity, false);
                 this.raspberry$delayedLeashHolderId = 0;
@@ -266,8 +266,8 @@ public abstract class BoatMixin extends Entity implements Leashable {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void raspberry$resolveLeash(CallbackInfo ci) {
-        if (this.level.isClientSide && this.raspberry$delayedLeashHolderId != 0 && this.raspberry$getLeashHolder() == null) {
-            Entity entity = this.level.getEntity(this.raspberry$delayedLeashHolderId);
+        if (this.level().isClientSide && this.raspberry$delayedLeashHolderId != 0 && this.raspberry$getLeashHolder() == null) {
+            Entity entity = this.level().getEntity(this.raspberry$delayedLeashHolderId);
             if (entity != null) {
                 this.raspberry$setLeashedTo(entity, false);
                 this.raspberry$delayedLeashHolderId = 0;

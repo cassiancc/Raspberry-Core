@@ -40,12 +40,12 @@ import java.util.List;
 public class KnotInteractionHelper {
 
     public static void syncKnots(LeashFenceKnotEntity knot) {
-        if (knot.level.isClientSide) return;
+        if (knot.level().isClientSide) return;
 
         KnotConnectionManager manager = KnotConnectionManager.getManager(knot);
         KnotConnectionSyncPacket packet = new KnotConnectionSyncPacket(knot.getId(), manager.getConnectedUuids());
 
-        if (knot.level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+        if (knot.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
             for (net.minecraft.server.level.ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(
                     new net.minecraft.world.level.ChunkPos(knot.blockPosition()), false)) {
                 packet.sendTo(player);
@@ -61,7 +61,7 @@ public class KnotInteractionHelper {
         public final boolean hasKnots;
 
         public HeldEntities(Entity holder) {
-            this.all = Leashable.leashableInArea(holder.level, holder.position(), l -> l.raspberry$getLeashHolder() == holder);
+            this.all = Leashable.leashableInArea(holder.level(), holder.position(), l -> l.raspberry$getLeashHolder() == holder);
             this.mobs = all.stream().filter(l -> !(l instanceof LeashFenceKnotEntity)).toList();
             this.knots = all.stream()
                     .filter(l -> l instanceof LeashFenceKnotEntity)

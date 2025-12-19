@@ -36,10 +36,10 @@ public abstract class ChainKnotEntityBehaviorMixin extends HangingEntity {
 
     @Inject(method = "canStayAttached", at = @At("RETURN"), cancellable = true, remap = false)
     private void raspberry$checkForLeashKnot(CallbackInfoReturnable<Boolean> cir) {
-        if (cir.getReturnValue() && !this.level.isClientSide) {
+        if (cir.getReturnValue() && !this.level().isClientSide()) {
             BlockPos pos = this.blockPosition();
             AABB aabb = new AABB(pos).inflate(1.0); 
-            List<LeashFenceKnotEntity> knots = this.level.getEntitiesOfClass(LeashFenceKnotEntity.class, aabb);
+            List<LeashFenceKnotEntity> knots = this.level().getEntitiesOfClass(LeashFenceKnotEntity.class, aabb);
             
             for (LeashFenceKnotEntity knot : knots) {
                 if (knot.blockPosition().equals(pos) && knot.isAlive()) {
@@ -52,7 +52,7 @@ public abstract class ChainKnotEntityBehaviorMixin extends HangingEntity {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void raspberry$tickCheckObstruction(CallbackInfo ci) {
-        if (!this.level.isClientSide && !this.canStayAttached()) {
+        if (!this.level().isClientSide() && !this.canStayAttached()) {
             this.destroyLinks(true);
             this.discard();
         }
@@ -73,7 +73,7 @@ public abstract class ChainKnotEntityBehaviorMixin extends HangingEntity {
     @Overwrite
     public boolean skipAttackInteraction(Entity attacker) {
         if (attacker instanceof Player player) {
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide()) {
                 this.playPlacementSound();
                 this.destroyLinks(!player.isCreative());
                 this.discard();

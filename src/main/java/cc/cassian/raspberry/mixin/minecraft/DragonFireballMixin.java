@@ -2,7 +2,7 @@ package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -65,7 +65,7 @@ public abstract class DragonFireballMixin extends AbstractHurtingProjectile {
         if (result instanceof EntityHitResult entityHit) {
             Entity target = entityHit.getEntity();
             
-            DamageSource src = new IndirectEntityDamageSource("fireball", this, owner).setProjectile();
+            DamageSource src = new DamageSource(this.damageSources().indirectMagic(this, owner).typeHolder(), this);
 
             if (target instanceof Ghast) {
                 target.hurt(src, 30.0F); 
@@ -77,9 +77,9 @@ public abstract class DragonFireballMixin extends AbstractHurtingProjectile {
             return;
         }
 
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             var cloud = new net.minecraft.world.entity.AreaEffectCloud(
-                this.level, this.getX(), this.getY(), this.getZ());
+                    this.level(), this.getX(), this.getY(), this.getZ());
 
             if (owner instanceof net.minecraft.world.entity.LivingEntity living) {
                 cloud.setOwner(living);
@@ -93,9 +93,9 @@ public abstract class DragonFireballMixin extends AbstractHurtingProjectile {
             cloud.addEffect(new net.minecraft.world.effect.MobEffectInstance(
                     net.minecraft.world.effect.MobEffects.HARM, 1, 1));
 
-            this.level.levelEvent(2006, this.blockPosition(), this.isSilent() ? -1 : 1);
+            this.level().levelEvent(2006, this.blockPosition(), this.isSilent() ? -1 : 1);
             
-            this.level.addFreshEntity(cloud);
+            this.level().addFreshEntity(cloud);
         }
 
         this.discard();

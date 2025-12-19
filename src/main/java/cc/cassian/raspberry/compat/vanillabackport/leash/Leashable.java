@@ -112,7 +112,7 @@ public interface Leashable {
 
     static <E extends Entity & Leashable> void tickLeash(E entity) {
         Entity holder = entity.raspberry$getLeashHolder();
-        if (holder != null && holder.level == entity.level) {
+        if (holder != null && holder.level() == entity.level()) {
             double leashDistance = entity.leashDistanceTo(holder);
 
             if (entity instanceof TamableAnimal pet && pet.isOrderedToSit()) {
@@ -124,7 +124,7 @@ public interface Leashable {
 
             entity.whenLeashedTo(holder);
             if (leashDistance > entity.leashSnapDistance()) {
-                entity.level.playSound(null, holder, SoundEvents.LEASH_KNOT_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                entity.level().playSound(null, holder, SoundEvents.LEASH_KNOT_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F);
                 entity.leashTooFarBehaviour();
             } else if (leashDistance > entity.leashElasticDistance() - (double) holder.getBbWidth() - (double) entity.getBbWidth() && entity.checkElasticInteractions(holder)) {
                 entity.onElasticLeashPull(holder);
@@ -157,8 +157,8 @@ public interface Leashable {
     }
 
     static <E extends Entity & Leashable> float angularFriction(E entity) {
-        if (entity.isOnGround()) {
-            return entity.level.getBlockState(((EntityAccessor) entity).callGetBlockPosBelowThatAffectsMyMovement()).getBlock().getFriction() * 0.91F;
+        if (entity.onGround()) {
+            return entity.level().getBlockState(((EntityAccessor) entity).callGetBlockPosBelowThatAffectsMyMovement()).getBlock().getFriction() * 0.91F;
         } else {
             return (entity.isInWater() || entity.isInLava()) ? 0.8F : 0.91F;
         }
@@ -312,7 +312,7 @@ public interface Leashable {
     }
 
     static List<Leashable> leashableLeashedTo(Entity entity) {
-        return leashableInArea(entity.level, entity.position(), l -> l.raspberry$getLeashHolder() == entity);
+        return leashableInArea(entity.level(), entity.position(), l -> l.raspberry$getLeashHolder() == entity);
     }
 
     static List<Leashable> leashableInArea(Level level, Vec3 pos, Predicate<Leashable> filter) {

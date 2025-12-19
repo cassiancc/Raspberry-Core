@@ -65,9 +65,9 @@ public class LeashEvents {
         Entity target = event.getTarget();
         ItemStack stack = event.getItemStack();
 
-        if (!target.level.isClientSide && player.isSecondaryUseActive() && target instanceof Leashable leashable && leashable.canBeLeashed(player) && target.isAlive()) {
+        if (!target.level().isClientSide() && player.isSecondaryUseActive() && target instanceof Leashable leashable && leashable.canBeLeashed(player) && target.isAlive()) {
             if (!(target instanceof LivingEntity living && living.isBaby())) {
-                List<Leashable> nearbyEntities = Leashable.leashableInArea(target.level, target.position(), l -> l.raspberry$getLeashHolder() == player);
+                List<Leashable> nearbyEntities = Leashable.leashableInArea(target.level(), target.position(), l -> l.raspberry$getLeashHolder() == player);
 
                 if (!nearbyEntities.isEmpty()) {
                     boolean attachedAny = false;
@@ -85,7 +85,7 @@ public class LeashEvents {
                     }
 
                     if (attachedAny) {
-                        target.level.gameEvent(GameEvent.ENTITY_INTERACT, target.blockPosition(), GameEvent.Context.of(player));
+                        target.level().gameEvent(GameEvent.ENTITY_INTERACT, target.blockPosition(), GameEvent.Context.of(player));
                         target.playSound(SoundEvents.LEASH_KNOT_PLACE, 1.0F, 1.0F);
 
                         event.setCancellationResult(InteractionResult.SUCCESS);
@@ -105,9 +105,9 @@ public class LeashEvents {
 
         if (target.isAlive() && target instanceof Leashable leashable) {
             if (leashable.raspberry$getLeashHolder() == player) {
-                if (!target.level.isClientSide) {
+                if (!target.level().isClientSide()) {
                     leashable.raspberry$dropLeash(true, !player.isCreative());
-                    target.level.gameEvent(GameEvent.ENTITY_INTERACT, target.position(), GameEvent.Context.of(player));
+                    target.level().gameEvent(GameEvent.ENTITY_INTERACT, target.position(), GameEvent.Context.of(player));
                     target.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0F, 1.0F);
                 }
                 event.setCancellationResult(InteractionResult.SUCCESS);
@@ -120,7 +120,7 @@ public class LeashEvents {
                     return;
                 }
 
-                if (!target.level.isClientSide && leashable.canHaveALeashAttachedTo(player)) {
+                if (!target.level().isClientSide() && leashable.canHaveALeashAttachedTo(player)) {
                     if (leashable.raspberry$isLeashed()) {
                         leashable.raspberry$dropLeash(true, true);
                     }
@@ -179,7 +179,7 @@ public class LeashEvents {
 
     public static boolean shearOffAllLeashConnections(Entity entity, Player player) {
         boolean sheared = dropAllLeashConnections(entity, player);
-        if (sheared && entity.level instanceof ServerLevel server) {
+        if (sheared && entity.level() instanceof ServerLevel server) {
             server.playSound(null, entity.blockPosition(), SoundEvents.SHEEP_SHEAR, SoundSource.PLAYERS, 1.0f, 1.0f);
         }
         return sheared;

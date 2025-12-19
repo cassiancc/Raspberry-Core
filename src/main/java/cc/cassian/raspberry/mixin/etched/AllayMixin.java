@@ -2,6 +2,7 @@ package cc.cassian.raspberry.mixin.etched;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -29,7 +30,7 @@ public abstract class AllayMixin extends PathfinderMob {
     @Inject(method = "shouldStopDancing", at = @At("HEAD"), cancellable = true)
     private void raspberry$shouldStopDancing(CallbackInfoReturnable<Boolean> cir) {
         if (this.jukeboxPos != null) {
-            ResourceLocation blockId = Registry.BLOCK.getKey(this.level.getBlockState(this.jukeboxPos).getBlock());
+            ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(this.level().getBlockState(this.jukeboxPos).getBlock());
             
             if (blockId.toString().equals("etched:album_jukebox")) {
                 if (this.jukeboxPos.closerToCenterThan(this.position(), GameEvent.JUKEBOX_PLAY.getNotificationRadius())) {

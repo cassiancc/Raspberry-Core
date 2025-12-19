@@ -41,7 +41,7 @@ public class KnotConnectionManager {
     private final Set<UUID> connectedKnotUuids = new HashSet<>();
 
     public void checkDistance(LeashFenceKnotEntity self) {
-        if (self.level.isClientSide) return;
+        if (self.level().isClientSide()) return;
 
         List<LeashFenceKnotEntity> knots = this.getConnectedKnots(self);
         boolean snappedAny = false;
@@ -93,7 +93,7 @@ public class KnotConnectionManager {
 
     public List<LeashFenceKnotEntity> getConnectedKnots(LeashFenceKnotEntity self) {
         List<LeashFenceKnotEntity> connectedKnots = new ArrayList<>();
-        Level level = self.level;
+        Level level = self.level();
 
         if (level instanceof ServerLevel serverLevel) {
             Iterator<UUID> iterator = connectedKnotUuids.iterator();

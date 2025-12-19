@@ -118,6 +118,7 @@ repositories {
         }
         filter {
             includeGroup("software.bernie.geckolib")
+            includeGroup("com.eliotlash.mclib")
         }
     }
     // Parchment Mappings
@@ -261,7 +262,7 @@ dependencies {
     // Optional dependencies for mods with only mixin fixes
     modImplementation("curse.maven:aquaculture-60028:$aquaculture_version")
     modImplementation("curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version")
-    modImplementation("curse.maven:copperized-567666:$copperized_version")
+//    modImplementation("curse.maven:copperized-567666:$copperized_version")
     modImplementation("curse.maven:connectible-chains-forge-418514:$connectible_chains_version")
     modImplementation("software.bernie.geckolib:geckolib-forge-$geckolib_version")
     implementation("com.eliotlash.mclib:mclib:20")
@@ -275,8 +276,8 @@ dependencies {
     modImplementation("maven.modrinth:spelunkery:$spelunkery_version-forge")
     modImplementation("maven.modrinth:sullysmod:$sullys_version")
     modImplementation("maven.modrinth:twigs:$twigs_version")
-    modImplementation("curse.maven:dungeons-mobs-428883:$dungeons_mobs_version")
-    modImplementation("curse.maven:dungeons-libraries-550941:$dungeons_libraries_version") // dependency of dungeons mobs
+    modCompileOnly("curse.maven:dungeons-mobs-428883:$dungeons_mobs_version")
+    modCompileOnly("curse.maven:dungeons-libraries-550941:$dungeons_libraries_version") // dependency of dungeons mobs
     modImplementation("curse.maven:enderman-overhaul-574409:$enderman_overhaul_version")
     modImplementation("curse.maven:resourceful-config-714059:$resourceful_config_version") // dependency of enderman overhaul
     modImplementation("curse.maven:resourceful-lib-570073:$resourceful_lib_version") // dependency of enderman overhaul
@@ -294,18 +295,13 @@ dependencies {
     modImplementation("maven.modrinth:spyglass-improvements:${spyglass_improvements_version}")
     modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of spyglass improvements
     modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
-    modImplementation("curse.maven:controllable-317269:4445137")
+    modCompileOnly("curse.maven:controllable-317269:4445137")
     modImplementation("maven.modrinth:architects-palette:${architects_palette_version}")
-    modImplementation("maven.modrinth:cooks-collection:$cooks_collection_version")
-    modImplementation("maven.modrinth:jade:$jade_version")
+    modCompileOnly("maven.modrinth:cooks-collection:$cooks_collection_version")
+    modCompileOnly("maven.modrinth:jade:$jade_version")
     modImplementation("maven.modrinth:xaeros-minimap:${xaeros_minimap_version}")
     modImplementation("maven.modrinth:xaeros-world-map:${xaeros_worldmap_version}")
     modImplementation("curse.maven:etched-491890:${etched_version}")
-    modImplementation("curse.maven:pollen-544350:${pollen_version}") // dependency of etched
-    implementation "gg.moonflower:molang-compiler:3.0.1.5" // pollen dependency
-    implementation "gg.moonflower.pinwheel:pinwheel:1.2.0.3" // pollen dependency
-    forgeRuntimeLibrary "gg.moonflower:molang-compiler:3.0.1.5"
-    forgeRuntimeLibrary "gg.moonflower.pinwheel:pinwheel:1.2.0.3"
 
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
@@ -319,6 +315,7 @@ dependencies {
     modImplementation("curse.maven:mining-master-534956:5540513")
     //1.20
     modImplementation "maven.modrinth:better-copper-armor-and-tools:1.2-1.20.1"
+    modImplementation "dev.architectury:architectury-forge:9.2.14"
 
     // MixinSquared
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.2.0"))
