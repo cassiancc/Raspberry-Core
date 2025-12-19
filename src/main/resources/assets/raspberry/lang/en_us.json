@@ -123,6 +123,7 @@
   "config.raspberry.config.jadeRequiresScoping": "Jade requires the player to look through spyglass",
   "config.raspberry.config.disableBirchLeafTinting": "Disable birch leaf tinting",
   "config.raspberry.config.disableFaucetSourceBlocks": "Disable waterlogged blocks as valid sources for Faucets",
+  "config.raspberry.config.betterJukeboxes": "Playing music in a jukebox fades out vanilla music",
 
   "emi.cooking.time_minute": "%s Minute",
   "emi.cooking.time_minutes": "%s Minutes",
