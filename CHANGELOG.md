@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Better jukeboxes config option, which will fade out vanilla music when playing a jukebox (supports Etched).
-  - Also changes sound to be non-directional, and 
+- Better jukeboxes config option:
+  - Fades out vanilla music when playing a jukebox (supports Etched).
+  - Changes jukebox sound to be non-directional.
+- Setting in music and sounds menu to control jukebox fade distance.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

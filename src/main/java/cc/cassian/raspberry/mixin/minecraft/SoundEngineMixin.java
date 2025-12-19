@@ -1,16 +1,3 @@
-/* Copyright (c) 2025 WatDuhHekBro
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-*/
-
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.config.ModConfig;
@@ -32,16 +19,7 @@ import java.util.Map;
 
 @Mixin(SoundEngine.class)
 public abstract class SoundEngineMixin {
-    @Unique
-    private static final double MIN_DISTANCE = 50.0;
-    @Unique
-    private static final double MAX_DISTANCE = 100.0;
-    @Unique
-    private static final double MIN_DISTANCE_SQUARED = MIN_DISTANCE * MIN_DISTANCE;
-    @Unique
-    private static final double MAX_DISTANCE_SQUARED = MAX_DISTANCE * MAX_DISTANCE;
-    @Unique
-    private static final double DIVISOR = MAX_DISTANCE_SQUARED - MIN_DISTANCE_SQUARED;
+
     @Unique
     private static final int TICKS_TO_FULLY_FADE_OUT = 20;
     @Unique
@@ -85,6 +63,13 @@ public abstract class SoundEngineMixin {
             return;
         }
 
+        double maxDistance = ModConfig.get().jukeboxDistance;
+        double minDistance = maxDistance * 0.25;
+
+        double minDistanceSquared = minDistance * minDistance;
+        double maxDistanceSquared = maxDistance * maxDistance;
+        double divisor = maxDistanceSquared - minDistanceSquared;
+
         Collection<SoundInstance> records = wrapper.getInstanceBySource().get(SoundSource.RECORDS);
         long amountRecordsHearable = records.stream().filter(sound -> sound.getVolume() > 0).count();
         Vec3 playerPosition = wrapper.getListener().getListenerPosition();
@@ -98,7 +83,8 @@ public abstract class SoundEngineMixin {
         for (SoundInstance sound : records) {
             if (coordinates.containsKey(sound)) {
                 double distanceSquared = playerPosition.distanceToSqr(coordinates.get(sound));
-                double calculatedVolume = (MAX_DISTANCE_SQUARED - distanceSquared) / DIVISOR;
+
+                double calculatedVolume = (maxDistanceSquared - distanceSquared) / divisor;
                 calculatedVolume = Math.max(0, Math.min(1, calculatedVolume));
                 float adjustedVolume = wrapper.calculateAdjustedVolume((float) calculatedVolume, SoundSource.RECORDS);
 
@@ -127,7 +113,7 @@ public abstract class SoundEngineMixin {
 
         for (SoundInstance sound : music) {
             ChannelAccess.ChannelHandle sourceManager = wrapper.getInstanceToChannel().get(sound);
-            float maxVolume = sound.getVolume(); // Usually 1.0 for C418 music and 0.4 for newer music
+            float maxVolume = sound.getVolume();
 
             sourceManager.execute(source -> {
                 source.setVolume(wrapper.calculateAdjustedVolume(maxVolume * currentMusicVolumeFactor, SoundSource.MUSIC));
