@@ -56,6 +56,7 @@
     "dungeons_mobs.CobwebProjectileEntityMixin",
     "dynamiccrosshair.VanillaBlockHandlerMixin",
     "ecologics.CoconutSliceItemMixin",
+    "ecologics.PenguinMixin",
     "emi.EmiRecipesMixin",
     "endergetic.EnderWallTorchMixin",
     "endermanoverhaul.ReplacedEndermanMixin",

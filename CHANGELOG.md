@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fades out vanilla music when playing a jukebox (supports Etched).
   - Changes jukebox sound to be non-directional.
 - Setting in music and sounds menu to control jukebox fade distance.
+- Config option to disable Ecologics penguins dropping feathers.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
