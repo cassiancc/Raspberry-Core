@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Swap Arrows can no longer force Withers into boats.
+
 ## [1.10.1] - 2025-12-18
 
 ### Fixed
