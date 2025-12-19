@@ -2,6 +2,8 @@ plugins {
     id 'dev.architectury.loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
     id 'org.moddedmc.wiki.toolkit' version '0.2.7'
+    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
+    id 'co.uzzu.dotenv.gradle' version "4.0.0"
 }
 
 group = project.maven_group
@@ -363,5 +365,31 @@ publishing {
         // Notice: This block does NOT have the same function as the block in the top level.
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
+    }
+}
+
+
+publishMods {
+    file = remapJar.archiveFile
+    type = BETA
+    modLoaders.add("forge")
+    changelog = file('CHANGELOG-LATEST.md').text.trim()
+
+    modrinth {
+        projectId = "1dE2nxJB"
+        accessToken = env.MODRINTH_API_KEY.orNull()
+        minecraftVersions.add(minecraft_version)
+        requires("blueprint")
+        requires("supplementaries")
+        requires("farmers-delight")
+    }
+
+    curseforge {
+        projectId = "1dE2nxJB"
+        accessToken = env.CURSEFORGE_API_KEY.orNull()
+        minecraftVersions.add(minecraft_version)
+        requires("blueprint")
+        requires("supplementaries")
+        requires("farmers-delight")
     }
 }
