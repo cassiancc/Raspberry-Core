@@ -34,5 +34,6 @@ public final class ModCompat {
     public static final boolean EMI = ModList.get().isLoaded("emi");
     public static final boolean CONTROLLABLE = ModList.get().isLoaded("controllable");
     public static final boolean NATURALIST = ModList.get().isLoaded("naturalist");
+    public static final boolean ITEM_OBLITERATOR = ModList.get().isLoaded("item_obliterator");
     public static boolean XAEROS_WORLD_MAP = ModList.get().isLoaded("xaeroworldmap");
 }

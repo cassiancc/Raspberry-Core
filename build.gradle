@@ -321,6 +321,8 @@ dependencies {
     modImplementation("maven.modrinth:puzzles-lib:${puzzles_lib_version}")
     modImplementation("maven.modrinth:echo-chest:${echo_chest_version}")
     modImplementation("maven.modrinth:feature-recycler:${feature_recycler_version}")
+    modImplementation("maven.modrinth:item-obliterator:${item_obliterator_version}")
+    modImplementation("maven.modrinth:necronomicon:${necronomicon_version}")
 
     // MixinSquared
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.2.0"))
