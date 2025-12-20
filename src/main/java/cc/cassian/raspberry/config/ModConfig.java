@@ -82,6 +82,7 @@ public class ModConfig {
     public List<String> hiddenPotions = new ArrayList<>();
     public List<String> hiddenTooltipItems = new ArrayList<>();
     public Map<String, String> creativeTabIcons = new HashMap<>();
+    public boolean noTemplates = true;
 
     public ModConfig() {
         creativeTabIcons.put("minecraft:building_blocks", "minecraft:bricks");
