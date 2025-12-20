@@ -1,6 +1,9 @@
 package cc.cassian.raspberry.registry;
 
+import cc.cassian.raspberry.ModCompat;
+import cc.cassian.raspberry.compat.ItemObliteratorCompat;
 import cc.cassian.raspberry.config.ModConfig;
+import elocindev.item_obliterator.forge.ItemObliterator;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
@@ -27,6 +30,12 @@ public class RaspberryCreativePlacements {
                 Map.Entry<ItemStack, CreativeModeTab.TabVisibility> entry = iterator.next();
                 ItemStack stack = entry.getKey();
                 boolean shouldRemove = false;
+
+                if (ModCompat.ITEM_OBLITERATOR) {
+                    if (ItemObliteratorCompat.shouldHide(stack)) {
+                        shouldRemove = true;
+                    }
+                }
 
                 if (stack.getItem() instanceof PotionItem || stack.getItem() instanceof SplashPotionItem ||
                         stack.getItem() instanceof LingeringPotionItem || stack.getItem() instanceof TippedArrowItem) {

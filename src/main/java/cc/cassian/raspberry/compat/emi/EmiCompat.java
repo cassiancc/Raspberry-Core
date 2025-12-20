@@ -9,6 +9,7 @@ import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
+import elocindev.item_obliterator.forge.utils.Utils;
 import net.minecraft.world.item.Items;
 
 @EmiEntrypoint
@@ -36,7 +37,7 @@ public class EmiCompat implements EmiPlugin {
             EmiBeaconPaymentRecipe.addBeaconRecipe(emiRegistry);
         }
         if (ModCompat.ITEM_OBLITERATOR) {
-            ItemObliteratorCompat.hideStacks(emiRegistry);
+            emiRegistry.removeEmiStacks(emiStack -> ItemObliteratorCompat.shouldHide(emiStack.getItemStack()));
         }
     }
 
