@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -71,7 +72,7 @@ public abstract class ChainKnotEntityBehaviorMixin extends HangingEntity {
      * @reason Fixes inability to punch-break knots and adds durability usage to shears on punch.
      */
     @Overwrite
-    public boolean skipAttackInteraction(Entity attacker) {
+    public boolean skipAttackInteraction(@NotNull Entity attacker) {
         if (attacker instanceof Player player) {
             if (!this.level().isClientSide()) {
                 this.playPlacementSound();
