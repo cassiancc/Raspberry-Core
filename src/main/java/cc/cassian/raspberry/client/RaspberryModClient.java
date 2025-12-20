@@ -71,11 +71,11 @@ public class RaspberryModClient {
             ItemBlockRenderTypes.setRenderLayer(RaspberryBlocks.TEMPORARY_COBWEB.get(), RenderType.cutout());
 
             Minecraft.getInstance()
-                .getSoundManager()
-                .addListener(new MusicEventListener());
-        });
+                    .getSoundManager()
+                    .addListener(new MusicEventListener());
 
-        RaspberryItemProperties.register();
+            RaspberryItemProperties.register();
+        });
     }
 
     // Forge event bus.

@@ -95,7 +95,17 @@
   "config.raspberry.config.ghastDragonFireball": "Change ghast projectile to dragon fireball",
   "config.raspberry.config.backportLeash": "Backport leash mechanics from the Chase the Skies drop",
 
-  "config.raspberry.config.searchContainers": "Allow items in bundles/containers",
+ "config.raspberry.hidden": "Hide Features",
+ "config.raspberry.config.hidden_enchantments": "Hidden Enchantments",
+ "config.raspberry.config.hidden_enchantments_tooltip": "List of enchantment IDs to hide (e.g. minecraft:sharpness)",
+ "config.raspberry.config.hidden_potions": "Hidden Potions",
+ "config.raspberry.config.hidden_potions_tooltip": "List of potion IDs to hide (e.g. minecraft:poison)",
+ "config.raspberry.config.hidden_tooltips": "Hidden Tooltip Items",
+ "config.raspberry.config.hidden_tooltip_tooltip": "Items that shouldn't show Attack Damage/Speed tooltips",
+ "config.raspberry.config.creative_tab_icons": "Creative Tab Icons",
+ "config.raspberry.config.creative_tab_icons_tooltip": "Format: tab_id=item_id (e.g. minecraft:food_and_drinks=minecraft:apple)",
+
+ "config.raspberry.config.searchContainers": "Allow items in bundles/containers",
 
   "config.raspberry.config.emi_tablets": "Add EMI integration to RF tablets.",
   "config.raspberry.config.toms_hideBeacon": "Hide beacon info in Tom's Simple Storage.",

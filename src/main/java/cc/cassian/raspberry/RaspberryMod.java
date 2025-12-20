@@ -6,7 +6,6 @@ import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.entity.SwapArrowEntity;
 import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
-import cc.cassian.raspberry.network.RaspberryNetwork;
 import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
@@ -44,8 +43,6 @@ public final class RaspberryMod {
         // However, some things (like registries and resources) may still be uninitialized.
         // Proceed with mild caution.
         ModConfig.load();
-        // Register network.
-        RaspberryNetwork.register();
         // Register deferred registers.
         if (ModCompat.FARMERS_DELIGHT && ModCompat.SUPPLEMENTARIES) {
             RaspberryBlocks.register(eventBus);

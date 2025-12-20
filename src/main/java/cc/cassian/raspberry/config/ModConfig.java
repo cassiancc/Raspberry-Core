@@ -1,4 +1,5 @@
 package cc.cassian.raspberry.config;
+
 import cc.cassian.raspberry.RaspberryMod;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -11,12 +12,17 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ModConfig {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
     private static ModConfig INSTANCE = new ModConfig();
+
     //General settings
     public boolean aftershock = true;
     public boolean stovesStartLit = false;
@@ -61,7 +67,7 @@ public class ModConfig {
     public double raspberryCartMaxSpeed = 34.0;
     public boolean dungeons_mobs_revised_cobwebs = true;
     public boolean ghastDragonFireball = false;
-    public boolean backportLeash = true;
+    public boolean leashFences = true; // TODO: reimplement harou's leashed fences
     public boolean disableBirchLeafTinting = true;
     public boolean jadeRequiresScoping = true;
     public MusicFrequency musicFrequency = MusicFrequency.DEFAULT;
@@ -72,6 +78,25 @@ public class ModConfig {
     public boolean disablePenguinShedding = false;
     public boolean fastFlyBlockBreaking = true;
 
+    public List<String> hiddenEnchantments = new ArrayList<>();
+    public List<String> hiddenPotions = new ArrayList<>();
+    public List<String> hiddenTooltipItems = new ArrayList<>();
+    public Map<String, String> creativeTabIcons = new HashMap<>();
+
+    public ModConfig() {
+        creativeTabIcons.put("minecraft:building_blocks", "minecraft:bricks");
+        creativeTabIcons.put("minecraft:colored_blocks", "minecraft:cyan_wool");
+        creativeTabIcons.put("minecraft:natural_blocks", "minecraft:grass_block");
+        creativeTabIcons.put("minecraft:functional_blocks", "minecraft:oak_sign");
+        creativeTabIcons.put("minecraft:redstone_blocks", "minecraft:redstone");
+        creativeTabIcons.put("minecraft:tools_and_utilities", "minecraft:diamond_pickaxe");
+        creativeTabIcons.put("minecraft:combat", "minecraft:netherite_sword");
+        creativeTabIcons.put("minecraft:food_and_drinks", "minecraft:golden_apple");
+        creativeTabIcons.put("minecraft:ingredients", "minecraft:iron_ingot");
+        creativeTabIcons.put("minecraft:spawn_eggs", "minecraft:creeper_spawn_egg");
+        creativeTabIcons.put("minecraft:op_blocks", "minecraft:command_block");
+    }
+
     public static void load() {
         if (!Files.exists(configPath())) {
             save();
@@ -80,6 +105,7 @@ public class ModConfig {
 
         try (var input = Files.newInputStream(configPath())) {
             INSTANCE = GSON.fromJson(new InputStreamReader(input, StandardCharsets.UTF_8), ModConfig.class);
+            save();
         } catch (IOException e) {
             RaspberryMod.LOGGER.warn("Unable to load config file!");
         }
@@ -101,6 +127,4 @@ public class ModConfig {
     public static Path configPath() {
         return Path.of(FMLPaths.CONFIGDIR.get() + "/raspberry_core.json");
     }
-
-
 }
