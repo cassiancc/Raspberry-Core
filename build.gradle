@@ -318,6 +318,8 @@ dependencies {
     //1.20
     modImplementation "maven.modrinth:better-copper-armor-and-tools:1.2-1.20.1"
     modImplementation "dev.architectury:architectury-forge:9.2.14"
+    modImplementation("maven.modrinth:puzzles-lib:${puzzles_lib_version}")
+    modImplementation("maven.modrinth:echo-chest:${echo_chest_version}")
 
     // MixinSquared
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.2.0"))

@@ -70,6 +70,7 @@ public class ModConfig {
     public boolean betterJukeboxes = true;
     public double jukeboxDistance = 64.0;
     public boolean disablePenguinShedding = false;
+    public boolean fastFlyBlockBreaking = true;
 
     public static void load() {
         if (!Files.exists(configPath())) {

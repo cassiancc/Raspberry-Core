@@ -10,6 +10,7 @@ import cc.cassian.raspberry.network.RaspberryNetwork;
 import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -18,6 +19,7 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -60,6 +62,7 @@ public final class RaspberryMod {
         MinecraftForge.EVENT_BUS.addListener(this::onEntityJoinLevel);
         MinecraftForge.EVENT_BUS.addListener(this::onLivingUpdate);
         MinecraftForge.EVENT_BUS.addListener(this::onLivingHurt);
+        MinecraftForge.EVENT_BUS.addListener(this::onBlockBreak);
         eventBus.addListener(RaspberryMod::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
@@ -128,6 +131,14 @@ public final class RaspberryMod {
     public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
         if (ModCompat.ENVIRONMENTAL)
             EnvironmentalCompat.onLivingUpdate(event);
+    }
+
+    @SubscribeEvent
+    public void onBlockBreak(PlayerEvent.BreakSpeed event) {
+        Player player = event.getEntity();
+        if (!player.onGround() && (player.isFallFlying() || ModConfig.get().fastFlyBlockBreaking)) {
+            event.setNewSpeed(event.getOriginalSpeed() * 5.0F);
+        }
     }
 
     @SubscribeEvent

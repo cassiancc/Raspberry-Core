@@ -2,6 +2,8 @@ package cc.cassian.raspberry.registry;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.DeferredRegister;
@@ -19,9 +21,34 @@ public class RaspberryMobEffects {
             .addAttributeModifier(Attributes.ATTACK_SPEED, "CE4EFE3F-12D8-4C0A-AA36-5BA2BB9FFFF3", 0.1F, AttributeModifier.Operation.MULTIPLY_TOTAL)
     );
 
+    public static final RegistryObject<MobEffect> SATISFACTION = MOB_EFFECTS.register("satisfaction",
+            () -> new Satisfaction( MobEffectCategory.BENEFICIAL, 10076657)
+    );
+
+    public static final RegistryObject<MobEffect> COUGHING = MOB_EFFECTS.register("coughing",
+            () -> new Coughing(MobEffectCategory.HARMFUL, 10076657)
+    );
+
     private static class Aftershock extends MobEffect {
         public Aftershock(MobEffectCategory category, int color) {
             super(category, color);
+        }
+    }
+
+    private static class Satisfaction extends MobEffect {
+        public Satisfaction(MobEffectCategory category, int color) {
+            super(category, color);
+        }
+    }
+
+    private static class Coughing extends MobEffect {
+        public Coughing(MobEffectCategory category, int color) {
+            super(category, color);
+        }
+
+        @Override
+        public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
+            livingEntity.hurt(livingEntity.damageSources().generic(), amplifier+1);
         }
     }
 }

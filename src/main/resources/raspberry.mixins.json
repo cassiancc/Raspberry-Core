@@ -6,6 +6,7 @@
   "client": [
     "connectiblechains.ChainKnotEntityRendererMixin",
     "create.MechanicalCrafterMixin",
+    "echo_chest.EchoChestScreenMixin",
     "emi.RecipeScreenMixin",
     "etched.EtchedRecordItemMixin",
     "etched.StopListeningSoundMixin",
@@ -43,6 +44,7 @@
     "create.BlastingTypeMixin",
     "create.FanProcessingMixin",
     "create.MountedStorageMixin",
+    "echo_chest.EchoChestMenuMixin",
     "ecologics.CoconutSliceItemMixin",
     "ecologics.PenguinMixin",
     "emi.EmiRecipesMixin",
