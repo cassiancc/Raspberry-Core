@@ -53,6 +53,7 @@
     "farmersdelight.NetherStoveBlockMixin",
     "farmersdelight.RichSoilFarmlandBlockMixin",
     "farmersdelight.StoveBlockMixin",
+    "feature_recyler.FeatureRecyclerMixin",
     "jade.OverlayRendererMixin",
     "jade.RayTracingMixin",
     "map_atlases.MapCollectionMixin",
