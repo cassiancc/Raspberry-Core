@@ -332,6 +332,7 @@ dependencies {
     modImplementation("maven.modrinth:feature-recycler:${feature_recycler_version}")
     modImplementation("maven.modrinth:item-obliterator:${item_obliterator_version}")
     modImplementation("maven.modrinth:necronomicon:${necronomicon_version}")
+    modImplementation("maven.modrinth:sidekick:${sidekick_version}+${minecraft_version}-forge")
 
     // MixinSquared
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.2.0"))

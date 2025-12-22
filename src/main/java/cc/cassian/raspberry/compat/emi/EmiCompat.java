@@ -3,13 +3,19 @@ package cc.cassian.raspberry.compat.emi;
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.compat.ItemObliteratorCompat;
+import cc.cassian.raspberry.compat.SidekickCompat;
 import cc.cassian.raspberry.config.ModConfig;
+import cc.cassian.raspberry.networking.SetStackPacket;
+import cc.cassian.raspberry.networking.RaspberryNetworking;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
+import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import elocindev.item_obliterator.forge.utils.Utils;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.item.Items;
 
 @EmiEntrypoint
@@ -42,6 +48,19 @@ public class EmiCompat implements EmiPlugin {
         if (ModCompat.ITEM_OBLITERATOR) {
             emiRegistry.removeEmiStacks(emiStack -> ItemObliteratorCompat.shouldHide(emiStack.getItemStack()));
         }
+        emiRegistry.addDragDropHandler(CreativeModeInventoryScreen.class, EmiCompat::handleDragAndDrop);
+        emiRegistry.addDragDropHandler(InventoryScreen.class, EmiCompat::handleDragAndDrop);
+        if (ModCompat.SIDEKICK) {
+            SidekickCompat.addDragAndDrop(emiRegistry);
+        }
+    }
+
+    public static boolean handleDragAndDrop(AbstractContainerScreen<?> screen, EmiIngredient stack, int x, int y) {
+        if (screen.getMinecraft().player.hasPermissions(2)) {
+            RaspberryNetworking.sendToServer(new SetStackPacket(screen.getSlotUnderMouse().getContainerSlot(), stack.getEmiStacks().get(0).getItemStack()));
+            return true;
+        }
+        return false;
     }
 
 }

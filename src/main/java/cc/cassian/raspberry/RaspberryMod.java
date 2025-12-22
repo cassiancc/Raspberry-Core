@@ -6,6 +6,7 @@ import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.entity.SwapArrowEntity;
 import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
+import cc.cassian.raspberry.networking.RaspberryNetworking;
 import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
@@ -53,6 +54,7 @@ public final class RaspberryMod {
             eventBus.addListener(RaspberryCreativePlacements::set);
         }
         RaspberryParticleTypes.PARTICLE_TYPES.register(eventBus);
+        RaspberryNetworking.register();
         // Register event bus listeners.
         MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityInteract);

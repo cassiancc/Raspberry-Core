@@ -10,6 +10,7 @@
 - Setting in music and sounds menu to control jukebox fade distance.
 - Config option to disable Ecologics penguins dropping feathers.
 - New item tag to hide items from the creative menu.
+- Items dragged from EMI into the inventory now are added to the inventory (as long as the player is an operator).
 
 ### Changed
 - Removed leash backport in favor of Vanilla Backport's implementation.
