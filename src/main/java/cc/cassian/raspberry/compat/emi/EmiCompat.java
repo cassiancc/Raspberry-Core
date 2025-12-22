@@ -21,6 +21,9 @@ public class EmiCompat implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry emiRegistry) {
+        if (ModConfig.get().emi_tablets && ModCompat.CREATE && ModCompat.DOMESTICATION_INNOVATION && ModCompat.ENSORCELLATION && ModCompat.SUPPLEMENTARIES && ModCompat.ALLUREMENT) {
+            EmiSmithingRecipe.addEnchantments(emiRegistry);
+        }
         if (ModCompat.QUARK) {
             emiRegistry.addWorkstation(EmiCompat.ANVIL, EmiStack.of(Items.ANVIL));
             emiRegistry.addWorkstation(EmiCompat.ANVIL, EmiStack.of(Items.CHIPPED_ANVIL));

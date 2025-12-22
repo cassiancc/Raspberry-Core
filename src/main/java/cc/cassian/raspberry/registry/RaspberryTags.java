@@ -10,6 +10,8 @@ import static cc.cassian.raspberry.RaspberryMod.locate;
 
 public class RaspberryTags {
     public static final TagKey<Item> DISABLED = createItemTag("disabled");
+    public static final TagKey<Item> HIDDEN_FROM_CREATIVE_MENU = createItemTag("hidden_from_creative_menu");
+
     public static final TagKey<Item> BAIT = createItemTag("bait");
     public static final TagKey<Item> BAD_BAIT = createItemTag("bad_bait");
     public static final TagKey<Item> MID_BAIT = createItemTag("mid_bait");

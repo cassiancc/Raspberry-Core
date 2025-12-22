@@ -8,20 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.10.1] - 2025-12-18
 
-### Added
-- New config settings to:
-  - Hide enchantments
-  - Hide potion types
-  - Hide tooltips
-  - Change creative tab icons
-
 ### Fixed
 - Crash on dedicated server.
-- Music and sound settings being broken on 1.20.
-
-### Changed
-- Removed leash backport in favor of Vanilla Backport's implementation.
-- Temporarily removed the ability to leash fences.
 
 ## [1.10] - 2025-12-18
 

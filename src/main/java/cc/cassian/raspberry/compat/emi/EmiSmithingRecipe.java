@@ -1,7 +1,12 @@
 package cc.cassian.raspberry.compat.emi;
 
 import cc.cassian.raspberry.RaspberryMod;
+import cofh.ensorcellation.init.registries.ModEnchantments;
+import com.github.alexthe668.domesticationinnovation.server.enchantment.DIEnchantmentRegistry;
+import com.github.alexthe668.domesticationinnovation.server.item.DIItemRegistry;
 import com.simibubi.create.AllItems;
+import com.teamabnormals.allurement.core.registry.AllurementEnchantments;
+import de.cadentem.additional_enchantments.registry.AEEnchantments;
 import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipe;
@@ -11,14 +16,21 @@ import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
+import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.infernalstudios.miningmaster.init.MMEnchantments;
+import vectorwing.farmersdelight.common.registry.ModItems;
+import vectorwing.farmersdelight.common.tag.ForgeTags;
 
 import java.util.List;
 
@@ -27,7 +39,7 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
     public EmiSmithingRecipe(EmiIngredient input1, EmiStack input2, EmiStack output, ResourceLocation id) {
         super(input1, input2, output, id);
     }
-/*
+
     public static void addEnchantments(EmiRegistry emiRegistry) {
         final var EVERLASTING = get("everlasting");
         final var AQUATIC = get("aquatic");
@@ -76,12 +88,12 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
 
         // BEASTLY - CAVALIER
         addRecipe(emiRegistry,
-                getSword(), Tags.Items.TOOLS_SWORDS,
-                EnsorcEnchantments.CAVALIER.get(), BEASTLY,
+                getSword(), ItemTags.SWORDS,
+                ModEnchantments.CAVALIER.get(), BEASTLY,
                 "cavalier_sword");
         addRecipe(emiRegistry,
-                Items.DIAMOND_AXE, Tags.Items.TOOLS_AXES,
-                EnsorcEnchantments.CAVALIER.get(), BEASTLY,
+                Items.DIAMOND_AXE, ItemTags.AXES,
+                ModEnchantments.CAVALIER.get(), BEASTLY,
                 "cavalier_axe");
         // BEASTLY - MULTI-LEAP
         addRecipe(emiRegistry,
@@ -95,7 +107,7 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
 
         // CYCLIC - SWEEPING EDGE
         addRecipe(emiRegistry,
-                getSword(), Tags.Items.TOOLS_SWORDS,
+                getSword(), ItemTags.SWORDS,
                 Enchantments.SWEEPING_EDGE, CYCLIC,
                 "sweeping_edge");
         // CYCLIC - RIPTIDE
@@ -112,7 +124,7 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
         // ENDURING - VITALITY
         addRecipe(emiRegistry,
                 getArmour(), Tags.Items.ARMORS,
-                EnsorcEnchantments.VITALITY.get(), ENDURING,
+                ModEnchantments.VITALITY.get(), ENDURING,
                 "vitality");
         // ENDURING - HEALTH BOOST
         addRecipe(emiRegistry,
@@ -122,17 +134,17 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
 
         // FLINGING - LAUNCH
         addRecipe(emiRegistry,
-                getSword(), Tags.Items.TOOLS_SWORDS,
+                getSword(), ItemTags.SWORDS,
                 AllurementEnchantments.LAUNCH.get(), FLINGING,
                 "launch_sword");
         // FLINGING - VOLLEY
         addRecipe(emiRegistry,
                 Items.BOW, Tags.Items.TOOLS_BOWS,
-                EnsorcEnchantments.VOLLEY.get(), FLINGING,
+                ModEnchantments.VOLLEY.get(), FLINGING,
                 "volley_bow");
         addRecipe(emiRegistry,
                 Items.CROSSBOW, Tags.Items.TOOLS_CROSSBOWS,
-                EnsorcEnchantments.VOLLEY.get(), FLINGING,
+                ModEnchantments.VOLLEY.get(), FLINGING,
                 "volley_crossbow");
         // FLINGING - DEFLECTION
         addRecipe(emiRegistry,
@@ -156,11 +168,11 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
 
         // HALLOWED - SMITE
         addRecipe(emiRegistry,
-                getSword(), Tags.Items.TOOLS_SWORDS,
+                getSword(), ItemTags.SWORDS,
                 Enchantments.SMITE, HALLOWED,
                 "smite_sword");
         addRecipe(emiRegistry,
-                Items.DIAMOND_AXE, Tags.Items.TOOLS_AXES,
+                Items.DIAMOND_AXE, ItemTags.AXES,
                 Enchantments.SMITE, HALLOWED,
                 "smite_axe");
         // HALLOWED - CHANNELING
@@ -196,11 +208,11 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
 
         // HEAVY - GUARD BREAK
         addRecipe(emiRegistry,
-                getSword(), Tags.Items.TOOLS_SWORDS,
+                getSword(), ItemTags.SWORDS,
                 GUARD_BREAK, HEAVY,
                 "guard_break_sword");
         addRecipe(emiRegistry,
-                Items.DIAMOND_AXE, Tags.Items.TOOLS_AXES,
+                Items.DIAMOND_AXE, ItemTags.AXES,
                 GUARD_BREAK, HEAVY,
                 "guard_break_axe");
         // HEAVY - BRACEWALK
@@ -216,11 +228,11 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
 
         // INFESTED - BANE OF ARTHROPODS
         addRecipe(emiRegistry,
-                getSword(), Tags.Items.TOOLS_SWORDS,
+                getSword(), ItemTags.SWORDS,
                 Enchantments.BANE_OF_ARTHROPODS, INFESTED,
                 "bane_sword");
         addRecipe(emiRegistry,
-                Items.DIAMOND_AXE, Tags.Items.TOOLS_AXES,
+                Items.DIAMOND_AXE, ItemTags.AXES,
                 Enchantments.BANE_OF_ARTHROPODS, INFESTED,
                 "bane_axe");
         // INFESTED - SPREAD OF AILMENTS
@@ -245,7 +257,7 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
         // OTHERWORLDLY - DISPLACEMENT
         addRecipe(emiRegistry,
                 Items.DIAMOND_CHESTPLATE, Tags.Items.ARMORS_CHESTPLATES,
-                EnsorcEnchantments.DISPLACEMENT.get(), OTHERWORLDLY,
+                ModEnchantments.DISPLACEMENT.get(), OTHERWORLDLY,
                 "displacement");
         // OTHERWORLDLY - TETHERED TELEPORT
         addRecipe(emiRegistry,
@@ -256,11 +268,11 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
         // PIERCING - TRUESHOT
         addRecipe(emiRegistry,
                 Items.BOW, Tags.Items.TOOLS_BOWS,
-                EnsorcEnchantments.TRUESHOT.get(), PIERCING,
+                ModEnchantments.TRUESHOT.get(), PIERCING,
                 "trueshot_bow");
         addRecipe(emiRegistry,
                 Items.CROSSBOW, Tags.Items.TOOLS_CROSSBOWS,
-                EnsorcEnchantments.TRUESHOT.get(), PIERCING,
+                ModEnchantments.TRUESHOT.get(), PIERCING,
                 "trueshot_crossbow");
         // PIERCING - IMPALING
         addRecipe(emiRegistry,
@@ -276,13 +288,13 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
         // PULLING - REACH
         addRecipe(emiRegistry,
                 Items.DIAMOND_CHESTPLATE, Tags.Items.ARMORS_CHESTPLATES,
-                EnsorcEnchantments.REACH.get(), PULLING,
+                ModEnchantments.REACH.get(), PULLING,
                 "reach");
 
         // SILENT - BACKSTABBING
         addRecipe(emiRegistry,
                 ModItems.DIAMOND_KNIFE.get(), ForgeTags.TOOLS_KNIVES,
-                ModEnchantments.BACKSTABBING.get(), SILENT,
+                vectorwing.farmersdelight.common.registry.ModEnchantments.BACKSTABBING.get(), SILENT,
                 "backstabbing");
         // SILENT - SWIFT SNEAK
         addRecipe(emiRegistry,
@@ -297,25 +309,25 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
 
         // SWIFT - SWIFTSTRIKE
         addRecipe(emiRegistry,
-                getSword(), Tags.Items.TOOLS_SWORDS,
+                getSword(), ItemTags.SWORDS,
                 AEEnchantments.FASTER_ATTACKS.get(), SWIFT,
                 "swift_sword");
         addRecipe(emiRegistry,
-                Items.DIAMOND_AXE, Tags.Items.TOOLS_AXES,
+                Items.DIAMOND_AXE, ItemTags.AXES,
                 AEEnchantments.FASTER_ATTACKS.get(), SWIFT,
                 "swift_axe");
         // SWIFT - QUICK DRAW
         addRecipe(emiRegistry,
                 Items.BOW, Tags.Items.TOOLS_BOWS,
-                EnsorcEnchantments.QUICK_DRAW.get(), SWIFT,
+                ModEnchantments.QUICK_DRAW.get(), SWIFT,
                 "swift_bow");
         addRecipe(emiRegistry,
                 Items.CROSSBOW, Tags.Items.TOOLS_CROSSBOWS,
-                EnsorcEnchantments.QUICK_DRAW.get(), SWIFT,
+                ModEnchantments.QUICK_DRAW.get(), SWIFT,
                 "swift_crossbow");
 
     }
-*/
+
     private static Item getLeggings() {
         return Items.DIAMOND_LEGGINGS;
     }

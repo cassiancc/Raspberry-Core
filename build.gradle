@@ -309,6 +309,15 @@ dependencies {
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
     modImplementation("maven.modrinth:mmmmmmmmmmmm:zAahRq2q")
 
+    // EMI Compat for Enchantments
+    modRuntimeOnly("dev.latvian.mods:kubejs-forge:$kubejs_version")
+    modImplementation("maven.modrinth:ensorcellation:5.0.2")
+    modImplementation("curse.maven:allurement-438003:5228059")
+    modImplementation("maven.modrinth:mining-master:nS5d6tAJ")
+    modImplementation("maven.modrinth:additional-enchantments:VnTOPZ6k")
+    modCompileOnly("maven.modrinth:domestication-innovation:SGxCLghg")
+    modCompileOnly("maven.modrinth:citadel:oD1qDb1C")// dependency of domestication innovation
+
     // beacons
     modImplementation("curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version")
     modImplementation("curse.maven:cerbons-better-beacons-921066:$better_beacons_version")

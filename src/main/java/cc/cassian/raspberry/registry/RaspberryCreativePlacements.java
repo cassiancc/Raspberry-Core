@@ -31,13 +31,17 @@ public class RaspberryCreativePlacements {
                 ItemStack stack = entry.getKey();
                 boolean shouldRemove = false;
 
-                if (ModCompat.ITEM_OBLITERATOR) {
+                if (stack.is(RaspberryTags.HIDDEN_FROM_CREATIVE_MENU)) {
+                    shouldRemove = true;
+                }
+
+                if (!shouldRemove && ModCompat.ITEM_OBLITERATOR) {
                     if (ItemObliteratorCompat.shouldHide(stack)) {
                         shouldRemove = true;
                     }
                 }
 
-                if (stack.getItem() instanceof PotionItem || stack.getItem() instanceof SplashPotionItem ||
+                if (!shouldRemove && stack.getItem() instanceof PotionItem || stack.getItem() instanceof SplashPotionItem ||
                         stack.getItem() instanceof LingeringPotionItem || stack.getItem() instanceof TippedArrowItem) {
 
                     ResourceLocation potionId = BuiltInRegistries.POTION.getKey(PotionUtils.getPotion(stack));
