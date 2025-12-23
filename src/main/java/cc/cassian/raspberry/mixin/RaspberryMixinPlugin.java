@@ -28,6 +28,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("architects_palette", mixinClassName)){
             return false;
         }
+        if (checkMixin("autumnity", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("aquaculture", mixinClassName)){
             return false;
         }

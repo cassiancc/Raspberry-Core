@@ -264,7 +264,7 @@ dependencies {
     // Optional dependencies for mods with only mixin fixes
     modImplementation("curse.maven:aquaculture-60028:$aquaculture_version")
     modImplementation("curse.maven:copper-tuff-backport-fabric-950738:$copper_backport_version")
-//    modImplementation("curse.maven:copperized-567666:$copperized_version")
+    modCompileOnly("local:copperized:2.5+1.20.1")
     modImplementation("curse.maven:connectible-chains-forge-418514:$connectible_chains_version")
     modImplementation("software.bernie.geckolib:geckolib-forge-$geckolib_version")
     implementation("com.eliotlash.mclib:mclib:20")
