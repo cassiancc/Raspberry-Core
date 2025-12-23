@@ -69,6 +69,7 @@ public class ModConfig {
     public boolean ghastDragonFireball = false;
     public boolean leashFences = true; // TODO: reimplement harou's leashed fences
     public boolean disableBirchLeafTinting = true;
+    public boolean disableMapleLeafTinting = false;
     public boolean jadeRequiresScoping = true;
     public MusicFrequency musicFrequency = MusicFrequency.DEFAULT;
     public boolean showMusicToast = false;
@@ -84,7 +85,7 @@ public class ModConfig {
     public Map<String, String> creativeTabIcons = new HashMap<>();
     public boolean noTemplates = true;
 
-    public ModConfig() {
+	public ModConfig() {
         creativeTabIcons.put("minecraft:building_blocks", "minecraft:bricks");
         creativeTabIcons.put("minecraft:colored_blocks", "minecraft:cyan_wool");
         creativeTabIcons.put("minecraft:natural_blocks", "minecraft:grass_block");
