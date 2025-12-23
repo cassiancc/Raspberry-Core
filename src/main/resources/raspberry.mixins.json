@@ -82,6 +82,7 @@
     "minecraft.MinecartChestMixin",
     "minecraft.NoBannersMixin",
     "minecraft.NoTemplatesMixin",
+    "minecraft.PackCompatibilityMixin",
     "minecraft.PigMixin",
     "minecraft.RaiderMixin",
     "minecraft.ScreenMixin",

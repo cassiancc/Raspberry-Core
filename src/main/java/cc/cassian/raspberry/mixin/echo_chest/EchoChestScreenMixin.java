@@ -11,6 +11,7 @@ public class EchoChestScreenMixin {
     @Inject(
             method = {"render"},
             at = {@At(
+                    remap = false,
                     value = "INVOKE",
                     target = "Lfuzs/echochest/world/inventory/EchoChestMenu;getExperience()F"
             )},

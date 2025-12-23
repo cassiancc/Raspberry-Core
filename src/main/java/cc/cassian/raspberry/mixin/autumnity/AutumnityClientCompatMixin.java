@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Pseudo;
 @Pseudo
 @Mixin(AutumnityClientCompat.class)
 public class AutumnityClientCompatMixin {
-    @WrapMethod(method = "lambda$registerBlockColors$1")
+    @WrapMethod(method = "lambda$registerBlockColors$1", remap = false)
     private static int red(BlockState state, BlockAndTintGetter world, BlockPos pos, int tintIndex, Operation<Integer> original) {
         if (ModConfig.get().disableMapleLeafTinting) {
             return -1;
@@ -23,14 +23,14 @@ public class AutumnityClientCompatMixin {
         return original.call(state, world, pos, tintIndex);
 
     }
-    @WrapMethod(method = "lambda$registerBlockColors$2")
+    @WrapMethod(method = "lambda$registerBlockColors$2", remap = false)
     private static int orange(BlockState state, BlockAndTintGetter world, BlockPos pos, int tintIndex, Operation<Integer> original) {
         if (ModConfig.get().disableMapleLeafTinting) {
             return -1;
         }
         return original.call(state, world, pos, tintIndex);
     }
-    @WrapMethod(method = "lambda$registerBlockColors$3")
+    @WrapMethod(method = "lambda$registerBlockColors$3", remap = false)
     private static int yellow(BlockState state, BlockAndTintGetter world, BlockPos pos, int tintIndex, Operation<Integer> original) {
         if (ModConfig.get().disableMapleLeafTinting) {
             return -1;

@@ -278,7 +278,7 @@ dependencies {
     modImplementation("maven.modrinth:spelunkery:$spelunkery_version-forge")
     modImplementation("maven.modrinth:sullysmod:$sullys_version")
     modImplementation("maven.modrinth:twigs:$twigs_version")
-    modCompileOnly("curse.maven:dungeons-mobs-428883:$dungeons_mobs_version")
+    modCompileOnly("local:dungeons_mobs:$dungeons_mobs_version")
     modCompileOnly("curse.maven:dungeons-libraries-550941:$dungeons_libraries_version") // dependency of dungeons mobs
     modImplementation("curse.maven:enderman-overhaul-574409:$enderman_overhaul_version")
     modImplementation("curse.maven:resourceful-config-714059:$resourceful_config_version") // dependency of enderman overhaul

@@ -122,6 +122,7 @@ run/
 !libs/ecologics-forge-1.19.2-2.1.11.jar
 !libs/sage_brush-1.19.2-0.1.0-all.jar
 !libs/copperized-2.5+1.20.1.jar
+!libs/dungeons_mobs-1.20.1-4.0.8-beta-all.jar
 
 kubejs/
 .env
