@@ -1,0 +1,19 @@
+{
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "raspberry:pink_rose_bush"
+    }
+  ],
+  "processingTime": 50,
+  "results": [
+    {
+      "count": 4,
+      "item": "minecraft:pink_dye"
+    },
+    {
+      "chance": 0.1,
+      "item": "minecraft:magenta_dye"
+    }
+  ]
+}

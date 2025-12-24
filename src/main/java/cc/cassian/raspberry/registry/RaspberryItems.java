@@ -9,6 +9,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import vectorwing.farmersdelight.common.FoodValues;
 
 import java.util.function.Supplier;
 
@@ -32,7 +33,7 @@ public class RaspberryItems {
     public static Supplier<Item> SWAP_ARROW = registerItem("swap_arrow", () -> new SwapArrowItem(new Item.Properties()));
     public static Supplier<Item> CAT_FOOD = registerItem("cat_food", () -> new CatFoodItem(new Item.Properties().craftRemainder(Items.BOWL)));
     public static Supplier<Item> ATLAS = registerItem("atlas", () -> new AtlasItem(new Item.Properties()));
-    public static Supplier<Item> CHERRY_PIE = registerItem("cherry_pie", () -> new Item(new Item.Properties()));
+    public static Supplier<Item> CHERRY_PIE_SLICE = registerItem("cherry_pie_slice", () -> new Item(new Item.Properties().food(FoodValues.PIE_SLICE)));
 
     public static Supplier<Item> CHEERY_WILDFLOWER_GARLAND = registerItem("cheery_wildflower_garland", () -> new FlowerGarlandItem(RaspberryBlocks.CHEERY_WILDFLOWER_GARLAND.get(), new Item.Properties()));
     public static Supplier<Item> HOPEFUL_WILDFLOWER_GARLAND = registerItem("hopeful_wildflower_garland", () -> new FlowerGarlandItem(RaspberryBlocks.HOPEFUL_WILDFLOWER_GARLAND.get(), new Item.Properties()));

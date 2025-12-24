@@ -253,7 +253,7 @@ dependencies {
     // Farmer's Delight and its addons
     modImplementation("maven.modrinth:farmers-delight:$farmers_delight_version")
     modCompileOnly("curse.maven:brewin-and-chewin-637808:$brewin_and_chewin_version")
-    modCompileOnly("maven.modrinth:cultural-delights:$cultural_delights_version")
+    modImplementation("maven.modrinth:cultural-delights:$cultural_delights_version")
     modCompileOnly("maven.modrinth:my-nethers-delight:$nethers_delight_version")
 
     // Create, its dependencies, and its dependents

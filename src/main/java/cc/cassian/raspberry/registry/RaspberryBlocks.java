@@ -5,14 +5,11 @@ import cc.cassian.raspberry.blocks.*;
 import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
 import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.AshLayerBlock;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.PancakeBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.RakedGravelBlock;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -21,6 +18,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.violetmoon.quark.content.building.block.HedgeBlock;
+import org.violetmoon.zeta.module.ZetaModule;
+import vectorwing.farmersdelight.common.block.PieBlock;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 
@@ -195,6 +195,14 @@ public class RaspberryBlocks {
             () -> new DirectionalSlabBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)));
     public static BlockSupplier FINE_WOOD_WALL = registerBlock("fine_wood" + "_wall",
             () -> new FineWoodWall(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)));
+
+    // 1.20 blocks
+    public static BlockSupplier CHERRY_PIE = registerBlock("cherry_pie", () -> new PieBlock(BlockBehaviour.Properties.of(), RaspberryItems.CHERRY_PIE_SLICE));
+    public static BlockSupplier PINK_ROSE = registerBlock("pink_rose", () -> new FlowerBlock(()->MobEffects.WITHER, 1, BlockBehaviour.Properties.copy(Blocks.POPPY)));
+    public static Supplier<Block> POTTED_PINK_ROSE = registerBlockWithoutItem("potted_pink_rose", () -> new FlowerPotBlock(()-> (FlowerPotBlock) Blocks.FLOWER_POT, PINK_ROSE.getBlockSupplier(), BlockBehaviour.Properties.copy(Blocks.POPPY)));
+    public static BlockSupplier PINK_ROSE_BUSH = registerBlock("pink_rose_bush", () -> new TallFlowerBlock(BlockBehaviour.Properties.copy(Blocks.ROSE_BUSH)));
+    public static BlockSupplier WITHER_ROSE_BUSH = registerBlock("wither_rose_bush", () -> new WitherRoseBushBlock(BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE)));
+    public static BlockSupplier AVOCADO_HEDGE = registerBlock("avocado_hedge", () -> new HedgeBlock( "avocado_hedge", null, Blocks.JUNGLE_FENCE, com.baisylia.culturaldelights.block.ModBlocks.AVOCADO_LEAVES.get()));
 
     private static BlockBehaviour.Properties flowerBedProperties(boolean replaceable) {
         var material = BlockBehaviour.Properties.of();
