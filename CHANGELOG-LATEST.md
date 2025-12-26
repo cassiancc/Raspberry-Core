@@ -22,6 +22,6 @@
 - Vertical leashes now render properly.
 - Leads now connect to the front of boats.
 - Boat leash connections persist on world reload.
-- Crash on dedicated server.
 - Music and sound settings being broken on 1.20.
 - Tablet recipes now work on 1.20.
+- A spectator with Bracewalk no longer can break blocks. (Additional Enchantments)

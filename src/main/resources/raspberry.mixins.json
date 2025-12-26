@@ -19,6 +19,7 @@
     "spyglass_improvements.MinecraftMixin"
   ],
   "mixins": [
+    "additional_enchantments.BracewalkMixin",
     "aquaculture.AquaFishingBobberEntityMixin",
     "aquaculture.AquaFishingRodItemMixin",
     "aquaculture.BaitItemMixin",
