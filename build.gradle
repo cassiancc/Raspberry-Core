@@ -242,6 +242,7 @@ dependencies {
     modCompileOnly("maven.modrinth:endergetic:$endergetic_version")
     modImplementation("maven.modrinth:buzzier-bees:$buzzier_bees_version")
     modImplementation("maven.modrinth:autumnity:$autumnity_version")
+    modImplementation("maven.modrinth:atmospheric:$atmospheric_version")
 
     // Recipe viewers
     modImplementation("dev.emi:emi-forge:${emi_version}+$minecraft_version")

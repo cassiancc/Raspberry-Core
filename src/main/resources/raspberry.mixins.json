@@ -33,6 +33,8 @@
     "aquaculture.TackleBoxBlockEntityMixin",
     "aquaculture.TackleBoxContainerMixin",
     "architects_palette.TwistedTreeMixin",
+    "atmospheric.AloeVeraBlockMixin",
+    "atmospheric.TallAloeVeraBlockMixin",
     "blueprint.WoodPostBlockMixin",
     "brewinandchewin.KegBlockEntityMixin",
     "brewinandchewin.KegRecipeMixin",
