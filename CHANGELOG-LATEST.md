@@ -25,3 +25,4 @@
 - Music and sound settings being broken on 1.20.
 - Tablet recipes now work on 1.20.
 - A spectator with Bracewalk no longer can break blocks. (Additional Enchantments)
+- Aloe Vera blocks can now be harvested with modded shears. (Atmospheric)

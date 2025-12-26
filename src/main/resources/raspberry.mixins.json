@@ -28,6 +28,8 @@
     "aquaculture.TackleBoxContainerMixin",
     "architects_palette.TwistedTreeMixin",
     "autumnity.AutumnityClientCompatMixin",
+    "atmospheric.AloeVeraBlockMixin",
+    "atmospheric.TallAloeVeraBlockMixin",
     "caverns_and_chasms.BluntArrowMixin",
     "caverns_and_chasms.BowItemMixin",
     "caverns_and_chasms.BrazierBlockMixin",
