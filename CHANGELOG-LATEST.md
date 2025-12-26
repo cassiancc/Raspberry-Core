@@ -10,3 +10,4 @@
 - Vertical leashes now render properly.
 - Leads now connect to the front of boats.
 - Boat leash connections persist on world reload.
+- A spectator with Bracewalk no longer can break blocks. (Additional Enchantments)
