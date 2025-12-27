@@ -161,7 +161,7 @@ public class RecipeConfig {
                             return false;
                         }
                     };
-                    default -> r -> true;
+                    default -> throw new IllegalArgumentException("Unknown filter key: " + key);
                 };
                 combined = combined.and(check);
             }
