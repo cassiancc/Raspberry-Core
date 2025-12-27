@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -76,6 +77,7 @@ public final class RaspberryMod {
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
         MinecraftForge.EVENT_BUS.addListener(this::onAddReloadListener);
+        MinecraftForge.EVENT_BUS.addListener(this::onTagsUpdated);
 
         if (FMLEnvironment.dist.isClient()) {
             RaspberryModClient.init();
@@ -167,14 +169,16 @@ public final class RaspberryMod {
     }
 
     @SubscribeEvent
+    public void onTagsUpdated(TagsUpdatedEvent event) {
+        TagModifier.apply();
+    }
+
+    @SubscribeEvent
     public void onAddReloadListener(AddReloadListenerEvent event) {
         event.addListener(new PreparableReloadListener() {
             @Override
             public @NotNull CompletableFuture<Void> reload(@NotNull PreparationBarrier stage, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller preparationsProfiler, @NotNull ProfilerFiller reloadProfiler, @NotNull Executor backgroundExecutor, @NotNull Executor gameExecutor) {
-                return stage.wait(null).thenRunAsync(() -> {
-                    TagModifier.apply();
-                    RecipeModifier.apply(event.getServerResources().getRecipeManager());
-                }, gameExecutor);
+                return stage.wait(null).thenRunAsync(() -> RecipeModifier.apply(event.getServerResources().getRecipeManager()), gameExecutor);
             }
         });
     }

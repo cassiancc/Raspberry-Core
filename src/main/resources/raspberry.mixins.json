@@ -20,6 +20,7 @@
   ],
   "mixins": [
     "accessor.AbstractCookingRecipeAccessor",
+    "accessor.HolderSetNamedAccessor",
     "accessor.IngredientAccessor",
     "accessor.IngredientItemValueAccessor",
     "accessor.IngredientTagValueAccessor",
