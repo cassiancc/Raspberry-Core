@@ -7,12 +7,17 @@ import cc.cassian.raspberry.entity.SwapArrowEntity;
 import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
 import cc.cassian.raspberry.networking.RaspberryNetworking;
+import cc.cassian.raspberry.recipe.RecipeModifier;
 import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -27,8 +32,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import static cc.cassian.raspberry.registry.RaspberryBlocks.FOLIAGE_BLOCKS;
 
@@ -65,11 +74,12 @@ public final class RaspberryMod {
         eventBus.addListener(RaspberryMod::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
+        MinecraftForge.EVENT_BUS.addListener(this::onAddReloadListener);
+
         if (FMLEnvironment.dist.isClient()) {
             RaspberryModClient.init();
         }
-        if (ModCompat.BLUEPRINT)
-            RaspberryData.registerData();
+        if (ModCompat.BLUEPRINT) RaspberryData.registerData();
     }
 
     public static ResourceLocation locate(String id) {
@@ -82,8 +92,9 @@ public final class RaspberryMod {
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        if (ModCompat.NEAPOLITAN)
+        if (ModCompat.NEAPOLITAN) {
             NeapolitanCompat.boostAgility();
+        }
         if (ModCompat.QUARK) {
             QuarkCompat.register();
         }
@@ -99,8 +110,9 @@ public final class RaspberryMod {
 
     @SubscribeEvent
     public static void lightningTick(EntityStruckByLightningEvent event) {
-        if (!ModCompat.COFH_CORE && ModConfig.get().aftershock)
+        if (!ModCompat.COFH_CORE && ModConfig.get().aftershock) {
             AftershockEvent.electrify(event);
+        }
     }
 
     @SubscribeEvent
@@ -110,26 +122,30 @@ public final class RaspberryMod {
 
     @SubscribeEvent
     public void onItemTooltipEvent(ItemTooltipEvent event) {
-        if (ModCompat.AQUACULTURE)
+        if (ModCompat.AQUACULTURE) {
             AquacultureCompat.checkAndAddTooltip(event);
+        }
     }
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (ModCompat.ENVIRONMENTAL)
+        if (ModCompat.ENVIRONMENTAL) {
             EnvironmentalCompat.onEntityInteract(event);
+        }
     }
 
     @SubscribeEvent
     public void onEntityJoinLevel(EntityJoinLevelEvent event) {
-        if (ModCompat.ENVIRONMENTAL)
+        if (ModCompat.ENVIRONMENTAL) {
             EnvironmentalCompat.onEntityJoinWorld(event);
+        }
     }
 
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
-        if (ModCompat.ENVIRONMENTAL)
+        if (ModCompat.ENVIRONMENTAL) {
             EnvironmentalCompat.onLivingUpdate(event);
+        }
     }
 
     @SubscribeEvent
@@ -147,5 +163,15 @@ public final class RaspberryMod {
             // Copies the way Caverns and Chasms make Blunt Arrows deal no damage
             event.setAmount(0.0F);
         }
+    }
+
+    @SubscribeEvent
+    public void onAddReloadListener(AddReloadListenerEvent event) {
+        event.addListener(new PreparableReloadListener() {
+            @Override
+            public @NotNull CompletableFuture<Void> reload(@NotNull PreparationBarrier stage, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller preparationsProfiler, @NotNull ProfilerFiller reloadProfiler, @NotNull Executor backgroundExecutor, @NotNull Executor gameExecutor) {
+                return stage.wait(null).thenRunAsync(() -> RecipeModifier.apply(event.getServerResources().getRecipeManager()), gameExecutor);
+            }
+        });
     }
 }

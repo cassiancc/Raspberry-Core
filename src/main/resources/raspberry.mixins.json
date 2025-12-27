@@ -96,7 +96,6 @@
     "minecraft.PackCompatibilityMixin",
     "minecraft.PigMixin",
     "minecraft.RaiderMixin",
-    "minecraft.RecipeManagerMixin",
     "minecraft.ScreenMixin",
     "minecraft.SilenceServerMixin",
     "minecraft.SpreadingSnowyDirtBlockMixin",
