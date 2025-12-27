@@ -18,9 +18,7 @@ loom {
         mixinConfig 'raspberry.mixins.json'
     }
     mixin {
-        afterEvaluate {
-            defaultRefmapName = "raspberry.refmap.json"
-        }
+        defaultRefmapName = "raspberry.refmap.json"
     }
 }
 

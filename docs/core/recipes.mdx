@@ -1,0 +1,136 @@
+---
+title: Recipes
+hide_meta: true
+---
+
+# Raspberry Recipe Config
+
+This system allows you to remove or modify Minecraft recipes using a standalone JSON configuration file. It hooks directly into the `RecipeManager` reload event, applying changes after vanilla data packs are loaded.
+
+## Configuration File
+
+- **Location:** `config/raspberry-recipes.json`
+- **Generation:** The file is automatically generated with default examples the first time a world is loaded or a server is started.
+
+## JSON Structure
+
+The file follows a structure containing a list of modifications. Each modification object requires an `action` and a `filter`.
+
+```json
+{
+  "modifications": [
+    {
+      "action": "ACTION_NAME",
+      "filter": {
+        "FILTER_CRITERIA": "VALUE"
+      }
+    }
+  ]
+}
+
+```
+
+---
+
+## 1. Filtering Recipes
+
+The `filter` object determines which recipes are affected. A recipe must match all provided fields to be selected.
+
+### Basic Filters
+
+You can filter by simple strings, or use **arrays** to match multiple values (acting as an OR condition).
+
+| Field | Description | Example |
+| --- | --- | --- |
+| `output` | The registry name of the item produced. | `"minecraft:stone_pickaxe"` |
+| `id` | The specific ID of a recipe. | `"minecraft:black_bed_from_white_bed"` |
+| `mod` | The mod ID that owns the recipe. | `"farmersdelight"` or `["create", "mekanism"]` |
+| `type` | The recipe type. | `"minecraft:smoking"` |
+| `input` | Matches if the recipe contains this ingredient. | `"minecraft:stick"` or `"#minecraft:logs"` |
+
+### Advanced Filters (Regex & Logic)
+
+* **Regex:** Wrap strings in `/` to use Regular Expressions.
+*Example:* `"/minecraft:.*_log/"` matches all vanilla logs.
+* **Logic:** Use `not`, `or`, and `and` for complex conditions.
+
+**Example:** Remove all recipes that output Gold items, *except* those from Minecraft.
+
+```json
+{
+  "action": "remove",
+  "filter": {
+    "output": "/.*gold.*/",
+    "not": {
+        "mod": "minecraft"
+    }
+  }
+}
+
+```
+
+---
+
+## 2. Actions
+
+### Action: `remove`
+
+Completely removes the matching recipes from the game. You can use arrays to remove large batches of recipes at once.
+
+**Example:** Remove specific recipes by ID.
+
+```json
+{
+  "action": "remove",
+  "filter": {
+    "id": [
+      "minecraft:wooden_pickaxe",
+      "minecraft:wooden_hoe"
+    ]
+  }
+}
+
+```
+
+### Action: `replace_input`
+
+Scans ingredients and replaces a target with a new one.
+
+* **`target`**: The item ID (e.g., `minecraft:stick`) or tag (e.g., `#minecraft:logs`) to find.
+* **`replacement`**: The item or tag to use instead.
+    * **Single Item:** `"minecraft:bamboo"`
+    * **Compound (Array):** `["minecraft:bamboo", "minecraft:stick"]` (Accepts either item).
+
+
+**Example:** Replace Sticks with Bamboo OR Sticks.
+
+```json
+{
+  "action": "replace_input",
+  "target": "minecraft:stick",
+  "replacement": ["minecraft:bamboo", "minecraft:stick"],
+  "filter": {
+    "mod": "minecraft" 
+  }
+}
+
+```
+
+### Action: `replace_output`
+
+Changes the result of the matching recipes.
+
+* **`replacement`**: The new item ID for the output.
+
+**Example:** Make the Cake recipe craft a Golden Apple instead.
+
+```json
+{
+  "action": "replace_output",
+  "replacement": "minecraft:golden_apple",
+  "filter": {
+    "id": "minecraft:cake"
+  }
+}
+
+```

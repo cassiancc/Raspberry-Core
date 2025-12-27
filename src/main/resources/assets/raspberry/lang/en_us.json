@@ -103,6 +103,12 @@
   "config.raspberry.config.dungeons_mobs_revised_cobwebs": "Less buggy cobweb entities",
   "config.raspberry.config.ghastDragonFireball": "Change ghast projectile to dragon fireball",
   "config.raspberry.config.backportLeash": "Backport leash mechanics from the Chase the Skies drop",
+  "config.raspberry.config.foxes_noRabbitDrops": "Prevent Foxes from dropping Rabbit items",
+  "config.raspberry.config.noRabbitFootDrops": "Disable Rabbit Foot drops",
+  "config.raspberry.config.raspberry_beacon_interaction": "Enable Raspberry Beacon interaction",
+  "config.raspberry.config.leashFences": "Fence to Fence Leashing",
+  "config.raspberry.config.disableMapleLeafTinting": "Disable Maple Leaf tinting",
+  "config.raspberry.config.fastFlyBlockBreaking": "Fast Block Breaking while Flying",
 
  "config.raspberry.hidden": "Hide Features",
  "config.raspberry.config.hidden_enchantments": "Hidden Enchantments",
