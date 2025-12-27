@@ -10,15 +10,12 @@ import cc.cassian.raspberry.networking.RaspberryNetworking;
 import cc.cassian.raspberry.recipe.RecipeModifier;
 import cc.cassian.raspberry.recipe.TagModifier;
 import cc.cassian.raspberry.registry.*;
+import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.PreparableReloadListener;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -35,12 +32,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 import static cc.cassian.raspberry.registry.RaspberryBlocks.FOLIAGE_BLOCKS;
 
@@ -175,6 +168,10 @@ public final class RaspberryMod {
         var server = ServerLifecycleHooks.getCurrentServer();
         if (server != null) {
             RecipeModifier.apply(server.getRecipeManager());
+
+            server.getPlayerList().getPlayers().forEach(player ->
+                    player.connection.send(new ClientboundUpdateRecipesPacket(server.getRecipeManager().getRecipes()))
+            );
         }
     }
 
