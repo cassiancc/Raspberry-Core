@@ -1,6 +1,8 @@
 package cc.cassian.raspberry.recipe;
 
+import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.RaspberryMod;
+import cc.cassian.raspberry.compat.ItemObliteratorCompat;
 import cc.cassian.raspberry.config.RecipeConfig;
 import cc.cassian.raspberry.mixin.accessor.*;
 import com.google.gson.JsonArray;
@@ -25,9 +27,10 @@ public class RecipeModifier {
         errorCount = 0;
 
         JsonObject config = RecipeConfig.load();
-        if (!config.has("modifications")) return;
+        boolean hasModifications = config.has("modifications");
 
-        JsonArray modifications = config.getAsJsonArray("modifications");
+        if (!hasModifications && !ModCompat.ITEM_OBLITERATOR) return;
+
         List<Recipe<?>> recipesToRemove = new ArrayList<>();
 
         RecipeManagerAccessor managerAccessor = (RecipeManagerAccessor) manager;
@@ -35,59 +38,76 @@ public class RecipeModifier {
         Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipesByType = new HashMap<>(managerAccessor.getRecipes());
         Map<ResourceLocation, Recipe<?>> recipesByName = new HashMap<>(managerAccessor.getByName());
 
-        for (JsonElement element : modifications) {
-            if (!element.isJsonObject()) continue;
-            JsonObject mod = element.getAsJsonObject();
-            String action = mod.get("action").getAsString();
-            JsonObject filter = mod.getAsJsonObject("filter");
+        if (hasModifications) {
+            JsonArray modifications = config.getAsJsonArray("modifications");
 
-            try {
-                switch (action) {
-                    case "remove" -> {
-                        for (Recipe<?> recipe : recipesByName.values()) {
-                            if (matchesFilter(recipe, filter)) {
-                                recipesToRemove.add(recipe);
+            for (JsonElement element : modifications) {
+                if (!element.isJsonObject()) continue;
+                JsonObject mod = element.getAsJsonObject();
+                String action = mod.get("action").getAsString();
+                JsonObject filter = mod.getAsJsonObject("filter");
+
+                try {
+                    switch (action) {
+                        case "remove" -> {
+                            for (Recipe<?> recipe : recipesByName.values()) {
+                                if (matchesFilter(recipe, filter)) {
+                                    recipesToRemove.add(recipe);
+                                }
+                            }
+                        }
+                        case "replace_input" -> {
+                            Ingredient targetIngredient = parseIngredient(mod.get("target"));
+                            Ingredient newIngredient = parseIngredient(mod.get("replacement"));
+
+                            if (isEmptyOrInvalid(targetIngredient) || isEmptyOrInvalid(newIngredient)) continue;
+
+                            for (Recipe<?> recipe : recipesByName.values()) {
+                                if (matchesFilter(recipe, filter)) {
+                                    replaceInputInRecipe(recipe, targetIngredient, newIngredient);
+                                }
+                            }
+                        }
+                        case "replace_output" -> {
+                            String replacement = mod.get("replacement").getAsString();
+                            ResourceLocation id = tryParseId(replacement);
+                            if (id == null) {
+                                errorCount++;
+                                continue;
+                            }
+
+                            Item item = ForgeRegistries.ITEMS.getValue(id);
+                            if (item == null || item == Items.AIR) {
+                                RaspberryMod.LOGGER.warn("Skipping replace_output for unknown item: {}", replacement);
+                                continue;
+                            }
+
+                            ItemStack newResult = new ItemStack(item);
+
+                            for (Recipe<?> recipe : recipesByName.values()) {
+                                if (matchesFilter(recipe, filter)) {
+                                    replaceOutputInRecipe(recipe, newResult);
+                                }
                             }
                         }
                     }
-                    case "replace_input" -> {
-                        Ingredient targetIngredient = parseIngredient(mod.get("target"));
-                        Ingredient newIngredient = parseIngredient(mod.get("replacement"));
-
-                        if (isEmptyOrInvalid(targetIngredient) || isEmptyOrInvalid(newIngredient)) continue;
-
-                        for (Recipe<?> recipe : recipesByName.values()) {
-                            if (matchesFilter(recipe, filter)) {
-                                replaceInputInRecipe(recipe, targetIngredient, newIngredient);
-                            }
-                        }
-                    }
-                    case "replace_output" -> {
-                        String replacement = mod.get("replacement").getAsString();
-                        ResourceLocation id = tryParseId(replacement);
-                        if (id == null) {
-                            errorCount++;
-                            continue;
-                        }
-
-                        Item item = ForgeRegistries.ITEMS.getValue(id);
-                        if (item == null || item == Items.AIR) {
-                            RaspberryMod.LOGGER.warn("Skipping replace_output for unknown item: {}", replacement);
-                            continue;
-                        }
-
-                        ItemStack newResult = new ItemStack(item);
-
-                        for (Recipe<?> recipe : recipesByName.values()) {
-                            if (matchesFilter(recipe, filter)) {
-                                replaceOutputInRecipe(recipe, newResult);
-                            }
-                        }
-                    }
+                } catch (Exception e) {
+                    errorCount++;
+                    RaspberryMod.LOGGER.error("Error processing modification entry: {}", mod, e);
                 }
-            } catch (Exception e) {
-                errorCount++;
-                RaspberryMod.LOGGER.error("Error processing modification entry: {}", mod, e);
+            }
+        }
+
+        if (ModCompat.ITEM_OBLITERATOR) {
+            for (Recipe<?> recipe : recipesByName.values()) {
+                try {
+                    ItemStack result = recipe.getResultItem(RegistryAccess.EMPTY);
+                    if (!result.isEmpty() && ItemObliteratorCompat.shouldHide(result)) {
+                        recipesToRemove.add(recipe);
+                    }
+                } catch (Exception ignored) {
+                    // Ignore recipes that fail to provide a result item safely
+                }
             }
         }
 
