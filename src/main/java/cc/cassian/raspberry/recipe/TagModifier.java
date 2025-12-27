@@ -86,6 +86,7 @@ public class TagModifier {
                             var vanillaTag = vanillaRegistry.getTag(key).orElse(null);
 
                             if (vanillaTag != null && vanillaTag.size() > 0) {
+                                RaspberryMod.LOGGER.info("TagModifier: Clearing tag '{}' (contained {} items)", tagId, vanillaTag.size());
                                 removalCount += vanillaTag.size();
                                 clearTag(vanillaTag);
                             }

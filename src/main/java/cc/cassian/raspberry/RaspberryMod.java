@@ -34,6 +34,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +77,6 @@ public final class RaspberryMod {
         eventBus.addListener(RaspberryMod::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
-        MinecraftForge.EVENT_BUS.addListener(this::onAddReloadListener);
         MinecraftForge.EVENT_BUS.addListener(this::onTagsUpdated);
 
         if (FMLEnvironment.dist.isClient()) {
@@ -171,15 +171,11 @@ public final class RaspberryMod {
     @SubscribeEvent
     public void onTagsUpdated(TagsUpdatedEvent event) {
         TagModifier.apply();
+
+        var server = ServerLifecycleHooks.getCurrentServer();
+        if (server != null) {
+            RecipeModifier.apply(server.getRecipeManager());
+        }
     }
 
-    @SubscribeEvent
-    public void onAddReloadListener(AddReloadListenerEvent event) {
-        event.addListener(new PreparableReloadListener() {
-            @Override
-            public @NotNull CompletableFuture<Void> reload(@NotNull PreparationBarrier stage, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller preparationsProfiler, @NotNull ProfilerFiller reloadProfiler, @NotNull Executor backgroundExecutor, @NotNull Executor gameExecutor) {
-                return stage.wait(null).thenRunAsync(() -> RecipeModifier.apply(event.getServerResources().getRecipeManager()), gameExecutor);
-            }
-        });
-    }
 }

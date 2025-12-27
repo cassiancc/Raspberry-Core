@@ -35,15 +35,14 @@ public class RecipeConfig {
 
         if (config == null || !config.has("modifications")) return rules;
 
-        JsonArray modifications = config.getAsJsonArray("modifications");
-
-        for (JsonElement element : modifications) {
+        for (JsonElement element : config.getAsJsonArray("modifications")) {
             try {
                 if (!element.isJsonObject()) continue;
                 JsonObject mod = element.getAsJsonObject();
-                rules.add(parseRule(mod));
+                RecipeRule rule = parseRule(mod);
+                if (rule != null) rules.add(rule);
             } catch (Exception e) {
-                RaspberryMod.LOGGER.error("Failed to parse recipe rule: {}", element);
+                RaspberryMod.LOGGER.error("Failed to parse recipe rule: {}", element, e);
             }
         }
         return rules;
@@ -55,15 +54,13 @@ public class RecipeConfig {
 
         if (config == null || !config.has("tag_modifications")) return rules;
 
-        JsonArray modifications = config.getAsJsonArray("tag_modifications");
-
-        for (JsonElement element : modifications) {
+        for (JsonElement element : config.getAsJsonArray("tag_modifications")) {
             try {
                 if (!element.isJsonObject()) continue;
                 JsonObject mod = element.getAsJsonObject();
                 rules.add(parseTagRule(mod));
             } catch (Exception e) {
-                RaspberryMod.LOGGER.error("Failed to parse tag rule: {}", element);
+                RaspberryMod.LOGGER.error("Failed to parse tag rule: {}", element, e);
             }
         }
         return rules;
@@ -85,7 +82,10 @@ public class RecipeConfig {
             case "replace_output" -> {
                 String idStr = mod.get("replacement").getAsString();
                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(idStr));
-                if (item == null || item == Items.AIR) throw new IllegalArgumentException("Invalid replacement item: " + idStr);
+                if (item == null || item == Items.AIR) {
+                    RaspberryMod.LOGGER.warn("Skipping rule: Invalid replacement item '{}'.", idStr);
+                    yield null;
+                }
                 yield new RecipeRule(RecipeRule.Action.REPLACE_OUTPUT, filter, new ItemStack(item));
             }
             default -> throw new IllegalArgumentException("Unknown action: " + actionStr);
@@ -97,51 +97,22 @@ public class RecipeConfig {
 
         List<ResourceLocation> items = new ArrayList<>();
         if (mod.has("items")) {
-            JsonElement itemsEl = mod.get("items");
-            if (itemsEl.isJsonArray()) {
-                itemsEl.getAsJsonArray().forEach(e -> {
-                    try {
-                        items.add(new ResourceLocation(e.getAsString()));
-                    } catch (Exception ex) {
-                        RaspberryMod.LOGGER.warn("Skipping invalid item ID in tag rule: {}", e.getAsString());
-                    }
-                });
-            } else {
-                try {
-                    items.add(new ResourceLocation(itemsEl.getAsString()));
-                } catch (Exception ex) {
-                    RaspberryMod.LOGGER.warn("Skipping invalid item ID in tag rule: {}", itemsEl.getAsString());
-                }
-            }
+            JsonElement el = mod.get("items");
+            if (el.isJsonArray()) el.getAsJsonArray().forEach(e -> items.add(new ResourceLocation(e.getAsString())));
+            else items.add(new ResourceLocation(el.getAsString()));
         }
 
         List<ResourceLocation> tags = new ArrayList<>();
         if (mod.has("tags")) {
-            mod.get("tags").getAsJsonArray().forEach(e -> {
-                try {
-                    tags.add(new ResourceLocation(e.getAsString()));
-                } catch (Exception ex) {
-                    RaspberryMod.LOGGER.warn("Skipping invalid tag ID in tag rule: {}", e.getAsString());
-                }
-            });
+            mod.get("tags").getAsJsonArray().forEach(e -> tags.add(new ResourceLocation(e.getAsString())));
         } else if (mod.has("tag")) {
-            try {
-                tags.add(new ResourceLocation(mod.get("tag").getAsString()));
-            } catch (Exception ex) {
-                RaspberryMod.LOGGER.warn("Skipping invalid tag ID in tag rule: {}", mod.get("tag").getAsString());
-            }
+            tags.add(new ResourceLocation(mod.get("tag").getAsString()));
         }
 
         return switch (actionStr) {
             case "remove_all_tags" -> new TagRule(TagRule.Action.REMOVE_ALL_TAGS, items, null);
-            case "remove_from_tag" -> {
-                if (tags.isEmpty()) throw new IllegalArgumentException("Missing valid tag(s) for remove_from_tag action");
-                yield new TagRule(TagRule.Action.REMOVE_FROM_TAG, items, tags);
-            }
-            case "clear_tag" -> {
-                if (tags.isEmpty()) throw new IllegalArgumentException("Missing valid tag(s) for clear_tag action");
-                yield new TagRule(TagRule.Action.CLEAR_TAG, null, tags);
-            }
+            case "remove_from_tag" -> new TagRule(TagRule.Action.REMOVE_FROM_TAG, items, tags);
+            case "clear_tag" -> new TagRule(TagRule.Action.CLEAR_TAG, null, tags);
             default -> throw new IllegalArgumentException("Unknown tag action: " + actionStr);
         };
     }
@@ -151,13 +122,11 @@ public class RecipeConfig {
             JsonObject obj = json.getAsJsonObject();
 
             if (obj.has("not")) return parseFilter(obj.get("not")).negate();
-
             if (obj.has("or")) {
                 Predicate<Recipe<?>> p = r -> false;
                 for (JsonElement e : obj.getAsJsonArray("or")) p = p.or(parseFilter(e));
                 return p;
             }
-
             if (obj.has("and")) {
                 Predicate<Recipe<?>> p = r -> true;
                 for (JsonElement e : obj.getAsJsonArray("and")) p = p.and(parseFilter(e));
@@ -168,29 +137,37 @@ public class RecipeConfig {
             for (String key : obj.keySet()) {
                 JsonElement criterion = obj.get(key);
                 Predicate<Recipe<?>> check = switch (key) {
-                    case "type" -> r -> getStringMatcher(criterion).test(r.getType().toString());
-                    case "mod" -> r -> getStringMatcher(criterion).test(r.getId().getNamespace());
-                    case "id" -> r -> getStringMatcher(criterion).test(r.getId().toString());
-                    case "input" -> r -> {
+                    case "type" -> {
+                        Predicate<String> m = getStringMatcher(criterion);
+                        yield r -> m.test(r.getType().toString());
+                    }
+                    case "mod" -> {
+                        Predicate<String> m = getStringMatcher(criterion);
+                        yield r -> m.test(r.getId().getNamespace());
+                    }
+                    case "id" -> {
+                        Predicate<String> m = getStringMatcher(criterion);
+                        yield r -> m.test(r.getId().toString());
+                    }
+                    case "input" -> {
                         Predicate<String> matcher = getStringMatcher(criterion);
-                        return r.getIngredients().stream().anyMatch(ing -> {
+                        yield r -> r.getIngredients().stream().anyMatch(ing -> {
                             for (ItemStack stack : ing.getItems()) {
                                 ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
                                 if (id != null && matcher.test(id.toString())) return true;
                             }
                             return false;
                         });
-                    };
-                    case "output" -> r -> {
-                        try {
+                    }
+                    case "output" -> {
+                        Predicate<String> m = getStringMatcher(criterion);
+                        yield r -> {
                             ItemStack out = r.getResultItem(RegistryAccess.EMPTY);
                             if (out.isEmpty()) return false;
                             ResourceLocation id = ForgeRegistries.ITEMS.getKey(out.getItem());
-                            return id != null && getStringMatcher(criterion).test(id.toString());
-                        } catch (Exception e) {
-                            return false;
-                        }
-                    };
+                            return id != null && m.test(id.toString());
+                        };
+                    }
                     default -> throw new IllegalArgumentException("Unknown filter key: " + key);
                 };
                 combined = combined.and(check);
@@ -231,8 +208,6 @@ public class RecipeConfig {
 
     private static void createDefault() {
         JsonObject root = new JsonObject();
-
-        // Recipe Modifications
         JsonArray modifications = new JsonArray();
         JsonObject removeExample = new JsonObject();
         removeExample.addProperty("action", "remove");
@@ -242,7 +217,6 @@ public class RecipeConfig {
         modifications.add(removeExample);
         root.add("modifications", modifications);
 
-        // Tag Modifications
         JsonArray tagModifications = new JsonArray();
         JsonObject tagRemoveExample = new JsonObject();
         tagRemoveExample.addProperty("action", "remove_all_tags");
@@ -263,21 +237,11 @@ public class RecipeConfig {
         if (json == null) return Ingredient.EMPTY;
         if (json.isJsonArray()) {
             List<Ingredient> list = new ArrayList<>();
-            json.getAsJsonArray().forEach(e -> {
-                try {
-                    list.add(parseIngredientString(e.getAsString()));
-                } catch (Exception ex) {
-                    RaspberryMod.LOGGER.warn("Skipping invalid ingredient: {}", e.getAsString());
-                }
-            });
+            json.getAsJsonArray().forEach(e -> list.add(parseIngredientString(e.getAsString())));
             return Ingredient.merge(list);
         }
-        try {
-            return parseIngredientString(json.getAsString());
-        } catch (Exception e) {
-            RaspberryMod.LOGGER.warn("Skipping invalid ingredient: {}", json.getAsString());
-            return Ingredient.EMPTY;
-        }
+
+        return parseIngredientString(json.getAsString());
     }
 
     private static Ingredient parseIngredientString(String str) {
