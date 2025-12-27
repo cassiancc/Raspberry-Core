@@ -5,7 +5,8 @@ hide_meta: true
 
 # Raspberry Recipe Config
 
-This system allows you to remove or modify Minecraft recipes using a standalone JSON configuration file. It hooks directly into the `RecipeManager` reload event, applying changes after vanilla data packs are loaded.
+This system allows you to remove or modify Minecraft recipes using a standalone JSON configuration file.
+It hooks directly into the `RecipeManager` reload event, applying changes after vanilla data packs are loaded.
 
 ## Configuration File
 
@@ -14,18 +15,12 @@ This system allows you to remove or modify Minecraft recipes using a standalone 
 
 ## JSON Structure
 
-The file follows a structure containing a list of modifications. Each modification object requires an `action` and a `filter`.
+The file contains two main sections: `modifications` for recipes and `tag_modifications` for item tags.
 
 ```json
 {
-  "modifications": [
-    {
-      "action": "ACTION_NAME",
-      "filter": {
-        "FILTER_CRITERIA": "VALUE"
-      }
-    }
-  ]
+  "modifications": [ ... ],
+  "tag_modifications": [ ... ]
 }
 
 ```
@@ -34,7 +29,8 @@ The file follows a structure containing a list of modifications. Each modificati
 
 ## 1. Filtering Recipes
 
-The `filter` object determines which recipes are affected. A recipe must match all provided fields to be selected.
+The `filter` object determines which recipes are affected.
+A recipe must match all provided fields to be selected.
 
 ### Basic Filters
 
@@ -71,11 +67,12 @@ You can filter by simple strings, or use **arrays** to match multiple values (ac
 
 ---
 
-## 2. Actions
+## 2. Recipe Actions
 
 ### Action: `remove`
 
-Completely removes the matching recipes from the game. You can use arrays to remove large batches of recipes at once.
+Completely removes the matching recipes from the game.
+You can use arrays to remove large batches of recipes at once.
 
 **Example:** Remove specific recipes by ID.
 
@@ -98,8 +95,9 @@ Scans ingredients and replaces a target with a new one.
 
 * **`target`**: The item ID (e.g., `minecraft:stick`) or tag (e.g., `#minecraft:logs`) to find.
 * **`replacement`**: The item or tag to use instead.
-    * **Single Item:** `"minecraft:bamboo"`
-    * **Compound (Array):** `["minecraft:bamboo", "minecraft:stick"]` (Accepts either item).
+* **Single Item:** `"minecraft:bamboo"`
+* **Compound (Array):** `["minecraft:bamboo", "minecraft:stick"]` (Accepts either item).
+
 
 
 **Example:** Replace Sticks with Bamboo OR Sticks.
@@ -131,6 +129,70 @@ Changes the result of the matching recipes.
   "filter": {
     "id": "minecraft:cake"
   }
+}
+
+```
+
+---
+
+## 3. Tag Modifications
+
+The `tag_modifications` section allows you to strip tags from items. This is useful for cleaning up recipe viewers (JEI/EMI) or removing unobtainable items from tag groups.
+
+### Action: `remove_all_tags`
+
+Removes **all** tags from the specified items. This effectively orphans the item from tag-based recipe lookups.
+
+* **`items`**: A single item ID string or an array of item IDs.
+
+**Example:** Remove all tags from specific items.
+
+```json
+{
+  "action": "remove_all_tags",
+  "items": [
+    "minecraft:stick",
+    "minecraft:cake"
+  ]
+}
+
+```
+
+### Action: `remove_from_tag`
+
+Removes items from a **specific** tag, while leaving them in other tags.
+
+* **`tag`**: The tag ID to modify (e.g., `minecraft:planks`).
+* **`items`**: The item(s) to remove from that tag.
+
+**Example:** Remove Oak Planks from the generic planks tag.
+
+```json
+{
+  "action": "remove_from_tag",
+  "tag": "minecraft:planks",
+  "items": "minecraft:oak_planks"
+}
+
+```
+
+### Action: `clear_tag`
+
+The `clear_tag` action allows you to completely empty a tag of all its associated items.
+This is useful for clearing out mod-added tags that you want to disable entirely or rebuild from scratch.
+
+* **`tags`**: A single tag ID string or an array of tag IDs to be cleared.
+
+**Example:** Clear all items from specific modded tags.
+
+```json
+{
+  "action": "clear_tag",
+  "tags": [
+    "createaddition:plant_foods",
+    "caverns_and_chasms:experience_boost_items",
+    "curios:artifact"
+  ]
 }
 
 ```

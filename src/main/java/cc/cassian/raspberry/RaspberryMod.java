@@ -8,6 +8,7 @@ import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
 import cc.cassian.raspberry.networking.RaspberryNetworking;
 import cc.cassian.raspberry.recipe.RecipeModifier;
+import cc.cassian.raspberry.recipe.TagModifier;
 import cc.cassian.raspberry.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
@@ -170,7 +171,10 @@ public final class RaspberryMod {
         event.addListener(new PreparableReloadListener() {
             @Override
             public @NotNull CompletableFuture<Void> reload(@NotNull PreparationBarrier stage, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller preparationsProfiler, @NotNull ProfilerFiller reloadProfiler, @NotNull Executor backgroundExecutor, @NotNull Executor gameExecutor) {
-                return stage.wait(null).thenRunAsync(() -> RecipeModifier.apply(event.getServerResources().getRecipeManager()), gameExecutor);
+                return stage.wait(null).thenRunAsync(() -> {
+                    TagModifier.apply();
+                    RecipeModifier.apply(event.getServerResources().getRecipeManager());
+                }, gameExecutor);
             }
         });
     }

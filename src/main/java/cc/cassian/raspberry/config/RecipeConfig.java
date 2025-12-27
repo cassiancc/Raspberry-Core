@@ -2,6 +2,7 @@ package cc.cassian.raspberry.config;
 
 import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.recipe.RecipeRule;
+import cc.cassian.raspberry.recipe.TagRule;
 import com.google.gson.*;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -48,6 +49,26 @@ public class RecipeConfig {
         return rules;
     }
 
+    public static List<TagRule> loadTagRules() {
+        List<TagRule> rules = new ArrayList<>();
+        JsonObject config = loadJson();
+
+        if (config == null || !config.has("tag_modifications")) return rules;
+
+        JsonArray modifications = config.getAsJsonArray("tag_modifications");
+
+        for (JsonElement element : modifications) {
+            try {
+                if (!element.isJsonObject()) continue;
+                JsonObject mod = element.getAsJsonObject();
+                rules.add(parseTagRule(mod));
+            } catch (Exception e) {
+                RaspberryMod.LOGGER.error("Failed to parse tag rule: {}", element);
+            }
+        }
+        return rules;
+    }
+
     private static RecipeRule parseRule(JsonObject mod) {
         String actionStr = mod.has("action") ? mod.get("action").getAsString() : "unknown";
         if (!mod.has("filter")) throw new IllegalArgumentException("Missing filter");
@@ -68,6 +89,40 @@ public class RecipeConfig {
                 yield new RecipeRule(RecipeRule.Action.REPLACE_OUTPUT, filter, new ItemStack(item));
             }
             default -> throw new IllegalArgumentException("Unknown action: " + actionStr);
+        };
+    }
+
+    private static TagRule parseTagRule(JsonObject mod) {
+        String actionStr = mod.has("action") ? mod.get("action").getAsString() : "unknown";
+
+        List<ResourceLocation> items = new ArrayList<>();
+        if (mod.has("items")) {
+            JsonElement itemsEl = mod.get("items");
+            if (itemsEl.isJsonArray()) {
+                itemsEl.getAsJsonArray().forEach(e -> items.add(new ResourceLocation(e.getAsString())));
+            } else {
+                items.add(new ResourceLocation(itemsEl.getAsString()));
+            }
+        }
+
+        List<ResourceLocation> tags = new ArrayList<>();
+        if (mod.has("tags")) {
+            mod.get("tags").getAsJsonArray().forEach(e -> tags.add(new ResourceLocation(e.getAsString())));
+        } else if (mod.has("tag")) {
+            tags.add(new ResourceLocation(mod.get("tag").getAsString()));
+        }
+
+        return switch (actionStr) {
+            case "remove_all_tags" -> new TagRule(TagRule.Action.REMOVE_ALL_TAGS, items, null);
+            case "remove_from_tag" -> {
+                if (tags.isEmpty()) throw new IllegalArgumentException("Missing tag(s) for remove_from_tag action");
+                yield new TagRule(TagRule.Action.REMOVE_FROM_TAG, items, tags);
+            }
+            case "clear_tag" -> {
+                if (tags.isEmpty()) throw new IllegalArgumentException("Missing tag(s) for clear_tag action");
+                yield new TagRule(TagRule.Action.CLEAR_TAG, null, tags);
+            }
+            default -> throw new IllegalArgumentException("Unknown tag action: " + actionStr);
         };
     }
 
@@ -141,6 +196,8 @@ public class RecipeConfig {
 
     private static void createDefault() {
         JsonObject root = new JsonObject();
+
+        // Recipe Modifications
         JsonArray modifications = new JsonArray();
         JsonObject removeExample = new JsonObject();
         removeExample.addProperty("action", "remove");
@@ -149,6 +206,16 @@ public class RecipeConfig {
         removeExample.add("filter", filter);
         modifications.add(removeExample);
         root.add("modifications", modifications);
+
+        // Tag Modifications
+        JsonArray tagModifications = new JsonArray();
+        JsonObject tagRemoveExample = new JsonObject();
+        tagRemoveExample.addProperty("action", "remove_all_tags");
+        JsonArray items = new JsonArray();
+        items.add("minecraft:wooden_hoe");
+        tagRemoveExample.add("items", items);
+        tagModifications.add(tagRemoveExample);
+        root.add("tag_modifications", tagModifications);
 
         try (FileWriter writer = new FileWriter(CONFIG_PATH.toFile())) {
             GSON.toJson(root, writer);
