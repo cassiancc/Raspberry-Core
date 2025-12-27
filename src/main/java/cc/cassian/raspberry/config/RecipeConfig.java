@@ -99,27 +99,47 @@ public class RecipeConfig {
         if (mod.has("items")) {
             JsonElement itemsEl = mod.get("items");
             if (itemsEl.isJsonArray()) {
-                itemsEl.getAsJsonArray().forEach(e -> items.add(new ResourceLocation(e.getAsString())));
+                itemsEl.getAsJsonArray().forEach(e -> {
+                    try {
+                        items.add(new ResourceLocation(e.getAsString()));
+                    } catch (Exception ex) {
+                        RaspberryMod.LOGGER.warn("Skipping invalid item ID in tag rule: {}", e.getAsString());
+                    }
+                });
             } else {
-                items.add(new ResourceLocation(itemsEl.getAsString()));
+                try {
+                    items.add(new ResourceLocation(itemsEl.getAsString()));
+                } catch (Exception ex) {
+                    RaspberryMod.LOGGER.warn("Skipping invalid item ID in tag rule: {}", itemsEl.getAsString());
+                }
             }
         }
 
         List<ResourceLocation> tags = new ArrayList<>();
         if (mod.has("tags")) {
-            mod.get("tags").getAsJsonArray().forEach(e -> tags.add(new ResourceLocation(e.getAsString())));
+            mod.get("tags").getAsJsonArray().forEach(e -> {
+                try {
+                    tags.add(new ResourceLocation(e.getAsString()));
+                } catch (Exception ex) {
+                    RaspberryMod.LOGGER.warn("Skipping invalid tag ID in tag rule: {}", e.getAsString());
+                }
+            });
         } else if (mod.has("tag")) {
-            tags.add(new ResourceLocation(mod.get("tag").getAsString()));
+            try {
+                tags.add(new ResourceLocation(mod.get("tag").getAsString()));
+            } catch (Exception ex) {
+                RaspberryMod.LOGGER.warn("Skipping invalid tag ID in tag rule: {}", mod.get("tag").getAsString());
+            }
         }
 
         return switch (actionStr) {
             case "remove_all_tags" -> new TagRule(TagRule.Action.REMOVE_ALL_TAGS, items, null);
             case "remove_from_tag" -> {
-                if (tags.isEmpty()) throw new IllegalArgumentException("Missing tag(s) for remove_from_tag action");
+                if (tags.isEmpty()) throw new IllegalArgumentException("Missing valid tag(s) for remove_from_tag action");
                 yield new TagRule(TagRule.Action.REMOVE_FROM_TAG, items, tags);
             }
             case "clear_tag" -> {
-                if (tags.isEmpty()) throw new IllegalArgumentException("Missing tag(s) for clear_tag action");
+                if (tags.isEmpty()) throw new IllegalArgumentException("Missing valid tag(s) for clear_tag action");
                 yield new TagRule(TagRule.Action.CLEAR_TAG, null, tags);
             }
             default -> throw new IllegalArgumentException("Unknown tag action: " + actionStr);
@@ -151,6 +171,16 @@ public class RecipeConfig {
                     case "type" -> r -> getStringMatcher(criterion).test(r.getType().toString());
                     case "mod" -> r -> getStringMatcher(criterion).test(r.getId().getNamespace());
                     case "id" -> r -> getStringMatcher(criterion).test(r.getId().toString());
+                    case "input" -> r -> {
+                        Predicate<String> matcher = getStringMatcher(criterion);
+                        return r.getIngredients().stream().anyMatch(ing -> {
+                            for (ItemStack stack : ing.getItems()) {
+                                ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+                                if (id != null && matcher.test(id.toString())) return true;
+                            }
+                            return false;
+                        });
+                    };
                     case "output" -> r -> {
                         try {
                             ItemStack out = r.getResultItem(RegistryAccess.EMPTY);
@@ -178,8 +208,13 @@ public class RecipeConfig {
         }
         String str = element.getAsString();
         if (str.startsWith("/") && str.endsWith("/") && str.length() > 2) {
-            Pattern pattern = Pattern.compile(str.substring(1, str.length() - 1));
-            return s -> pattern.matcher(s).matches();
+            try {
+                Pattern pattern = Pattern.compile(str.substring(1, str.length() - 1));
+                return s -> pattern.matcher(s).matches();
+            } catch (Exception e) {
+                RaspberryMod.LOGGER.warn("Invalid regex pattern in filter: {}", str);
+                return s -> false;
+            }
         }
         return str::equals;
     }
@@ -228,10 +263,21 @@ public class RecipeConfig {
         if (json == null) return Ingredient.EMPTY;
         if (json.isJsonArray()) {
             List<Ingredient> list = new ArrayList<>();
-            json.getAsJsonArray().forEach(e -> list.add(parseIngredientString(e.getAsString())));
+            json.getAsJsonArray().forEach(e -> {
+                try {
+                    list.add(parseIngredientString(e.getAsString()));
+                } catch (Exception ex) {
+                    RaspberryMod.LOGGER.warn("Skipping invalid ingredient: {}", e.getAsString());
+                }
+            });
             return Ingredient.merge(list);
         }
-        return parseIngredientString(json.getAsString());
+        try {
+            return parseIngredientString(json.getAsString());
+        } catch (Exception e) {
+            RaspberryMod.LOGGER.warn("Skipping invalid ingredient: {}", json.getAsString());
+            return Ingredient.EMPTY;
+        }
     }
 
     private static Ingredient parseIngredientString(String str) {
