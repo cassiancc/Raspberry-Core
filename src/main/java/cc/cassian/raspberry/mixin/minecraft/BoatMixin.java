@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
 
-Copyright (c) 2025 
+Copyright (c) 2025
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 
-
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.compat.vanillabackport.leash.InterpolationHandler;
@@ -36,12 +35,12 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -56,24 +55,37 @@ import java.util.UUID;
 public abstract class BoatMixin extends Entity implements Leashable {
 
     @Unique
-    private static final EntityDataAccessor<OptionalInt> DATA_ID_LEASH_HOLDER_ID = SynchedEntityData.defineId(Boat.class, EntityDataSerializers.OPTIONAL_UNSIGNED_INT);
+    private static final EntityDataAccessor<OptionalInt> DATA_ID_LEASH_HOLDER_ID = SynchedEntityData.defineId(BoatMixin.class, EntityDataSerializers.OPTIONAL_UNSIGNED_INT);
 
     @Unique
-    private int delayedLeashHolderId;
-
-    @Unique
-    @Nullable
-    private Entity leashHolder;
-
-    @Unique 
-    private final InterpolationHandler interpolation = new InterpolationHandler(this, 3);
+    private int raspberry$delayedLeashHolderId;
 
     @Unique
     @Nullable
-    private CompoundTag leashInfoTag;
+    private Entity raspberry$leashHolder;
+
+    @Unique
+    private final InterpolationHandler raspberry$interpolation = new InterpolationHandler(this, 3);
+
+    @Unique
+    @Nullable
+    private CompoundTag raspberry$leashInfoTag;
+
+    @Unique
+    private double raspberry$angularMomentum;
 
     public BoatMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    public double raspberry$angularMomentum() {
+        return this.raspberry$angularMomentum;
+    }
+
+    @Override
+    public void setRaspberry$angularMomentum(double angularMomentum) {
+        this.raspberry$angularMomentum = angularMomentum;
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
@@ -83,23 +95,23 @@ public abstract class BoatMixin extends Entity implements Leashable {
 
     @Unique
     private void raspberry$restoreLeashFromSave() {
-        if (this.leashInfoTag != null && this.level instanceof ServerLevel serverLevel) {
-            if (this.leashInfoTag.hasUUID("UUID")) {
-                UUID uuid = this.leashInfoTag.getUUID("UUID");
+        if (this.raspberry$leashInfoTag != null && this.level instanceof ServerLevel serverLevel) {
+            if (this.raspberry$leashInfoTag.hasUUID("UUID")) {
+                UUID uuid = this.raspberry$leashInfoTag.getUUID("UUID");
                 Entity entity = serverLevel.getEntity(uuid);
                 if (entity != null) {
-                    this.setLeashedTo(entity, true);
+                    this.raspberry$setLeashedTo(entity, true);
                     return;
                 }
-            } else if (this.leashInfoTag.contains("X", 99) && this.leashInfoTag.contains("Y", 99) && this.leashInfoTag.contains("Z", 99)) {
-                BlockPos pos = net.minecraft.nbt.NbtUtils.readBlockPos(this.leashInfoTag);
-                this.setLeashedTo(net.minecraft.world.entity.decoration.LeashFenceKnotEntity.getOrCreateKnot(this.level, pos), true);
+            } else if (this.raspberry$leashInfoTag.contains("X", 99) && this.raspberry$leashInfoTag.contains("Y", 99) && this.raspberry$leashInfoTag.contains("Z", 99)) {
+                BlockPos pos = net.minecraft.nbt.NbtUtils.readBlockPos(this.raspberry$leashInfoTag);
+                this.raspberry$setLeashedTo(net.minecraft.world.entity.decoration.LeashFenceKnotEntity.getOrCreateKnot(this.level, pos), true);
                 return;
             }
 
             if (this.tickCount > 100) {
                 this.spawnAtLocation(Items.LEAD);
-                this.leashInfoTag = null;
+                this.raspberry$leashInfoTag = null;
             }
         }
     }
@@ -107,13 +119,13 @@ public abstract class BoatMixin extends Entity implements Leashable {
     @Inject(method = "tick", at = @At("TAIL"))
     private void raspberry$tickLeash(CallbackInfo ci) {
         if (!this.level.isClientSide && ModConfig.get().backportLeash) {
-            if (this.leashInfoTag != null) {
+            if (this.raspberry$leashInfoTag != null) {
                 this.raspberry$restoreLeashFromSave();
             }
-            
-            if (this.leashHolder != null) {
-                if (!this.isAlive() || !this.leashHolder.isAlive()) {
-                    this.dropLeash(true, true);
+
+            if (this.raspberry$leashHolder != null) {
+                if (!this.isAlive() || !this.raspberry$leashHolder.isAlive()) {
+                    this.raspberry$dropLeash(true, true);
                 }
             }
 
@@ -125,19 +137,19 @@ public abstract class BoatMixin extends Entity implements Leashable {
     private void raspberry$saveLeash(CompoundTag compound, CallbackInfo ci) {
         if (!ModConfig.get().backportLeash) return;
 
-        if (this.leashHolder != null) {
+        if (this.raspberry$leashHolder != null) {
             CompoundTag tag = new CompoundTag();
-            if (this.leashHolder instanceof LivingEntity) {
-                tag.putUUID("UUID", this.leashHolder.getUUID());
-            } else if (this.leashHolder instanceof HangingEntity) {
-                BlockPos pos = ((HangingEntity) this.leashHolder).getPos();
+            if (this.raspberry$leashHolder instanceof HangingEntity hangingEntity) {
+                BlockPos pos = hangingEntity.getPos();
                 tag.putInt("X", pos.getX());
                 tag.putInt("Y", pos.getY());
                 tag.putInt("Z", pos.getZ());
+            } else {
+                tag.putUUID("UUID", this.raspberry$leashHolder.getUUID());
             }
             compound.put("Leash", tag);
-        } else if (this.leashInfoTag != null) {
-            compound.put("Leash", this.leashInfoTag.copy());
+        } else if (this.raspberry$leashInfoTag != null) {
+            compound.put("Leash", this.raspberry$leashInfoTag.copy());
         }
     }
 
@@ -146,62 +158,70 @@ public abstract class BoatMixin extends Entity implements Leashable {
         if (!ModConfig.get().backportLeash) return;
 
         if (compound.contains("Leash", 10)) {
-            this.leashInfoTag = compound.getCompound("Leash");
+            this.raspberry$leashInfoTag = compound.getCompound("Leash");
         }
     }
 
     @Override
-    public boolean isLeashed() {
+    public boolean raspberry$isLeashed() {
         return this.entityData.get(DATA_ID_LEASH_HOLDER_ID).isPresent();
     }
 
     @Nullable
     @Override
-    public Entity getLeashHolder() {
-        if (this.leashHolder == null && this.entityData.get(DATA_ID_LEASH_HOLDER_ID).isPresent()) {
+    public Entity raspberry$getLeashHolder() {
+        if (this.raspberry$leashHolder == null && this.entityData.get(DATA_ID_LEASH_HOLDER_ID).isPresent()) {
             if (this.level.isClientSide) {
-                this.leashHolder = this.level.getEntity(this.entityData.get(DATA_ID_LEASH_HOLDER_ID).getAsInt());
+                this.raspberry$leashHolder = this.level.getEntity(this.entityData.get(DATA_ID_LEASH_HOLDER_ID).getAsInt());
             }
         }
-        return this.leashHolder;
+        return this.raspberry$leashHolder;
     }
 
     @Override
-    public void setLeashedTo(Entity entity, boolean sendPacket) {
-        this.leashHolder = entity;
-        this.leashInfoTag = null;
+    public void raspberry$setLeashedTo(Entity entity, boolean sendPacket) {
+        this.raspberry$leashHolder = entity;
+        this.raspberry$leashInfoTag = null;
+        this.raspberry$delayedLeashHolderId = 0;
         this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.of(entity.getId()));
 
-        if (sendPacket && this.level instanceof ServerLevel serverLevel) {
+        if (sendPacket && !this.level.isClientSide && this.level instanceof ServerLevel serverLevel) {
             serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, entity));
         }
     }
 
     @Override
-    public void dropLeash(boolean broadcast, boolean dropItem) {
-        if (this.leashHolder != null) {
-            this.leashHolder = null;
-            this.leashInfoTag = null;
-            this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+    public void raspberry$dropLeash(boolean broadcast, boolean dropItem) {
+        boolean wasLeashed = this.raspberry$leashHolder != null;
 
-            if (!this.level.isClientSide && dropItem) {
+        this.raspberry$leashHolder = null;
+        this.raspberry$leashInfoTag = null;
+        this.raspberry$delayedLeashHolderId = 0;
+        this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+
+        if (!this.level.isClientSide && wasLeashed) {
+            if (dropItem) {
                 this.spawnAtLocation(Items.LEAD);
             }
 
-            if (!this.level.isClientSide && broadcast && this.level instanceof ServerLevel serverLevel) {
+            if (broadcast && this.level instanceof ServerLevel serverLevel) {
                 serverLevel.getChunkSource().broadcast(this, new ClientboundSetEntityLinkPacket(this, null));
             }
         }
     }
 
     @Override
-    public void setDelayedLeashHolderId(int id) {
-        this.delayedLeashHolderId = id;
-        this.dropLeash(false, false);
-        if (this.level != null && id != 0) {
+    public void raspberry$setDelayedLeashHolderId(int id) {
+        this.raspberry$delayedLeashHolderId = id;
+
+        this.raspberry$leashHolder = null;
+        this.entityData.set(DATA_ID_LEASH_HOLDER_ID, OptionalInt.empty());
+
+        if (id != 0) {
             Entity entity = this.level.getEntity(id);
             if (entity != null) {
-                this.setLeashedTo(entity, false);
+                this.raspberry$setLeashedTo(entity, false);
+                this.raspberry$delayedLeashHolderId = 0;
             }
         }
     }
@@ -210,7 +230,7 @@ public abstract class BoatMixin extends Entity implements Leashable {
     private void raspberry$lerpTo(double x, double y, double z, float yRot, float xRot, int lerpSteps, boolean teleport, CallbackInfo ci) {
         if (ModConfig.get().backportLeash) {
             ci.cancel();
-            this.interpolation.interpolateTo(new Vec3(x, y, z), yRot, xRot);
+            this.raspberry$interpolation.interpolateTo(new Vec3(x, y, z), yRot, xRot);
         }
     }
 
@@ -219,35 +239,49 @@ public abstract class BoatMixin extends Entity implements Leashable {
         if (ModConfig.get().backportLeash) {
             ci.cancel();
             if (this.isControlledByLocalInstance()) {
-                this.interpolation.cancel();
+                this.raspberry$interpolation.cancel();
                 this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
-            } 
-            
-            this.interpolation.interpolate();
+            }
+
+            this.raspberry$interpolation.interpolate();
         }
     }
 
     @Override
-    public Vec3 getLeashOffset() {
+    public Vec3 raspberry$getLeashOffset(float partialTick) {
         return new Vec3(0.0, 0.88F * this.getBbHeight(), 0.64F * this.getBbWidth());
     }
-    
+
+    public @NotNull Vec3 getRopeHoldPosition(float partialTicks) {
+        return this.getPosition(partialTicks).add(0.0D, this.getEyeHeight() * 0.88D, 0.0D);
+    }
+
     @Override
     public void removeAfterChangingDimensions() {
         super.removeAfterChangingDimensions();
         if (ModConfig.get().backportLeash) {
-            this.dropLeash(true, false);
+            this.raspberry$dropLeash(true, false);
         }
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void raspberry$resolveLeash(CallbackInfo ci) {
-        if (this.level.isClientSide && this.delayedLeashHolderId != 0 && this.getLeashHolder() == null) {
-            Entity entity = this.level.getEntity(this.delayedLeashHolderId);
+        if (this.level.isClientSide && this.raspberry$delayedLeashHolderId != 0 && this.raspberry$getLeashHolder() == null) {
+            Entity entity = this.level.getEntity(this.raspberry$delayedLeashHolderId);
             if (entity != null) {
-                this.setLeashedTo(entity, false);
-                this.delayedLeashHolderId = 0;
+                this.raspberry$setLeashedTo(entity, false);
+                this.raspberry$delayedLeashHolderId = 0;
             }
         }
+    }
+
+    @Override
+    public boolean raspberry$supportQuadLeash() {
+        return true;
+    }
+
+    @Override
+    public Vec3[] raspberry$getQuadLeashOffsets() {
+        return Leashable.createQuadLeashOffsets(this, 0.0, 0.64, 0.382, 0.88);
     }
 }

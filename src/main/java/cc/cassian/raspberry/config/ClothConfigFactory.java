@@ -27,6 +27,8 @@ public class ClothConfigFactory {
 
         for (var field : ModConfig.class.getFields()) {
             ConfigCategory category;
+            if (field.getName().equals("jukeboxDistance")) continue;
+            if (field.getName().equals("showMusicToast")) continue;
             if (field.getName().contains("gliders")) category = gliderCategory;
             else if (field.getName().contains("aquaculture")) category = aquacultureCategory;
             else if (field.getName().contains("horse")) category = horseCategory;

@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.1] - 2025-12-18
+
+### Fixed
+- Crash on dedicated server.
+
+## [1.10] - 2025-12-18
+
 ### Added
 - Maximum minecart speed is configurable.
 - Copper Horse Armor now grants Lightning Resistance and Aftershock. (Copperized)
@@ -35,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Connectible Chains act more in-line with vanilla leads.
 - Allays can be duplicated using the Album Jukebox. (Etched)
 - Spiders now also check if players are trapped in temporary cobweb blocks. (Dungeons Mobs)
+- Twisted tree sapling from Architect's Palette now loads from a datapack instead of being hardcoded.
 
 ## [1.9]
 

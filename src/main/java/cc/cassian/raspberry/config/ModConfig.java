@@ -64,6 +64,9 @@ public class ModConfig {
     public MusicFrequency musicFrequency = MusicFrequency.DEFAULT;
     public boolean showMusicToast = false;
     public boolean disableFaucetSourceBlocks = false;
+    public boolean betterJukeboxes = true;
+    public double jukeboxDistance = 64.0;
+    public boolean disablePenguinShedding = false;
 
     public static void load() {
         if (!Files.exists(configPath())) {

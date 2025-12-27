@@ -2,6 +2,7 @@ package cc.cassian.raspberry.entity;
 
 import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RaspberryParticleTypes;
+import cc.cassian.raspberry.registry.RaspberryTags;
 import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -82,7 +83,7 @@ public class SwapArrowEntity extends AbstractArrow {
                     if (targetVehicle != null) {
                         shooter.startRiding(targetVehicle, true);
                     }
-                    if (shooterVehicle != null) {
+                    if (shooterVehicle != null && !target.getType().is(RaspberryTags.DISALLOWED_IN_BOATS)) {
                         target.startRiding(shooterVehicle, true);
                     }
                     didTeleport = true;
@@ -112,6 +113,7 @@ public class SwapArrowEntity extends AbstractArrow {
 
                     // Teleport player
                     Vec3 dispenserVec3 = Vec3.atBottomCenterOf(dispenserPos);
+                    target.stopRiding();
                     target.teleportTo(dispenserVec3.x, dispenserVec3.y, dispenserVec3.z);
 
                     // Place copied dispenser

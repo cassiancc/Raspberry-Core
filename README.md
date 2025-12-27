@@ -24,6 +24,7 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 - [Oreganized](https://modrinth.com/mod/oreganized) is recommended.
 - [Aquaculture 2](https://modrinth.com/mod/aquaculture) is optional.
 - [Another Furniture](https://modrinth.com/mod/another-furniture) is optional.
+- [Architect's Palette](https://modrinth.com/mod/architects-palette) is optional.
 - [Brewin and Chewin](https://www.curseforge.com/minecraft/mc-mods/brewin-and-chewin) is optional.
 - [Caverns and Chasms](https://modrinth.com/mod/caverns-and-chasms) is optional.
 - [Clash](https://www.curseforge.com/minecraft/mc-mods/clash) is optional.
@@ -59,5 +60,6 @@ If you are thinking about using the code or assets from Raspberry Core, please n
 - Contains sounds from [Auditory Continued](https://modrinth.com/mod/auditory-continued), used under its [MIT License](https://github.com/ItsSyfe/auditory-continued).
 - Contains code from [Vanilla Backport](https://github.com/ItsBlackGear/VanillaBackport), used under its [MIT License](https://github.com/ItsBlackGear/VanillaBackport/blob/1.20.1/LICENSE.txt).
 - Contains code from [Harou's Leashed Fences](https://github.com/martinkadlec0/harous-leashed-fences), used under its [MIT License](https://github.com/martinkadlec0/harous-leashed-fences/blob/1.21.11/LICENSE).
+- Contains code from [Better Jukebox](https://github.com/WatDuhHekBro/BetterJukebox), used under its [LGPL-3.0-only License](https://github.com/WatDuhHekBro/BetterJukebox/blob/main/LICENSE.txt).
 
 This repository contains a compiled JAR of Ecologics to allow for the mod to be compiled against, with the copyrighted assets removed. Ecologics code is available under its [MIT License](https://github.com/samedifferent/Ecologics/blob/1.19-crossplatform/LICENSE).

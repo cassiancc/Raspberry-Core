@@ -31,6 +31,7 @@ import cc.cassian.raspberry.mixin.minecraft.PathfinderMobAccessor;
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
@@ -56,20 +57,17 @@ public interface Leashable {
     List<Vec3> ENTITY_ATTACHMENT_POINT = ImmutableList.of(new Vec3(0.0, 0.5, 0.5));
     List<Vec3> LEASHER_ATTACHMENT_POINT = ImmutableList.of(new Vec3(0.0, 0.5, 0.0));
     List<Vec3> SHARED_QUAD_ATTACHMENT_POINTS = ImmutableList.of(
-        new Vec3(-0.5, 0.5, 0.5),
-        new Vec3(-0.5, 0.5, -0.5),
-        new Vec3(0.5, 0.5, -0.5),
-        new Vec3(0.5, 0.5, 0.5)
+            new Vec3(-0.5, 0.5, 0.5),
+            new Vec3(-0.5, 0.5, -0.5),
+            new Vec3(0.5, 0.5, -0.5),
+            new Vec3(0.5, 0.5, 0.5)
     );
 
-    default Vec3 getLeashOffset(float partialTick) {
-        return new Vec3(0, ((Entity)this).getEyeHeight() * 0.8F, 0); 
+    default Vec3 raspberry$getLeashOffset(float partialTick) {
+        return new Vec3(0, ((Entity)this).getEyeHeight() * 0.8F, 0);
     }
 
-    default void setDelayedLeashHolderId(int id) {
-    }
-
-    default boolean isLeashed() {
+    default boolean raspberry$isLeashed() {
         if (this instanceof Mob mob) return mob.isLeashed();
         return false;
     }
@@ -82,7 +80,12 @@ public interface Leashable {
         }
     }
 
-    default void setLeashedTo(Entity entity, boolean sendAttachPacket) {
+    default void raspberry$onLeashRemoved() {
+    }
+
+    default void raspberry$setDelayedLeashHolderId(int id) {}
+
+    default void raspberry$setLeashedTo(Entity entity, boolean sendAttachPacket) {
         if (this instanceof Mob mob) mob.setLeashedTo(entity, sendAttachPacket);
     }
 
@@ -95,18 +98,26 @@ public interface Leashable {
         return true;
     }
 
-    default void dropLeash(boolean broadcast, boolean dropItem) {
-        if (this instanceof Mob mob) mob.dropLeash(broadcast, dropItem);
+    default void raspberry$dropLeash(boolean broadcast, boolean dropItem) {
+        if (this instanceof Mob mob) {
+            Entity holder = mob.getLeashHolder();
+
+            mob.dropLeash(broadcast, dropItem);
+
+            if (holder instanceof Leashable leashableHolder) {
+                leashableHolder.raspberry$onLeashRemoved();
+            }
+        }
     }
 
     static <E extends Entity & Leashable> void tickLeash(E entity) {
-        Entity holder = entity.getLeashHolder();
+        Entity holder = entity.raspberry$getLeashHolder();
         if (holder != null && holder.level == entity.level) {
             double leashDistance = entity.leashDistanceTo(holder);
 
             if (entity instanceof TamableAnimal pet && pet.isOrderedToSit()) {
                 if (leashDistance > entity.leashSnapDistance()) {
-                    entity.dropLeash(true, true);
+                    entity.raspberry$dropLeash(true, true);
                 }
                 return;
             }
@@ -121,8 +132,8 @@ public interface Leashable {
                 entity.closeRangeLeashBehavior(holder);
             }
 
-            entity.setYRot((float) (entity.getYRot() - entity.angularMomentum()));
-            entity.setAngularMomentum(entity.angularMomentum() * (double) angularFriction(entity));
+            entity.setYRot((float) (entity.getYRot() - entity.raspberry$angularMomentum()));
+            entity.setRaspberry$angularMomentum(entity.raspberry$angularMomentum() * (double) angularFriction(entity));
         }
     }
 
@@ -130,7 +141,7 @@ public interface Leashable {
         if (this instanceof PathfinderMob mob) {
             ((PathfinderMobAccessor) this).callOnLeashDistance(mob.distanceTo(entity));
         }
-        
+
         Entity self = (Entity) this;
         if (self.getDeltaMovement().y > -0.5D) {
             self.fallDistance = 1.0F;
@@ -155,14 +166,14 @@ public interface Leashable {
 
     default void whenLeashedTo(Entity entity) {
         if (this instanceof PathfinderMob mob) mob.restrictTo(entity.blockPosition(), (int) this.leashElasticDistance() - 1);
-        if (entity instanceof Leashable ext) ext.notifyLeashHolder(this);
+        if (entity instanceof Leashable ext) ext.notifyLeashHolder();
     }
 
-    default void notifyLeashHolder(Leashable entity) {}
+    default void notifyLeashHolder() {}
 
     default void leashTooFarBehaviour() {
         if (this instanceof PathfinderMob mob) mob.goalSelector.disableControlFlag(Goal.Flag.MOVE);
-        this.dropLeash(true, true);
+        this.raspberry$dropLeash(true, true);
     }
 
     default void closeRangeLeashBehavior(Entity entity) {
@@ -179,25 +190,25 @@ public interface Leashable {
     default boolean checkElasticInteractions(Entity entity) {
         if (((Entity) this).getControllingPassenger() instanceof Player) return false;
 
-        boolean supportQuadLeash = entity instanceof Leashable holder && holder.supportQuadLeashAsHolder() && this.supportQuadLeash();
+        boolean supportQuadLeash = entity instanceof Leashable holder && holder.raspberry$supportQuadLeashAsHolder() && this.raspberry$supportQuadLeash();
         List<Wrench> wrenches = computeElasticInteraction(
-            (Entity & Leashable) this,
-            entity,
-            supportQuadLeash ? SHARED_QUAD_ATTACHMENT_POINTS : ENTITY_ATTACHMENT_POINT,
-            supportQuadLeash ? SHARED_QUAD_ATTACHMENT_POINTS : LEASHER_ATTACHMENT_POINT
+                (Entity & Leashable) this,
+                entity,
+                supportQuadLeash ? SHARED_QUAD_ATTACHMENT_POINTS : ENTITY_ATTACHMENT_POINT,
+                supportQuadLeash ? SHARED_QUAD_ATTACHMENT_POINTS : LEASHER_ATTACHMENT_POINT
         );
 
         if (wrenches.isEmpty()) {
             return false;
         } else {
             Wrench wrench = Wrench.accumulate(wrenches).scale(supportQuadLeash ? 0.25 : 1.0);
-            this.setAngularMomentum(this.angularMomentum() + 10.0 * wrench.torque());
+            this.setRaspberry$angularMomentum(this.raspberry$angularMomentum() + 10.0 * wrench.torque());
             Vec3 offset = getHolderMovement(entity).subtract(getKnownMovement((Entity) this));
-            
+
             Vec3 currentMotion = ((Entity) this).getDeltaMovement();
             Vec3 deltaMovement = wrench.force().multiply(AXIS_SPECIFIC_ELASTICITY).add(offset.scale(0.11));
             ((Entity) this).setDeltaMovement(currentMotion.add(deltaMovement));
-            
+
             return true;
         }
     }
@@ -251,7 +262,7 @@ public interface Leashable {
         }
     }
 
-    default boolean supportQuadLeash() {
+    default boolean raspberry$supportQuadLeash() {
         Entity entity = (Entity) this;
         for (Predicate<Entity> filter : QUAD_LEASH_OFFSETS.keySet()) {
             if (filter.test(entity)) {
@@ -261,21 +272,22 @@ public interface Leashable {
         return false;
     }
 
-    default boolean supportQuadLeashAsHolder() {
+    default boolean raspberry$supportQuadLeashAsHolder() {
         return false;
     }
 
-    default Vec3[] getQuadLeashOffsets() {
+    default Vec3[] raspberry$getQuadLeashOffsets() {
         Entity entity = (Entity) this;
         for (Predicate<Entity> filter : QUAD_LEASH_OFFSETS.keySet()) {
             if (filter.test(entity)) {
                 return QUAD_LEASH_OFFSETS.get(filter).apply(entity);
             }
         }
+
         return createQuadLeashOffsets((Entity) this, 0.0, 0.5, 0.5, 0.5);
     }
 
-    default Vec3[] getQuadLeashHolderOffsets() {
+    default Vec3[] raspberry$getQuadLeashHolderOffsets() {
         return createQuadLeashOffsets((Entity) this, 0.0, 0.5, 0.5, 0.0);
     }
 
@@ -287,35 +299,43 @@ public interface Leashable {
         double height = heightOffset * (double) entity.getBbHeight();
 
         return new Vec3[] {
-            new Vec3(-width, height, side + forward),
-            new Vec3(-width, height, -side + forward),
-            new Vec3(width, height, -side + forward),
-            new Vec3(width, height, side + forward)
+                new Vec3(-width, height, side + forward),
+                new Vec3(-width, height, -side + forward),
+                new Vec3(width, height, -side + forward),
+                new Vec3(width, height, side + forward)
         };
     }
 
-    default Entity getLeashHolder() {
+    default Entity raspberry$getLeashHolder() {
         if (this instanceof Mob mob) return mob.getLeashHolder();
         return null;
     }
 
     static List<Leashable> leashableLeashedTo(Entity entity) {
-        return leashableInArea(entity.level, entity.position(), l -> l.getLeashHolder() == entity);
+        return leashableInArea(entity.level, entity.position(), l -> l.raspberry$getLeashHolder() == entity);
     }
 
     static List<Leashable> leashableInArea(Level level, Vec3 pos, Predicate<Leashable> filter) {
         AABB area = AABB.ofSize(pos, 32.0, 32.0, 32.0);
         return level.getEntitiesOfClass(Entity.class, area, entity -> entity instanceof Leashable leashable && filter.test(leashable))
-            .stream()
-            .map(Leashable.class::cast)
-            .toList();
+                .stream()
+                .map(Leashable.class::cast)
+                .toList();
     }
 
-    default double angularMomentum() {
+    default double raspberry$angularMomentum() {
         return 0.0;
     }
 
-    default void setAngularMomentum(double angularMomentum) { }
+    static float raspberry$getPreciseBodyRotation(Entity entity, float partialTicks) {
+        if (entity instanceof LivingEntity living) {
+            return Mth.lerp(partialTicks, living.yBodyRotO, living.yBodyRot);
+        } else {
+            return Mth.lerp(partialTicks, entity.yRotO, entity.getYRot());
+        }
+    }
+
+    default void setRaspberry$angularMomentum(double raspberry$angularMomentum) { }
 
     record Wrench(Vec3 force, double torque) {
         static final Wrench ZERO = new Wrench(Vec3.ZERO, 0.0);
