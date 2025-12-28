@@ -103,6 +103,7 @@
     "quark.CrateContainerBlacklistMixin",
     "quark.ExpandedItemInteractionsModuleMixin",
     "quark.QuickArmorSwappingModuleMixin",
+    "respiteful.RespitefulFluidsMixin",
     "screenshot_viewer.ScreenshotViewerMixin",
     "spelunkery.PointedDripstoneBlockMixin",
     "spyglass_improvements.EventsHandlerMixin",

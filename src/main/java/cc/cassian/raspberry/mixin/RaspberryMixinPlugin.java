@@ -100,6 +100,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("quark", mixinClassName)){
             return false;
         }
+        else if (checkMixin("respiteful", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("screenshot_viewer", mixinClassName)){
             return false;
         }

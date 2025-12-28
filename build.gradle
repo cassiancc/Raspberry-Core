@@ -238,7 +238,7 @@ dependencies {
     modCompileOnly("maven.modrinth:environmental:$environmental_version")
     modCompileOnly("maven.modrinth:caverns-and-chasms:$caverns_and_chasms_version")
     modCompileOnly("maven.modrinth:upgrade-aquatic:$upgrade_aquatic_version")
-    modCompileOnly("maven.modrinth:neapolitan:$neapolitan_version")
+    modImplementation("maven.modrinth:neapolitan:$neapolitan_version")
     modImplementation("com.teamabnormals:blueprint:$blueprint_version")
     modCompileOnly("maven.modrinth:endergetic:$endergetic_version")
     modImplementation("maven.modrinth:buzzier-bees:$buzzier_bees_version")
@@ -253,7 +253,10 @@ dependencies {
     modImplementation("maven.modrinth:farmers-delight:$farmers_delight_version")
     modCompileOnly("curse.maven:brewin-and-chewin-637808:$brewin_and_chewin_version")
     modImplementation("maven.modrinth:cultural-delights:$cultural_delights_version")
+    modImplementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    modImplementation("curse.maven:farmers-respite-551453:$farmers_respite_version")
     modCompileOnly("maven.modrinth:my-nethers-delight:$nethers_delight_version")
+    modImplementation("maven.modrinth:respiteful:$respiteful_version")
 
     // Create, its dependencies, and its dependents
     modCompileOnly("com.simibubi.create:create-$minecraft_version:$create_forge_version:slim") { transitive = false }
@@ -323,6 +326,7 @@ dependencies {
     modImplementation("curse.maven:cerbons-api-955605:$cerbons_api_version")
 
     modImplementation("curse.maven:mining-master-534956:5540513")
+
     //1.20
     modImplementation "maven.modrinth:better-copper-armor-and-tools:1.2-1.20.1"
     modImplementation "dev.architectury:architectury-forge:9.2.14"
