@@ -7,16 +7,12 @@ import cc.cassian.raspberry.entity.SwapArrowEntity;
 import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
 import cc.cassian.raspberry.networking.RaspberryNetworking;
-import cc.cassian.raspberry.recipe.RecipeModifier;
-import cc.cassian.raspberry.recipe.TagModifier;
 import cc.cassian.raspberry.registry.*;
-import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -31,7 +27,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +65,6 @@ public final class RaspberryMod {
         eventBus.addListener(RaspberryMod::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
-        MinecraftForge.EVENT_BUS.addListener(this::onTagsUpdated);
 
         if (FMLEnvironment.dist.isClient()) {
             RaspberryModClient.init();
@@ -158,20 +152,6 @@ public final class RaspberryMod {
         if (source.getDirectEntity() instanceof SwapArrowEntity) {
             // Copies the way Caverns and Chasms make Blunt Arrows deal no damage
             event.setAmount(0.0F);
-        }
-    }
-
-    @SubscribeEvent
-    public void onTagsUpdated(TagsUpdatedEvent event) {
-        TagModifier.apply();
-
-        var server = ServerLifecycleHooks.getCurrentServer();
-        if (server != null) {
-            RecipeModifier.apply(server.getRecipeManager());
-
-            server.getPlayerList().getPlayers().forEach(player ->
-                    player.connection.send(new ClientboundUpdateRecipesPacket(server.getRecipeManager().getRecipes()))
-            );
         }
     }
 

@@ -19,15 +19,6 @@
     "spyglass_improvements.MinecraftMixin"
   ],
   "mixins": [
-    "accessor.AbstractCookingRecipeAccessor",
-    "accessor.HolderSetNamedAccessor",
-    "accessor.IngredientAccessor",
-    "accessor.IngredientItemValueAccessor",
-    "accessor.IngredientTagValueAccessor",
-    "accessor.RecipeManagerAccessor",
-    "accessor.ShapedRecipeAccessor",
-    "accessor.ShapelessRecipeAccessor",
-    "accessor.SingleItemRecipeAccessor",
     "additional_enchantments.BracewalkMixin",
     "aquaculture.AquaFishingBobberEntityMixin",
     "aquaculture.AquaFishingRodItemMixin",
