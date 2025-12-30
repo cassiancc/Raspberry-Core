@@ -198,9 +198,16 @@ public class RaspberryBlocks {
 
     // 1.20 blocks
     public static BlockSupplier CHERRY_PIE = registerBlock("cherry_pie", () -> new PieBlock(BlockBehaviour.Properties.of(), RaspberryItems.CHERRY_PIE_SLICE));
-    public static BlockSupplier PINK_ROSE = registerBlock("pink_rose", () -> new FlowerBlock(()->MobEffects.WITHER, 1, BlockBehaviour.Properties.copy(Blocks.POPPY)));
-    public static Supplier<Block> POTTED_PINK_ROSE = registerBlockWithoutItem("potted_pink_rose", () -> new FlowerPotBlock(()-> (FlowerPotBlock) Blocks.FLOWER_POT, PINK_ROSE.getBlockSupplier(), BlockBehaviour.Properties.copy(Blocks.POPPY)));
     public static BlockSupplier PINK_ROSE_BUSH = registerBlock("pink_rose_bush", () -> new TallFlowerBlock(BlockBehaviour.Properties.copy(Blocks.ROSE_BUSH)));
+    public static BlockSupplier PINK_ROSE = registerBlock("pink_rose",
+            () -> new RaspberryRoseBlock(
+                    () -> PINK_ROSE_BUSH.getBlock(),
+                    () -> MobEffects.WITHER,
+                    5,
+                    BlockBehaviour.Properties.copy(Blocks.POPPY)
+            ));
+    public static final RegistryObject<Block> POTTED_PINK_ROSE = registerPottedPlant(PINK_ROSE);
+
     public static BlockSupplier WITHER_ROSE_BUSH = registerBlock("wither_rose_bush", () -> new WitherRoseBushBlock(BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE)));
     public static BlockSupplier AVOCADO_HEDGE = registerBlock("avocado_hedge", () -> new HedgeBlock( "avocado_hedge", null, Blocks.JUNGLE_FENCE, com.baisylia.culturaldelights.block.ModBlocks.AVOCADO_LEAVES.get()));
 

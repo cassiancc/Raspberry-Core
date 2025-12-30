@@ -92,6 +92,7 @@
     "minecraft.SilenceServerMixin",
     "minecraft.SpreadingSnowyDirtBlockMixin",
     "minecraft.ThrowableProjectileMixin",
+    "minecraft.WitherRoseBlockMixin",
     "miningmaster.DamageKnightJumpPacketMixin",
     "miningmaster.HeartfeltEnchantmentMixin",
     "naturalist.CatchableFireflyMixin",

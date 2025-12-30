@@ -20,6 +20,7 @@
   "block.raspberry.playful_wildflower_garland": "Playful Flower Garland",
   "block.raspberry.hopeful_wildflower_garland": "Hopeful Flower Garland",
   "block.raspberry.clovers": "Clovers",
+  "block.raspberry.potted_pink_rose": "Potted Pink Rose",
   "block.raspberry.pink_rose": "Pink Rose",
   "block.raspberry.pink_rose_bush": "Pink Rose Bush",
   "block.raspberry.wither_rose_bush": "Wither Rose Bush",
@@ -54,8 +55,11 @@
   "item.raspberry.cat_food": "Cat Food",
   "lore.raspberry.cat_food": "A foodstuff meant for your cat! ",
 
+ "raspberry.jei.info.pink_rose": "Pink Roses can be found in Snowy biomes. They can also be bonemealed into Pink Rose Bushes.",
+ "raspberry.jei.info.pink_rose_bush": "Bonemeal a Pink Rose and it will grow into a Pink Rose Bush!",
+ "raspberry.jei.info.wither_rose_bush": "Bonemeal a Wither Rose and it will grow into a Wither Rose Bush!",
 
-  "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
+ "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
   "raspberry.subtitles.player.attack.silver_hit": "Mirror connects",
 
   "subtitles.item.armor.equip_copper": "Copper armor clonks",

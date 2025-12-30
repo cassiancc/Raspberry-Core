@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "raspberry:block/rose_bush_top"
+    "cross": "raspberry:block/wither_rose_bush_top"
   },
   "render_type":"cutout"
 }

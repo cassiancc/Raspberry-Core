@@ -8,16 +8,21 @@ import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
 import cc.cassian.raspberry.networking.RaspberryNetworking;
 import cc.cassian.raspberry.registry.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -143,6 +148,26 @@ public final class RaspberryMod {
         Player player = event.getEntity();
         if (!player.onGround() && (player.isFallFlying() || ModConfig.get().fastFlyBlockBreaking)) {
             event.setNewSpeed(event.getOriginalSpeed() * 5.0F);
+        }
+    }
+
+    @SubscribeEvent
+    public void onBonemeal(BonemealEvent event) {
+        BlockState state = event.getBlock();
+        if (state.is(Blocks.WITHER_ROSE)) {
+            BlockPos pos = event.getPos();
+
+            if (RaspberryBlocks.WITHER_ROSE_BUSH.getBlock().defaultBlockState().canSurvive(event.getLevel(), pos)
+                    && event.getLevel().isEmptyBlock(pos.above())) {
+
+                event.setResult(net.minecraftforge.eventbus.api.Event.Result.ALLOW);
+
+                if (!event.getLevel().isClientSide) {
+                    if (event.getLevel().random.nextInt(5) == 0) {
+                        DoublePlantBlock.placeAt(event.getLevel(), RaspberryBlocks.WITHER_ROSE_BUSH.getBlock().defaultBlockState(), pos, 3);
+                    }
+                }
+            }
         }
     }
 
