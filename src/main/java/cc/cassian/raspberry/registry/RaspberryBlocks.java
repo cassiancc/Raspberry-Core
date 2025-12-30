@@ -197,7 +197,7 @@ public class RaspberryBlocks {
             () -> new FineWoodWall(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)));
 
     // 1.20 blocks
-    public static BlockSupplier CHERRY_PIE = registerBlock("cherry_pie", () -> new PieBlock(BlockBehaviour.Properties.of(), RaspberryItems.CHERRY_PIE_SLICE));
+    public static BlockSupplier CHERRY_PIE = registerBlock("cherry_pie", () -> new PieBlock(BlockBehaviour.Properties.copy(Blocks.CAKE), RaspberryItems.CHERRY_PIE_SLICE));
     public static BlockSupplier PINK_ROSE_BUSH = registerBlock("pink_rose_bush", () -> new TallFlowerBlock(BlockBehaviour.Properties.copy(Blocks.ROSE_BUSH)));
     public static BlockSupplier PINK_ROSE = registerBlock("pink_rose",
             () -> new RaspberryRoseBlock(

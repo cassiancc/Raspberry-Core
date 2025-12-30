@@ -76,6 +76,7 @@ public class RaspberryCreativePlacements {
             event.accept(RaspberryBlocks.PINK_ROSE.getBlock());
             event.accept(RaspberryBlocks.PINK_ROSE_BUSH.getBlock());
             event.accept(RaspberryBlocks.WITHER_ROSE_BUSH.getBlock());
+            event.accept(RaspberryBlocks.AVOCADO_HEDGE.getBlock());
         }
         else if (event.getTabKey().equals(CreativeModeTabs.BUILDING_BLOCKS)) {
             event.accept(RaspberryBlocks.ASH_BLOCK.getBlock());

@@ -38,6 +38,7 @@
   "block.raspberry.fine_wood_stairs": "Fine Wood Stairs",
   "block.raspberry.fine_wood_slab": "Fine Wood Slab",
   "block.raspberry.fine_wood_wall": "Fine Wood Wall",
+  "block.raspberry.avocado_hedge": "Avocado Hedge",
 
   "item.raspberry.swap_arrow": "Swap Arrow",
   "lore.raspberry.swap_arrow": "This arrow swaps the position of the entity it hits with the shooter.",

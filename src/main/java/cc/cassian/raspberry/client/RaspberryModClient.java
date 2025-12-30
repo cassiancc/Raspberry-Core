@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.world.level.FoliageColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -28,7 +29,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod.EventBusSubscriber(modid = RaspberryMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RaspberryModClient {
@@ -56,6 +56,15 @@ public class RaspberryModClient {
             }), block.getBlock());
         }
 
+        event.register((state, view, pos, tintIndex) -> view != null && pos != null
+                ? BiomeColors.getAverageFoliageColor(view, pos)
+                : FoliageColor.getDefaultColor(), RaspberryBlocks.AVOCADO_HEDGE.getBlock());
+    }
+
+    @SubscribeEvent
+    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        event.register((stack, tintIndex) -> FoliageColor.getDefaultColor(),
+                RaspberryBlocks.AVOCADO_HEDGE.getBlock());
     }
 
     @SubscribeEvent
@@ -69,6 +78,7 @@ public class RaspberryModClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(RaspberryBlocks.TEMPORARY_COBWEB.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(RaspberryBlocks.AVOCADO_HEDGE.getBlock(), RenderType.cutoutMipped());
 
             Minecraft.getInstance()
                     .getSoundManager()
