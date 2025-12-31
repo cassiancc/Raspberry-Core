@@ -3,38 +3,42 @@ package cc.cassian.raspberry;
 import net.minecraftforge.fml.ModList;
 
 public final class ModCompat {
-    public static final boolean ALLUREMENT = ModList.get().isLoaded("allurement");
-    public static final boolean ANOTHER_FURNITURE  = ModList.get().isLoaded("another_furniture");
-    public static final boolean AQUACULTURE = ModList.get().isLoaded("aquaculture");
-    public static final boolean BETTER_BEACONS = ModList.get().isLoaded("better_beacons");
-    public static final boolean CAVERNS_AND_CHASMS = ModList.get().isLoaded("caverns_and_chasms");
-    public static final boolean CLOTH_CONFIG = ModList.get().isLoaded("cloth_config");
-    public static final boolean COFH_CORE = ModList.get().isLoaded("cofh_core");
-    public static final boolean COPPERIZED = ModList.get().isLoaded("copperized");
-    public static final boolean COPPER_BACKPORT = ModList.get().isLoaded("copperandtuffbackport");
-    public static final boolean CREATE = ModList.get().isLoaded("create");
-    public static final boolean DOMESTICATION_INNOVATION = ModList.get().isLoaded("domesticationinnovation");
-    public static final boolean ENSORCELLATION = ModList.get().isLoaded("ensorcellation");
-    public static final boolean ENVIRONMENTAL = ModList.get().isLoaded("environmental");
-    public static final boolean FARMERS_DELIGHT = ModList.get().isLoaded("farmersdelight");
-    public static final boolean GLIDERS = ModList.get().isLoaded("vc_gliders");
-    public static final boolean IMMERSIVE_OVERLAYS = ModList.get().isLoaded("immersiveoverlays");
-    public static final boolean OREGANIZED = ModList.get().isLoaded("oreganized");
-    public static final boolean MAP_ATLASES = ModList.get().isLoaded("map_atlases");
-    public static final boolean MINING_MASTER = ModList.get().isLoaded("miningmaster");
-    public static final boolean NEAPOLITAN = ModList.get().isLoaded("neapolitan");
-    public static final boolean QUARK = ModList.get().isLoaded("quark");
-    public static final boolean SURVIVALITY = ModList.get().isLoaded("survivality");
-    public static final boolean SUPPLEMENTARIES = ModList.get().isLoaded("supplementaries");
-    public static final boolean SPELUNKERY = ModList.get().isLoaded("spelunkery");
-    public static final boolean TOMS_STORAGE = ModList.get().isLoaded("toms_storage");
 
-    public static final boolean BLUEPRINT = ModList.get().isLoaded("blueprint");
-    public static final boolean BREWINANDCHEWIN = ModList.get().isLoaded("brewinandchewin");
-    public static final boolean EMI = ModList.get().isLoaded("emi");
-    public static final boolean CONTROLLABLE = ModList.get().isLoaded("controllable");
-    public static final boolean NATURALIST = ModList.get().isLoaded("naturalist");
-    public static final boolean ITEM_OBLITERATOR = ModList.get().isLoaded("item_obliterator");
-    public static final boolean SIDEKICK = ModList.get().isLoaded("sidekick");
-	public static boolean XAEROS_WORLD_MAP = ModList.get().isLoaded("xaeroworldmap");
+    private static boolean isLoaded(String modId) {
+        return ModList.get() != null && ModList.get().isLoaded(modId);
+    }
+
+    public static boolean hasAllurement() { return isLoaded("allurement"); }
+    public static boolean hasAnotherFurniture() { return isLoaded("another_furniture"); }
+    public static boolean hasAquaculture() { return isLoaded("aquaculture"); }
+    public static boolean hasBetterBeacons() { return isLoaded("better_beacons"); }
+    public static boolean hasCavernsAndChasms() { return isLoaded("caverns_and_chasms"); }
+    public static boolean hasClothConfig() { return isLoaded("cloth_config"); }
+    public static boolean hasCofhCore() { return isLoaded("cofh_core"); }
+    public static boolean hasCopperized() { return isLoaded("copperized"); }
+    public static boolean hasCopperBackport() { return isLoaded("copperandtuffbackport"); }
+    public static boolean hasCreate() { return isLoaded("create"); }
+    public static boolean hasDomesticationInnovation() { return isLoaded("domesticationinnovation"); }
+    public static boolean hasEnsorcellation() { return isLoaded("ensorcellation"); }
+    public static boolean hasEnvironmental() { return isLoaded("environmental"); }
+    public static boolean hasFarmersDelight() { return isLoaded("farmersdelight"); }
+    public static boolean hasGliders() { return isLoaded("vc_gliders"); }
+    public static boolean hasImmersiveOverlays() { return isLoaded("immersiveoverlays"); }
+    public static boolean hasOreganized() { return isLoaded("oreganized"); }
+    public static boolean hasMapAtlases() { return isLoaded("map_atlases"); }
+    public static boolean hasMiningMaster() { return isLoaded("miningmaster"); }
+    public static boolean hasNeapolitan() { return isLoaded("neapolitan"); }
+    public static boolean hasQuark() { return isLoaded("quark"); }
+    public static boolean hasSurvivality() { return isLoaded("survivality"); }
+    public static boolean hasSupplementaries() { return isLoaded("supplementaries"); }
+    public static boolean hasSpelunkery() { return isLoaded("spelunkery"); }
+    public static boolean hasTomsStorage() { return isLoaded("toms_storage"); }
+    public static boolean hasBlueprint() { return isLoaded("blueprint"); }
+    public static boolean hasBrewinAndChewin() { return isLoaded("brewinandchewin"); }
+    public static boolean hasEmi() { return isLoaded("emi"); }
+    public static boolean hasControllable() { return isLoaded("controllable"); }
+    public static boolean hasNaturalist() { return isLoaded("naturalist"); }
+    public static boolean hasItemObliterator() { return isLoaded("item_obliterator"); }
+    public static boolean hasSidekick() { return isLoaded("sidekick"); }
+    public static boolean hasXaerosWorldMap() { return isLoaded("xaeroworldmap"); }
 }

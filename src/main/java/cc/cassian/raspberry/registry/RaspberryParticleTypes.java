@@ -25,22 +25,20 @@ public class RaspberryParticleTypes {
     public static final RegistryObject<SimpleParticleType> MOODY_PETAL;
     public static final RegistryObject<SimpleParticleType> SWAP_ARROW_PORTAL;
 
-    private static RegistryObject<SimpleParticleType> registerSimpleParticleType(boolean alwaysShow, String name) {
-        return PARTICLE_TYPES.register(name, () -> {
-            return new SimpleParticleType(alwaysShow);
-        });
+    private static RegistryObject<SimpleParticleType> registerSimpleParticleType(String name) {
+        return PARTICLE_TYPES.register(name, () -> new SimpleParticleType(true));
     }
 
     public RaspberryParticleTypes() {
     }
 
     static {
-        MIRROR = registerSimpleParticleType(true, "mirror");
-        CHEERY_PETAL = registerSimpleParticleType(true, "cheery_petal");
-        PLAYFUL_PETAL = registerSimpleParticleType(true, "playful_petal");
-        HOPEFUL_PETAL = registerSimpleParticleType(true, "hopeful_petal");
-        MOODY_PETAL = registerSimpleParticleType(true, "moody_petal");
-        SWAP_ARROW_PORTAL = registerSimpleParticleType(true, "swap_arrow_portal");
+        MIRROR = registerSimpleParticleType("mirror");
+        CHEERY_PETAL = registerSimpleParticleType("cheery_petal");
+        PLAYFUL_PETAL = registerSimpleParticleType("playful_petal");
+        HOPEFUL_PETAL = registerSimpleParticleType("hopeful_petal");
+        MOODY_PETAL = registerSimpleParticleType("moody_petal");
+        SWAP_ARROW_PORTAL = registerSimpleParticleType("swap_arrow_portal");
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
@@ -50,7 +48,7 @@ public class RaspberryParticleTypes {
 
         @SubscribeEvent
         public static void registerParticleTypes(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet((ParticleType)RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
             event.registerSpriteSet(RaspberryParticleTypes.CHEERY_PETAL.get(), FlowerPetalParticle.Provider::new);
             event.registerSpriteSet(RaspberryParticleTypes.PLAYFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
             event.registerSpriteSet(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);

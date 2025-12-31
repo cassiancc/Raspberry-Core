@@ -29,7 +29,7 @@ public class RaspberryCreativePlacements {
                 shouldRemove = true;
             }
 
-            if (!shouldRemove && ModCompat.ITEM_OBLITERATOR) {
+            if (!shouldRemove && ModCompat.hasItemObliterator()) {
                 if (ItemObliteratorCompat.shouldHide(stack)) {
                     shouldRemove = true;
                 }

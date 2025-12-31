@@ -228,14 +228,14 @@ public class RaspberryBlocks {
     }
 
     public static BlockBehaviour.Properties getTruffleProperties() {
-        if (ModCompat.ENVIRONMENTAL)
+        if (ModCompat.hasEnvironmental())
             return EnvironmentalCompat.getTruffleProperties();
         else return BlockBehaviour.Properties.copy(Blocks.DIRT);
     }
 
     public static BlockSupplier registerLeadGrate() {
         BlockBehaviour.Properties properties = BlockBehaviour.Properties.of().noOcclusion().strength(5.0F, 6.0F).requiresCorrectToolForDrops().sound(SoundType.METAL);
-        if (ModCompat.COPPER_BACKPORT) {
+        if (ModCompat.hasCopperBackport()) {
             return CopperBackportCompat.registerGrateBlock(properties);
         }
         else return registerBlock("lead_grate",

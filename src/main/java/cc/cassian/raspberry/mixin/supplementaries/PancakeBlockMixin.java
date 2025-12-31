@@ -53,7 +53,7 @@ public class PancakeBlockMixin {
 
     @ModifyArg(method = "removeLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/effect/MobEffectInstance;<init>(Lnet/minecraft/world/effect/MobEffect;I)V"))
     private MobEffect pancakesGiveSugarRush(MobEffect par1) {
-        if (ModCompat.NEAPOLITAN) {
+        if (ModCompat.hasNeapolitan()) {
             return NeapolitanCompat.sugarRush();
         } else {
             return par1;

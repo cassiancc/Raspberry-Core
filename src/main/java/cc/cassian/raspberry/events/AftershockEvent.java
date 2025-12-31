@@ -29,7 +29,7 @@ public class AftershockEvent {
             }
             copperCount--;
             if (copperCount >= 0) {
-                if (!ModCompat.COFH_CORE)
+                if (!ModCompat.hasCofhCore())
                     player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20, copperCount, false, false, false));
                 player.addEffect(new MobEffectInstance(RaspberryMobEffects.AFTERSHOCK.get(), 6000, copperCount, false, false, true));
             }

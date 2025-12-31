@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class LivingEntityMixin {
     @Inject(method = "tick", at = @At(value = "HEAD"))
     private void tick(CallbackInfo ci) {
-        if (ModCompat.COFH_CORE)
+        if (ModCompat.hasCofhCore())
             AftershockEvent.resist((LivingEntity) (Object) this);
     }
 }

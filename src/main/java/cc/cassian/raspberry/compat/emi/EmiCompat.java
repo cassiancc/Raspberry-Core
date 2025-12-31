@@ -27,17 +27,17 @@ public class EmiCompat implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry emiRegistry) {
-        if (ModConfig.get().emi_tablets && ModCompat.CREATE && ModCompat.DOMESTICATION_INNOVATION && ModCompat.ENSORCELLATION && ModCompat.SUPPLEMENTARIES && ModCompat.ALLUREMENT) {
+        if (ModConfig.get().emi_tablets && ModCompat.hasCreate() && ModCompat.hasDomesticationInnovation() && ModCompat.hasEnsorcellation() && ModCompat.hasSupplementaries() && ModCompat.hasAllurement()) {
             EmiSmithingRecipe.addEnchantments(emiRegistry);
         }
-        if (ModCompat.QUARK) {
+        if (ModCompat.hasQuark()) {
             emiRegistry.addWorkstation(EmiCompat.ANVIL, EmiStack.of(Items.ANVIL));
             emiRegistry.addWorkstation(EmiCompat.ANVIL, EmiStack.of(Items.CHIPPED_ANVIL));
             emiRegistry.addWorkstation(EmiCompat.ANVIL, EmiStack.of(Items.DAMAGED_ANVIL));
             emiRegistry.addCategory(ANVIL);
             EmiEtchingRecipe.addRunes(emiRegistry);
         }
-        if (ModCompat.BETTER_BEACONS && ModConfig.get().raspberry_beacon_interaction) {
+        if (ModCompat.hasBetterBeacons() && ModConfig.get().raspberry_beacon_interaction) {
             emiRegistry.addWorkstation(EmiCompat.BEACON_BASE, EmiStack.of(Items.BEACON));
             emiRegistry.addCategory(BEACON_BASE);
             EmiBeaconBaseRecipe.addBeaconRecipe(emiRegistry);
@@ -45,19 +45,21 @@ public class EmiCompat implements EmiPlugin {
             emiRegistry.addCategory(BEACON_PAYMENT);
             EmiBeaconPaymentRecipe.addBeaconRecipe(emiRegistry);
         }
-        if (ModCompat.ITEM_OBLITERATOR) {
+        if (ModCompat.hasItemObliterator()) {
             emiRegistry.removeEmiStacks(emiStack -> ItemObliteratorCompat.shouldHide(emiStack.getItemStack()));
         }
         emiRegistry.addDragDropHandler(CreativeModeInventoryScreen.class, EmiCompat::handleDragAndDrop);
         emiRegistry.addDragDropHandler(InventoryScreen.class, EmiCompat::handleDragAndDrop);
-        if (ModCompat.SIDEKICK) {
+        if (ModCompat.hasSidekick()) {
             SidekickCompat.addDragAndDrop(emiRegistry);
         }
     }
 
     public static boolean handleDragAndDrop(AbstractContainerScreen<?> screen, EmiIngredient stack, int x, int y) {
-        if (screen.getMinecraft().player.hasPermissions(2)) {
-            RaspberryNetworking.sendToServer(new SetStackPacket(screen.getSlotUnderMouse().getContainerSlot(), stack.getEmiStacks().get(0).getItemStack()));
+        if (screen.getMinecraft().player != null && screen.getMinecraft().player.hasPermissions(2)) {
+            if (screen.getSlotUnderMouse() != null) {
+                RaspberryNetworking.sendToServer(new SetStackPacket(screen.getSlotUnderMouse().getContainerSlot(), stack.getEmiStacks().get(0).getItemStack()));
+            }
             return true;
         }
         return false;

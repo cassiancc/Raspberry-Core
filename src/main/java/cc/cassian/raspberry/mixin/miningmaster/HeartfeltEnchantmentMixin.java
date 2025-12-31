@@ -24,7 +24,7 @@ public class HeartfeltEnchantmentMixin {
     @WrapOperation(method = "onItemAttributeModifierCalculate", remap = false, at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ItemAttributeModifierEvent;getItemStack()Lnet/minecraft/world/item/ItemStack;"))
     private static ItemStack glidersAreArmor(ItemAttributeModifierEvent instance, Operation<ItemStack> original) {
         var stack = original.call(instance);
-        if (ModCompat.GLIDERS && GlidersCompat.isGlider(stack) && stack.is(RaspberryTags.ENCHANTABLE_HEARTFELT)) {
+        if (ModCompat.hasGliders() && GlidersCompat.isGlider(stack) && stack.is(RaspberryTags.ENCHANTABLE_HEARTFELT)) {
             ItemStack defaultInstance = Items.LEATHER_CHESTPLATE.getDefaultInstance();
             defaultInstance.setTag(stack.getTag());
             return defaultInstance;

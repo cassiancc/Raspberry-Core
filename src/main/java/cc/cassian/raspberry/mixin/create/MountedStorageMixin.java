@@ -17,13 +17,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MountedStorageMixin {
     @Inject(method = "canUseAsStorage", at = @At(value = "HEAD"), remap = false, cancellable = true)
     private static void moddedBlocksAreStorage(BlockEntity be, CallbackInfoReturnable<Boolean> cir) {
-        if (ModCompat.FARMERS_DELIGHT)
+        if (ModCompat.hasFarmersDelight())
             if (FarmersDelightCompat.isCabinet(be))
                 cir.setReturnValue(true);
-        else if (ModCompat.ANOTHER_FURNITURE)
+        else if (ModCompat.hasAnotherFurniture())
             if (AnotherFurnitureCompat.isDrawer(be))
                 cir.setReturnValue(true);
-        else if (ModCompat.SUPPLEMENTARIES)
+        else if (ModCompat.hasSupplementaries())
             if (SupplementariesCompat.isStorage(be))
                 cir.setReturnValue(true);
     }

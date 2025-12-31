@@ -50,7 +50,7 @@ public final class RaspberryMod {
         // Proceed with mild caution.
         ModConfig.load();
         // Register deferred registers.
-        if (ModCompat.FARMERS_DELIGHT && ModCompat.SUPPLEMENTARIES) {
+        if (ModCompat.hasFarmersDelight() && ModCompat.hasSupplementaries()) {
             RaspberryBlocks.register(eventBus);
             RaspberryItems.ITEMS.register(eventBus);
             RaspberryMobEffects.MOB_EFFECTS.register(eventBus);
@@ -74,7 +74,7 @@ public final class RaspberryMod {
         if (FMLEnvironment.dist.isClient()) {
             RaspberryModClient.init();
         }
-        if (ModCompat.BLUEPRINT) RaspberryData.registerData();
+        if (ModCompat.hasBlueprint()) RaspberryData.registerData();
     }
 
     public static ResourceLocation locate(String id) {
@@ -87,16 +87,16 @@ public final class RaspberryMod {
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        if (ModCompat.NEAPOLITAN) {
+        if (ModCompat.hasNeapolitan()) {
             NeapolitanCompat.boostAgility();
         }
-        if (ModCompat.QUARK) {
+        if (ModCompat.hasQuark()) {
             QuarkCompat.register();
         }
         for (BlockSupplier foliageBlock : FOLIAGE_BLOCKS) {
             ComposterBlock.COMPOSTABLES.put(foliageBlock.getBlockSupplier().get(), 0.3f);
         }
-        if (ModCompat.SUPPLEMENTARIES) {
+        if (ModCompat.hasSupplementaries()) {
             SupplementariesCompat.register();
         }
 
@@ -105,7 +105,7 @@ public final class RaspberryMod {
 
     @SubscribeEvent
     public static void lightningTick(EntityStruckByLightningEvent event) {
-        if (!ModCompat.COFH_CORE && ModConfig.get().aftershock) {
+        if (!ModCompat.hasCofhCore() && ModConfig.get().aftershock) {
             AftershockEvent.electrify(event);
         }
     }
@@ -117,28 +117,28 @@ public final class RaspberryMod {
 
     @SubscribeEvent
     public void onItemTooltipEvent(ItemTooltipEvent event) {
-        if (ModCompat.AQUACULTURE) {
+        if (ModCompat.hasAquaculture()) {
             AquacultureCompat.checkAndAddTooltip(event);
         }
     }
 
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (ModCompat.ENVIRONMENTAL) {
+        if (ModCompat.hasEnvironmental()) {
             EnvironmentalCompat.onEntityInteract(event);
         }
     }
 
     @SubscribeEvent
     public void onEntityJoinLevel(EntityJoinLevelEvent event) {
-        if (ModCompat.ENVIRONMENTAL) {
+        if (ModCompat.hasEnvironmental()) {
             EnvironmentalCompat.onEntityJoinWorld(event);
         }
     }
 
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
-        if (ModCompat.ENVIRONMENTAL) {
+        if (ModCompat.hasEnvironmental()) {
             EnvironmentalCompat.onLivingUpdate(event);
         }
     }

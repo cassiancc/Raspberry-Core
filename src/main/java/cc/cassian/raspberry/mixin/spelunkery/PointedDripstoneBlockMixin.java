@@ -37,11 +37,13 @@ public class PointedDripstoneBlockMixin {
     @Inject(method = "maybeTransferFluid", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z", shift = At.Shift.BEFORE))
     private static void soSalty(BlockState state, ServerLevel level, BlockPos pos, float randChance, CallbackInfo ci, @Local Optional<PointedDripstoneBlock.FluidInfo> optional, @Local Fluid fluid, @Local(ordinal = 0) BlockPos blockPos) {
         if (ModList.get().isLoaded("spelunkery") &&
-                level.getBlockState(optional.get().pos().below()).is(SpelunkeryCompat.rockSalt) && fluid == Fluids.WATER) {
+                level.getBlockState(optional.get().pos().below()).is(SpelunkeryCompat.getRockSalt()) && fluid == Fluids.WATER) {
+
             BlockPos blockPos2 = raspberryCore$findSaltable(level, blockPos);
+
             if (blockPos2 != null) {
                 level.levelEvent(1504, blockPos, 0);
-                BlockState blockState = SpelunkeryCompat.rockSalt.defaultBlockState();
+                BlockState blockState = SpelunkeryCompat.getRockSalt().defaultBlockState();
                 level.setBlockAndUpdate(blockPos2, blockState);
             }
         }
@@ -50,18 +52,15 @@ public class PointedDripstoneBlockMixin {
     @Unique
     @Nullable
     private static BlockPos raspberryCore$findSaltable(Level level, BlockPos pos) {
-        Predicate<BlockState> predicate = (arg2) -> {
-            return arg2.is(RaspberryTags.CONVERTS_TO_SALT);
-        };
-        BiPredicate<BlockPos, BlockState> biPredicate = (arg2, arg3) -> {
-            return canDripThrough(level, arg2, arg3) || arg3.is(Blocks.POINTED_DRIPSTONE);
-        };
+        Predicate<BlockState> predicate = (arg2) -> arg2.is(RaspberryTags.CONVERTS_TO_SALT);
+        BiPredicate<BlockPos, BlockState> biPredicate = (arg2, arg3) -> canDripThrough(level, arg2, arg3) || arg3.is(Blocks.POINTED_DRIPSTONE);
 
-        return findBlockVertical(level, pos, Direction.DOWN.getAxisDirection(), biPredicate, predicate).orElse(null);
+        return raspberryCore$findBlockVertical(level, pos, Direction.DOWN.getAxisDirection(), biPredicate, predicate).orElse(null);
     }
 
-    private static Optional<BlockPos> findBlockVertical(LevelAccessor level, BlockPos pos, Direction.AxisDirection axis,
-                                                        BiPredicate<BlockPos, BlockState> positionalStatePredicate, Predicate<BlockState> statePredicate) {
+    @Unique
+    private static Optional<BlockPos> raspberryCore$findBlockVertical(LevelAccessor level, BlockPos pos, Direction.AxisDirection axis,
+                                                                      BiPredicate<BlockPos, BlockState> positionalStatePredicate, Predicate<BlockState> statePredicate) {
         Direction direction = Direction.get(axis, Direction.Axis.Y);
         BlockPos.MutableBlockPos mutableBlockPos = pos.mutable();
         for (int i = 1; i < 11; i++) {
@@ -77,5 +76,4 @@ public class PointedDripstoneBlockMixin {
 
         return Optional.empty();
     }
-
 }

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class AtlasItem extends Item {
     public AtlasItem(Properties properties) {
@@ -15,8 +16,8 @@ public class AtlasItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        if (ModCompat.XAEROS_WORLD_MAP && level.isClientSide()) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
+        if (ModCompat.hasXaerosWorldMap() && level.isClientSide()) {
             XaerosCompat.openWorldMap(player);
         }
         return InteractionResultHolder.success(player.getItemInHand(usedHand));

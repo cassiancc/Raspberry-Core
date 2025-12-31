@@ -31,7 +31,7 @@ public abstract class ItemStackMixin {
 //        if (!arg.hasTag() && !arg2.hasTag()) {
 //            cir.setReturnValue(true);
 //        } else
-        if (ModCompat.SPELUNKERY) {
+        if (ModCompat.hasSpelunkery()) {
             if (SpelunkeryCompat.checkDimensionalTears(arg, arg2))
                 cir.setReturnValue(true);
         }

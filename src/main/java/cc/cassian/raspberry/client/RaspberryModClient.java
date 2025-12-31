@@ -108,7 +108,7 @@ public class RaspberryModClient {
      * Integrate Cloth Config screen (if mod present) with Forge mod menu.
      */
     public static void registerModsPage(ModLoadingContext context) {
-        if (ModCompat.CLOTH_CONFIG)
+        if (ModCompat.hasClothConfig())
             context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(ModConfigFactory::createScreen));
     }
 

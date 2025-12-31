@@ -22,7 +22,7 @@ public class RaspberryItems {
     public static Supplier<Item> FIREFLY = registerFireflyItem();
 
     private static Supplier<Item> registerFireflyItem() {
-        if (ModCompat.NATURALIST) {
+        if (ModCompat.hasNaturalist()) {
             return NaturalistCompat.registerFireflyItem();
         } else {
             return RaspberryItems.registerItem("firefly", () -> new Item(new Item.Properties()));
