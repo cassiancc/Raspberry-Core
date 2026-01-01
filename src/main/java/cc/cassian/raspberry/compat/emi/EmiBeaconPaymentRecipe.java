@@ -71,12 +71,13 @@ public class EmiBeaconPaymentRecipe extends EmiBeaconBaseRecipe {
             Map.entry( "create:andesite_alloy", 0),
             Map.entry( "create:brass_ingot", 45),
             Map.entry( "create:zinc_ingot", 15),
+            Map.entry( "create:polished_rose_quartz", 15),
             Map.entry( "minecraft:amethyst_shard", 7),
             Map.entry( "minecraft:copper_ingot", 0),
 
-            Map.entry("minecraft:diamond", 60),
-            Map.entry( "minecraft:echo_shard", 75),
-            Map.entry( "minecraft:ender_pearl", 60),
+            Map.entry("minecraft:diamond", 85),
+            Map.entry( "minecraft:echo_shard", 60),
+            Map.entry( "minecraft:ender_pearl", 85),
             Map.entry( "minecraft:gold_ingot", 30),
 
             Map.entry( "minecraft:iron_ingot", 15),
@@ -86,7 +87,7 @@ public class EmiBeaconPaymentRecipe extends EmiBeaconBaseRecipe {
             Map.entry("oreganized:lead_ingot", 15),
             Map.entry( "oreganized:silver_ingot", 85),
 
-            Map.entry("spelunkery:cinnabar", 7)
+            Map.entry("spelunkery:cinnabar", 30)
             );
 
     private static final List<EmiIngredient> BLOCKS;
