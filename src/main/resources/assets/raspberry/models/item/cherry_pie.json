@@ -1,6 +1,6 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "environmental:item/cherry_pie"
+    "layer0": "raspberry:item/cherry_pie"
   }
 }
