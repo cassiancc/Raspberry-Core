@@ -16,6 +16,7 @@
 ### Changed
 - Removed leash backport in favor of Vanilla Backport's implementation.
 - Temporarily removed the ability to leash fences.
+- Armor trims no longer mention that they are Smithing Templates.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
@@ -26,3 +27,4 @@
 - Tablet recipes now work on 1.20.
 - A spectator with Bracewalk no longer can break blocks. (Additional Enchantments)
 - Aloe Vera blocks can now be harvested with modded shears. (Atmospheric)
+- Beacon recipes now match the current version of RF.

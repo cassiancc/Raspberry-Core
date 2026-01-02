@@ -90,6 +90,7 @@
     "minecraft.RaiderMixin",
     "minecraft.ScreenMixin",
     "minecraft.SilenceServerMixin",
+    "minecraft.SmithingTemplateMixin",
     "minecraft.SpreadingSnowyDirtBlockMixin",
     "minecraft.ThrowableProjectileMixin",
     "minecraft.WitherRoseBlockMixin",

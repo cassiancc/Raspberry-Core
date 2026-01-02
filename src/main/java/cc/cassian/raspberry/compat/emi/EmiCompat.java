@@ -35,7 +35,6 @@ public class EmiCompat implements EmiPlugin {
             emiRegistry.addWorkstation(EmiCompat.ANVIL, EmiStack.of(Items.CHIPPED_ANVIL));
             emiRegistry.addWorkstation(EmiCompat.ANVIL, EmiStack.of(Items.DAMAGED_ANVIL));
             emiRegistry.addCategory(ANVIL);
-            EmiEtchingRecipe.addRunes(emiRegistry);
         }
         if (ModCompat.hasBetterBeacons() && ModConfig.get().raspberry_beacon_interaction) {
             emiRegistry.addWorkstation(EmiCompat.BEACON_BASE, EmiStack.of(Items.BEACON));
