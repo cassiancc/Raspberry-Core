@@ -12,6 +12,7 @@
 - New item tag to hide items from the creative menu.
 - Items dragged from EMI into the inventory now are added to the inventory (as long as the player is an operator).
 - Maple leaf tinting can now be disabled in the mod config.
+- Spruce leaf tinting can now be disabled in the mod config.
 
 ### Changed
 - Removed leash backport in favor of Vanilla Backport's implementation.

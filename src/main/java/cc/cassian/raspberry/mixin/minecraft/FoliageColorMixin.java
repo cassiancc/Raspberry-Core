@@ -9,8 +9,15 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(FoliageColor.class)
 public class FoliageColorMixin {
     @WrapMethod(method = "getBirchColor")
-    private static int mixin(Operation<Integer> original) {
+    private static int noBirchTinting(Operation<Integer> original) {
         if (ModConfig.get().disableBirchLeafTinting)
+            return 0xffffff;
+        return original.call();
+    }
+
+    @WrapMethod(method = "getEvergreenColor")
+    private static int noSpruceTinting(Operation<Integer> original) {
+        if (ModConfig.get().disableSpruceLeafTinting)
             return 0xffffff;
         return original.call();
     }

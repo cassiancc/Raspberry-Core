@@ -85,8 +85,9 @@ public class ModConfig {
     public Map<String, String> creativeTabIcons = new HashMap<>();
     public boolean noTemplates = true;
     public boolean compatibleDatapacks = true;
+    public boolean disableSpruceLeafTinting = true;
 
-	public ModConfig() {
+    public ModConfig() {
         creativeTabIcons.put("minecraft:building_blocks", "minecraft:bricks");
         creativeTabIcons.put("minecraft:colored_blocks", "minecraft:cyan_wool");
         creativeTabIcons.put("minecraft:natural_blocks", "minecraft:grass_block");
