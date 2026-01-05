@@ -16,10 +16,6 @@
     "minecraft.SoundEngineWrapper",
     "minecraft.SoundOptionsScreenMixin",
     "naturalist.GlowGoopItemMixin",
-    "profiler.FullTextSearchTreeMixin",
-    "profiler.IdSearchTreeMixin",
-    "profiler.SearchRegistryMixin",
-    "profiler.ShutdownHookMixin",
     "spyglass_improvements.MinecraftMixin"
   ],
   "mixins": [
@@ -106,8 +102,6 @@
     "naturalist.SnakeMixin",
     "naturalist.StackableMobItemsMixin",
     "oreganized.SilverMirrorItemMixin",
-    "profiler.CreativeModeTabsMixin",
-    "profiler.EmiRegistryMixin",
     "quark.CrateContainerBlacklistMixin",
     "quark.ExpandedItemInteractionsModuleMixin",
     "quark.QuickArmorSwappingModuleMixin",
