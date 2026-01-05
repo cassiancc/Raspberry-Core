@@ -20,8 +20,7 @@ import java.util.Map;
 public class ModConfig {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-
-    private static ModConfig INSTANCE = new ModConfig();
+    private static ModConfig INSTANCE;
 
     //General settings
     public boolean aftershock = true;
@@ -38,6 +37,7 @@ public class ModConfig {
     public int aquaculture_goodBaitLureBonus = 3;
     public int aquaculture_wormDiscoveryRange = 80;
     public boolean create_blastproofing = true;
+    public boolean enableProfiler = false;
     public boolean searchContainers = true;
     public boolean horses_noWander = true;
     public boolean horses_noBuck = true;
@@ -67,7 +67,6 @@ public class ModConfig {
     public double raspberryCartMaxSpeed = 34.0;
     public boolean dungeons_mobs_revised_cobwebs = true;
     public boolean ghastDragonFireball = false;
-    public boolean leashFences = true; // TODO: reimplement harou's leashed fences
     public boolean disableBirchLeafTinting = true;
     public boolean disableMapleLeafTinting = false;
     public boolean jadeRequiresScoping = true;
@@ -103,28 +102,30 @@ public class ModConfig {
 
     public static void load() {
         if (!Files.exists(configPath())) {
+            INSTANCE = new ModConfig();
             save();
             return;
         }
 
         try (var input = Files.newInputStream(configPath())) {
             INSTANCE = GSON.fromJson(new InputStreamReader(input, StandardCharsets.UTF_8), ModConfig.class);
-            save();
         } catch (IOException e) {
-            RaspberryMod.LOGGER.warn("Unable to load config file!");
+            RaspberryMod.LOGGER.warn("Unable to load config file!", e);
+            INSTANCE = new ModConfig();
         }
     }
 
     public static void save() {
+        if (INSTANCE == null) INSTANCE = new ModConfig();
         try (var output = Files.newOutputStream(configPath()); var writer = new OutputStreamWriter(output, StandardCharsets.UTF_8)) {
             GSON.toJson(INSTANCE, writer);
         } catch (IOException e) {
-            RaspberryMod.LOGGER.warn("Unable to save config file!");
+            RaspberryMod.LOGGER.warn("Unable to save config file!", e);
         }
     }
 
     public static ModConfig get() {
-        if (INSTANCE == null) INSTANCE = new ModConfig();
+        if (INSTANCE == null) load();
         return INSTANCE;
     }
 

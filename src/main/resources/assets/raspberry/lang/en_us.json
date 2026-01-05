@@ -130,7 +130,11 @@
   "config.raspberry.config.emi_tablets": "Add EMI integration to RF tablets.",
   "config.raspberry.config.toms_hideBeacon": "Hide beacon info in Tom's Simple Storage.",
 
-  "config.raspberry.config.sunSensitiveRaiders": "Raider mobs burn in daylight",
+ "config.raspberry.config.compatibleDatapacks": "Forcibly marks all datapacks as compatible",
+ "config.raspberry.config.disableSpruceLeafTinting": "Disable spruce leaf tinting",
+ "config.raspberry.config.noTemplates": "Completely remove smithing templates",
+ "config.raspberry.config.enableProfiler": "Enable EMI/creative mode search profiler",
+ "config.raspberry.config.sunSensitiveRaiders": "Raider mobs burn in daylight",
   "config.raspberry.config.mirrorSearchRadius": "Mirror search radius",
   "config.raspberry.config.mirrorVerticalSearchRadius": "Mirror vertical search radius",
   "config.raspberry.config.mirrorParticleSearchRadius": "Mirror particle search radius",
