@@ -13,6 +13,7 @@
 - Items dragged from EMI into the inventory now are added to the inventory (as long as the player is an operator).
 - Maple leaf tinting can now be disabled in the mod config.
 - Spruce leaf tinting can now be disabled in the mod config.
+- Optional profiler for creative mode/EMI search indexing.
 
 ### Changed
 - Removed leash backport in favor of Vanilla Backport's implementation.
@@ -26,6 +27,7 @@
 - Boat leash connections persist on world reload.
 - Music and sound settings being broken on 1.20.
 - Tablet recipes now work on 1.20.
-- A spectator with Bracewalk no longer can break blocks. (Additional Enchantments)
+- Spectators with Bracewalk no longer can break blocks. (Additional Enchantments)
 - Aloe Vera blocks can now be harvested with modded shears. (Atmospheric)
 - Beacon recipes now match the current version of RF.
+- Errors caused by missing buckets from Respiteful.
