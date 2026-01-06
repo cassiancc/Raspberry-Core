@@ -30,3 +30,4 @@
 - Aloe Vera blocks can now be harvested with modded shears. (Atmospheric)
 - Beacon recipes now match the current version of RF.
 - Errors caused by missing buckets from Respiteful.
+- ModernFix's blast search trees feature now works with EMI.

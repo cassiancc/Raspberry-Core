@@ -15,6 +15,7 @@
     "minecraft.SoundEngineMixin",
     "minecraft.SoundEngineWrapper",
     "minecraft.SoundOptionsScreenMixin",
+    "modernfix.ModernFixCompatMixin",
     "naturalist.GlowGoopItemMixin",
     "spyglass_improvements.MinecraftMixin"
   ],

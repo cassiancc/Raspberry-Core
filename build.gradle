@@ -282,9 +282,6 @@ dependencies {
     modImplementation("maven.modrinth:twigs:$twigs_version")
     modCompileOnly("local:dungeons_mobs:$dungeons_mobs_version")
     modCompileOnly("curse.maven:dungeons-libraries-550941:$dungeons_libraries_version") // dependency of dungeons mobs
-    modImplementation("curse.maven:enderman-overhaul-574409:$enderman_overhaul_version")
-    modImplementation("curse.maven:resourceful-config-714059:$resourceful_config_version") // dependency of enderman overhaul
-    modImplementation("curse.maven:resourceful-lib-570073:$resourceful_lib_version") // dependency of enderman overhaul
     modImplementation("maven.modrinth:quark:$quark_version")
     modImplementation("maven.modrinth:zeta:$zeta_version")
 //    modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
@@ -320,14 +317,14 @@ dependencies {
     modCompileOnly("maven.modrinth:domestication-innovation:SGxCLghg")
     modCompileOnly("maven.modrinth:citadel:oD1qDb1C")// dependency of domestication innovation
 
-    // beacons
+    // Beacons
     modImplementation("curse.maven:just-enough-beacons-reforged-912266:$jeb_reforged_version")
     modImplementation("curse.maven:cerbons-better-beacons-921066:$better_beacons_version")
     modImplementation("curse.maven:cerbons-api-955605:$cerbons_api_version")
 
     modImplementation("curse.maven:mining-master-534956:5540513")
 
-    //1.20
+    // 1.20
     modImplementation "maven.modrinth:better-copper-armor-and-tools:1.2-1.20.1"
     modImplementation "dev.architectury:architectury-forge:9.2.14"
     modImplementation("maven.modrinth:puzzles-lib:${puzzles_lib_version}")
@@ -336,14 +333,15 @@ dependencies {
     modImplementation("maven.modrinth:item-obliterator:${item_obliterator_version}")
     modImplementation("maven.modrinth:necronomicon:${necronomicon_version}")
     modImplementation("maven.modrinth:sidekick:${sidekick_version}+${minecraft_version}-forge")
+    modImplementation("maven.modrinth:modernfix:${modernfix_version}")
 
     // MixinSquared
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.2.0"))
     implementation(include("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.2.0"))
+
     // MixinExtras
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     implementation(include("io.github.llamalad7:mixinextras-forge:0.4.1"))
-
 }
 
 processResources {

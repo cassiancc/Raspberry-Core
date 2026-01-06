@@ -91,6 +91,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("miningmaster", mixinClassName)){
             return false;
         }
+        else if (checkMixin("modernfix", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("naturalist", mixinClassName)){
             return false;
         }

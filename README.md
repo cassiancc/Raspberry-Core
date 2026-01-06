@@ -49,15 +49,13 @@ A full feature list is available on the [Modded Minecraft Wiki](https://moddedmc
 [![Code license (MIT)](https://img.shields.io/badge/code%20license-MIT-green.svg?style=flat-square)](https://github.com/cassiancc/Raspberry-Core/blob/main/LICENSE.txt)
 
 
-If you are thinking about using the code or assets from Raspberry Core, please note the mod's licensing. **All assets of Raspberry Core are unlicensed and all rights are reserved to them by their respective authors.** The source code of Raspberry Core mod for Minecraft 1.20.1 is under the MIT license.
+If you are thinking about using the code or assets from Raspberry Core, please note the mod's licensing. **All assets of Raspberry Core are unlicensed and all rights are reserved to them by their respective authors.** The source code of the Raspberry Core mod for Minecraft 1.20.1 is under the MIT license.
 
 ## Credits
 - Contains code from the 1.19.4 version of [Audaki Cart Engine](https://modrinth.com/mod/audaki-cart-engine), used under its [CC0 license](https://github.com/audaki/minecraft-cart-engine/blob/mc1.18.2-1.19.4/LICENSE).
 - Contains code from [MerchantCalico's fork](https://github.com/MehVahdJukaar/FarmersDelightRefabricated) of [Farmer's Delight](https://modrinth.com/mod/farmers-delight), used under its [MIT License](https://github.com/MehVahdJukaar/FarmersDelightRefabricated/blob/feat/1.20/emi/LICENSE).
 - Contains code from [Create Fabric](https://github.com/Fabricators-of-Create/Create), used under its [MIT License](https://github.com/MehVahdJukaar/FarmersDelightRefabricated/blob/feat/1.20/emi/LICENSE).
 - Contains sounds from [Auditory Continued](https://modrinth.com/mod/auditory-continued), used under its [MIT License](https://github.com/ItsSyfe/auditory-continued).
-- Contains code from [Vanilla Backport](https://github.com/ItsBlackGear/VanillaBackport), used under its [MIT License](https://github.com/ItsBlackGear/VanillaBackport/blob/1.20.1/LICENSE.txt).
-- Contains code from [Harou's Leashed Fences](https://github.com/martinkadlec0/harous-leashed-fences), used under its [MIT License](https://github.com/martinkadlec0/harous-leashed-fences/blob/1.21.11/LICENSE).
 - Contains code from [Better Jukebox](https://github.com/WatDuhHekBro/BetterJukebox), used under its [LGPL-3.0-only License](https://github.com/WatDuhHekBro/BetterJukebox/blob/main/LICENSE.txt).
 
 This repository contains a compiled JAR of Ecologics to allow for the mod to be compiled against, with the copyrighted assets removed. Ecologics code is available under its [MIT License](https://github.com/samedifferent/Ecologics/blob/1.19-crossplatform/LICENSE).
