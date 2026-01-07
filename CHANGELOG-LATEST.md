@@ -31,3 +31,4 @@
 - Beacon recipes now match the current version of RF.
 - Errors caused by missing buckets from Respiteful.
 - ModernFix's blast search trees feature now works with EMI.
+- Restored connectible chains mixins, now targeting the Fabric version.

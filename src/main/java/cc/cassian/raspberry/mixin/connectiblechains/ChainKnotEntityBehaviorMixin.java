@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.mixin.connectiblechains;
 
-import com.lilypuree.connectiblechains.entity.ChainKnotEntity;
+import com.github.legoatoom.connectiblechains.entity.ChainKnotEntity;
+import com.github.legoatoom.connectiblechains.entity.Chainable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,26 +23,27 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Mixin(ChainKnotEntity.class)
 public abstract class ChainKnotEntityBehaviorMixin extends HangingEntity {
 
-    protected ChainKnotEntityBehaviorMixin(EntityType<? extends HangingEntity> p_31703_, Level p_31704_) {
-        super(p_31703_, p_31704_);
+    protected ChainKnotEntityBehaviorMixin(EntityType<? extends HangingEntity> type, Level level) {
+        super(type, level);
     }
 
-    @Shadow(remap = false) public abstract boolean canStayAttached();
-    @Shadow(remap = false) public abstract void destroyLinks(boolean mayDrop);
     @Shadow(remap = false) public abstract void playPlacementSound();
 
-    @Inject(method = "canStayAttached", at = @At("RETURN"), cancellable = true, remap = false)
+    @Shadow(remap = false) public abstract HashSet<Chainable.ChainData> getChainDataSet();
+
+    @Inject(method = "survives", at = @At("RETURN"), cancellable = true)
     private void raspberry$checkForLeashKnot(CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue() && !this.level().isClientSide()) {
             BlockPos pos = this.blockPosition();
-            AABB aabb = new AABB(pos).inflate(1.0); 
+            AABB aabb = new AABB(pos).inflate(1.0);
             List<LeashFenceKnotEntity> knots = this.level().getEntitiesOfClass(LeashFenceKnotEntity.class, aabb);
-            
+
             for (LeashFenceKnotEntity knot : knots) {
                 if (knot.blockPosition().equals(pos) && knot.isAlive()) {
                     cir.setReturnValue(false);
@@ -53,13 +55,22 @@ public abstract class ChainKnotEntityBehaviorMixin extends HangingEntity {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void raspberry$tickCheckObstruction(CallbackInfo ci) {
-        if (!this.level().isClientSide() && !this.canStayAttached()) {
-            this.destroyLinks(true);
-            this.discard();
+        if (!this.level().isClientSide()) {
+            if (!this.survives()) {
+                ((Chainable) this).detachAllChains();
+                this.remove(RemovalReason.DISCARDED);
+                return;
+            }
+
+            if (this.getChainDataSet().isEmpty()) {
+                this.remove(RemovalReason.DISCARDED);
+            }
         }
     }
 
-    @Inject(method = "interact", at = @At(value = "INVOKE", target = "Lcom/lilypuree/connectiblechains/entity/ChainKnotEntity;destroyLinks(Z)V", remap = false))
+    @Inject(method = "interact",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/github/legoatoom/connectiblechains/entity/ChainKnotEntity;dropItem(Lnet/minecraft/world/entity/Entity;)V"))
     private void raspberry$damageShearsOnInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Tags.Items.SHEARS)) {
@@ -76,9 +87,12 @@ public abstract class ChainKnotEntityBehaviorMixin extends HangingEntity {
         if (attacker instanceof Player player) {
             if (!this.level().isClientSide()) {
                 this.playPlacementSound();
-                this.destroyLinks(!player.isCreative());
-                this.discard();
-
+                if (!player.isCreative()) {
+                    ((Chainable) this).detachAllChains();
+                } else {
+                    ((Chainable) this).detachAllChainsWithoutDrop();
+                }
+                this.remove(RemovalReason.DISCARDED);
                 ItemStack stack = player.getMainHandItem();
                 if (stack.is(Tags.Items.SHEARS)) {
                     stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));

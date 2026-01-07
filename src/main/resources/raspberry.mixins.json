@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
-    "connectiblechains.ChainKnotEntityRendererMixin",
     "create.MechanicalCrafterMixin",
     "echo_chest.EchoChestScreenMixin",
     "emi.RecipeScreenMixin",
@@ -15,7 +14,9 @@
     "minecraft.SoundEngineMixin",
     "minecraft.SoundEngineWrapper",
     "minecraft.SoundOptionsScreenMixin",
+    "modernfix.KeyMappingAccessor",
     "modernfix.ModernFixCompatMixin",
+    "modernfix.ModernFixReplacementMixin",
     "naturalist.GlowGoopItemMixin",
     "spyglass_improvements.MinecraftMixin"
   ],
