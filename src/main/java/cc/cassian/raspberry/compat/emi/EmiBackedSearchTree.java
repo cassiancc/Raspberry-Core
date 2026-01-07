@@ -62,6 +62,25 @@ public class EmiBackedSearchTree extends DummySearchTree<ItemStack> {
         return new ArrayList<>(results);
     }
 
+    public static void register() {
+        SearchTreeProviderRegistry.register(new SearchTreeProviderRegistry.Provider() {
+            @Override
+            public RefreshableSearchTree<ItemStack> getSearchTree(boolean tag) {
+                return new EmiBackedSearchTree(tag);
+            }
+
+            @Override
+            public boolean canUse() {
+                return ModList.get().isLoaded("emi");
+            }
+
+            @Override
+            public String getName() {
+                return "EMI";
+            }
+        });
+    }
+
     public static final SearchTreeProviderRegistry.Provider PROVIDER = new SearchTreeProviderRegistry.Provider() {
         @Override
         public RefreshableSearchTree<ItemStack> getSearchTree(boolean tag) {

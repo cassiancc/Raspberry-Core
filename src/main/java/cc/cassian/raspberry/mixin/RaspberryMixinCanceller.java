@@ -14,6 +14,9 @@ public class RaspberryMixinCanceller implements MixinCanceller {
         else if (mixinClassName.equals("com.mrcrayfish.controllable.mixin.client.jei.IngredientListOverlayMixin") && LoadingModList.get().getModFileById("emi") != null) { 
             return true;
         }
+        else if (mixinClassName.equals("org.embeddedt.modernfix.common.mixin.perf.blast_search_trees.MinecraftMixin")) {
+            return true;
+        }
         return false;
     }
 }
