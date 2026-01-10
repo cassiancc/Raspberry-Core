@@ -307,6 +307,18 @@
     "title": "Imaginary Interlude",
     "author": "C418"
   },
+  "minecraft:music/game/caves/dead_mice": {
+    "title": "Dead Mice",
+    "author": "C418"
+  },
+  "minecraft:music/game/caves/norway": {
+    "title": "Norway",
+    "author": "C418"
+  },
+  "minecraft:music/game/caves/trapdoor": {
+    "title": "Trapdoor",
+    "author": "C418"
+  },
   "endergetic:music/game/end/poise_forest": {
     "title": "Poise Forest",
     "author": "Timinations"
