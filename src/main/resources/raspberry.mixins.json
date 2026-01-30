@@ -120,7 +120,8 @@
     "toms_storage.StorageTerminalMenuMixin",
     "vc_gliders.ArmorStandMixin",
     "vc_gliders.GliderItemMixin",
-    "vc_gliders.GliderUtilMixin"
+    "vc_gliders.GliderUtilMixin",
+    "windswept.PineTreeFeatureMixin"
   ],
   "refmap": "raspberry.refmap.json",
   "plugin": "cc.cassian.raspberry.mixin.RaspberryMixinPlugin",

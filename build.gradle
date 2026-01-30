@@ -302,6 +302,7 @@ dependencies {
     modImplementation("maven.modrinth:xaeros-minimap:${xaeros_minimap_version}")
     modImplementation("maven.modrinth:xaeros-world-map:${xaeros_worldmap_version}")
     modImplementation("curse.maven:etched-491890:${etched_version}")
+    modImplementation("maven.modrinth:windswept:${windswept_version}")
 
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
