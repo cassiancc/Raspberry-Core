@@ -76,6 +76,7 @@ public class ModConfig {
     public double jukeboxDistance = 64.0;
     public boolean disablePenguinShedding = false;
     public boolean fastFlyBlockBreaking = true;
+    public boolean disableWindsweptPineconePlacement = true;
 
     public List<String> hiddenEnchantments = new ArrayList<>();
     public List<String> hiddenPotions = new ArrayList<>();
