@@ -38,6 +38,7 @@ Raspberry Core is a client and server mod for Forge 1.19.2. While it was created
 - [Gliders](https://modrinth.com/mod/gliders) is optional.
 - [Neapolitan](https://modrinth.com/mod/neapolitan) is optional.
 - [Quark](https://modrinth.com/mod/quark) is optional.
+- [Savage and Ravage](https://modrinth.com/mod/savage-and-ravage) is optional.
 - [Sully's Mod](https://modrinth.com/mod/sullysmod) is optional.
 - [Upgrade Aquatic](https://modrinth.com/mod/upgrade-aquatic) is optional.
 

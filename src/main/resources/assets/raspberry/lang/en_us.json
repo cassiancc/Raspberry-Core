@@ -125,6 +125,8 @@
   "config.raspberry.config.disableFaucetSourceBlocks": "Disable waterlogged blocks as valid sources for Faucets",
   "config.raspberry.config.betterJukeboxes": "Playing music in a jukebox fades out vanilla music",
   "config.raspberry.config.disablePenguinShedding": "Disable Ecologics penguin feather shedding",
+  "raspberry.config.creeper_spores_duration_modifier": "Creeper Spore Duration Modifier",
+  "raspberry.config.creeper_spores_duration_modifier.tooltip": "Multiplies the duration of the spore cloud created when a player throws Creeper Spores (0.5 is half duration, 2.0 is double duration).",
 
   "emi.cooking.time_minute": "%s Minute",
   "emi.cooking.time_minutes": "%s Minutes",

@@ -4,6 +4,7 @@
     - Changes jukebox sound to be non-directional.
 - Setting in music and sounds menu to control jukebox fade distance.
 - Config option to disable Ecologics penguins dropping feathers.
+- Config option to modify Savage & Ravage creeper spore cloud durations.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

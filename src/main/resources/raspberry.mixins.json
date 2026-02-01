@@ -131,6 +131,7 @@
     "quark.QuickArmorSwappingModuleMixin",
     "quark.TrowelItemMixin",
     "quark.WoodPostBlockMixin",
+    "savageandravage.SporeCloudMixin",
     "screenshot_viewer.ScreenshotViewerMixin",
     "spelunkery.PointedDripstoneBlockMixin",
     "spyglass_improvements.EventsHandlerMixin",
