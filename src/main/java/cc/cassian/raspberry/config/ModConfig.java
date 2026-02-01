@@ -77,6 +77,7 @@ public class ModConfig {
     public boolean disablePenguinShedding = false;
     public boolean fastFlyBlockBreaking = true;
     public boolean disableWindsweptPineconePlacement = true;
+    public double creeperSporesDurationModifier = 1.0;
 
     public List<String> hiddenEnchantments = new ArrayList<>();
     public List<String> hiddenPotions = new ArrayList<>();

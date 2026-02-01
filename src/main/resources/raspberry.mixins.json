@@ -107,6 +107,7 @@
     "quark.ExpandedItemInteractionsModuleMixin",
     "quark.QuickArmorSwappingModuleMixin",
     "respiteful.RespitefulFluidsMixin",
+    "savageandravage.SporeCloudMixin",
     "screenshot_viewer.ScreenshotViewerMixin",
     "spelunkery.PointedDripstoneBlockMixin",
     "spyglass_improvements.EventsHandlerMixin",

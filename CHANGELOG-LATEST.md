@@ -9,6 +9,7 @@
     - Changes jukebox sound to be non-directional.
 - Setting in music and sounds menu to control jukebox fade distance.
 - Config option to disable Ecologics penguins dropping feathers.
+- Config option to modify Savage and Ravage player thrown creeper spores duration. 
 - New item tag to hide items from the creative menu.
 - Items dragged from EMI into the inventory now are added to the inventory (as long as the player is an operator).
 - Maple leaf tinting can now be disabled in the mod config.
