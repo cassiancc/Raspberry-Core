@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class SoulboundEventsMixin {
 	@Inject(
 			method = "handlePlayerCloneEvent", remap = false, at = @At(value = "HEAD"), cancellable = true)
-	private static void raspberry$disableCuring(PlayerEvent.Clone event, CallbackInfo ci) {
+	private static void raspberry$disableDuping(PlayerEvent.Clone event, CallbackInfo ci) {
 		ci.cancel();
 	}
 }

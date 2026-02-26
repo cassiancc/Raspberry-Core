@@ -64,6 +64,7 @@
     "emi.EmiRecipesMixin",
     "endergetic.EnderWallTorchMixin",
     "endermanoverhaul.ReplacedEndermanMixin",
+    "ensorcellation.SoulboundEnchantmentMixin",
     "ensorcellation.SoulboundEventsMixin",
     "environmental.AbstractSkeletonMixin",
     "environmental.ArmorItemMixin",

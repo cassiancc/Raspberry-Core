@@ -34,6 +34,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("aquaculture", mixinClassName)){
             return false;
         }
+        else if (checkMixin("buzzier_bees", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("brewinandchewin", mixinClassName)){
             return false;
         }
@@ -62,6 +65,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
             return false;
         }
         else if (checkMixin("endergetic", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("ensorcellation", mixinClassName)){
             return false;
         }
         else if (checkMixin("emi", mixinClassName)){
