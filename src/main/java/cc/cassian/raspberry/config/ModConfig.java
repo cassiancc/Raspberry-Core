@@ -67,6 +67,7 @@ public class ModConfig {
     public boolean betterJukeboxes = true;
     public double jukeboxDistance = 64.0;
     public boolean disablePenguinShedding = false;
+    public boolean disableCurativeItems = true;
     public double creeperSporesDurationModifier = 1.0;
 
     public static void load() {
