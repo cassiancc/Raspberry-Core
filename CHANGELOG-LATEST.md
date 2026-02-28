@@ -6,6 +6,7 @@
 - Config option to disable Ecologics penguins dropping feathers.
 - Config option to modify Savage & Ravage creeper spore cloud durations.
 - Disabled some curative items.
+- Items in the `raspberry:fireproof` tag no longer burn.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
@@ -17,3 +18,4 @@
 - Rose Gold bombs now dispense correctly.
 - Crash with Pehkui.
 - Roses can no longer break bedrock.
+- Swept Axes no longer burn.

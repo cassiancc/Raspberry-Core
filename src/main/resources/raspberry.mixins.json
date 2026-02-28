@@ -95,6 +95,7 @@
     "minecraft.EntityAccessor",
     "minecraft.EntityMixin",
     "minecraft.FenceBlockMixin",
+    "minecraft.FireproofItemMixin",
     "minecraft.FoliageColorMixin",
     "minecraft.FoxMixin",
     "minecraft.GhastShootFireballGoalMixin",
