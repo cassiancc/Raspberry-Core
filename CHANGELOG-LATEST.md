@@ -5,6 +5,7 @@
 - Setting in music and sounds menu to control jukebox fade distance.
 - Config option to disable Ecologics penguins dropping feathers.
 - Config option to modify Savage & Ravage creeper spore cloud durations.
+- Disabled some curative items.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
@@ -13,3 +14,5 @@
 - Boat leash connections persist on world reload.
 - A spectator with Bracewalk no longer can break blocks. (Additional Enchantments)
 - Aloe Vera blocks can now be harvested with modded shears. (Atmospheric)
+- Rose Gold bombs now dispense correctly.
+- Crash with Pehkui.
