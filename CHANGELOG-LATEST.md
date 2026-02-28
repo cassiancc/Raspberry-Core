@@ -16,3 +16,4 @@
 - Aloe Vera blocks can now be harvested with modded shears. (Atmospheric)
 - Rose Gold bombs now dispense correctly.
 - Crash with Pehkui.
+- Roses can no longer break bedrock.

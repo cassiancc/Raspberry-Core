@@ -309,6 +309,7 @@ dependencies {
     implementation "gg.moonflower.pinwheel:pinwheel:1.2.0.3" // pollen dependency
     forgeRuntimeLibrary "gg.moonflower:molang-compiler:3.0.1.5"
     forgeRuntimeLibrary "gg.moonflower.pinwheel:pinwheel:1.2.0.3"
+    modImplementation("maven.modrinth:windswept:$windswept_version")
 
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:5138314")
