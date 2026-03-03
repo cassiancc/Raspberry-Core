@@ -236,7 +236,7 @@ dependencies {
 
     // Abnormals
     modCompileOnly("maven.modrinth:environmental:$environmental_version")
-    modCompileOnly("maven.modrinth:caverns-and-chasms:$caverns_and_chasms_version")
+    modImplementation("maven.modrinth:caverns-and-chasms:$caverns_and_chasms_version")
     modCompileOnly("maven.modrinth:upgrade-aquatic:$upgrade_aquatic_version")
     modImplementation("maven.modrinth:neapolitan:$neapolitan_version")
     modImplementation("com.teamabnormals:blueprint:$blueprint_version")

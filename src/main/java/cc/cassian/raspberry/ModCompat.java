@@ -16,6 +16,7 @@ public final class ModCompat {
     public static boolean hasClothConfig() { return isLoaded("cloth_config"); }
     public static boolean hasCofhCore() { return isLoaded("cofh_core"); }
     public static boolean hasCopperized() { return isLoaded("copperized"); }
+    public static boolean hasCopperAgeBackport() { return isLoaded("copperagebackport"); }
     public static boolean hasCopperBackport() { return isLoaded("copperandtuffbackport"); }
     public static boolean hasCreate() { return isLoaded("create"); }
     public static boolean hasDomesticationInnovation() { return isLoaded("domesticationinnovation"); }
