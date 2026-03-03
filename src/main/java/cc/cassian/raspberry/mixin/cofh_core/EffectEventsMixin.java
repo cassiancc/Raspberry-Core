@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EffectEventsMixin {
     @Inject(method = "handleEntityStruckByLightningEvent", at = @At(value = "HEAD"), remap = false)
     private static void mixin(EntityStruckByLightningEvent event, CallbackInfo ci) {
-        if (ModCompat.hasCopperized() && ModConfig.get().aftershock)
+        if (ModConfig.get().aftershock)
             AftershockEvent.electrify(event);
     }
 }
