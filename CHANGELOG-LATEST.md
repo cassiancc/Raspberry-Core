@@ -9,17 +9,20 @@
     - Changes jukebox sound to be non-directional.
 - Setting in music and sounds menu to control jukebox fade distance.
 - Config option to disable Ecologics penguins dropping feathers.
-- Config option to modify Savage and Ravage player thrown creeper spores duration. 
+- Config option to modify Savage and Ravage player thrown creeper spores duration.
 - New item tag to hide items from the creative menu.
 - Items dragged from EMI into the inventory now are added to the inventory (as long as the player is an operator).
 - Maple leaf tinting can now be disabled in the mod config.
 - Spruce leaf tinting can now be disabled in the mod config.
-- Tag for certain biomes to have denser Windswept Pinecones. 
+- Tag for certain biomes to have denser Windswept Pinecones.
 
 ### Changed
 - Removed leash backport in favor of Vanilla Backport's implementation.
 - Temporarily removed the ability to leash fences.
 - Armor trims no longer mention that they are Smithing Templates.
+- Config option to modify Savage & Ravage creeper spore cloud durations.
+- Disabled some curative items.
+- Items in the `raspberry:fireproof` tag no longer burn.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
@@ -33,3 +36,7 @@
 - Beacon recipes now match the current version of RF.
 - Errors caused by missing buckets from Respiteful.
 - ModernFix's blast search trees feature now works with EMI.
+- Rose Gold bombs now dispense correctly.
+- Crash with Pehkui.
+- Roses can no longer break bedrock.
+- Swept Axes no longer burn.

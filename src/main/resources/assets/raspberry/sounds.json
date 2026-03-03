@@ -5,6 +5,12 @@
   ],
   "subtitle": "raspberry.subtitles.entity.ashball.throw"
   },
+  "entity.rose_gold_bomb.throw": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "raspberry.subtitles.entity.rose_gold_bomb.throw"
+  },
   "entity.dried_kelp.eat": {
     "sounds": [
       "raspberry:eat_dried_kelp1",

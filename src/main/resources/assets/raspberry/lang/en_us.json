@@ -61,6 +61,7 @@
   "raspberry.jei.info.wither_rose_bush": "Bonemeal a Wither Rose and it will grow into a Wither Rose Bush!",
 
   "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
+  "raspberry.subtitles.entity.rose_gold_bomb.throw": "Bomb flies",
   "raspberry.subtitles.player.attack.silver_hit": "Mirror connects",
 
   "subtitles.item.armor.equip_copper": "Copper armor clonks",
@@ -165,7 +166,7 @@
   "raspberry.options.jukebox": "Jukebox Distance",
   "raspberry.options.frequency": "Music Frequency",
   "raspberry.options.toast": "Music Toast",
-
+  
   "emi.cooking.time_minute": "%s Minute",
   "emi.cooking.time_minutes": "%s Minutes",
 
