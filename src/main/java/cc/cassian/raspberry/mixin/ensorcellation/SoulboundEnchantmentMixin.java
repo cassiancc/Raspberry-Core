@@ -1,8 +1,8 @@
 package cc.cassian.raspberry.mixin.ensorcellation;
 
 import cc.cassian.raspberry.registry.RaspberryTags;
-import cofh.ensorcellation.enchantment.SoulboundEnchantment;
-import cofh.lib.enchantment.EnchantmentCoFH;
+import cofh.ensorcellation.common.enchantment.SoulboundEnchantment;
+import cofh.lib.common.enchantment.EnchantmentCoFH;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;

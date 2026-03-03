@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class DoublePlantBlockMixin {
 	@Inject(method = "placeAt", at = @At("HEAD"), cancellable = true)
 	private static void raspberry$place(LevelAccessor level, BlockState state, BlockPos pos, int flags, CallbackInfo ci) {
-		if (!level.getBlockState(pos.above()).getMaterial().isReplaceable()) {
+		if (!level.getBlockState(pos.above()).canBeReplaced()) {
 			ci.cancel();
 		}
 	}
