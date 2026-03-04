@@ -111,6 +111,8 @@ public final class RaspberryMod {
         if (!ModCompat.hasCofhCore() && ModConfig.get().aftershock) {
             AftershockEvent.electrify(event);
         }
+        if (ModCompat.hasCopperAgeBackport())
+            CopperAgeBackportCompat.saveCopperGolem(event);
     }
 
     @SubscribeEvent
