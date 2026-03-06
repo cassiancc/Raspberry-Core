@@ -19,3 +19,4 @@
 - Crash with Pehkui.
 - Roses can no longer break bedrock.
 - Swept Axes no longer burn.
+- Jumping with a Horse no longer damages armour enchanted with Knight Jump (Mining Master).

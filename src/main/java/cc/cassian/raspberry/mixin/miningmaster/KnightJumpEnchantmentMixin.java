@@ -17,7 +17,7 @@ public class KnightJumpEnchantmentMixin {
     @WrapOperation(method = "onClientTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/KeyMapping;isDown()Z"))
     private static boolean disableDoubleJumpInWater(KeyMapping instance, Operation<Boolean> original, @Local Minecraft mc) {
         if (mc.player == null) return false;
-        if (!mc.player.isInWater()) {
+        if (!mc.player.isInWater() && (mc.player.getVehicle() == null)) {
             if (ModCompat.CONTROLLABLE && ControllableCompat.isJumping()) {
                 return true;
             }
