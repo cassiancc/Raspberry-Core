@@ -119,6 +119,7 @@
     "minecraft.RaiderMixin",
     "minecraft.ScreenMixin",
     "minecraft.SilenceServerMixin",
+    "minecraft.SpawnEggItemMixin",
     "minecraft.SpreadingSnowyDirtBlockMixin",
     "minecraft.ThrowableProjectileMixin",
     "miningmaster.DamageKnightJumpPacketMixin",
