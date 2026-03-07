@@ -7,6 +7,8 @@
 - Config option to modify Savage & Ravage creeper spore cloud durations.
 - Disabled some curative items.
 - Items in the `raspberry:fireproof` tag no longer burn.
+- Spawn eggs are no longer tinted.
+- Pebbles now break glass (Twigs). 
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

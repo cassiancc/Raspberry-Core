@@ -154,6 +154,7 @@
     "survivality.SurvivalityUtilsMixin",
     "toms_storage.AbstractStorageTerminalScreenMixin",
     "toms_storage.StorageTerminalMenuMixin",
+    "twigs.PebbleMixin",
     "upgrade_aquatic.PikeMixin",
     "upgrade_aquatic.ThrasherMixin",
     "upgrade_aquatic.ThrasherThrashGoalMixin",

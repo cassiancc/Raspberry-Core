@@ -70,6 +70,7 @@ public class ModConfig {
     public boolean disableCurativeItems = true;
     public double creeperSporesDurationModifier = 1.0;
     public boolean disableSpawnEggTinting = true;
+    public boolean strongerPebbles = true;
 
 	public static void load() {
         if (!Files.exists(configPath())) {
