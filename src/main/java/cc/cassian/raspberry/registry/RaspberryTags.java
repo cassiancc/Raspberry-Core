@@ -23,8 +23,6 @@ public class RaspberryTags {
 
     public static final TagKey<Item> COPPER_ARMOR = createItemTag("copper_armor");
 
-    public static final TagKey<Item> WEATHER_CYCLERS = createItemTag("weather_cyclers");
-
     public static final TagKey<Item> HAS_KINETIC_DAMAGE = createItemTag( "has_kinetic_damage");
 
     public static final TagKey<Item> WORM_SEEKER_ITEMS = createItemTag( "worm_seeker_items");

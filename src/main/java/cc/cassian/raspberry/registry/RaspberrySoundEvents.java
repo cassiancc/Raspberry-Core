@@ -25,6 +25,7 @@ public class RaspberrySoundEvents {
 
     public static final RegistryObject<SoundEvent> COPPER_EQUIP = register("item.armor.equip_copper");
 
+    public static final RegistryObject<SoundEvent> BLOCK_CYCLE = register("event.raspberry.block_cycle");
     public static final RegistryObject<SoundEvent> WEATHER_CYCLE = register("event.raspberry.weather_cycle");
 
     private static RegistryObject<SoundEvent> register(String key) {

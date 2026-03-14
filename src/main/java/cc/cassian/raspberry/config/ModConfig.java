@@ -71,8 +71,10 @@ public class ModConfig {
     public double creeperSporesDurationModifier = 1.0;
     public boolean disableSpawnEggTinting = true;
     public boolean strongerPebbles = true;
+    public boolean weatherChanging = true;
+    public boolean gloomyRuning = true;
 
-	public static void load() {
+    public static void load() {
         if (!Files.exists(configPath())) {
             save();
             return;

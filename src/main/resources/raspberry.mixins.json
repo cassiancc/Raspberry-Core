@@ -139,6 +139,7 @@
     "quark.QuickArmorSwappingModuleMixin",
     "quark.TrowelItemMixin",
     "quark.WoodPostBlockMixin",
+    "savageandravage.ConchOfConjuringMixin",
     "savageandravage.SporeCloudMixin",
     "savageandravage.WandOfFreezingItemMixin",
     "screenshot_viewer.ScreenshotViewerMixin",
