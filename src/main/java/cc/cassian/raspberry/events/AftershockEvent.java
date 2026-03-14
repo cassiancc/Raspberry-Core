@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.events;
 
 import cc.cassian.raspberry.ModCompat;
+import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryMobEffects;
 import cc.cassian.raspberry.registry.RaspberryTags;
 import cofh.core.init.CoreMobEffects;
@@ -19,6 +20,7 @@ public class AftershockEvent {
      * Implemented via Forge event and mixin into CoFH Core.
      */
     public static void electrify(EntityStruckByLightningEvent event) {
+        if (!ModConfig.get().aftershock) return;
         Entity entity = event.getEntity();
         int copperCount = 0;
         if (entity instanceof LivingEntity player) {

@@ -9,6 +9,7 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.TickEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,8 @@ public class FlowerGarlandEvent {
         PARTICLES.put(RaspberryItems.MOODY_WILDFLOWER_GARLAND.get(), RaspberryParticleTypes.MOODY_PETAL.get());
     }
 
-    public static void tick(Minecraft mc) {
+    public static void tick(TickEvent.ClientTickEvent event) {
+        Minecraft mc = Minecraft.getInstance();
         ParticleStatus status = mc.options.particles().get();
         var player = mc.player;
         if (status == ParticleStatus.MINIMAL) return;

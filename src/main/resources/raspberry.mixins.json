@@ -153,6 +153,7 @@
     "supplementaries.PancakeBlockMixin",
     "supplementaries.RakedGravelBlockMixin",
     "supplementaries.SoapClearMixin",
+    "supplementaries.WindVaneBlockTileMixin",
     "survivality.SurvivalityUtilsMixin",
     "toms_storage.AbstractStorageTerminalScreenMixin",
     "toms_storage.StorageTerminalMenuMixin",

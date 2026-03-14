@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.events;
 
+import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.event.TickEvent;
 
 public class ChangeWeatherEvent {
 	public static boolean cycleWeather(final Level level, final BlockPos pos, final Player player, final InteractionHand hand) {
@@ -40,6 +42,8 @@ public class ChangeWeatherEvent {
 					serverLevel.setWeatherParameters(DAY_TIME, 0, false, false);
 					player.sendSystemMessage(Component.translatable("commands.weather.set.clear"));
 				}
+			} else {
+				ChangeWeatherEvent.ticksUntilStopSpinning = 60;
 			}
 			itemInHand.hurtAndBreak(100, player, player1 -> player1.broadcastBreakEvent(hand));
 			level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), RaspberrySoundEvents.WEATHER_CYCLE.get(), SoundSource.PLAYERS,
@@ -61,5 +65,19 @@ public class ChangeWeatherEvent {
 			return cycleWeather(level, blockHitResult.getBlockPos(), player, hand);
 		}
 		return false;
+	}
+
+	public static void tick(TickEvent.ClientTickEvent.LevelTickEvent event) {
+		if (event.phase == TickEvent.Phase.START) {
+			if (ticksUntilStopSpinning > 0) {
+				ticksUntilStopSpinning--;
+			}
+		}
+	}
+
+	private static int ticksUntilStopSpinning = 0;
+
+	public static boolean shouldSpin() {
+		return ChangeWeatherEvent.ticksUntilStopSpinning>1;
 	}
 }

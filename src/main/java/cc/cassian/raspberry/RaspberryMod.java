@@ -7,6 +7,7 @@ import cc.cassian.raspberry.compat.oreganized.network.RaspberryOreganizedNetwork
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.entity.SwapArrowEntity;
 import cc.cassian.raspberry.events.AftershockEvent;
+import cc.cassian.raspberry.events.ChangeWeatherEvent;
 import cc.cassian.raspberry.events.DarknessRepairEvent;
 import cc.cassian.raspberry.network.RaspberryNetwork;
 import cc.cassian.raspberry.registry.*;
@@ -52,14 +53,19 @@ public final class RaspberryMod {
         RaspberrySoundEvents.SOUNDS.register(eventBus);
         RaspberryParticleTypes.PARTICLE_TYPES.register(eventBus);
         // Register event bus listeners.
-        MinecraftForge.EVENT_BUS.addListener(this::onItemTooltipEvent);
-        MinecraftForge.EVENT_BUS.addListener(this::onEntityInteract);
-        MinecraftForge.EVENT_BUS.addListener(this::onEntityJoinLevel);
-        MinecraftForge.EVENT_BUS.addListener(this::onLivingUpdate);
-        MinecraftForge.EVENT_BUS.addListener(this::onLivingHurt);
+        if (ModCompat.AQUACULTURE)
+            MinecraftForge.EVENT_BUS.addListener(AquacultureCompat::checkAndAddTooltip);
+        if (ModCompat.ENVIRONMENTAL) {
+			MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onEntityInteract);
+            MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onEntityJoinWorld);
+            MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onLivingUpdate);
+		}
+        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::onLivingHurt);
+        MinecraftForge.EVENT_BUS.addListener(ChangeWeatherEvent::tick);
         eventBus.addListener(RaspberryMod::commonSetup);
-        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
-        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
+        MinecraftForge.EVENT_BUS.addListener(DarknessRepairEvent::playerTick);
+        if (!ModCompat.COFH_CORE)
+            MinecraftForge.EVENT_BUS.addListener(AftershockEvent::electrify);
         if (ModCompat.OREGANIZED) {
             RaspberryAttributes.ATTRIBUTES.register(eventBus);
             RaspberryOreganizedNetwork.register();
@@ -82,7 +88,6 @@ public final class RaspberryMod {
         return new ResourceLocation(namespace, id);
     }
 
-    @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
         if (ModCompat.NEAPOLITAN)
             NeapolitanCompat.boostAgility();
@@ -99,43 +104,7 @@ public final class RaspberryMod {
         event.enqueueWork(RaspberryBlocks::addPottedPlants);
     }
 
-    @SubscribeEvent
-    public static void lightningTick(EntityStruckByLightningEvent event) {
-        if (!ModCompat.COFH_CORE && ModConfig.get().aftershock)
-            AftershockEvent.electrify(event);
-    }
-
-    @SubscribeEvent
-    public static void playerTick(TickEvent.PlayerTickEvent event) {
-        DarknessRepairEvent.tick(event.player);
-    }
-
-    @SubscribeEvent
-    public void onItemTooltipEvent(ItemTooltipEvent event) {
-        if (ModCompat.AQUACULTURE)
-            AquacultureCompat.checkAndAddTooltip(event);
-    }
-
-    @SubscribeEvent
-    public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (ModCompat.ENVIRONMENTAL)
-            EnvironmentalCompat.onEntityInteract(event);
-    }
-
-    @SubscribeEvent
-    public void onEntityJoinLevel(EntityJoinLevelEvent event) {
-        if (ModCompat.ENVIRONMENTAL)
-            EnvironmentalCompat.onEntityJoinWorld(event);
-    }
-
-    @SubscribeEvent
-    public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
-        if (ModCompat.ENVIRONMENTAL)
-            EnvironmentalCompat.onLivingUpdate(event);
-    }
-
-    @SubscribeEvent
-    public void onLivingHurt(LivingHurtEvent event) {
+    public static void onLivingHurt(LivingHurtEvent event) {
         DamageSource source = event.getSource();
         if (source.getDirectEntity() instanceof SwapArrowEntity) {
             // Copies the way Caverns and Chasms make Blunt Arrows deal no damage
