@@ -23,6 +23,8 @@
 - Config option to modify Savage & Ravage creeper spore cloud durations.
 - Disabled some curative items.
 - Items in the `raspberry:fireproof` tag no longer burn.
+- Spawn eggs are no longer tinted.
+- Pebbles now break glass (Twigs). 
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
@@ -40,3 +42,4 @@
 - Crash with Pehkui.
 - Roses can no longer break bedrock.
 - Swept Axes no longer burn.
+- Jumping with a Horse no longer damages armour enchanted with Knight Jump (Mining Master).

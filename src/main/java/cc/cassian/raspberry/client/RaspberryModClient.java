@@ -35,8 +35,8 @@ public class RaspberryModClient {
 
     public static void init() {
         // Register config
-        registerModsPage(ModLoadingContext.get());
-        MinecraftForge.EVENT_BUS.addListener(RaspberryModClient::clickTick);
+        registerModsPage(context);
+        MinecraftForge.EVENT_BUS.addListener(FlowerGarlandEvent::tick);
     }
 
     @SubscribeEvent
@@ -86,11 +86,6 @@ public class RaspberryModClient {
 
             RaspberryItemProperties.register();
         });
-    }
-
-    // Forge event bus.
-    public static void clickTick(TickEvent.ClientTickEvent event) {
-        FlowerGarlandEvent.tick(Minecraft.getInstance());
     }
 
     @SubscribeEvent

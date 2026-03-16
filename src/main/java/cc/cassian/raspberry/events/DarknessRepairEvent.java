@@ -4,8 +4,13 @@ import cc.cassian.raspberry.registry.RaspberryTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.TickEvent;
 
 public class DarknessRepairEvent {
+    public static void playerTick(TickEvent.PlayerTickEvent event) {
+        DarknessRepairEvent.tick(event.player);
+    }
+
     public static void tick(Player player) {
         if (player.getRandom().nextInt(101)>99) {
             if (player.level().getMaxLocalRawBrightness(player.getOnPos())<1 || player.hasEffect(MobEffects.DARKNESS) || player.hasEffect(MobEffects.BLINDNESS)) {

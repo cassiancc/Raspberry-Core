@@ -79,7 +79,10 @@ public class ModConfig {
     public boolean disableWindsweptPineconePlacement = true;
     public double creeperSporesDurationModifier = 1.0;
     public boolean disableCurativeItems = true;
-
+    public boolean disableSpawnEggTinting = true;
+    public boolean strongerPebbles = true;
+    public boolean weatherChanging = true;
+    public boolean gloomyRuning = true;
     public List<String> hiddenEnchantments = new ArrayList<>();
     public List<String> hiddenPotions = new ArrayList<>();
     public List<String> hiddenTooltipItems = new ArrayList<>();
@@ -102,6 +105,7 @@ public class ModConfig {
         creativeTabIcons.put("minecraft:spawn_eggs", "minecraft:creeper_spawn_egg");
         creativeTabIcons.put("minecraft:op_blocks", "minecraft:command_block");
     }
+
 
     public static void load() {
         if (!Files.exists(configPath())) {
