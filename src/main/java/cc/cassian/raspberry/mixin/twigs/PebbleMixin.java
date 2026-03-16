@@ -38,10 +38,10 @@ public abstract class PebbleMixin extends ThrowableItemProjectile {
 	private boolean raspberryCore$breakGlass(BlockPos pos, int chance) {
         boolean flag = false;
         int c = chance - 1 - this.random.nextInt(4);
-        BlockState state = this.level.getBlockState(pos);
+        BlockState state = this.level().getBlockState(pos);
         if (!(state.getBlock().getExplosionResistance() > 3.0F)) {
             if (c >= 0 && state.is(ModTags.BRICK_BREAKABLE_GLASS)) {
-                this.level.destroyBlock(pos, true);
+                this.level().destroyBlock(pos, true);
                 this.raspberryCore$breakGlass(pos.above(), c);
                 this.raspberryCore$breakGlass(pos.below(), c);
                 this.raspberryCore$breakGlass(pos.east(), c);

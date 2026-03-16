@@ -61,7 +61,7 @@ public class ChangeWeatherEvent {
 	}
 
 	public static boolean cycleWeather(Level level, Player player, InteractionHand hand) {
-		if (player.pick(player.getReachDistance(), 0, false) instanceof BlockHitResult blockHitResult) {
+		if (player.pick(player.getBlockReach(), 0, false) instanceof BlockHitResult blockHitResult) {
 			return cycleWeather(level, blockHitResult.getBlockPos(), player, hand);
 		}
 		return false;

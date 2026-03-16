@@ -66,13 +66,11 @@ public final class RaspberryMod {
         // Event Listeners
         MinecraftForge.EVENT_BUS.addListener(RaspberryMod::onBlockBreak);
         eventBus.addListener(RaspberryMod::commonSetup);
-        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::playerTick);
-        MinecraftForge.EVENT_BUS.addListener(RaspberryMod::lightningTick);
 
         // Register event bus listeners.
-        if (ModCompat.AQUACULTURE)
+        if (ModCompat.hasAquaculture())
             MinecraftForge.EVENT_BUS.addListener(AquacultureCompat::checkAndAddTooltip);
-        if (ModCompat.ENVIRONMENTAL) {
+        if (ModCompat.hasEnvironmental()) {
 			MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onEntityInteract);
             MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onEntityJoinWorld);
             MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onLivingUpdate);
@@ -81,16 +79,10 @@ public final class RaspberryMod {
         MinecraftForge.EVENT_BUS.addListener(ChangeWeatherEvent::tick);
         eventBus.addListener(RaspberryMod::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(DarknessRepairEvent::playerTick);
-        if (!ModCompat.COFH_CORE)
+        if (!ModCompat.hasCofhCore())
             MinecraftForge.EVENT_BUS.addListener(AftershockEvent::electrify);
-        if (ModCompat.OREGANIZED) {
-            RaspberryAttributes.ATTRIBUTES.register(eventBus);
-            RaspberryOreganizedNetwork.register();
-            MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onItemAttributes);
-            MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onHurtEvent);
-        }
         if (FMLEnvironment.dist.isClient()) {
-            RaspberryModClient.init();
+            RaspberryModClient.init(context);
         }
         if (ModCompat.hasBlueprint()) RaspberryData.registerData();
     }

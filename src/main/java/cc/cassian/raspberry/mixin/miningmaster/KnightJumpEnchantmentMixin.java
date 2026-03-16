@@ -1,7 +1,6 @@
 package cc.cassian.raspberry.mixin.miningmaster;
 
 import cc.cassian.raspberry.ModCompat;
-import cc.cassian.raspberry.compat.controllable.ControllableCompat;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -18,9 +17,6 @@ public class KnightJumpEnchantmentMixin {
     private static boolean disableDoubleJumpInWater(KeyMapping instance, Operation<Boolean> original, @Local Minecraft mc) {
         if (mc.player == null) return false;
         if (!mc.player.isInWater() && (mc.player.getVehicle() == null)) {
-            if (ModCompat.CONTROLLABLE && ControllableCompat.isJumping()) {
-                return true;
-            }
             return original.call(instance);
         }
          return false;

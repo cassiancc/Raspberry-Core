@@ -29,7 +29,7 @@ public class ChangeBlockEvent {
 	}
 
 	public static boolean changeBlock(Level level, Player player, InteractionHand hand, Block oldBlock, Block newBlock) {
-		if (player.pick(player.getReachDistance(), 0, false) instanceof BlockHitResult blockHitResult) {
+		if (player.pick(player.getBlockReach(), 0, false) instanceof BlockHitResult blockHitResult) {
 			return changeBlock(level, blockHitResult.getBlockPos(), player, hand, oldBlock, newBlock);
 		}
 		return false;
