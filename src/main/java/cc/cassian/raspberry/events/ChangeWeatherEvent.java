@@ -1,6 +1,5 @@
 package cc.cassian.raspberry.events;
 
-import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
@@ -21,6 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.TickEvent;
 
 public class ChangeWeatherEvent {
+
 	public static boolean cycleWeather(final Level level, final BlockPos pos, final Player player, final InteractionHand hand) {
 		if (!ModConfig.get().weatherChanging) return false;
 		ItemStack itemInHand = player.getItemInHand(hand);
@@ -41,23 +41,25 @@ public class ChangeWeatherEvent {
 				else {
 					serverLevel.setWeatherParameters(DAY_TIME, 0, false, false);
 					player.sendSystemMessage(Component.translatable("commands.weather.set.clear"));
+
 				}
 			} else {
+				ChangeWeatherEvent.changeWeatherPos = pos;
 				ChangeWeatherEvent.ticksUntilStopSpinning = 60;
 			}
 			itemInHand.hurtAndBreak(100, player, player1 -> player1.broadcastBreakEvent(hand));
-			level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), RaspberrySoundEvents.WEATHER_CYCLE.get(), SoundSource.PLAYERS,
-					(float) ModConfig.get().mirrorVolumeModifier, 1.0F + (float) (player.getRandom().nextGaussian() * 0.35));
-			player.getCooldowns().addCooldown(itemInHand.getItem(), 120);
-			playParticle(level, pos);
+			level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), RaspberrySoundEvents.WEATHER_CYCLE.get(), SoundSource.PLAYERS, 0.4F, 1.0F);
+			player.getCooldowns().addCooldown(itemInHand.getItem(), 60);
+//			playParticle(level, pos);
 			return true;
 		}
 		return false;
 	}
 
 	public static void playParticle(Level level, BlockPos pos) {
-		ParticleUtils.spawnParticlesAlongAxis(Direction.Axis.Y, level, pos, 5, ParticleTypes.ELECTRIC_SPARK, UniformInt.of(25, 50));
-		ParticleUtils.spawnParticlesAlongAxis(Direction.Axis.X, level, pos, 1, ParticleTypes.ELECTRIC_SPARK, UniformInt.of(10, 50));
+		ParticleUtils.spawnParticlesAlongAxis(Direction.Axis.X, level, pos, 1, ParticleTypes.ELECTRIC_SPARK, UniformInt.of(1, 5));
+		ParticleUtils.spawnParticlesAlongAxis(Direction.Axis.Y, level, pos, 1, ParticleTypes.END_ROD, UniformInt.of(1, 1));
+		ParticleUtils.spawnParticlesAlongAxis(Direction.Axis.Y, level, pos, 1, ParticleTypes.SNOWFLAKE, UniformInt.of(1, 1));
 	}
 
 	public static boolean cycleWeather(Level level, Player player, InteractionHand hand) {
@@ -68,14 +70,15 @@ public class ChangeWeatherEvent {
 	}
 
 	public static void tick(TickEvent.ClientTickEvent.LevelTickEvent event) {
-		if (event.phase == TickEvent.Phase.START) {
+		if (event.phase == TickEvent.Phase.START && event.level.dimension().equals(Level.OVERWORLD)) {
 			if (ticksUntilStopSpinning > 0) {
 				ticksUntilStopSpinning--;
 			}
 		}
 	}
 
-	private static int ticksUntilStopSpinning = 0;
+	public static int ticksUntilStopSpinning = 0;
+	public static BlockPos changeWeatherPos = BlockPos.ZERO;
 
 	public static boolean shouldSpin() {
 		return ChangeWeatherEvent.ticksUntilStopSpinning>1;
