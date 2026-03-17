@@ -45,8 +45,8 @@ public final class RaspberryMod {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public RaspberryMod() {
-        var context = ModLoadingContext.get();
-        var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        var context = FMLJavaModLoadingContext.get();
+        var eventBus = context.getModEventBus();
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like registries and resources) may still be uninitialized.
         // Proceed with mild caution.
