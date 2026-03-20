@@ -18,6 +18,7 @@ public class RaspberryTags {
     public static final TagKey<Item> ENCHANTABLE_WEAPON = createItemTag("enchantable/weapon");
     public static final TagKey<Item> ENCHANTABLE_HEARTFELT = createItemTag("enchantable/heartfelt");
     public static final TagKey<Item> ENCHANTABLE_SOULBOUND = createItemTag("enchantable/soulbound");
+    public static final TagKey<Item> ENCHANTABLE_CAVALIER = createItemTag("enchantable/cavalier");
 
     public static final TagKey<Item> FIREPROOF = createItemTag("fireproof");
 
