@@ -73,8 +73,9 @@ public class ModConfig {
     public boolean strongerPebbles = true;
     public boolean weatherChanging = true;
     public boolean gloomyRuning = true;
+    public boolean safeEnderPearls = true;
 
-    public static void load() {
+	public static void load() {
         if (!Files.exists(configPath())) {
             save();
             return;

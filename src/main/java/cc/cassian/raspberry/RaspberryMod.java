@@ -15,14 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -71,6 +64,9 @@ public final class RaspberryMod {
             RaspberryOreganizedNetwork.register();
             MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onItemAttributes);
             MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onHurtEvent);
+        }
+        if (ModCompat.MINERS_DELIGHT) {
+            MinecraftForge.EVENT_BUS.addListener(MinersDelightCompat::infestedInteract);
         }
         if (FMLEnvironment.dist.isClient()) {
             RaspberryModClient.init(context);

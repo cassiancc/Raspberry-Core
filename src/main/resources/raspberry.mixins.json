@@ -123,6 +123,7 @@
     "minecraft.SpawnEggItemMixin",
     "minecraft.SpreadingSnowyDirtBlockMixin",
     "minecraft.ThrowableProjectileMixin",
+    "minecraft.ThrownEnderpearlMixin",
     "miningmaster.DamageKnightJumpPacketMixin",
     "miningmaster.HeartfeltEnchantmentMixin",
     "naturalist.CatchableFireflyMixin",

@@ -49,7 +49,7 @@ public class ChangeWeatherEvent {
 			}
 			itemInHand.hurtAndBreak(100, player, player1 -> player1.broadcastBreakEvent(hand));
 			level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), RaspberrySoundEvents.WEATHER_CYCLE.get(), SoundSource.PLAYERS, 0.4F, 1.0F);
-			player.getCooldowns().addCooldown(itemInHand.getItem(), 60);
+			player.getCooldowns().addCooldown(itemInHand.getItem(), 120);
 //			playParticle(level, pos);
 			return true;
 		}

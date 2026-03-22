@@ -21,6 +21,7 @@ public final class ModCompat {
     public static final boolean IMMERSIVE_OVERLAYS = ModList.get().isLoaded("immersiveoverlays");
     public static final boolean OREGANIZED = ModList.get().isLoaded("oreganized");
     public static final boolean MAP_ATLASES = ModList.get().isLoaded("map_atlases");
+    public static final boolean MINERS_DELIGHT = ModList.get().isLoaded("miners_delight");
     public static final boolean MINING_MASTER = ModList.get().isLoaded("miningmaster");
     public static final boolean NEAPOLITAN = ModList.get().isLoaded("neapolitan");
     public static final boolean QUARK = ModList.get().isLoaded("quark");
