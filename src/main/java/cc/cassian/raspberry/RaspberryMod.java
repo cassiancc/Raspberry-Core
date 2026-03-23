@@ -5,6 +5,7 @@ import cc.cassian.raspberry.compat.*;
 import cc.cassian.raspberry.compat.oreganized.OreganizedEvents;
 import cc.cassian.raspberry.compat.oreganized.network.RaspberryOreganizedNetwork;
 import cc.cassian.raspberry.config.ModConfig;
+import cc.cassian.raspberry.effect.InfestedMobEffect;
 import cc.cassian.raspberry.entity.SwapArrowEntity;
 import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.ChangeWeatherEvent;
@@ -68,6 +69,7 @@ public final class RaspberryMod {
         if (ModCompat.MINERS_DELIGHT) {
             MinecraftForge.EVENT_BUS.addListener(MinersDelightCompat::infestedInteract);
         }
+        MinecraftForge.EVENT_BUS.addListener(InfestedMobEffect::onMobHurt);
         if (FMLEnvironment.dist.isClient()) {
             RaspberryModClient.init(context);
         }

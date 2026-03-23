@@ -73,6 +73,8 @@
 
   "effect.raspberry.aftershock": "Aftershock",
   "effect.raspberry.aftershock.description": "Increases movement & attack speed. Gained from getting struck by lightning while wearing copper armour.",
+  "effect.raspberry.infested": "Infested",
+  "effect.raspberry.infested.description": "An effect that causes you to spawn Silverfish when you take damage.",
 
   "config.raspberry.title": "Raspberry Core",
   "config.raspberry.config.stovesStartLit": "Light stoves by default",
