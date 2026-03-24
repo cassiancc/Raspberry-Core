@@ -1,6 +1,8 @@
 package cc.cassian.raspberry.registry;
 
+import cc.cassian.raspberry.effect.AftershockMobEffect;
 import cc.cassian.raspberry.effect.InfestedMobEffect;
+import cc.cassian.raspberry.effect.OozingMobEffect;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -16,18 +18,17 @@ public class RaspberryMobEffects {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MOD_ID);
 
     public static final RegistryObject<MobEffect> AFTERSHOCK = MOB_EFFECTS.register("aftershock",
-            () -> new Aftershock( MobEffectCategory.BENEFICIAL, 10076657)
+            () -> new AftershockMobEffect(MobEffectCategory.BENEFICIAL, 10076657)
             .addAttributeModifier(Attributes.MOVEMENT_SPEED, "CE4EFE3F-12D8-4C0A-AA36-312EEE9DBEF3", 0.2F, AttributeModifier.Operation.MULTIPLY_TOTAL)
             .addAttributeModifier(Attributes.ATTACK_SPEED, "CE4EFE3F-12D8-4C0A-AA36-5BA2BB9FFFF3", 0.1F, AttributeModifier.Operation.MULTIPLY_TOTAL)
     );
 
     public static final RegistryObject<InfestedMobEffect> INFESTED = MOB_EFFECTS.register("infested",
-            () -> new InfestedMobEffect(MobEffectCategory.HARMFUL, 10076657, 0.1F, (randomSource) -> Mth.randomBetweenInclusive(randomSource, 1, 2))
+            () -> new InfestedMobEffect(MobEffectCategory.HARMFUL, 10076657)
     );
 
-    private static class Aftershock extends MobEffect {
-        public Aftershock(MobEffectCategory category, int color) {
-            super(category, color);
-        }
-    }
+    public static final RegistryObject<OozingMobEffect> OOZING = MOB_EFFECTS.register("oozing",
+            () -> new OozingMobEffect(MobEffectCategory.HARMFUL, 10092451)
+    );
+
 }
