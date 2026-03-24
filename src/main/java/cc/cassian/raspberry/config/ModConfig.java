@@ -69,11 +69,12 @@ public class ModConfig {
     public boolean disablePenguinShedding = false;
     public boolean disableCurativeItems = true;
     public double creeperSporesDurationModifier = 1.0;
-    public boolean disableSpawnEggTinting = true;
+    public boolean disableSpawnEggTinting = false;
     public boolean strongerPebbles = true;
     public boolean weatherChanging = true;
     public boolean gloomyRuning = true;
     public boolean safeEnderPearls = true;
+    public float infested_spawn_chance = 0.1f;
 
 	public static void load() {
         if (!Files.exists(configPath())) {
