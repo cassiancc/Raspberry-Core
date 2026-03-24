@@ -3,9 +3,12 @@ package cc.cassian.raspberry.registry;
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.compat.NaturalistCompat;
 import cc.cassian.raspberry.items.*;
+import com.teammetallurgy.aquaculture.api.fishing.Hook;
+import net.minecraft.ChatFormatting;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -27,6 +30,8 @@ public class RaspberryItems {
             return RaspberryItems.registerItem("firefly", () -> new Item(new Item.Properties()));
         }
     }
+
+    public static Hook GRAPPLING_HOOK = (new Hook.HookBuilder("grappling")).setModID(MOD_ID).setDurabilityChance(0.2).setColor(ChatFormatting.GRAY).setWeight(new Vec3(1.5,1.5,1.5)).build();
 
     public static Supplier<Item> ROSE_GOLD_BOMB = registerItem("rose_gold_bomb", () -> new RoseGoldBombItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static Supplier<Item> SWAP_ARROW = registerItem("swap_arrow", () -> new SwapArrowItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));

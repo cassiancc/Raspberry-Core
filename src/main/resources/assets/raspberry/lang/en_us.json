@@ -49,10 +49,14 @@
   "item.raspberry.cat_food": "Cat Food",
   "lore.raspberry.cat_food": "A foodstuff meant for your cat! ",
 
+  "item.aquaculture.grappling_hook": "Grappling Hook",
+  "aquaculture.grappling_hook.tooltip.title": "Grappling",
+  "aquaculture.grappling_hook.tooltip.desc": "Good for climbing, not fishing",
 
   "raspberry.subtitles.entity.ashball.throw": "Ashball flies",
   "raspberry.subtitles.entity.rose_gold_bomb.throw": "Bomb flies",
   "raspberry.subtitles.player.attack.silver_hit": "Mirror connects",
+  "raspberry.subtitles.player.grappling_hook.tighten": "Rope Tightens",
 
   "subtitles.item.armor.equip_copper": "Copper armor clonks",
 

@@ -4,6 +4,7 @@ import cc.cassian.raspberry.compat.supplementaries.RoseGoldBombExplosion;
 import cc.cassian.raspberry.entity.Ashball;
 import cc.cassian.raspberry.entity.RoseGoldBombEntity;
 import cc.cassian.raspberry.entity.SwapArrowEntity;
+import cc.cassian.raspberry.entity.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -27,6 +28,10 @@ public class RaspberryEntityTypes {
 
     public static final RegistryObject<EntityType<SwapArrowEntity>> SWAP_ARROW = register(
             "swap_arrow", EntityType.Builder.<SwapArrowEntity>of(SwapArrowEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10)
+    );
+
+    public static final RegistryObject<EntityType<Entity>> GRAPPLING_HOOK = register(
+            "grappling_hook", EntityType.Builder.createNothing(MobCategory.MISC).noSave().noSummon().sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(5).setCustomClientFactory(GrapplingHookEntity::new)
     );
 
     private static <T extends Entity> RegistryObject<EntityType<T>> register(String key, EntityType.Builder<T> builder) {
