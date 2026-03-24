@@ -2,8 +2,6 @@ package cc.cassian.raspberry.registry;
 
 import cc.cassian.raspberry.effect.AftershockMobEffect;
 import cc.cassian.raspberry.effect.InfestedMobEffect;
-import cc.cassian.raspberry.effect.OozingMobEffect;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -26,9 +24,4 @@ public class RaspberryMobEffects {
     public static final RegistryObject<InfestedMobEffect> INFESTED = MOB_EFFECTS.register("infested",
             () -> new InfestedMobEffect(MobEffectCategory.HARMFUL, 10076657)
     );
-
-    public static final RegistryObject<OozingMobEffect> OOZING = MOB_EFFECTS.register("oozing",
-            () -> new OozingMobEffect(MobEffectCategory.HARMFUL, 10092451)
-    );
-
 }
