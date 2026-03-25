@@ -41,6 +41,8 @@ public final class RaspberryMod {
         RaspberryNetwork.register();
         // Register deferred registers.
         RaspberryBlocks.register(eventBus);
+        RaspberryFluids.FLUIDS.register(eventBus);
+        RaspberryFluids.FLUID_TYPES.register(eventBus);
         RaspberryItems.ITEMS.register(eventBus);
         RaspberryMobEffects.MOB_EFFECTS.register(eventBus);
         RaspberryEntityTypes.ENTITIES.register(eventBus);
