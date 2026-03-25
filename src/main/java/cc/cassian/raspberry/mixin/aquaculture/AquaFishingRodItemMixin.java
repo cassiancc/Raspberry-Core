@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.mixin.aquaculture;
 
 import cc.cassian.raspberry.PlayerWithGrapplingHook;
+import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.entity.GrapplingHookEntity;
 import cc.cassian.raspberry.registry.RaspberryTags;
@@ -70,7 +71,7 @@ public abstract class AquaFishingRodItemMixin {
         lureSpeed = Math.min(5, lureSpeed);
 
         Entity bobber;
-        if (hook.getName().equals("grappling")) {
+        if (hook.getName() != null && hook.getName().equals("grappling")) {
             bobber = new GrapplingHookEntity(player, player.level, luck, lureSpeed, getFishingLine(heldStack), getBobber(heldStack), heldStack);
         } else {
             bobber = new AquaFishingBobberEntity(player, player.level, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack);
