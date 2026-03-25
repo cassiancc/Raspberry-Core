@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -374,6 +375,10 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         return RaspberryEntityTypes.GRAPPLING_HOOK.get();
     }
 
+    @Override
+    public Component getName() {
+        return Component.translatable("item.aquaculture.grappling_hook");
+    }
 
     protected void defineSynchedData() {
     }
