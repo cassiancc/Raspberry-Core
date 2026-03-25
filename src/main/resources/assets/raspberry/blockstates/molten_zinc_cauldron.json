@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "raspberry:block/molten_zinc_cauldron"
+    }
+  }
+}

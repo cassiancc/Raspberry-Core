@@ -1,11 +1,13 @@
 package cc.cassian.raspberry.registry;
 
+import cc.cassian.raspberry.fluids.MoltenCauldronBlock;
 import cc.cassian.raspberry.fluids.MoltenFlowingFluid;
 import cc.cassian.raspberry.fluids.MoltenFluidExtensions;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
@@ -96,7 +98,9 @@ public class RaspberryFluids {
 
 
 	private static ForgeFlowingFluid.Properties registerProperties(String name, RegistryObject<FluidType> moltenFluidType, RegistryObject<FlowingFluid> source, RegistryObject<FlowingFluid> flowing) {
-		return new ForgeFlowingFluid.Properties(moltenFluidType, source, flowing).bucket(bucket(name, source)).block(block(name, source));
+		Supplier<? extends Item> bucket = bucket(name, source);
+		RaspberryBlocks.registerBlock("%s_cauldron".formatted(name), ()-> new MoltenCauldronBlock(bucket, BlockBehaviour.Properties.copy(Blocks.LAVA_CAULDRON)));
+		return new ForgeFlowingFluid.Properties(moltenFluidType, source, flowing).bucket(bucket).block(block(name, source));
 	}
 
 	private static Supplier<? extends LiquidBlock> block(String name, RegistryObject<FlowingFluid> fluid) {
@@ -104,7 +108,7 @@ public class RaspberryFluids {
 	}
 
 	private static Supplier<? extends Item> bucket(String name, RegistryObject<FlowingFluid> moltenLead) {
-		return RaspberryItems.registerItem("%s_bucket".formatted(name), ()->new BucketItem(moltenLead, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MATERIALS)));
+		return RaspberryItems.registerItem("%s_bucket".formatted(name), ()->new MoltenBucketItem(name, moltenLead, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MATERIALS)));
 	}
 
 	static RegistryObject<FluidType> registerFluidType(String name) {
