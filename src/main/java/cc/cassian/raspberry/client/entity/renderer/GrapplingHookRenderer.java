@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.client.entity.renderer;
 
 import cc.cassian.raspberry.RaspberryMod;
+import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.entity.GrapplingHookEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -23,6 +24,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
 
 public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
     private static final ResourceLocation HOOK = RaspberryMod.locate("textures/entity/projectiles/grappling_hook.png");
@@ -38,18 +41,45 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
 
         boolean isAttached = entity.isAttached();
 
-        // Line Color
+        // Line Colors
         ItemStack line = entity.getFishingLine();
-        float lineR = 112f / 255f;
-        float lineG = 75f / 255f;
-        float lineB = 42f / 255f;
+        List<Integer> colors = List.of(
+            0x704b2a,
+            0x634225
+        );
+
         if (!line.isEmpty()) {
             DyeableLeatherItem lineItem = (DyeableLeatherItem)line.getItem();
             if (lineItem.hasCustomColor(line)) {
                 int colorInt = lineItem.getColor(line);
-                lineR = (float)(colorInt >> 16 & 255) / 255.0F;
-                lineG = (float)(colorInt >> 8 & 255) / 255.0F;
-                lineB = (float)(colorInt & 255) / 255.0F;
+
+                // Darken secondary color
+                int r = (colorInt >> 16) & 0xFF;
+                int g = (colorInt >> 8) & 0xFF;
+                int b = colorInt & 0xFF;
+
+                r = (int)(r * 0.95f);
+                g = (int)(g * 0.95f);
+                b = (int)(b * 0.95f);
+
+                int darkened = (r << 16) | (g << 8) | b;
+
+                colors = List.of(colorInt, darkened);
+            }
+
+            if (line.hasCustomHoverName()) {
+                String name = line.getHoverName().getString();
+                for (Map.Entry<String, List<String>> entry : ModConfig.get().fishing_line_patterns.entrySet()) {
+                    if (name.equalsIgnoreCase(entry.getKey())) {
+                        colors = ModConfig.get().fishing_line_patterns.get(entry.getKey()).stream().map(colorString -> {
+                            if (colorString.startsWith("#")) {
+                                colorString = colorString.substring(1);
+                            }
+                            return Integer.parseInt(colorString, 16);
+                        }).toList();
+                        break;
+                    }
+                }
             }
         }
 
@@ -119,11 +149,11 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
 
         for (int segment = 0; segment <= segments; segment++) {
             addVertexPair(vertexconsumer1, posestack$pose1, rodOffsetX, rodOffsetY, rodOffsetZ, LEASH_THICKNESS, LEASH_THICKNESS,
-                    offsetZ, offsetX, segment, segments,false, packedLight, lineR, lineG, lineB, isAttached, entity.shakeTime - partialTicks, negativeRelativeVelocity);
+                    offsetZ, offsetX, segment, segments,false, packedLight, colors, isAttached, entity.shakeTime - partialTicks, negativeRelativeVelocity);
         }
         for (int segment = segments; segment >= 0; segment--) {
             addVertexPair(vertexconsumer1, posestack$pose1, rodOffsetX, rodOffsetY, rodOffsetZ, LEASH_THICKNESS, 0.0F,
-                    offsetZ, offsetX, segment, segments,true, packedLight, lineR, lineG, lineB, isAttached, entity.shakeTime - partialTicks, negativeRelativeVelocity);
+                    offsetZ, offsetX, segment, segments,true, packedLight, colors, isAttached, entity.shakeTime - partialTicks, negativeRelativeVelocity);
         }
 
         matrixStack.popPose();
@@ -187,26 +217,17 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
             float offsetZ, float offsetX,
             int segment, int totalSegments,
             boolean isInnerFace, int packedLight,
-            float r, float g, float b, boolean attached, float shakeTime,
+            List<Integer> colors, boolean attached, float shakeTime,
             double negativeRelativeHookVelocity
     ) {
         float progress = (float) segment / totalSegments;
         float offsetY = 0.05F;
 
         // Color
-        boolean useSecondary = segment % 2 == (isInnerFace ? 1 : 0);
-
-        final float A_R = r;
-        final float A_G = g;
-        final float A_B = b;
-
-        final float B_R = r * 0.95F;
-        final float B_G = g * 0.95F;
-        final float B_B = b * 0.95F;
-
-        float red   = useSecondary ? B_R : A_R;
-        float green = useSecondary ? B_G : A_G;
-        float blue  = useSecondary ? B_B : A_B;
+        int color = colors.get((isInnerFace ? segment : segment + colors.size() - 1) % colors.size());
+        float red   = (float)(color >> 16 & 255) / 255.0F;
+        float green = (float)(color >> 8 & 255) / 255.0F;
+        float blue  = (float)(color & 255) / 255.0F;
 
         float posX = deltaX * progress;
         float posZ = deltaZ * progress;

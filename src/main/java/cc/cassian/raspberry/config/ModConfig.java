@@ -11,6 +11,8 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
 
 public class ModConfig {
 
@@ -75,6 +77,16 @@ public class ModConfig {
     public boolean gloomyRuning = true;
     public boolean safeEnderPearls = true;
     public float infested_spawn_chance = 0.1f;
+    public Map<String, List<String>> fishing_line_patterns = Map.of(
+        "pride", List.of(
+                "#fe0000",
+                "#ff8e01",
+                "#ffee00",
+                "#028215",
+                "#014cff",
+                "#8b018c"
+        )
+    );
 
 	public static void load() {
         if (!Files.exists(configPath())) {
