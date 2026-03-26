@@ -37,6 +37,8 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     private final int RANGE = 64;
     private final int RANGE_SQR = RANGE * RANGE;
     protected boolean isAttached;
+    @Nullable private BlockState lastState;
+    @Nullable private BlockPos attachedBlockPos;
     private final ItemStack fishingLine;
     private final ItemStack bobber;
     private final ItemStack fishingRod;
@@ -114,7 +116,13 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                 this.xRotO = this.getXRot();
             }
 
-            if (!isAttached) {
+            BlockPos blockpos = this.blockPosition();
+            BlockState blockstate = this.level.getBlockState(blockpos);
+            if (isAttached) {
+                if (this.shouldFall()) {
+                    this.startFalling();
+                }
+            } else {
                 Vec3 currentPosition = this.position();
                 Vec3 movedPosition = currentPosition.add(deltaMovement);
 
@@ -193,8 +201,6 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
                 this.setPos(newX, newY, newZ);
 
-                BlockPos blockpos = this.blockPosition();
-                BlockState blockstate = this.level.getBlockState(blockpos);
                 if (!blockstate.isAir()) {
                     VoxelShape voxelshape = blockstate.getCollisionShape(this.level, blockpos);
                     if (!voxelshape.isEmpty()) {
@@ -254,6 +260,22 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         }
     }
 
+    private boolean shouldFall() {
+        if (this.attachedBlockPos != null) {
+            BlockState state = this.level.getBlockState(this.attachedBlockPos);
+            return this.lastState != state && state.isAir();
+        }
+        return false;
+    }
+
+    private void startFalling() {
+        this.isAttached = false;
+        this.lastState = null;
+        this.attachedBlockPos = null;
+        Vec3 vec3 = this.getDeltaMovement();
+        this.setDeltaMovement(vec3.multiply(this.random.nextFloat() * 0.2F, this.random.nextFloat() * 0.2F, this.random.nextFloat() * 0.2F));
+    }
+
     @Override
     protected boolean canHitEntity(Entity target) {
         return false;
@@ -261,6 +283,8 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
     @Override
     protected void onHitBlock(@NotNull BlockHitResult result) {
+        this.attachedBlockPos = result.getBlockPos();
+        this.lastState = this.level.getBlockState(this.attachedBlockPos);
         super.onHitBlock(result);
         Vec3 deltaMovement = this.getDeltaMovement();
 
