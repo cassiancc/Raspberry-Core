@@ -43,6 +43,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     private final ItemStack bobber;
     private final ItemStack fishingRod;
     private final int luck;
+    public final boolean isSticky;
     public int shakeTime;
 
     @SuppressWarnings("unchecked")
@@ -56,9 +57,10 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         this.fishingLine = buf.readItem();
         this.bobber = buf.readItem();
         this.fishingRod = buf.readItem();
+        this.isSticky = buf.readBoolean();
     }
 
-    private GrapplingHookEntity(EntityType<? extends GrapplingHookEntity> entityType, Level level, int luck, int lureSpeed, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod) {
+    private GrapplingHookEntity(EntityType<? extends GrapplingHookEntity> entityType, Level level, int luck, int lureSpeed, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod, @Nonnull Boolean isSticky) {
         super(entityType, level);
         this.noCulling = true;
 
@@ -66,11 +68,12 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         this.fishingLine = fishingLine;
         this.bobber = bobber;
         this.fishingRod = rod;
+        this.isSticky = isSticky;
     }
 
     @SuppressWarnings("unchecked")
-    public GrapplingHookEntity(Player player, Level level, int luck, int lureSpeed, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod) {
-        this((EntityType) RaspberryEntityTypes.GRAPPLING_HOOK.get(), level, luck, lureSpeed, fishingLine, bobber, rod);
+    public GrapplingHookEntity(Player player, Level level, int luck, int lureSpeed, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod, @Nonnull Boolean isSticky) {
+        this((EntityType) RaspberryEntityTypes.GRAPPLING_HOOK.get(), level, luck, lureSpeed, fishingLine, bobber, rod, isSticky);
         this.setOwner(player);
         this.moveTo(player.getX(), player.getEyeY(),  player.getZ(), 0.0F, 0.0F);
 
@@ -94,6 +97,16 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     public boolean isAttached() {
         return isAttached;
     }
+
+    @Nonnull
+    public ItemStack getBobber() {
+        return this.bobber;
+    }
+
+    public boolean hasBobber() {
+        return !this.getBobber().isEmpty();
+    }
+
 
     public void tick() {
         super.tick();
@@ -291,41 +304,56 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         BlockState blockState = level.getBlockState(result.getBlockPos());
         level.playSound(null, this.getX(), this.getY(), this.getZ(), blockState.getSoundType().getHitSound(), SoundSource.PLAYERS,1F, 1);
 
-        // Bounce if hitting the side or bottom of a block
         Direction hitDirection = result.getDirection();
-        if (!hitDirection.equals(Direction.UP)) {
+        Vec3 hitPos = result.getLocation();
+
+        // Bounce if hitting the side or bottom of a block
+        if (!hitDirection.equals(Direction.UP) && !this.isSticky) {
             this.setDeltaMovement(this.getDeltaMovement().scale(0.1));
             if (hitDirection.getAxis() == Direction.Axis.X) {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(-1,1,1));
             } else if (hitDirection.getAxis() == Direction.Axis.Z) {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(1,1,-1));
             }
+            return;
+        }
+
+        RandomSource random = level.getRandom();
+
+        if (this.isSticky) {
+            this.playSound(SoundEvents.SLIME_SQUISH, 0.5F, 1.0F);
+            for (int particles = 4; particles > 0; particles--) {
+                Vec3 reversedMovement = deltaMovement.reverse().add(random.nextDouble()-0.5, random.nextDouble()-0.5, random.nextDouble()-0.5).normalize().scale(0.05);
+                level.addParticle(ParticleTypes.ITEM_SLIME, hitPos.x, hitPos.y, hitPos.z, reversedMovement.x, reversedMovement.y, reversedMovement.z);
+            }
         } else {
-            Vec3 hitPos = result.getLocation();
-            RandomSource random = level.getRandom();
+            this.playSound(SoundEvents.CHAIN_HIT, 0.5F, 0.75F);
             for (int particles = 3; particles > 0; particles--) {
                 Vec3 reversedMovement = deltaMovement.reverse().add(random.nextDouble()-0.5, random.nextDouble()-0.5, random.nextDouble()-0.5).normalize().scale(0.05);
                 level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), hitPos.x, hitPos.y, hitPos.z, reversedMovement.x, reversedMovement.y, reversedMovement.z);
             }
+        }
 
-            this.setDeltaMovement(Vec3.ZERO);
-            this.setPos(hitPos);
-            this.shakeTime = 7;
-            this.isAttached = true;
+        this.setDeltaMovement(Vec3.ZERO);
+        this.setPos(hitPos);
+        this.shakeTime = 7;
+        this.isAttached = true;
 
-            this.playSound(SoundEvents.CHAIN_HIT, 0.5F, 0.75F);
+        Player player = this.getPlayerOwner();
+        if (player != null){
+            Vec3 playerPos = player.getEyePosition();
+            Vec3 ropeVec = this.position().subtract(playerPos);
 
-            Player player = this.getPlayerOwner();
-            if (player != null){
-                Vec3 playerPos = player.getEyePosition();
-                Vec3 ropeVec = this.position().subtract(playerPos);
+            // Pull back a little to hook nicely onto corners
+            this.setPos(this.position().subtract(ropeVec.normalize().scale(3F/16)));
 
-                // Pull back a little to hook nicely onto corners
-                this.setPos(hitPos.subtract(ropeVec.normalize().scale(3F/16)));
-
-                Vec3 soundPosition = playerPos.add(ropeVec.normalize().scale(2));
-                level.playSound(null, soundPosition.x, soundPosition.y, soundPosition.z, RaspberrySoundEvents.GRAPPLING_HOOK_TIGHTEN.get(), SoundSource.PLAYERS,0.25F, 1);
+            // Move hook down a little to avoid clipping
+            if (hitDirection.equals(Direction.DOWN)) {
+                this.setPos(this.position().subtract(0,0.15,0));
             }
+
+            Vec3 soundPosition = playerPos.add(ropeVec.normalize().scale(2));
+            level.playSound(null, soundPosition.x, soundPosition.y, soundPosition.z, RaspberrySoundEvents.GRAPPLING_HOOK_TIGHTEN.get(), SoundSource.PLAYERS,0.25F, 1);
         }
     }
 
@@ -384,6 +412,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         buffer.writeItem(this.fishingLine);
         buffer.writeItem(this.bobber);
         buffer.writeItem(this.fishingRod);
+        buffer.writeBoolean(this.isSticky);
     }
 
     public void readSpawnData(FriendlyByteBuf additionalData) {

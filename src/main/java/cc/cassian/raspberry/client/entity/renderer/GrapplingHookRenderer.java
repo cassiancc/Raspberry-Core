@@ -29,7 +29,11 @@ import java.util.Map;
 
 public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
     private static final ResourceLocation HOOK = RaspberryMod.locate("textures/entity/projectiles/grappling_hook.png");
+    private static final ResourceLocation HOOK_STICKY = RaspberryMod.locate("textures/entity/projectiles/grappling_hook_sticky.png");
+    private static final ResourceLocation BOBBER_OVERLAY = RaspberryMod.locate("textures/entity/projectiles/grappling_hook_bobber_overlay.png");
     private static final RenderType HOOK_RENDER;
+    private static final RenderType HOOK_STICKY_RENDER;
+    private static final RenderType BOBBER_OVERLAY_RENDER;
 
     public GrapplingHookRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -166,7 +170,8 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
         matrixStack.mulPose(Vector3f.XP.rotationDegrees(45.0F));
 
-        VertexConsumer vertexConsumer = buffer.getBuffer(HOOK_RENDER);
+        VertexConsumer vertexConsumer = entity.isSticky ? buffer.getBuffer(HOOK_STICKY_RENDER) : buffer.getBuffer(HOOK_RENDER);
+
         PoseStack.Pose pose = matrixStack.last();
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
@@ -198,6 +203,28 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
             this.vertex(matrix4f, matrix3f, vertexConsumer, hookOffset-width, 3, 0, 0.0F, height/size, 0, 1, 0, packedLight);
         }
 
+        // Bobber overlay
+        VertexConsumer bobberOverlayVertex = buffer.getBuffer(BOBBER_OVERLAY_RENDER);
+        float bobberR = 1.0F;
+        float bobberG = 1.0F;
+        float bobberB = 1.0F;
+        if (entity.hasBobber()) {
+            ItemStack bobberStack = entity.getBobber();
+            if (!bobberStack.isEmpty() && bobberStack.getItem() instanceof DyeableLeatherItem) {
+                int colorInt = ((DyeableLeatherItem)bobberStack.getItem()).getColor(bobberStack);
+                bobberR = (float)(colorInt >> 16 & 255) / 255.0F;
+                bobberG = (float)(colorInt >> 8 & 255) / 255.0F;
+                bobberB = (float)(colorInt & 255) / 255.0F;
+            }
+        }
+        for(int r = 0; r < 4; ++r) {
+            matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+            this.vertex(matrix4f, matrix3f, bobberOverlayVertex, hookOffset-width, -3, 0, 0.0F, 0.0F, 0, 1, 0, packedLight, bobberR, bobberG, bobberB);
+            this.vertex(matrix4f, matrix3f, bobberOverlayVertex, hookOffset, -3, 0, width/size, 0.0F, 0, 1, 0, packedLight, bobberR, bobberG, bobberB);
+            this.vertex(matrix4f, matrix3f, bobberOverlayVertex, hookOffset, 3, 0, width/size, height/size, 0, 1, 0, packedLight, bobberR, bobberG, bobberB);
+            this.vertex(matrix4f, matrix3f, bobberOverlayVertex, hookOffset-width, 3, 0, 0.0F, height/size, 0, 1, 0, packedLight, bobberR, bobberG, bobberB);
+        }
+
         matrixStack.popPose();
     }
 
@@ -206,8 +233,11 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
         return HOOK;
     }
 
-    public void vertex(Matrix4f matrix, Matrix3f normals, VertexConsumer vertexBuilder, int offsetX, int offsetY, int offsetZ, float textureX, float textureY, int normalX, int m, int n, int packedLight) {
-        vertexBuilder.vertex(matrix, (float)offsetX, (float)offsetY, (float)offsetZ).color(255, 255, 255, 255).uv(textureX, textureY).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLight).normal(normals, (float)normalX, (float)n, (float)m).endVertex();
+    public void vertex(Matrix4f matrix, Matrix3f normals, VertexConsumer vertexBuilder, float offsetX, float offsetY, float offsetZ, float textureX, float textureY, int normalX, int m, int n, int packedLight, float r, float g, float b) {
+        vertexBuilder.vertex(matrix, offsetX, offsetY, offsetZ).color(r, g, b, 1.0F).uv(textureX, textureY).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLight).normal(normals, (float)normalX, (float)n, (float)m).endVertex();
+    }
+    public void vertex(Matrix4f matrix, Matrix3f normals, VertexConsumer vertexBuilder, float offsetX, float offsetY, float offsetZ, float textureX, float textureY, int normalX, int m, int n, int packedLight) {
+        this.vertex(matrix, normals, vertexBuilder, offsetX, offsetY, offsetZ, textureX, textureY, normalX, m, n, packedLight, 1,1,1);
     }
 
     private static void addVertexPair(
@@ -267,5 +297,7 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
 
     static {
         HOOK_RENDER = RenderType.entityCutout(HOOK);
+        HOOK_STICKY_RENDER = RenderType.entityCutout(HOOK_STICKY);
+        BOBBER_OVERLAY_RENDER = RenderType.entityCutout(BOBBER_OVERLAY);
     }
 }

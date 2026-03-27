@@ -72,7 +72,8 @@ public abstract class AquaFishingRodItemMixin {
 
         Entity bobber;
         if (hook.getName() != null && hook.getName().equals("grappling")) {
-            bobber = new GrapplingHookEntity(player, player.level, luck, lureSpeed, getFishingLine(heldStack), getBobber(heldStack), heldStack);
+            boolean isSticky = !bait.isEmpty() && bait.is(RaspberryTags.STICKY_BAIT);
+            bobber = new GrapplingHookEntity(player, player.level, luck, lureSpeed, getFishingLine(heldStack), getBobber(heldStack), heldStack, isSticky);
         } else {
             bobber = new AquaFishingBobberEntity(player, player.level, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack);
         }
