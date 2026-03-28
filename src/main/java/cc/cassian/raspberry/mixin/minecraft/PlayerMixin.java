@@ -2,6 +2,7 @@ package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.PlayerWithGrapplingHook;
 import cc.cassian.raspberry.entity.GrapplingHookEntity;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,15 +19,18 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
     @Nullable
     private GrapplingHookEntity raspberryCore$grapplingHook;
 
+
     @Inject(method = "travel", at = @At("HEAD"))
     private void onTravel(Vec3 travelVector, CallbackInfo ci) {
         Player player = (Player) (Object)this;
 
         GrapplingHookEntity hook = this.raspberryCore$grapplingHook;
         if (hook != null && hook.isAttached()) {
-
-            Vec3 hookPos = hook.position();
+            Vec3 hookPos = hook.position().add(0, 0, 0);
             Vec3 playerPos = player.position();
+            Vec3 rope = hookPos.subtract(playerPos);
+            Vec3 ropeDirection = rope.normalize().reverse();
+            double distanceSqr = rope.lengthSqr();
 
             // Don't pull player down
             if (hookPos.y < playerPos.y()) {
@@ -38,22 +42,48 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
                 return;
             }
 
-            Vec3 rope = hookPos.subtract(playerPos);
-            double distanceSqr = rope.lengthSqr();
+            // Climb up side of blocks
+            double travelVectorLengthSqr = travelVector.lengthSqr();
+            if (travelVectorLengthSqr > 0.01) {
+                Vec3 vec3 = travelVector.normalize();
+                float yRotSin = Mth.sin(player.getYRot() * ((float)Math.PI / 180F));
+                float yRotCos = Mth.cos(player.getYRot() * ((float)Math.PI / 180F));
+                Vec3 travelDirectionVector = new Vec3(vec3.x * (double)yRotCos - vec3.z * (double)yRotSin, 0, vec3.z * (double)yRotCos + vec3.x * (double)yRotSin);
 
+                double dot = travelDirectionVector.dot(new Vec3(ropeDirection.reverse().x, 0, ropeDirection.reverse().z));
+
+                if (dot > 0) {
+                    if (player.horizontalCollision) {
+                        player.setDeltaMovement(new Vec3(player.getDeltaMovement().x, Math.max(player.getDeltaMovement().y, 0.2), player.getDeltaMovement().z));
+                    }
+                }
+            }
+
+
+            Vec3 velocity = player.getDeltaMovement();
             double targetLength = 1.5F;
             double targetLengthSqr = targetLength * targetLength;
-
-            double stiffness = 0.02D;
+            double stiffness = 0.01D;
             double maxPull = 0.15;
 
             if (distanceSqr > targetLengthSqr) {
-                double pull = Math.min(distanceSqr/targetLengthSqr * stiffness, maxPull);
-                Vec3 movement = rope.normalize().multiply(pull,pull * 1.1, pull);
-                player.setDeltaMovement(player.getDeltaMovement().add(movement));
-            }
+                // Negate any radial velocity away from the hook
+                double elasticity = 1;
+                double radialVelocity = Math.max(velocity.dot(ropeDirection), 0);
+                Vec3 radialMovement = ropeDirection.scale(radialVelocity * elasticity);
+                Vec3 tangentialMovement = velocity.subtract(radialMovement);
 
-            player.hasImpulse = true;
+                player.setDeltaMovement(tangentialMovement);
+
+                // Pull towards hook
+                double pullDistance = Math.max(distanceSqr - targetLengthSqr, 0);
+                double pull = Math.min(pullDistance * stiffness, maxPull);
+                Vec3 pullVector = ropeDirection.reverse().scale(pull);
+
+                player.setDeltaMovement(player.getDeltaMovement().add(pullVector));
+
+                player.hasImpulse = true;
+            }
 
             if (!player.level.isClientSide) {
                 player.resetFallDistance();
