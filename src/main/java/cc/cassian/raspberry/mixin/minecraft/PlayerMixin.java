@@ -3,6 +3,7 @@ package cc.cassian.raspberry.mixin.minecraft;
 import cc.cassian.raspberry.PlayerWithGrapplingHook;
 import cc.cassian.raspberry.entity.GrapplingHookEntity;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,21 +26,27 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
         Player player = (Player) (Object)this;
 
         GrapplingHookEntity hook = this.raspberryCore$grapplingHook;
-        if (hook != null && hook.isAttached()) {
+        if (hook != null && (hook.isAttached() || hook.getHookedIn() != null)) {
             Vec3 hookPos = hook.position().add(0, 0, 0);
             Vec3 playerPos = player.position();
+            boolean hasHookedEntity = hook.getHookedIn() != null;
+            if (hasHookedEntity) {
+                playerPos = player.getEyePosition();
+            }
             Vec3 rope = hookPos.subtract(playerPos);
             Vec3 ropeDirection = rope.normalize().reverse();
             double distanceSqr = rope.lengthSqr();
 
-            // Don't pull player down
-            if (hookPos.y < playerPos.y()) {
-                return;
-            }
+            if (!hasHookedEntity) {
+                // Don't pull player down
+                if (hookPos.y < playerPos.y()) {
+                    return;
+                }
 
-            // Don't pull player if they're standing on the ground
-            if (player.isOnGround()) {
-                return;
+                // Don't pull player if they're standing on the ground
+                if (player.isOnGround()) {
+                    return;
+                }
             }
 
             // Climb up side of blocks
@@ -62,9 +69,16 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
 
             Vec3 velocity = player.getDeltaMovement();
             double targetLength = 1.5F;
-            double targetLengthSqr = targetLength * targetLength;
-            double stiffness = 0.01D;
             double maxPull = 0.15;
+            double stiffness = 0.01D;
+
+            if (hasHookedEntity) {
+                Entity entity = hook.getHookedIn();
+                targetLength = targetLength * GrapplingHookEntity.getSizeRatio(entity, player);
+                maxPull = maxPull * GrapplingHookEntity.getPullingRatio(entity, player, true);
+            }
+
+            double targetLengthSqr = targetLength * targetLength;
 
             if (distanceSqr > targetLengthSqr) {
                 // Negate any radial velocity away from the hook

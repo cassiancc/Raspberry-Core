@@ -43,7 +43,7 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
         Player player = entity.getPlayerOwner();
         if (player == null) return;
 
-        boolean isAttached = entity.isAttached();
+        boolean isAttached = entity.isAttached() || entity.getHookedIn() != null;
 
         // Line Colors
         ItemStack line = entity.getFishingLine();

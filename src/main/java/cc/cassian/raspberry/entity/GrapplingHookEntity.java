@@ -10,14 +10,19 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -26,6 +31,7 @@ import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
@@ -39,10 +45,13 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     protected boolean isAttached;
     @Nullable private BlockState lastState;
     @Nullable private BlockPos attachedBlockPos;
+    private static final EntityDataAccessor<Integer> DATA_HOOKED_ENTITY;
     private final ItemStack fishingLine;
     private final ItemStack bobber;
     private final ItemStack fishingRod;
     private final int luck;
+    @Nullable
+    private Entity hookedIn;
     public final boolean isSticky;
     public int shakeTime;
 
@@ -107,7 +116,6 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         return !this.getBobber().isEmpty();
     }
 
-
     public void tick() {
         super.tick();
         Player player = this.getPlayerOwner();
@@ -131,7 +139,18 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
             BlockPos blockpos = this.blockPosition();
             BlockState blockstate = this.level.getBlockState(blockpos);
-            if (isAttached) {
+
+            if (this.hookedIn != null) {
+                if (!this.hookedIn.isRemoved() && this.hookedIn.level.dimension() == this.level.dimension()) {
+                    this.setPos(this.hookedIn.getX(), this.hookedIn.getY(0.8), this.hookedIn.getZ());
+                    if (!this.level.isClientSide) {
+                        this.pullEntity(this.hookedIn);
+                        this.level.broadcastEntityEvent(this, (byte)31);
+                    }
+                } else {
+                    this.setHookedEntity(null);
+                }
+            } else if (isAttached) {
                 if (this.shouldFall()) {
                     this.startFalling();
                 }
@@ -169,8 +188,14 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                     }
                 }
 
-                // Stop updating movement if attached
-                if (this.isAttached) {
+                // Check for entity hit
+                HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+                if (hitresult.getType() == HitResult.Type.MISS || !ForgeEventFactory.onProjectileImpact(this, hitresult)) {
+                    this.onHit(hitresult);
+                }
+
+                // Stop updating movement if attached or hooked
+                if (this.isAttached || this.hookedIn != null) {
                     return;
                 }
 
@@ -241,7 +266,12 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     public int retrieve(@Nonnull ItemStack fishingRod) {
         Player player = this.getPlayerOwner();
         if (!this.level.isClientSide && player != null && !this.shouldStopFishing(player)) {
-            int rodDamage = 2;
+            int rodDamage = 1;
+
+            if (this.hookedIn != null) {
+                rodDamage = this.hookedIn instanceof ItemEntity ? 3 : 5;
+            }
+
             this.discard();
             return rodDamage;
         } else {
@@ -253,6 +283,11 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         // Play line break sound
         this.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.LEASH_KNOT_BREAK, SoundSource.PLAYERS, 0.25F, 1.0F);
         this.discard();
+    }
+
+    private void setHookedEntity(@Nullable Entity hookedEntity) {
+        this.hookedIn = hookedEntity;
+        this.getEntityData().set(DATA_HOOKED_ENTITY, hookedEntity == null ? 0 : hookedEntity.getId() + 1);
     }
 
     private boolean shouldStopFishing(Player player) {
@@ -291,8 +326,18 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
     @Override
     protected boolean canHitEntity(Entity target) {
-        return false;
+        return super.canHitEntity(target) || target.isAlive() && target instanceof ItemEntity;
     }
+
+    @Override
+    protected void onHitEntity(EntityHitResult result) {
+        super.onHitEntity(result);
+        this.shakeTime = 7;
+        if (!this.level.isClientSide) {
+            this.setHookedEntity(result.getEntity());
+        }
+    }
+
 
     @Override
     protected void onHitBlock(@NotNull BlockHitResult result) {
@@ -379,6 +424,67 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         this.updateOwnerInfo(this);
     }
 
+    public void handleEntityEvent(byte id) {
+        if (id == 31 && this.level.isClientSide && this.hookedIn instanceof Player && ((Player)this.hookedIn).isLocalPlayer()) {
+            this.pullEntity(this.hookedIn);
+        }
+
+        super.handleEntityEvent(id);
+    }
+
+    protected void pullEntity(Entity entity) {
+        Entity player = this.getOwner();
+        if (entity != null && player != null) {
+            Vec3 playerPos = player.getEyePosition();
+            Vec3 entityPos = this.position();
+            Vec3 rope = playerPos.subtract(entityPos);
+            Vec3 ropeDirection = rope.normalize().reverse();
+            double distanceSqr = rope.lengthSqr();
+
+            Vec3 velocity = entity.getDeltaMovement();
+            double targetLength = 1.5F;
+            targetLength = targetLength * getSizeRatio(entity, player);
+            double targetLengthSqr = targetLength * targetLength;
+            double stiffness = 0.01D;
+            double maxPull = 0.15;
+            maxPull = maxPull * GrapplingHookEntity.getPullingRatio(entity, player, false);
+
+            if (distanceSqr > targetLengthSqr) {
+                double elasticity = 1;
+                double radialVelocity = Math.max(velocity.dot(ropeDirection), 0);
+                Vec3 radialMovement = ropeDirection.scale(radialVelocity * elasticity);
+                Vec3 tangentialMovement = velocity.subtract(radialMovement);
+
+                entity.setDeltaMovement(tangentialMovement);
+
+                double pullDistance = Math.max(distanceSqr - targetLengthSqr, 0);
+                double pull = Math.min(pullDistance * stiffness, maxPull);
+                Vec3 pullVector = ropeDirection.reverse().scale(pull);
+
+                entity.setDeltaMovement(entity.getDeltaMovement().add(pullVector));
+            }
+        }
+    }
+
+    static public double getPullingRatio(Entity pulledEntity, Entity player, boolean pullingPlayer) {
+        double playerBias = 1;
+        double playerVolume = player.getBbWidth() * player.getBbWidth() * player.getBbHeight() * playerBias;
+        double entityVolume = pulledEntity.getBbWidth() * pulledEntity.getBbWidth() * pulledEntity.getBbHeight();
+        double total = playerVolume + entityVolume;
+        if (pullingPlayer) {
+            return entityVolume / total;
+        } else {
+            return playerVolume / total;
+        }
+    }
+
+    static public double getSizeRatio(Entity entity, Entity player) {
+        double playerVolume = player.getBbWidth() * player.getBbWidth() * player.getBbHeight();
+        double entityVolume = entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight();
+
+        return Mth.clamp(entityVolume / playerVolume, 0.2, 3.0);
+    }
+
     private void updateOwnerInfo(@Nullable GrapplingHookEntity grapplingHook) {
         Player player = this.getPlayerOwner();
         if (player != null) {
@@ -396,6 +502,12 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     public ItemStack getFishingLine() {
         return this.fishingLine;
     }
+
+    @Nullable
+    public Entity getHookedIn() {
+        return this.hookedIn;
+    }
+
 
     @Override
     public boolean canChangeDimensions() {
@@ -434,5 +546,19 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     }
 
     protected void defineSynchedData() {
+        this.getEntityData().define(DATA_HOOKED_ENTITY, 0);
+    }
+
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (DATA_HOOKED_ENTITY.equals(key)) {
+            int i = (Integer)this.getEntityData().get(DATA_HOOKED_ENTITY);
+            this.hookedIn = i > 0 ? this.level.getEntity(i - 1) : null;
+        }
+
+        super.onSyncedDataUpdated(key);
+    }
+
+    static {
+        DATA_HOOKED_ENTITY = SynchedEntityData.defineId(GrapplingHookEntity.class, EntityDataSerializers.INT);
     }
 }
