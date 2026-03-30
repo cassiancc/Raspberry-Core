@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(LargePumpkinSliceBlock.class)
 public class LargePumpkinSliceBlockMixin {
 	@WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z"))
-	private boolean moreThingsCanHang(ItemStack instance, TagKey<Item> tag, Operation<Boolean> original) {
+	private boolean respectModdedShearsPlease(ItemStack instance, TagKey<Item> tag, Operation<Boolean> original) {
 		if (instance.is(Tags.Items.SHEARS)) return true;
 		return original.call(instance, tag);
 	}
