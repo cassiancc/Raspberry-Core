@@ -22,7 +22,10 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (checkMixin("additional_enchantments", mixinClassName)){
+        if (checkMixin("autumnity", mixinClassName)){
+            return false;
+        }
+        else if (checkMixin("additional_enchantments", mixinClassName)){
             return false;
         }
         else if (checkMixin("alloyed", mixinClassName)){
