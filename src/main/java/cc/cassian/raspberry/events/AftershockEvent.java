@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.events;
 
 import cc.cassian.raspberry.ModCompat;
+import cc.cassian.raspberry.compat.CopperAgeBackportCompat;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.registry.RaspberryMobEffects;
 import cc.cassian.raspberry.registry.RaspberryTags;
@@ -23,11 +24,14 @@ public class AftershockEvent {
         if (!ModConfig.get().aftershock) return;
         Entity entity = event.getEntity();
         int copperCount = 0;
-        if (entity instanceof LivingEntity player) {
+        if (entity instanceof LivingEntity player && player.isAffectedByPotions()) {
             for (ItemStack armorSlot : entity.getArmorSlots()) {
                 if (armorSlot.is(RaspberryTags.COPPER_ARMOR)) {
                     copperCount++;
                 }
+            }
+            if (ModCompat.hasCopperAgeBackport() && CopperAgeBackportCompat.isCopperGolem(player)) {
+                copperCount = 2;
             }
             copperCount--;
             if (copperCount >= 0) {
