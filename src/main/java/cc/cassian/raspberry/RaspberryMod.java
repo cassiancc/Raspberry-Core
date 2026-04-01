@@ -80,6 +80,9 @@ public final class RaspberryMod {
         if (ModCompat.hasMinersDelight()) {
             MinecraftForge.EVENT_BUS.addListener(MinersDelightCompat::infestedInteract);
         }
+        if (ModCompat.hasCopperAgeBackport()) {
+            MinecraftForge.EVENT_BUS.addListener(CopperAgeBackportCompat::saveCopperGolem);
+        }
         MinecraftForge.EVENT_BUS.addListener(InfestedMobEffect::onMobHurt);
         if (FMLEnvironment.dist.isClient()) {
             RaspberryModClient.init(context);

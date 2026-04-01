@@ -190,7 +190,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                 }
 
                 // Check for entity hit
-                HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+                HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
                 if (hitresult.getType() == HitResult.Type.MISS || !ForgeEventFactory.onProjectileImpact(this, hitresult)) {
                     this.onHit(hitresult);
                 }

@@ -35,7 +35,7 @@ public class InfestedMobEffect extends MobEffect {
 			int count = spawnedCount.applyAsInt(livingEntity.getRandom());
 
 			for (int i = 0; i < count; ++i) {
-				spawnSilverfish(livingEntity.level, livingEntity, livingEntity.getX(), livingEntity.getY() + (double) livingEntity.getBbHeight() / (double) 2.0F, livingEntity.getZ());
+				spawnSilverfish(livingEntity.level(), livingEntity, livingEntity.getX(), livingEntity.getY() + (double) livingEntity.getBbHeight() / (double) 2.0F, livingEntity.getZ());
 			}
 		}
 	}

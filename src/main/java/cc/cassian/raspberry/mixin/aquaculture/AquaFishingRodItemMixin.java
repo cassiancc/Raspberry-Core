@@ -73,11 +73,11 @@ public abstract class AquaFishingRodItemMixin {
         Entity bobber;
         if (hook.getName() != null && hook.getName().equals("grappling")) {
             boolean isSticky = !bait.isEmpty() && bait.is(RaspberryTags.STICKY_BAIT);
-            bobber = new GrapplingHookEntity(player, player.level, luck, lureSpeed, getFishingLine(heldStack), getBobber(heldStack), heldStack, isSticky);
+            bobber = new GrapplingHookEntity(player, player.level(), luck, lureSpeed, getFishingLine(heldStack), getBobber(heldStack), heldStack, isSticky);
         } else {
-            bobber = new AquaFishingBobberEntity(player, player.level, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack);
+            bobber = new AquaFishingBobberEntity(player, player.level(), luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack);
         }
-        return player.level.addFreshEntity(bobber);
+        return player.level().addFreshEntity(bobber);
     }
 
     @Inject(method = "use", at = @At(value = "INVOKE_ASSIGN", target = "com/teammetallurgy/aquaculture/item/AquaFishingRodItem.getHookType (Lnet/minecraft/world/item/ItemStack;)Lcom/teammetallurgy/aquaculture/api/fishing/Hook;"), cancellable = true)
