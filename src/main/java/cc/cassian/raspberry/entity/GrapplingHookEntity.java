@@ -10,6 +10,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -95,7 +96,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
         double velocity = 1.3;
         Vec3 playerMovement = player.getDeltaMovement();
-        this.setDeltaMovement(direction.scale(velocity).add(playerMovement.x, player.isOnGround() ? 0 : playerMovement.y, playerMovement.z));
+        this.setDeltaMovement(direction.scale(velocity).add(playerMovement.x, player.onGround() ? 0 : playerMovement.y, playerMovement.z));
     }
 
     @Override
@@ -121,7 +122,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         Player player = this.getPlayerOwner();
         if (player == null) {
             this.discard();
-        } else if (this.level.isClientSide || !this.shouldStopFishing(player)) {
+        } else if (this.level().isClientSide || !this.shouldStopFishing(player)) {
 
             Vec3 deltaMovement = this.getDeltaMovement();
 
@@ -138,14 +139,14 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
             }
 
             BlockPos blockpos = this.blockPosition();
-            BlockState blockstate = this.level.getBlockState(blockpos);
+            BlockState blockstate = this.level().getBlockState(blockpos);
 
             if (this.hookedIn != null) {
-                if (!this.hookedIn.isRemoved() && this.hookedIn.level.dimension() == this.level.dimension()) {
+                if (!this.hookedIn.isRemoved() && this.hookedIn.level().dimension() == this.level().dimension()) {
                     this.setPos(this.hookedIn.getX(), this.hookedIn.getY(0.8), this.hookedIn.getZ());
-                    if (!this.level.isClientSide) {
+                    if (!this.level().isClientSide) {
                         this.pullEntity(this.hookedIn);
-                        this.level.broadcastEntityEvent(this, (byte)31);
+                        this.level().broadcastEntityEvent(this, (byte)31);
                     }
                 } else {
                     this.setHookedEntity(null);
@@ -166,7 +167,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                         ClipContext.Fluid.NONE,
                         this
                 );
-                BlockHitResult blockEdgeHitResult = level.clip(context);
+                BlockHitResult blockEdgeHitResult = level().clip(context);
 
                 if (blockEdgeHitResult.getType() == HitResult.Type.BLOCK) {
                     if (blockEdgeHitResult.getDirection() == Direction.DOWN) {
@@ -181,7 +182,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                     this.hasImpulse = true;
                 } else {
                     // Check for hook collision with block
-                    HitResult blockHitResult = this.level.clip(new ClipContext(currentPosition, movedPosition, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+                    HitResult blockHitResult = this.level().clip(new ClipContext(currentPosition, movedPosition, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
                     if (blockHitResult.getType() == HitResult.Type.BLOCK) {
                         this.onHit(blockHitResult);
                         this.hasImpulse = true;
@@ -228,7 +229,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                 if (this.isInWater()) {
                     for(int j = 0; j < 4; ++j) {
                         double f2 = 0.25;
-                        this.level.addParticle(ParticleTypes.BUBBLE, newX - deltaX * f2, newY - deltaY * f2, newZ - deltaZ * f2, deltaX, deltaY, deltaZ);
+                        this.level().addParticle(ParticleTypes.BUBBLE, newX - deltaX * f2, newY - deltaY * f2, newZ - deltaZ * f2, deltaX, deltaY, deltaZ);
                     }
                     inertia = 0.6F;
                 }
@@ -240,7 +241,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                 this.setPos(newX, newY, newZ);
 
                 if (!blockstate.isAir()) {
-                    VoxelShape voxelshape = blockstate.getCollisionShape(this.level, blockpos);
+                    VoxelShape voxelshape = blockstate.getCollisionShape(this.level(), blockpos);
                     if (!voxelshape.isEmpty()) {
                         Vec3 vec31 = this.position();
 
@@ -265,7 +266,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
     public int retrieve(@Nonnull ItemStack fishingRod) {
         Player player = this.getPlayerOwner();
-        if (!this.level.isClientSide && player != null && !this.shouldStopFishing(player)) {
+        if (!this.level().isClientSide && player != null && !this.shouldStopFishing(player)) {
             int rodDamage = 1;
 
             if (this.hookedIn != null) {
@@ -281,7 +282,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
     private void breakRope(Player player) {
         // Play line break sound
-        this.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.LEASH_KNOT_BREAK, SoundSource.PLAYERS, 0.25F, 1.0F);
+        this.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.LEASH_KNOT_BREAK, SoundSource.PLAYERS, 0.25F, 1.0F);
         this.discard();
     }
 
@@ -310,7 +311,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
     private boolean shouldFall() {
         if (this.attachedBlockPos != null) {
-            BlockState state = this.level.getBlockState(this.attachedBlockPos);
+            BlockState state = this.level().getBlockState(this.attachedBlockPos);
             return this.lastState != state && state.isAir();
         }
         return false;
@@ -333,7 +334,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         this.shakeTime = 7;
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             this.setHookedEntity(result.getEntity());
         }
     }
@@ -342,12 +343,12 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     @Override
     protected void onHitBlock(@NotNull BlockHitResult result) {
         this.attachedBlockPos = result.getBlockPos();
-        this.lastState = this.level.getBlockState(this.attachedBlockPos);
+        this.lastState = this.level().getBlockState(this.attachedBlockPos);
         super.onHitBlock(result);
         Vec3 deltaMovement = this.getDeltaMovement();
 
-        BlockState blockState = level.getBlockState(result.getBlockPos());
-        level.playSound(null, this.getX(), this.getY(), this.getZ(), blockState.getSoundType().getHitSound(), SoundSource.PLAYERS,1F, 1);
+        BlockState blockState = level().getBlockState(result.getBlockPos());
+        level().playSound(null, this.getX(), this.getY(), this.getZ(), blockState.getSoundType().getHitSound(), SoundSource.PLAYERS,1F, 1);
 
         Direction hitDirection = result.getDirection();
         Vec3 hitPos = result.getLocation();
@@ -363,19 +364,19 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
             return;
         }
 
-        RandomSource random = level.getRandom();
+        RandomSource random = level().getRandom();
 
         if (this.isSticky) {
             this.playSound(SoundEvents.SLIME_SQUISH, 0.5F, 1.0F);
             for (int particles = 4; particles > 0; particles--) {
                 Vec3 reversedMovement = deltaMovement.reverse().add(random.nextDouble()-0.5, random.nextDouble()-0.5, random.nextDouble()-0.5).normalize().scale(0.05);
-                level.addParticle(ParticleTypes.ITEM_SLIME, hitPos.x, hitPos.y, hitPos.z, reversedMovement.x, reversedMovement.y, reversedMovement.z);
+                level().addParticle(ParticleTypes.ITEM_SLIME, hitPos.x, hitPos.y, hitPos.z, reversedMovement.x, reversedMovement.y, reversedMovement.z);
             }
         } else {
             this.playSound(SoundEvents.CHAIN_HIT, 0.5F, 0.75F);
             for (int particles = 3; particles > 0; particles--) {
                 Vec3 reversedMovement = deltaMovement.reverse().add(random.nextDouble()-0.5, random.nextDouble()-0.5, random.nextDouble()-0.5).normalize().scale(0.05);
-                level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), hitPos.x, hitPos.y, hitPos.z, reversedMovement.x, reversedMovement.y, reversedMovement.z);
+                level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), hitPos.x, hitPos.y, hitPos.z, reversedMovement.x, reversedMovement.y, reversedMovement.z);
             }
         }
 
@@ -398,7 +399,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
             }
 
             Vec3 soundPosition = playerPos.add(ropeVec.normalize().scale(2));
-            level.playSound(null, soundPosition.x, soundPosition.y, soundPosition.z, RaspberrySoundEvents.GRAPPLING_HOOK_TIGHTEN.get(), SoundSource.PLAYERS,0.25F, 1);
+            level().playSound(null, soundPosition.x, soundPosition.y, soundPosition.z, RaspberrySoundEvents.GRAPPLING_HOOK_TIGHTEN.get(), SoundSource.PLAYERS,0.25F, 1);
         }
     }
 
@@ -425,7 +426,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     }
 
     public void handleEntityEvent(byte id) {
-        if (id == 31 && this.level.isClientSide && this.hookedIn instanceof Player && ((Player)this.hookedIn).isLocalPlayer()) {
+        if (id == 31 && this.level().isClientSide && this.hookedIn instanceof Player && ((Player)this.hookedIn).isLocalPlayer()) {
             this.pullEntity(this.hookedIn);
         }
 
@@ -531,7 +532,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     }
 
     @Nonnull
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -552,7 +553,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (DATA_HOOKED_ENTITY.equals(key)) {
             int i = (Integer)this.getEntityData().get(DATA_HOOKED_ENTITY);
-            this.hookedIn = i > 0 ? this.level.getEntity(i - 1) : null;
+            this.hookedIn = i > 0 ? this.level().getEntity(i - 1) : null;
         }
 
         super.onSyncedDataUpdated(key);

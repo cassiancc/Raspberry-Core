@@ -42,4 +42,8 @@ public final class ModCompat {
     public static boolean hasItemObliterator() { return isLoaded("item_obliterator"); }
     public static boolean hasSidekick() { return isLoaded("sidekick"); }
     public static boolean hasXaerosWorldMap() { return isLoaded("xaeroworldmap"); }
+
+	public static boolean hasMinersDelight() {
+		return isLoaded("minersdelight");
+	}
 }

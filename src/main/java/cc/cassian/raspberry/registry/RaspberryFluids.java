@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.FluidType;
@@ -104,11 +103,11 @@ public class RaspberryFluids {
 	}
 
 	private static Supplier<? extends LiquidBlock> block(String name, RegistryObject<FlowingFluid> fluid) {
-		return RaspberryBlocks.BLOCKS.register(name, ()->new LiquidBlock(fluid, BlockBehaviour.Properties.of(Material.LAVA)));
+		return RaspberryBlocks.BLOCKS.register(name, ()->new LiquidBlock(fluid, BlockBehaviour.Properties.copy(Blocks.LAVA)));
 	}
 
 	private static Supplier<? extends Item> bucket(String name, RegistryObject<FlowingFluid> moltenLead) {
-		return RaspberryItems.registerItem("%s_bucket".formatted(name), ()->new MoltenBucketItem(name, moltenLead, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MATERIALS)));
+		return RaspberryItems.registerItem("%s_bucket".formatted(name), ()->new MoltenBucketItem(name, moltenLead, new Item.Properties().stacksTo(1)));
 	}
 
 	static RegistryObject<FluidType> registerFluidType(String name) {

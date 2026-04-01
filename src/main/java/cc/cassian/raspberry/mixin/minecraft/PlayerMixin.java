@@ -44,7 +44,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
                 }
 
                 // Don't pull player if they're standing on the ground
-                if (player.isOnGround()) {
+                if (player.onGround()) {
                     return;
                 }
             }
@@ -99,9 +99,9 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
                 player.hasImpulse = true;
             }
 
-            if (!player.level.isClientSide) {
+            if (!player.level().isClientSide) {
                 player.resetFallDistance();
-                if (!player.isOnGround()) player.hurtMarked = false;
+                if (!player.onGround()) player.hurtMarked = false;
             }
         }
     }

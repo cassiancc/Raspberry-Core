@@ -75,7 +75,7 @@ public abstract class MoltenFlowingFluid extends ForgeFlowingFluid {
 							level.setBlockAndUpdate(blockpos, ForgeEventFactory.fireFluidPlaceBlockEvent(level, blockpos, pos, Blocks.FIRE.defaultBlockState()));
 							return;
 						}
-					} else if (blockstate.getMaterial().blocksMotion()) {
+					} else if (blockstate.blocksMotion()) {
 						return;
 					}
 				}

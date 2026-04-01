@@ -5,9 +5,7 @@ import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.entity.GrapplingHookEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -22,6 +20,9 @@ import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolActions;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -166,9 +167,9 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
         matrixStack.pushPose();
         matrixStack.scale(0.05625F, 0.05625F, 0.05625F);
         matrixStack.translate(0.0, 1, 0.0);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(45.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
+        matrixStack.mulPose(Axis.XP.rotationDegrees(45.0F));
 
         VertexConsumer vertexConsumer = entity.isSticky ? buffer.getBuffer(HOOK_STICKY_RENDER) : buffer.getBuffer(HOOK_RENDER);
 
@@ -196,7 +197,7 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
 
         // Side cross
         for(int r = 0; r < 4; ++r) {
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+            matrixStack.mulPose(Axis.XP.rotationDegrees(90.0F));
             this.vertex(matrix4f, matrix3f, vertexConsumer, hookOffset-width, -3, 0, 0.0F, 0.0F, 0, 1, 0, packedLight);
             this.vertex(matrix4f, matrix3f, vertexConsumer, hookOffset, -3, 0, width/size, 0.0F, 0, 1, 0, packedLight);
             this.vertex(matrix4f, matrix3f, vertexConsumer, hookOffset, 3, 0, width/size, height/size, 0, 1, 0, packedLight);
@@ -218,7 +219,7 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
             }
         }
         for(int r = 0; r < 4; ++r) {
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+            matrixStack.mulPose(Axis.XP.rotationDegrees(90.0F));
             this.vertex(matrix4f, matrix3f, bobberOverlayVertex, hookOffset-width, -3, 0, 0.0F, 0.0F, 0, 1, 0, packedLight, bobberR, bobberG, bobberB);
             this.vertex(matrix4f, matrix3f, bobberOverlayVertex, hookOffset, -3, 0, width/size, 0.0F, 0, 1, 0, packedLight, bobberR, bobberG, bobberB);
             this.vertex(matrix4f, matrix3f, bobberOverlayVertex, hookOffset, 3, 0, width/size, height/size, 0, 1, 0, packedLight, bobberR, bobberG, bobberB);

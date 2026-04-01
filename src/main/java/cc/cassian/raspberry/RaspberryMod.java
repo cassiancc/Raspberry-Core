@@ -77,12 +77,7 @@ public final class RaspberryMod {
         MinecraftForge.EVENT_BUS.addListener(DarknessRepairEvent::playerTick);
         if (!ModCompat.hasCofhCore())
             MinecraftForge.EVENT_BUS.addListener(AftershockEvent::electrify);
-        if (ModCompat.OREGANIZED) {
-            RaspberryAttributes.ATTRIBUTES.register(eventBus);
-            MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onItemAttributes);
-            MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onHurtEvent);
-        }
-        if (ModCompat.MINERS_DELIGHT) {
+        if (ModCompat.hasMinersDelight()) {
             MinecraftForge.EVENT_BUS.addListener(MinersDelightCompat::infestedInteract);
         }
         MinecraftForge.EVENT_BUS.addListener(InfestedMobEffect::onMobHurt);
