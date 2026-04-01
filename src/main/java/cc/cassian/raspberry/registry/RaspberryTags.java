@@ -16,10 +16,12 @@ public class RaspberryTags {
     public static final TagKey<Item> BAD_BAIT = createItemTag("bad_bait");
     public static final TagKey<Item> MID_BAIT = createItemTag("mid_bait");
     public static final TagKey<Item> GOOD_BAIT = createItemTag("good_bait");
+    public static final TagKey<Item> STICKY_BAIT = createItemTag("sticky_bait");
 
     public static final TagKey<Item> ENCHANTABLE_WEAPON = createItemTag("enchantable/weapon");
     public static final TagKey<Item> ENCHANTABLE_HEARTFELT = createItemTag("enchantable/heartfelt");
     public static final TagKey<Item> ENCHANTABLE_SOULBOUND = createItemTag("enchantable/soulbound");
+    public static final TagKey<Item> ENCHANTABLE_CAVALIER = createItemTag("enchantable/cavalier");
 
     public static final TagKey<Item> FIREPROOF = createItemTag("fireproof");
 
@@ -59,6 +61,7 @@ public class RaspberryTags {
 
     public static final TagKey<EntityType<?>> CAT_FOOD_USERS = createEntityTypeTag("cat_food_users");
     public static final TagKey<EntityType<?>> DISALLOWED_IN_BOATS = createEntityTypeTag("disallowed_in_boats");
+    public static final TagKey<EntityType<?>> INSECTS = createEntityTypeTag("insects");
 
     private static TagKey<Block> createBlockTag(String id) {
         return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), locate(id));

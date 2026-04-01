@@ -3,6 +3,10 @@
   "values": [
     "#raspberry:bad_bait",
     "#raspberry:mid_bait",
-    "#raspberry:good_bait"
+    "#raspberry:good_bait",
+    {
+      "id": "minecraft:slime_ball",
+      "required": false
+    }
   ]
 }

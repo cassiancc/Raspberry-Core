@@ -4,6 +4,10 @@
   - Hide potion types
   - Hide tooltips
   - Change creative tab icons
+- Grappling Hooks - a new traversal tool that can be equipped on a Reinforced Fishing Rod (Aquaculture).
+- Molten Fluids for multiple mods metal types, including Cauldrons and Buckets.
+- A backport of the Infested effect from Minecraft 1.21.
+- Wand of Freezing (Caverns and Chasms) can now be used on Wind Vane (Supplementaries) to change the weather.
 - Better jukeboxes config option:
     - Fades out vanilla music when playing a jukebox (supports Etched).
     - Changes jukebox sound to be non-directional.
@@ -23,7 +27,7 @@
 - Config option to modify Savage & Ravage creeper spore cloud durations.
 - Disabled some curative items.
 - Items in the `raspberry:fireproof` tag no longer burn.
-- Spawn eggs are no longer tinted.
+- Spawn egg tinting can now be disabled.
 - Pebbles now break glass (Twigs). 
 
 ### Fixed
@@ -43,3 +47,5 @@
 - Roses can no longer break bedrock.
 - Swept Axes no longer burn.
 - Jumping with a Horse no longer damages armour enchanted with Knight Jump (Mining Master).
+- Copper Armour Shock Resistance is now ambient.
+- Autumnity Pumpkin Blocks can now be sheared by modded shears.

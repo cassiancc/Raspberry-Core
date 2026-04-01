@@ -58,7 +58,10 @@ public class AftershockEvent {
         }
         copperCount--;
         if (ModCompat.hasCopperAgeBackport() && CopperAgeBackportCompat.isCopperGolem(entity)) {
-            copperCount = 2;
+            copperCount = 2; 
+        }
+        if (copperCount >= 0) {
+            entity.addEffect(new MobEffectInstance(CoreMobEffects.LIGHTNING_RESISTANCE.get(), 200, 0, true, false, false));
         }
         return copperCount;
     }

@@ -68,6 +68,15 @@
     ],
     "subtitle": "raspberry.subtitles.player.attack.silver_hit"
   },
+  "entity.player.grappling_hook.tighten": {
+    "sounds": [
+      "raspberry:tighten1",
+      "raspberry:tighten2",
+      "raspberry:tighten3",
+      "raspberry:tighten4"
+    ],
+    "subtitle": "raspberry.subtitles.player.grappling_hook.tighten"
+  },
   "item.armor.equip_copper": {
     "sounds": [
       "raspberry:equip_copper1",

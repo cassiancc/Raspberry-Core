@@ -257,7 +257,9 @@ dependencies {
     modImplementation("com.tterrag.registrate:Registrate:${registrate_version}")
     modImplementation("curse.maven:farmers-respite-551453:$farmers_respite_version")
     modCompileOnly("maven.modrinth:my-nethers-delight:$nethers_delight_version")
-    modImplementation("maven.modrinth:respiteful:$respiteful_version")
+//    modImplementation("maven.modrinth:respiteful:$respiteful_version") // For reasons unknown to me, this causes mapping errors
+    modImplementation("curse.maven:abnormals-delight-442719:$abnormals_delight_version") // depends on farmer's delight
+    modImplementation("maven.modrinth:miners-delight:$miners_delight_version")
 
     // Create, its dependencies, and its dependents
     modCompileOnly("com.simibubi.create:create-$minecraft_version:$create_forge_version:slim") { transitive = false }

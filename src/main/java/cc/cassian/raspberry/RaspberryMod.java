@@ -3,6 +3,7 @@ package cc.cassian.raspberry;
 import cc.cassian.raspberry.client.RaspberryModClient;
 import cc.cassian.raspberry.compat.*;
 import cc.cassian.raspberry.config.ModConfig;
+import cc.cassian.raspberry.effect.InfestedMobEffect;
 import cc.cassian.raspberry.entity.SwapArrowEntity;
 import cc.cassian.raspberry.events.AftershockEvent;
 import cc.cassian.raspberry.events.ChangeWeatherEvent;
@@ -18,10 +19,6 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -52,14 +49,13 @@ public final class RaspberryMod {
         // Proceed with mild caution.
         ModConfig.load();
         // Register deferred registers.
-        if (ModCompat.hasFarmersDelight() && ModCompat.hasSupplementaries()) {
-            RaspberryBlocks.register(eventBus);
-            RaspberryItems.ITEMS.register(eventBus);
-            RaspberryMobEffects.MOB_EFFECTS.register(eventBus);
-            RaspberryEntityTypes.ENTITIES.register(eventBus);
-            RaspberrySoundEvents.SOUNDS.register(eventBus);
-            eventBus.addListener(RaspberryCreativePlacements::set);
-        }
+        RaspberryBlocks.register(eventBus);
+        RaspberryFluids.FLUIDS.register(eventBus);
+        RaspberryFluids.FLUID_TYPES.register(eventBus);
+        RaspberryItems.ITEMS.register(eventBus);
+        RaspberryMobEffects.MOB_EFFECTS.register(eventBus);
+        RaspberryEntityTypes.ENTITIES.register(eventBus);
+        RaspberrySoundEvents.SOUNDS.register(eventBus);
         RaspberryParticleTypes.PARTICLE_TYPES.register(eventBus);
         RaspberryNetworking.register();
 
@@ -81,6 +77,15 @@ public final class RaspberryMod {
         MinecraftForge.EVENT_BUS.addListener(DarknessRepairEvent::playerTick);
         if (!ModCompat.hasCofhCore())
             MinecraftForge.EVENT_BUS.addListener(AftershockEvent::electrify);
+        if (ModCompat.OREGANIZED) {
+            RaspberryAttributes.ATTRIBUTES.register(eventBus);
+            MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onItemAttributes);
+            MinecraftForge.EVENT_BUS.addListener(OreganizedEvents::onHurtEvent);
+        }
+        if (ModCompat.MINERS_DELIGHT) {
+            MinecraftForge.EVENT_BUS.addListener(MinersDelightCompat::infestedInteract);
+        }
+        MinecraftForge.EVENT_BUS.addListener(InfestedMobEffect::onMobHurt);
         if (FMLEnvironment.dist.isClient()) {
             RaspberryModClient.init(context);
         }

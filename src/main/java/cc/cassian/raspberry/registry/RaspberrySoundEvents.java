@@ -22,6 +22,7 @@ public class RaspberrySoundEvents {
     public static final RegistryObject<SoundEvent> VEGETABLE_SOUNDS = register("entity.vegetable.eat");
 
     public static final RegistryObject<SoundEvent> SILVER_HIT = register("entity.player.attack.silver_hit");
+    public static final RegistryObject<SoundEvent> GRAPPLING_HOOK_TIGHTEN = register("entity.player.grappling_hook.tighten");
 
     public static final RegistryObject<SoundEvent> COPPER_EQUIP = register("item.armor.equip_copper");
 

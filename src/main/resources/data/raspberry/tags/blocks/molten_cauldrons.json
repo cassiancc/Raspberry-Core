@@ -1,0 +1,17 @@
+{
+  "replace":false,
+  "values":[
+    "raspberry:molten_brass_cauldron",
+    "raspberry:molten_bronze_cauldron",
+    "raspberry:molten_copper_cauldron",
+    "raspberry:molten_electrum_cauldron",
+    "raspberry:molten_lead_cauldron",
+    "raspberry:molten_gold_cauldron",
+    "raspberry:molten_iron_cauldron",
+    "raspberry:molten_necromium_cauldron",
+    "raspberry:molten_netherite_cauldron",
+    "raspberry:molten_rose_gold_cauldron",
+    "raspberry:molten_silver_cauldron",
+    "raspberry:molten_steel_cauldron",
+    "raspberry:molten_zinc_cauldron"
+]}

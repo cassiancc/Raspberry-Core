@@ -91,6 +91,19 @@ public class ModConfig {
     public boolean compatibleDatapacks = true;
     public boolean disableSpruceLeafTinting = true;
     public boolean betterCopperGolems = true;
+    public boolean safeEnderPearls = true;
+    public float infested_spawn_chance = 0.1f;
+
+    public Map<String, List<String>> fishing_line_patterns = Map.of(
+        "pride", List.of(
+                "#fe0000",
+                "#ff8e01",
+                "#ffee00",
+                "#028215",
+                "#014cff",
+                "#8b018c"
+        )
+    );
 
 	public ModConfig() {
         creativeTabIcons.put("minecraft:building_blocks", "minecraft:bricks");
@@ -106,8 +119,7 @@ public class ModConfig {
         creativeTabIcons.put("minecraft:op_blocks", "minecraft:command_block");
     }
 
-
-    public static void load() {
+	public static void load() {
         if (!Files.exists(configPath())) {
             INSTANCE = new ModConfig();
             save();
