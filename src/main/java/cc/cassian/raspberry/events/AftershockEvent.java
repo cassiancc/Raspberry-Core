@@ -55,7 +55,7 @@ public class AftershockEvent {
         }
         copperCount--;
         if (copperCount >= 0) {
-            entity.addEffect(new MobEffectInstance(CoreMobEffects.LIGHTNING_RESISTANCE.get(), 200, 0, true, false, false));
+            entity.addEffect(new MobEffectInstance(CoreMobEffects.LIGHTNING_RESISTANCE.get(), 201, 0, true, false, false));
         }
     }
 }
