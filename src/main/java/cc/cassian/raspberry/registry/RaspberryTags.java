@@ -36,6 +36,7 @@ public class RaspberryTags {
     public static final TagKey<Block> AXES_SHOULD_USE = createBlockTag("useable/axes");
     public static final TagKey<Block> HOES_SHOULD_USE = createBlockTag("useable/hoes");
     public static final TagKey<Block> MIRROR_DETECTABLES = createBlockTag("mirror_detectables");
+    public static final TagKey<Block> GRAPPLING_HOOK_STICKS = createBlockTag("grappling_hook_sticks");
 
     public static final TagKey<Block> INTERACTABLE_METAL_DOORS = createBlockTag("interactable_metal_doors");
 
@@ -56,6 +57,7 @@ public class RaspberryTags {
     public static final TagKey<Item> DRINK_SOUNDS = createItemTag("sounds/drink");
     public static final TagKey<Item> HONEY_SOUNDS = createItemTag("sounds/honey");
     public static final TagKey<Item> REPAIRS_IN_DARKNESS = createItemTag("repairs_in_darkness");
+    public static final TagKey<Item> GRAPPLING_HOOK_WALL_CLIMBING = createItemTag("grappling_hook_wall_climbing");
 
     public static final TagKey<EntityType<?>> CAT_FOOD_USERS = createEntityTypeTag("cat_food_users");
     public static final TagKey<EntityType<?>> DISALLOWED_IN_BOATS = createEntityTypeTag("disallowed_in_boats");

@@ -112,6 +112,7 @@
     "minecraft.LeashBehaviorMixin",
     "minecraft.LeashKnotEntityMixin",
     "minecraft.LevelSummaryMixin",
+    "minecraft.LivingEntityAccessor",
     "minecraft.LivingEntityMixin",
     "minecraft.MapItemMixin",
     "minecraft.MinecartChestMixin",

@@ -1,8 +1,10 @@
 package cc.cassian.raspberry.entity;
 
 import cc.cassian.raspberry.PlayerWithGrapplingHook;
+import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.registry.RaspberryEntityTypes;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
+import cc.cassian.raspberry.registry.RaspberryTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -18,6 +20,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +45,7 @@ import javax.annotation.Nullable;
 public class GrapplingHookEntity extends Projectile implements IEntityAdditionalSpawnData {
     private final int RANGE = 64;
     private final int RANGE_SQR = RANGE * RANGE;
+    public final float TARGET_LENGTH = 1.5F;
     protected boolean isAttached;
     @Nullable private BlockState lastState;
     @Nullable private BlockPos attachedBlockPos;
@@ -54,6 +58,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     private Entity hookedIn;
     public final boolean isSticky;
     public int shakeTime;
+    private boolean shouldPull = true;
 
     @SuppressWarnings("unchecked")
     public GrapplingHookEntity(PlayMessages.SpawnEntity spawnPacket, Level level) {
@@ -146,13 +151,17 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                     this.setPos(this.hookedIn.getX(), this.hookedIn.getY(0.8), this.hookedIn.getZ());
                     if (!this.level.isClientSide) {
                         this.pullEntity(this.hookedIn);
-                        this.level.broadcastEntityEvent(this, (byte)31);
+                        this.level.broadcastEntityEvent(this, EntityEvent.FISHING_ROD_REEL_IN);
                     }
                 } else {
                     this.setHookedEntity(null);
                 }
             } else if (isAttached) {
-                if (this.shouldFall()) {
+                if (this.isSticky && this.position().distanceTo(player.position()) <= TARGET_LENGTH) {
+                    this.playSound(SoundEvents.SLIME_HURT, 0.7F, 1.0F);
+                    // TODO: Rod damage as if retrieving
+                    this.discard();
+                } else if (this.shouldFall()) {
                     this.startFalling();
                 }
             } else {
@@ -177,7 +186,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                         // Pretend we hit the top to avoid bounce off
                         blockEdgeHitResult = new BlockHitResult(blockEdgeHitResult.getLocation(), Direction.UP, blockEdgeHitResult.getBlockPos(), blockEdgeHitResult.isInside());
                     }
-
+                    this.setDeltaMovement(this.getDeltaMovement().reverse());
                     this.onHit(blockEdgeHitResult);
                     this.hasImpulse = true;
                 } else {
@@ -273,6 +282,20 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                 rodDamage = this.hookedIn instanceof ItemEntity ? 3 : 5;
             }
 
+            // Consume slime bait
+//            if (!player.isCreative()) {
+//                ItemStackHandler rodHandler = AquaFishingRodItem.getHandler(this.fishingRod);
+//                ItemStack bait = rodHandler.getStackInSlot(1);
+//                if (!bait.isEmpty() && this.isSticky) {
+//                    if (this.level.random.nextFloat() > 0.8) {
+//                        bait.shrink(1);
+//                        this.playSound(SoundEvents.SLIME_HURT, 0.7F, 1.0F);
+//                    }
+//
+//                    rodHandler.setStackInSlot(1, bait);
+//                }
+//            }
+
             this.discard();
             return rodDamage;
         } else {
@@ -352,9 +375,10 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
         Direction hitDirection = result.getDirection();
         Vec3 hitPos = result.getLocation();
+        this.setPos(hitPos);
 
         // Bounce if hitting the side or bottom of a block
-        if (!hitDirection.equals(Direction.UP) && !this.isSticky) {
+        if (!hitDirection.equals(Direction.UP) && !this.isSticky && !blockState.is(RaspberryTags.GRAPPLING_HOOK_STICKS)) {
             this.setDeltaMovement(this.getDeltaMovement().scale(0.1));
             if (hitDirection.getAxis() == Direction.Axis.X) {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(-1,1,1));
@@ -363,6 +387,17 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
             }
             return;
         }
+
+        // if sticky, bounce off if going too fast
+//        if (isSticky && deltaMovement.lengthSqr() > 0.25 && hitDirection == Direction.UP) {
+//            Vec3 faceNormal = Vec3.atLowerCornerOf(hitDirection.getNormal());
+//            Vec3 moveDirection = deltaMovement.normalize();
+//            this.playSound(SoundEvents.SLIME_JUMP, 1.0F, 1.0F);
+//            deltaMovement = moveDirection.subtract(faceNormal.scale(2 * moveDirection.dot(faceNormal))).scale(0.7);
+//            this.setDeltaMovement(deltaMovement);
+//            return;
+//        }
+
 
         RandomSource random = level.getRandom();
 
@@ -381,7 +416,6 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         }
 
         this.setDeltaMovement(Vec3.ZERO);
-        this.setPos(hitPos);
         this.shakeTime = 7;
         this.isAttached = true;
 
@@ -507,6 +541,13 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     @Nullable
     public Entity getHookedIn() {
         return this.hookedIn;
+    }
+
+    public boolean getShouldPull() {
+        return this.shouldPull;
+    }
+    public void setShouldPull(boolean value) {
+        this.shouldPull = value;
     }
 
 
