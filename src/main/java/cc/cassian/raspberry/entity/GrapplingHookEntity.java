@@ -46,6 +46,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     private final int RANGE = 64;
     private final int RANGE_SQR = RANGE * RANGE;
     public final float TARGET_LENGTH = 1.5F;
+    public final float TARGET_LENGTH_STICKY = 2F;
     protected boolean isAttached;
     @Nullable private BlockState lastState;
     @Nullable private BlockPos attachedBlockPos;
@@ -59,6 +60,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     public final boolean isSticky;
     public int shakeTime;
     private boolean shouldPull = true;
+    private double totalPull = 0;
 
     @SuppressWarnings("unchecked")
     public GrapplingHookEntity(PlayMessages.SpawnEntity spawnPacket, Level level) {
@@ -122,6 +124,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         return !this.getBobber().isEmpty();
     }
 
+    @Override
     public void tick() {
         super.tick();
         Player player = this.getPlayerOwner();
@@ -157,7 +160,8 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                     this.setHookedEntity(null);
                 }
             } else if (isAttached) {
-                if (this.isSticky && this.position().distanceTo(player.position()) <= TARGET_LENGTH) {
+                double STICY_MAX_PULL_BEFORE_BREAK = 5;
+                if (this.isSticky && (this.position().distanceTo(player.position()) <= TARGET_LENGTH_STICKY || this.totalPull > STICY_MAX_PULL_BEFORE_BREAK)) {
                     this.playSound(SoundEvents.SLIME_HURT, 0.7F, 1.0F);
                     // TODO: Rod damage as if retrieving
                     this.discard();
@@ -273,6 +277,10 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     public void lerpTo(double x, double y, double z, float yRot, float xRot, int lerpSteps, boolean teleport) {
     }
 
+    public void addPull(double amount) {
+        this.totalPull += amount;
+    }
+
     public int retrieve(@Nonnull ItemStack fishingRod) {
         Player player = this.getPlayerOwner();
         if (!this.level.isClientSide && player != null && !this.shouldStopFishing(player)) {
@@ -281,20 +289,6 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
             if (this.hookedIn != null) {
                 rodDamage = this.hookedIn instanceof ItemEntity ? 3 : 5;
             }
-
-            // Consume slime bait
-//            if (!player.isCreative()) {
-//                ItemStackHandler rodHandler = AquaFishingRodItem.getHandler(this.fishingRod);
-//                ItemStack bait = rodHandler.getStackInSlot(1);
-//                if (!bait.isEmpty() && this.isSticky) {
-//                    if (this.level.random.nextFloat() > 0.8) {
-//                        bait.shrink(1);
-//                        this.playSound(SoundEvents.SLIME_HURT, 0.7F, 1.0F);
-//                    }
-//
-//                    rodHandler.setStackInSlot(1, bait);
-//                }
-//            }
 
             this.discard();
             return rodDamage;

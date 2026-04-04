@@ -4,6 +4,7 @@ import cc.cassian.raspberry.PlayerWithGrapplingHook;
 import cc.cassian.raspberry.entity.GrapplingHookEntity;
 import cc.cassian.raspberry.registry.RaspberryTags;
 import net.minecraft.core.Vec3i;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,14 +24,26 @@ import javax.annotation.Nullable;
 @Mixin(Player.class)
 public class PlayerMixin implements PlayerWithGrapplingHook {
     @Unique
+    private int raspberryCore$noJumpDelay;
+
+    @Unique
     @Nullable
     private GrapplingHookEntity raspberryCore$grapplingHook;
+
+    @Inject(method = "jumpFromGround", at = @At("HEAD"))
+    private void jumpFromGround(CallbackInfo ci) {
+        this.raspberryCore$noJumpDelay = 10;
+    }
 
     @Inject(method = "travel", at = @At("HEAD"))
     private void onTravel(Vec3 travelVector, CallbackInfo ci) {
         Player player = (Player) (Object)this;
-
         GrapplingHookEntity hook = this.raspberryCore$grapplingHook;
+
+        if (this.raspberryCore$noJumpDelay > 0) {
+            --this.raspberryCore$noJumpDelay;
+        }
+
         if (hook != null && (hook.isAttached() || hook.getHookedIn() != null)) {
             Vec3 hookPos = hook.position();
             Vec3 playerPos = player.position();
@@ -42,12 +55,12 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
             Vec3 ropeDirection = rope.normalize().reverse();
             double distanceSqr = rope.lengthSqr();
 
-            if (!hasHookedEntity && !hook.isSticky) {
-                // Don't pull player down
-                if (hookPos.y < playerPos.y()) {
-                    return;
-                }
+            // Don't pull player down
+            if (hookPos.y < playerPos.y() + 0.5) {
+                return;
+            }
 
+            if (!hasHookedEntity && !hook.isSticky) {
                 // Don't pull player if they're standing on the ground
                 if (player.isOnGround()) {
                     return;
@@ -84,11 +97,12 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
             }
 
             // Push off side of blocks
-            if (isJumping && !player.isOnGround() && player.horizontalCollision && !hasHookedEntity) {
-                Vec3 forward = player.getForward();
+            if (isJumping && raspberryCore$noJumpDelay == 0 && player.horizontalCollision && !player.verticalCollisionBelow && !player.isOnGround() && !hasHookedEntity) {
+                double jumpPower = ((LivingEntityAccessor) this).callGetJumpPower();
+                Vec3 forward = player.getForward().multiply(1, 0, 1);
                 ClipContext context = new ClipContext(
-                        playerPos,
-                        playerPos.add(forward),
+                        player.position().add(0,0.5,0),
+                        player.position().add(0,0.5,0).add(forward),
                         ClipContext.Block.COLLIDER,
                         ClipContext.Fluid.NONE,
                         player
@@ -96,20 +110,23 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
                 BlockHitResult blockHitResult = player.level.clip(context);
                 if (blockHitResult.getType() == HitResult.Type.BLOCK) {
                     Vec3i hitNormal = blockHitResult.getDirection().getNormal();
-                    Vec3 pushVector = forward.reverse().add(hitNormal.getX(), hitNormal.getY(), hitNormal.getZ()).normalize().scale(0.5);
+                    Vec3 pushVector = forward.reverse().add(hitNormal.getX(), hitNormal.getY(), hitNormal.getZ()).normalize().scale(jumpPower);
                     player.setDeltaMovement(player.getDeltaMovement().add(pushVector));
+                    this.raspberryCore$noJumpDelay = 10;
+                    player.awardStat(Stats.JUMP);
+                    player.causeFoodExhaustion(0.05F);
                 }
             }
 
             Vec3 velocity = player.getDeltaMovement();
-            double targetLength = 1.5F;
+            double targetLength = hook.TARGET_LENGTH;
             double maxPull = 0.15;
-            double stiffness = 0.01D;
+            double stiffness = 0.02D;
 
             if (hook.isSticky) {
                 stiffness = 0.5F;
                 maxPull = 0.2F;
-                targetLength = 2.0F;
+                targetLength = hook.TARGET_LENGTH_STICKY;
             }
 
             if (hasHookedEntity) {
@@ -137,7 +154,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
 
                 if (!hook.getShouldPull() && !player.horizontalCollision) {
                     // Negate some dampening for better swinging
-                    player.setDeltaMovement(player.getDeltaMovement().multiply(1.085, 1.01, 1.085));
+                    player.setDeltaMovement(player.getDeltaMovement().multiply(1.08, 1.01, 1.08));
                 }
 
                 // Pull towards hook
@@ -145,7 +162,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
                     double pullDistance = Math.max(distanceSqr - targetLengthSqr, 0);
                     double pull = Math.min(pullDistance * stiffness, maxPull);
                     Vec3 pullVector = ropeDirection.reverse().scale(pull);
-
+                    hook.addPull(pull);
                     player.setDeltaMovement(player.getDeltaMovement().add(pullVector));
                 }
 
