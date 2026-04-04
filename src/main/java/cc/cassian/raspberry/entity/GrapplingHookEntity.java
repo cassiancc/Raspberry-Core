@@ -378,6 +378,8 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                 this.setDeltaMovement(this.getDeltaMovement().multiply(-1,1,1));
             } else if (hitDirection.getAxis() == Direction.Axis.Z) {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(1,1,-1));
+            } else if (hitDirection.getAxis() == Direction.Axis.Y) {
+                this.setDeltaMovement(this.getDeltaMovement().multiply(1,-1,1));
             }
             return;
         }

@@ -55,24 +55,10 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
             Vec3 ropeDirection = rope.normalize().reverse();
             double distanceSqr = rope.lengthSqr();
 
-            // Don't pull player down
-            if (hookPos.y < playerPos.y() + 0.5) {
-                return;
-            }
-
             if (!hasHookedEntity && !hook.isSticky) {
                 // Don't pull player if they're standing on the ground
                 if (player.isOnGround()) {
                     return;
-                }
-            }
-            boolean isJumping = ((LivingEntityAccessor) this).isJumping();
-
-            if (!hook.isSticky) {
-                if (player.isCrouching()) {
-                    hook.setShouldPull(false);
-                } else if (isJumping) {
-                    hook.setShouldPull(true);
                 }
             }
 
@@ -80,7 +66,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
             boolean hasClimbingShoes = player.getItemBySlot(EquipmentSlot.FEET).is(RaspberryTags.GRAPPLING_HOOK_WALL_CLIMBING);
             if (hasClimbingShoes) {
                 double travelVectorLengthSqr = travelVector.lengthSqr();
-                if (!player.isCrouching() && travelVectorLengthSqr > 0.01) {
+                if (!player.isCrouching() && travelVectorLengthSqr > 0.01 && hookPos.y > playerPos.y()) {
                     Vec3 vec3 = travelVector.normalize();
                     float yRotSin = Mth.sin(player.getYRot() * ((float)Math.PI / 180F));
                     float yRotCos = Mth.cos(player.getYRot() * ((float)Math.PI / 180F));
@@ -93,6 +79,21 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
                             player.setDeltaMovement(new Vec3(player.getDeltaMovement().x, Math.max(player.getDeltaMovement().y, 0.2), player.getDeltaMovement().z));
                         }
                     }
+                }
+            }
+
+            // Don't pull player down
+            if (hookPos.y < playerPos.y() + 0.5) {
+                return;
+            }
+
+            boolean isJumping = ((LivingEntityAccessor) this).isJumping();
+
+            if (!hook.isSticky) {
+                if (player.isCrouching()) {
+                    hook.setShouldPull(false);
+                } else if (isJumping) {
+                    hook.setShouldPull(true);
                 }
             }
 
