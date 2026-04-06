@@ -60,6 +60,7 @@
     "create.GogglesItemMixin",
     "create.MountedStorageMixin",
     "create.WrenchItemMixin",
+    "domesticationinnovation.WaywardLanternBlockMixin",
     "dungeons_mobs.CobwebProjectileEntityMixin",
     "dynamiccrosshair.VanillaBlockHandlerMixin",
     "ecologics.CoconutSliceItemMixin",
