@@ -12,7 +12,9 @@
 - Disabled some curative items.
 - Items in the `raspberry:fireproof` tag no longer burn.
 - Spawn egg tinting can now be disabled.
-- Pebbles now break glass (Twigs). 
+- Pebbles now break glass (Twigs).
+- Disabled all keybinds from Additional Enchantments
+- Arrows shot with the homing enchantment now only select targets in a cone in front of them, and has had minor physics changes and a new particle effect
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

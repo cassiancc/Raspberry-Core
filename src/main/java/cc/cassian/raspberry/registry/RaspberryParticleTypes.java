@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.registry;
 
 import cc.cassian.raspberry.client.particle.FlowerPetalParticle;
+import cc.cassian.raspberry.client.particle.HomingParticle;
 import cc.cassian.raspberry.client.particle.SwapArrowPortalParticle;
 import net.minecraft.client.particle.PlayerCloudParticle;
 import net.minecraft.core.particles.ParticleType;
@@ -18,6 +19,7 @@ import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
 public class RaspberryParticleTypes {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MOD_ID);
 
+    public static final RegistryObject<SimpleParticleType> HOMING;
     public static final RegistryObject<SimpleParticleType> MIRROR;
     public static final RegistryObject<SimpleParticleType> CHEERY_PETAL;
     public static final RegistryObject<SimpleParticleType> PLAYFUL_PETAL;
@@ -35,6 +37,7 @@ public class RaspberryParticleTypes {
     }
 
     static {
+        HOMING = registerSimpleParticleType(true, "homing");
         MIRROR = registerSimpleParticleType(true, "mirror");
         CHEERY_PETAL = registerSimpleParticleType(true, "cheery_petal");
         PLAYFUL_PETAL = registerSimpleParticleType(true, "playful_petal");
@@ -50,7 +53,8 @@ public class RaspberryParticleTypes {
 
         @SubscribeEvent
         public static void registerParticleTypes(RegisterParticleProvidersEvent event) {
-            event.register((ParticleType)RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
+            event.register(RaspberryParticleTypes.HOMING.get(), HomingParticle.Provider::new);
+            event.register(RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
             event.register(RaspberryParticleTypes.CHEERY_PETAL.get(), FlowerPetalParticle.Provider::new);
             event.register(RaspberryParticleTypes.PLAYFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
             event.register(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);

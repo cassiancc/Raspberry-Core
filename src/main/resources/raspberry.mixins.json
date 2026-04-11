@@ -26,6 +26,10 @@
   ],
   "mixins": [
     "additional_enchantments.BracewalkMixin",
+    "additional_enchantments.ClientRegistryMixin",
+    "additional_enchantments.KeyHandlerMixin",
+    "additional_enchantments.PlayerDataMixin",
+    "additional_enchantments.ProjectileDataMixin",
     "alloyed.BlockEntityTypeMixin",
     "aquaculture.AquaFishingBobberEntityMixin",
     "aquaculture.AquaFishingRodItemMixin",
