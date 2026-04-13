@@ -17,6 +17,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
+
 @Mixin(ProjectileData.class)
 public class ProjectileDataMixin {
     @Unique
@@ -37,12 +39,27 @@ public class ProjectileDataMixin {
         // Discard targets not in front of projectile
         Projectile instance = CURRENT_PROJECTILE.get();;
         if (instance != null) {
+            // Always include glowing targets
+            if (entity.isCurrentlyGlowing()) {
+                return true;
+            }
             Vec3 projectileMovement = instance.getDeltaMovement().normalize();
             Vec3 vectorToTarget = instance.position().vectorTo(entity.position()).normalize();
             // 60deg cone in front of projectile
             return projectileMovement.dot(vectorToTarget) > 0.5F;
         }
         return true;
+    }
+
+    @WrapOperation(method = "lambda$searchForHomingTarget$2", at = @At(value = "INVOKE", target = "de/cadentem/additional_enchantments/capability/ProjectileData.setHomingTarget (Lnet/minecraft/world/entity/projectile/Projectile;Lnet/minecraft/world/entity/LivingEntity;)V"), remap = false)
+    private void prioritiseGlowingTargets(ProjectileData projectileData, Projectile instance, LivingEntity target, Operation<Void> original, @Local(name = "entities") List<LivingEntity> entities) {
+        for (LivingEntity entity : entities) {
+            if (entity.isCurrentlyGlowing()) {
+                target = entity;
+                break;
+            }
+        }
+        original.call(projectileData, instance, target);
     }
 
     @WrapOperation(method = "handleHomingMovement", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/projectile/Projectile.setDeltaMovement (Lnet/minecraft/world/phys/Vec3;)V"))

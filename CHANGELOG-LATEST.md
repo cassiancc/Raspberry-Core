@@ -14,7 +14,11 @@
 - Spawn egg tinting can now be disabled.
 - Pebbles now break glass (Twigs).
 - Disabled all keybinds from Additional Enchantments
-- Arrows shot with the homing enchantment now only select targets in a cone in front of them, and has had minor physics changes and a new particle effect
+- Various changes to the Homing enchantment:
+  - Keybind to filter target types/priority has been removed
+  - Targets are only chosen from within a cone in front of the projectile
+  - If a mob with Glowing is within range, it will always be chosen as the target
+  - Projectiles have slightly different physics and a new particle effect
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
