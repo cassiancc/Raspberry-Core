@@ -1,4 +1,4 @@
-package cc.cassian.raspberry.registry;
+package cc.cassian.raspberry.items;
 
 import cc.cassian.raspberry.RaspberryMod;
 import net.minecraft.advancements.CriteriaTriggers;

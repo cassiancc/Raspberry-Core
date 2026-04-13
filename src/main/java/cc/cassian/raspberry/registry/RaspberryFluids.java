@@ -1,10 +1,11 @@
 package cc.cassian.raspberry.registry;
 
+import cc.cassian.raspberry.blocks.MoltenLiquidBlock;
 import cc.cassian.raspberry.fluids.MoltenCauldronBlock;
 import cc.cassian.raspberry.fluids.MoltenFlowingFluid;
 import cc.cassian.raspberry.fluids.MoltenFluidExtensions;
+import cc.cassian.raspberry.items.MoltenBucketItem;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -104,7 +105,7 @@ public class RaspberryFluids {
 	}
 
 	private static Supplier<? extends LiquidBlock> block(String name, RegistryObject<FlowingFluid> fluid) {
-		return RaspberryBlocks.BLOCKS.register(name, ()->new LiquidBlock(fluid, BlockBehaviour.Properties.of(Material.LAVA)));
+		return RaspberryBlocks.BLOCKS.register(name, ()->new MoltenLiquidBlock(fluid, BlockBehaviour.Properties.of(Material.LAVA).lightLevel(state->15).noLootTable().noCollission().randomTicks().strength(100f)));
 	}
 
 	private static Supplier<? extends Item> bucket(String name, RegistryObject<FlowingFluid> moltenLead) {
