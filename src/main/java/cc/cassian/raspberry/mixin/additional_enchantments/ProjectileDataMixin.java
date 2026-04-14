@@ -9,6 +9,7 @@ import de.cadentem.additional_enchantments.capability.ProjectileData;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,6 +28,12 @@ public class ProjectileDataMixin {
     @Inject(method = "searchForHomingTarget", at = @At("HEAD"), cancellable = true, remap = false)
     private void captureInstance(Projectile instance, CallbackInfo ci) {
         CURRENT_PROJECTILE.set(instance);
+
+        // Tridents only home in water
+        if (instance instanceof ThrownTrident && !instance.isInWaterRainOrBubble()) {
+            ci.cancel();
+        }
+
         // Wait a few ticks before searching for target
         if (instance.tickCount < 3) {
             ci.cancel();
@@ -68,6 +75,11 @@ public class ProjectileDataMixin {
         Vec3 projectilePosition = instance.position();
         Vec3 movement = instance.getDeltaMovement();
         Vec3 particleMovement = movement.normalize().scale(0.1);
+
+        // Tridents only home in water
+        if (instance instanceof ThrownTrident && !instance.isInWaterRainOrBubble()) {
+            return;
+        }
 
         if (level.random.nextFloat() < 0.1) {
             level.addParticle(ParticleTypes.SCULK_SOUL, projectilePosition.x, projectilePosition.y, projectilePosition.z, 0, 0, 0);

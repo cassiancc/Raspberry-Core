@@ -77,6 +77,7 @@ public class ModConfig {
     public boolean gloomyRuning = true;
     public boolean safeEnderPearls = true;
     public float infested_spawn_chance = 0.1f;
+    public float thrown_trident_base_damage = 8.0f;
     public Map<String, List<String>> fishing_line_patterns = Map.of(
         "pride", List.of(
                 "#fe0000",
