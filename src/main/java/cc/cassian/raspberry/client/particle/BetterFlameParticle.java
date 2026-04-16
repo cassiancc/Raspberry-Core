@@ -20,7 +20,7 @@ public class BetterFlameParticle extends FlameParticle {
     private final SpriteSet sprites;
     private final float quadSize;
 
-    BetterFlameParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites, float quadSize) {
+    public BetterFlameParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites, float quadSize) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
         this.sprites = sprites;
         this.quadSize = quadSize;

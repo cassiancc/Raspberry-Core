@@ -5,6 +5,7 @@ import cc.cassian.raspberry.client.particle.HomingParticle;
 import cc.cassian.raspberry.client.particle.SwapArrowPortalParticle;
 import net.minecraft.client.particle.PlayerCloudParticle;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -60,10 +61,7 @@ public class RaspberryParticleTypes {
             event.register(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
             event.register(RaspberryParticleTypes.MOODY_PETAL.get(), FlowerPetalParticle.Provider::new);
             event.register(RaspberryParticleTypes.SWAP_ARROW_PORTAL.get(), SwapArrowPortalParticle.Provider::new);
-
-            event.register(ParticleTypes.FLAME, BetterFlameParticle.Provider::new);
-            event.register(ParticleTypes.SMALL_FLAME, BetterFlameParticle.SmallFlameProvider::new);
-            event.register(ParticleTypes.SOUL_FIRE_FLAME, BetterFlameParticle.Provider::new);
+            event.register(RaspberryParticleTypes.ROTATING_SWEEP.get(), RotatingSweepParticle.Provider::new);
         }
     }
 

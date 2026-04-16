@@ -15,6 +15,8 @@
     "minecraft.ClientPacketListenerMixin",
     "minecraft.EntityRendererAccessor",
     "minecraft.EntityRendererMixin",
+    "minecraft.FlameParticleProviderMixin",
+    "minecraft.FlameParticleSmallFlameProviderMixin",
     "minecraft.MobRendererMixin",
     "minecraft.MusicManagerMixin",
     "minecraft.SoundEngineMixin",
