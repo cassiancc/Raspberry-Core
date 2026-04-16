@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ThrownTrident.class)
 public class ThrownTridentMixin {
-    @ModifyVariable(method = "onHitEntity", at = @At(value = "STORE", ordinal = 0), name = "f")
+    @ModifyVariable(method = "onHitEntity", at = @At("STORE"), ordinal = 0)
     private float setDefaultDamage(float value) {
         return ModConfig.get().thrown_trident_base_damage;
     }
