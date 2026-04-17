@@ -55,3 +55,26 @@ mandatory = false
 versionRange = "[1.6.1,)"
 ordering = "BEFORE"
 side = "BOTH"
+
+[[dependencies.raspberry]]
+modId = "caverns_and_chasms"
+mandatory = false
+versionRange = "[1.0.2,)"
+ordering = "BEFORE"
+side = "BOTH"
+
+
+[[dependencies.raspberry]]
+modId = "buzzier_bees"
+mandatory = false
+versionRange = "[5.0.1,)"
+ordering = "BEFORE"
+side = "BOTH"
+
+
+[[dependencies.raspberry]]
+modId = "endergetic"
+mandatory = false
+versionRange = "[4.0.0,)"
+ordering = "BEFORE"
+side = "BOTH"

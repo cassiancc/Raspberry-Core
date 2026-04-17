@@ -1,10 +1,10 @@
 {
   "textures": [
-    "minecraft:small_soul_fire_flame_1",
-    "minecraft:small_soul_fire_flame_2",
-    "minecraft:small_soul_fire_flame_3",
-    "minecraft:small_soul_fire_flame_4",
-    "minecraft:small_soul_fire_flame_5",
-    "minecraft:small_soul_fire_flame_6"
+    "buzzier_bees:small_soul_fire_flame_1",
+    "buzzier_bees:small_soul_fire_flame_2",
+    "buzzier_bees:small_soul_fire_flame_3",
+    "buzzier_bees:small_soul_fire_flame_4",
+    "buzzier_bees:small_soul_fire_flame_5",
+    "buzzier_bees:small_soul_fire_flame_6"
   ]
 }
