@@ -61,7 +61,6 @@ public class RaspberryParticleTypes {
             event.register(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
             event.register(RaspberryParticleTypes.MOODY_PETAL.get(), FlowerPetalParticle.Provider::new);
             event.register(RaspberryParticleTypes.SWAP_ARROW_PORTAL.get(), SwapArrowPortalParticle.Provider::new);
-            event.register(RaspberryParticleTypes.ROTATING_SWEEP.get(), RotatingSweepParticle.Provider::new);
         }
     }
 
