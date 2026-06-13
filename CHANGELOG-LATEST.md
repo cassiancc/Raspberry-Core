@@ -34,3 +34,4 @@
 - Jumping with a Horse no longer damages armour enchanted with Knight Jump (Mining Master).
 - Copper Armour Shock Resistance is now ambient.
 - Autumnity Pumpkin Blocks can now be sheared by modded shears.
+- Farmer's Respite Tea Bushes can now be sheared by modded shears.

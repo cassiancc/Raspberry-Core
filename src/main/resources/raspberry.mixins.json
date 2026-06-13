@@ -93,6 +93,7 @@
     "farmersdelight.NetherStoveBlockMixin",
     "farmersdelight.RichSoilFarmlandBlockMixin",
     "farmersdelight.StoveBlockMixin",
+    "farmersrespite.TeaBushBlockMixin",
     "jade.OverlayRendererMixin",
     "jade.RayTracingMixin",
     "map_atlases.MapCollectionMixin",
