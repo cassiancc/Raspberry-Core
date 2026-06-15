@@ -88,6 +88,7 @@ public class ModConfig {
                 "#8b018c"
         )
     );
+    public int greatblade_slash_damage_bonus = 0;
 
 	public static void load() {
         if (!Files.exists(configPath())) {
