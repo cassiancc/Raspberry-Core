@@ -71,7 +71,7 @@ public class ProjectileDataMixin {
 
     @WrapOperation(method = "handleHomingMovement", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/projectile/Projectile.setDeltaMovement (Lnet/minecraft/world/phys/Vec3;)V"))
     private void lerpMovement(Projectile instance, Vec3 newMovement, Operation<Void> original) {
-        Level level = instance.level;
+        Level level = instance.level();
         Vec3 projectilePosition = instance.position();
         Vec3 movement = instance.getDeltaMovement();
         Vec3 particleMovement = movement.normalize().scale(0.1);

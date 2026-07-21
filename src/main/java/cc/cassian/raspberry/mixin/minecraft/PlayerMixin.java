@@ -98,7 +98,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
             }
 
             // Push off side of blocks
-            if (isJumping && raspberryCore$noJumpDelay == 0 && player.horizontalCollision && !player.verticalCollisionBelow && !player.isOnGround() && !hasHookedEntity) {
+            if (isJumping && raspberryCore$noJumpDelay == 0 && player.horizontalCollision && !player.verticalCollisionBelow && !player.onGround() && !hasHookedEntity) {
                 double jumpPower = ((LivingEntityAccessor) this).callGetJumpPower();
                 Vec3 forward = player.getForward().multiply(1, 0, 1);
                 ClipContext context = new ClipContext(
@@ -108,7 +108,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
                         ClipContext.Fluid.NONE,
                         player
                 );
-                BlockHitResult blockHitResult = player.level.clip(context);
+                BlockHitResult blockHitResult = player.level().clip(context);
                 if (blockHitResult.getType() == HitResult.Type.BLOCK) {
                     Vec3i hitNormal = blockHitResult.getDirection().getNormal();
                     Vec3 pushVector = forward.reverse().add(hitNormal.getX(), hitNormal.getY(), hitNormal.getZ()).normalize().scale(jumpPower);
@@ -148,7 +148,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
 
                 // Extend rope by adding back some radial movement
                 double maxLengthSqr = 256; // 16sqr
-                if (!hook.isSticky && player.isCrouching() && !player.isOnGround() && distanceSqr < maxLengthSqr){
+                if (!hook.isSticky && player.isCrouching() && !player.onGround() && distanceSqr < maxLengthSqr){
                     Vec3 addedRadialMovement = radialMovement.scale(0.7);
                     player.setDeltaMovement(player.getDeltaMovement().add(addedRadialMovement));
                 }
@@ -173,7 +173,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
             if (!player.level().isClientSide()) {
                 if (hookPos.y > playerPos.y() + 2) {
                     player.resetFallDistance();
-                    if (!player.isOnGround()) player.hurtMarked = false;
+                    if (!player.onGround()) player.hurtMarked = false;
                 }
             }
 

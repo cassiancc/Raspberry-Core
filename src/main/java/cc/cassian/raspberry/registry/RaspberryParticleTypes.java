@@ -28,8 +28,10 @@ public class RaspberryParticleTypes {
     public static final RegistryObject<SimpleParticleType> MOODY_PETAL;
     public static final RegistryObject<SimpleParticleType> SWAP_ARROW_PORTAL;
 
-    private static RegistryObject<SimpleParticleType> registerSimpleParticleType(String name) {
-        return PARTICLE_TYPES.register(name, () -> new SimpleParticleType(true));
+    private static RegistryObject<SimpleParticleType> registerSimpleParticleType(boolean alwaysShow, String name) {
+        return PARTICLE_TYPES.register(name, () -> {
+            return new SimpleParticleType(alwaysShow);
+        });
     }
 
     public RaspberryParticleTypes() {
@@ -52,13 +54,13 @@ public class RaspberryParticleTypes {
 
         @SubscribeEvent
         public static void registerParticleTypes(RegisterParticleProvidersEvent event) {
-            event.register(RaspberryParticleTypes.HOMING.get(), HomingParticle.Provider::new);
-            event.register(RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
-            event.register(RaspberryParticleTypes.CHEERY_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.register(RaspberryParticleTypes.PLAYFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.register(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.register(RaspberryParticleTypes.MOODY_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.register(RaspberryParticleTypes.SWAP_ARROW_PORTAL.get(), SwapArrowPortalParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.HOMING.get(), HomingParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.CHEERY_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.PLAYFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.MOODY_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.registerSpriteSet(RaspberryParticleTypes.SWAP_ARROW_PORTAL.get(), SwapArrowPortalParticle.Provider::new);
         }
     }
 

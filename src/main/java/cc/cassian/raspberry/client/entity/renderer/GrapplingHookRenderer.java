@@ -172,13 +172,13 @@ public class GrapplingHookRenderer extends EntityRenderer<GrapplingHookEntity> {
             Vec3 ropeVec = entityPosition.subtract(rodTipPosition).normalize();
             float ropeVecYRot = (float)(Mth.atan2(ropeVec.x, ropeVec.z) * (double)(180F / (float)Math.PI));
             float ropeVecZRot = (float)(Mth.atan2(ropeVec.y, ropeVec.horizontalDistance()) * (double)(180F / (float)Math.PI));
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(ropeVecYRot - 90.0F));
-            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(ropeVecZRot));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(ropeVecYRot - 90.0F));
+            matrixStack.mulPose(Axis.ZP.rotationDegrees(ropeVecZRot));
         } else {
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
-            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
+            matrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot())));
         }
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(45.0F));
+        matrixStack.mulPose(Axis.XP.rotationDegrees(45.0F));
 
         VertexConsumer vertexConsumer = entity.isSticky ? buffer.getBuffer(HOOK_STICKY_RENDER) : buffer.getBuffer(HOOK_RENDER);
 

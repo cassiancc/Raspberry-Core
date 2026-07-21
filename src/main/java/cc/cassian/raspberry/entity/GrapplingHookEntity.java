@@ -104,7 +104,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         double velocity = 1.3;
         Vec3 playerMovement = player.getDeltaMovement();
         // Add player movement, but remove negative y component to make it easier to throw hook while falling
-        this.setDeltaMovement(direction.scale(velocity).add(playerMovement.x, player.isOnGround() ? 0 : Math.max(playerMovement.y, 0), playerMovement.z));
+        this.setDeltaMovement(direction.scale(velocity).add(playerMovement.x, player.onGround() ? 0 : Math.max(playerMovement.y, 0), playerMovement.z));
     }
 
     @Override
@@ -396,7 +396,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 //        }
 
 
-        RandomSource random = level.getRandom();
+        RandomSource random = level().getRandom();
 
         if (this.isSticky) {
             this.playSound(SoundEvents.SLIME_SQUISH, 0.5F, 1.0F);

@@ -18,7 +18,7 @@ public class MoltenLiquidBlock extends LiquidBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         super.entityInside(state, level, pos, entity);
-        entity.hurt(DamageSource.LAVA, 2f);
+        entity.hurt(level.damageSources().lava(), 2f);
         entity.setSecondsOnFire(10);
     }
 }

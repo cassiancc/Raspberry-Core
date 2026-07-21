@@ -1,8 +1,6 @@
 package cc.cassian.raspberry.client.particle;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FlameParticle;
@@ -15,6 +13,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Quaternionf;
+import org.joml.Quaternionfc;
+import org.joml.Vector3f;
 
 public class BetterFlameParticle extends FlameParticle {
     private final SpriteSet sprites;
@@ -49,16 +50,16 @@ public class BetterFlameParticle extends FlameParticle {
         float h = (float)(Mth.lerp(partialTicks, this.zo, this.z) - vec3.z());
 
         // *Except for this part, where we only want the YRot from the camera
-        Quaternion quaternion = new Quaternion(0, -renderInfo.getYRot(),0, true);
+        Quaternionf quaternion = new Quaternionf(0f, -renderInfo.getYRot(),0f,0f);
 
         Vector3f vector3f = new Vector3f(-1.0F, -1.0F, 0.0F);
-        vector3f.transform(quaternion);
+        vector3f.rotate(quaternion);
         Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)};
         float j = this.getQuadSize(partialTicks);
 
         for(int k = 0; k < 4; ++k) {
             Vector3f vector3f2 = vector3fs[k];
-            vector3f2.transform(quaternion);
+            vector3f2.rotate(quaternion);
             vector3f2.mul(j);
             vector3f2.add(f, g, h);
         }

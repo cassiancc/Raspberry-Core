@@ -104,7 +104,7 @@ public class RaspberryFluids {
 	}
 
 	private static Supplier<? extends LiquidBlock> block(String name, RegistryObject<FlowingFluid> fluid) {
-		return RaspberryBlocks.BLOCKS.register(name, ()->new MoltenLiquidBlock(fluid, BlockBehaviour.Properties.of(Material.LAVA).lightLevel(state->15).noLootTable().noCollission().randomTicks().strength(100f)));
+		return RaspberryBlocks.BLOCKS.register(name, ()->new MoltenLiquidBlock(fluid, BlockBehaviour.Properties.of().lightLevel(state->15).noLootTable().noCollission().randomTicks().strength(100f)));
 	}
 
 	private static Supplier<? extends Item> bucket(String name, RegistryObject<FlowingFluid> moltenLead) {
