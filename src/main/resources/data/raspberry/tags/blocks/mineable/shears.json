@@ -47,6 +47,10 @@
       "required": false
     },
     {
+      "id": "raspberry:shrub",
+      "required": false
+    },
+    {
       "id": "spelunkery:tangle_roots",
       "required": false
     }

@@ -200,6 +200,9 @@ public class RaspberryBlocks {
     public static BlockSupplier FINE_WOOD_WALL = registerBlock("fine_wood" + "_wall",
             () -> new FineWoodWall(BlockBehaviour.Properties.copy(Blocks.ACACIA_STAIRS)), CreativeModeTab.TAB_BUILDING_BLOCKS);
 
+    public static BlockSupplier SHRUB = registerBlock("shrub", ()-> new TallGrassBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XYZ)), CreativeModeTab.TAB_MISC);
+    public static final RegistryObject<Block> POTTED_SHRUB = registerPottedPlant(SHRUB);
+
     private static BlockBehaviour.Properties flowerBedProperties(boolean replaceable) {
         var material = Material.PLANT;
         if (replaceable) material = Material.REPLACEABLE_PLANT;

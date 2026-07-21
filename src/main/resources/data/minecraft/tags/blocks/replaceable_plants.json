@@ -4,6 +4,10 @@
         {
             "id": "raspberry:clovers",
             "required": false
+        },
+        {
+            "id": "raspberry:shrub",
+            "required": false
         }
     ]
 }
