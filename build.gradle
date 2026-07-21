@@ -191,7 +191,7 @@ repositories {
         forRepository {
             maven {
                 name = "TerraformersMC"
-                url = "https://maven.terraformersmc.com/"
+                url = "https://maven.terraformersmc.com/releases"
             }
         }
         filter {
@@ -247,7 +247,7 @@ dependencies {
     modImplementation("maven.modrinth:savage-and-ravage:$savage_and_ravage_version")
 
     // Recipe viewers
-    modImplementation("dev.emi:emi-forge:${emi_version}+$minecraft_version")
+    modImplementation("maven.modrinth:emi:${emi_version}+$minecraft_version+forge")
     modImplementation("maven.modrinth:jei:$jei_version-forge")
 
     // Farmer's Delight and its addons

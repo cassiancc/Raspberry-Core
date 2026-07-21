@@ -7,6 +7,7 @@
 - Grappling Hooks - a new traversal tool that can be equipped on a Reinforced Fishing Rod (Aquaculture).
 - Molten Fluids for multiple mods metal types, including Cauldrons and Buckets.
 - A backport of the Infested effect from Minecraft 1.21.
+- A backport of the Red Shrub block from Minecraft 26.3.
 - Wand of Freezing (Caverns and Chasms) can now be used on Wind Vane (Supplementaries) to change the weather.
 - Better jukeboxes config option:
     - Fades out vanilla music when playing a jukebox (supports Etched).
@@ -28,7 +29,14 @@
 - Disabled some curative items.
 - Items in the `raspberry:fireproof` tag no longer burn.
 - Spawn egg tinting can now be disabled.
-- Pebbles now break glass (Twigs). 
+- Pebbles now break glass (Twigs).
+- Disabled all keybinds from Additional Enchantments.
+- Greatblade attack damage can now be configured (Clash!)
+- Various changes to the Homing enchantment:
+  - Keybind to filter target types/priority has been removed
+  - Targets are only chosen from within a cone in front of the projectile
+  - If a mob with Glowing is within range, it will always be chosen as the target
+  - Projectiles have slightly different physics and a new particle effect
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
@@ -49,3 +57,5 @@
 - Jumping with a Horse no longer damages armour enchanted with Knight Jump (Mining Master).
 - Copper Armour Shock Resistance is now ambient.
 - Autumnity Pumpkin Blocks can now be sheared by modded shears.
+- Farmer's Respite Tea Bushes can now be sheared by modded shears.
+- Raspberry Core's flower pot blocks are now tagged correctly.

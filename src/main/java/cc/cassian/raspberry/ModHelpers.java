@@ -31,7 +31,7 @@ public class ModHelpers {
         if (I18n.exists(key)) {
             return Component.translatable(key);
         } else {
-            return Component.literal(WordUtils.capitalizeFully(field.getName()));
+            return Component.literal(WordUtils.capitalizeFully(field.getName().replace("_", " ")));
         }
     }
 

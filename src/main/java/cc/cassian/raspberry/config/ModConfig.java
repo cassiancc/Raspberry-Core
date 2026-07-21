@@ -93,7 +93,7 @@ public class ModConfig {
     public boolean betterCopperGolems = true;
     public boolean safeEnderPearls = true;
     public float infested_spawn_chance = 0.1f;
-
+    public float thrown_trident_base_damage = 8.0f;
     public Map<String, List<String>> fishing_line_patterns = Map.of(
         "pride", List.of(
                 "#fe0000",
@@ -104,6 +104,7 @@ public class ModConfig {
                 "#8b018c"
         )
     );
+    public int greatblade_slash_damage_bonus = 0;
 
 	public ModConfig() {
         creativeTabIcons.put("minecraft:building_blocks", "minecraft:bricks");

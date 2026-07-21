@@ -1,9 +1,11 @@
 package cc.cassian.raspberry.registry;
 
 import cc.cassian.raspberry.client.particle.FlowerPetalParticle;
+import cc.cassian.raspberry.client.particle.HomingParticle;
 import cc.cassian.raspberry.client.particle.SwapArrowPortalParticle;
 import net.minecraft.client.particle.PlayerCloudParticle;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -18,6 +20,7 @@ import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
 public class RaspberryParticleTypes {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MOD_ID);
 
+    public static final RegistryObject<SimpleParticleType> HOMING;
     public static final RegistryObject<SimpleParticleType> MIRROR;
     public static final RegistryObject<SimpleParticleType> CHEERY_PETAL;
     public static final RegistryObject<SimpleParticleType> PLAYFUL_PETAL;
@@ -33,12 +36,13 @@ public class RaspberryParticleTypes {
     }
 
     static {
-        MIRROR = registerSimpleParticleType("mirror");
-        CHEERY_PETAL = registerSimpleParticleType("cheery_petal");
-        PLAYFUL_PETAL = registerSimpleParticleType("playful_petal");
-        HOPEFUL_PETAL = registerSimpleParticleType("hopeful_petal");
-        MOODY_PETAL = registerSimpleParticleType("moody_petal");
-        SWAP_ARROW_PORTAL = registerSimpleParticleType("swap_arrow_portal");
+        HOMING = registerSimpleParticleType(true, "homing");
+        MIRROR = registerSimpleParticleType(true, "mirror");
+        CHEERY_PETAL = registerSimpleParticleType(true, "cheery_petal");
+        PLAYFUL_PETAL = registerSimpleParticleType(true, "playful_petal");
+        HOPEFUL_PETAL = registerSimpleParticleType(true, "hopeful_petal");
+        MOODY_PETAL = registerSimpleParticleType(true, "moody_petal");
+        SWAP_ARROW_PORTAL = registerSimpleParticleType(true, "swap_arrow_portal");
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
@@ -48,12 +52,13 @@ public class RaspberryParticleTypes {
 
         @SubscribeEvent
         public static void registerParticleTypes(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
-            event.registerSpriteSet(RaspberryParticleTypes.CHEERY_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.registerSpriteSet(RaspberryParticleTypes.PLAYFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.registerSpriteSet(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.registerSpriteSet(RaspberryParticleTypes.MOODY_PETAL.get(), FlowerPetalParticle.Provider::new);
-            event.registerSpriteSet(RaspberryParticleTypes.SWAP_ARROW_PORTAL.get(), SwapArrowPortalParticle.Provider::new);
+            event.register(RaspberryParticleTypes.HOMING.get(), HomingParticle.Provider::new);
+            event.register(RaspberryParticleTypes.MIRROR.get(), PlayerCloudParticle.Provider::new);
+            event.register(RaspberryParticleTypes.CHEERY_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.register(RaspberryParticleTypes.PLAYFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.register(RaspberryParticleTypes.HOPEFUL_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.register(RaspberryParticleTypes.MOODY_PETAL.get(), FlowerPetalParticle.Provider::new);
+            event.register(RaspberryParticleTypes.SWAP_ARROW_PORTAL.get(), SwapArrowPortalParticle.Provider::new);
         }
     }
 

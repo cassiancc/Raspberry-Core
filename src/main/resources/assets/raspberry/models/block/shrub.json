@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "raspberry:block/shrub"
+  },
+  "render_type": "cutout"
+}

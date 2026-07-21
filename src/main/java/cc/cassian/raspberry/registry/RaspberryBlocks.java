@@ -211,6 +211,9 @@ public class RaspberryBlocks {
     public static BlockSupplier WITHER_ROSE_BUSH = registerBlock("wither_rose_bush", () -> new WitherRoseBushBlock(BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE)));
     public static BlockSupplier AVOCADO_HEDGE = registerBlock("avocado_hedge", () -> new HedgeBlock( "avocado_hedge", null, Blocks.JUNGLE_FENCE, com.baisylia.culturaldelights.block.ModBlocks.AVOCADO_LEAVES.get()));
 
+    public static BlockSupplier SHRUB = registerBlock("shrub", ()-> new TallGrassBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XYZ)), CreativeModeTab.TAB_MISC);
+    public static final RegistryObject<Block> POTTED_SHRUB = registerPottedPlant(SHRUB);
+
     private static BlockBehaviour.Properties flowerBedProperties(boolean replaceable) {
         var material = BlockBehaviour.Properties.of();
         if (replaceable) material = material.replaceable();

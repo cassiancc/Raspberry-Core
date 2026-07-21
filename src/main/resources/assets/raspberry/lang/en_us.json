@@ -26,6 +26,7 @@
   "block.raspberry.wither_rose_bush": "Wither Rose Bush",
   "block.raspberry.cherry_pie": "Cherry Pie",
   "item.raspberry.cherry_pie_slice": "Cherry Pie Slice",
+  "block.raspberry.shrub": "Shrub",
   "block.raspberry.snow": "Snow",
   "lore.raspberry.snow": "A block that drops Snowballs when broken with a shovel.",
   "block.raspberry.ash_block": "Ash Block",

@@ -1,8 +1,10 @@
 package cc.cassian.raspberry.entity;
 
 import cc.cassian.raspberry.PlayerWithGrapplingHook;
+import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.registry.RaspberryEntityTypes;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
+import cc.cassian.raspberry.registry.RaspberryTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -19,6 +21,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,6 +46,8 @@ import javax.annotation.Nullable;
 public class GrapplingHookEntity extends Projectile implements IEntityAdditionalSpawnData {
     private final int RANGE = 64;
     private final int RANGE_SQR = RANGE * RANGE;
+    public final float TARGET_LENGTH = 1.5F;
+    public final float TARGET_LENGTH_STICKY = 2F;
     protected boolean isAttached;
     @Nullable private BlockState lastState;
     @Nullable private BlockPos attachedBlockPos;
@@ -55,6 +60,8 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     private Entity hookedIn;
     public final boolean isSticky;
     public int shakeTime;
+    private boolean shouldPull = true;
+    private double totalPull = 0;
 
     @SuppressWarnings("unchecked")
     public GrapplingHookEntity(PlayMessages.SpawnEntity spawnPacket, Level level) {
@@ -96,7 +103,8 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
         double velocity = 1.3;
         Vec3 playerMovement = player.getDeltaMovement();
-        this.setDeltaMovement(direction.scale(velocity).add(playerMovement.x, player.onGround() ? 0 : playerMovement.y, playerMovement.z));
+        // Add player movement, but remove negative y component to make it easier to throw hook while falling
+        this.setDeltaMovement(direction.scale(velocity).add(playerMovement.x, player.isOnGround() ? 0 : Math.max(playerMovement.y, 0), playerMovement.z));
     }
 
     @Override
@@ -117,6 +125,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         return !this.getBobber().isEmpty();
     }
 
+    @Override
     public void tick() {
         super.tick();
         Player player = this.getPlayerOwner();
@@ -146,13 +155,18 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                     this.setPos(this.hookedIn.getX(), this.hookedIn.getY(0.8), this.hookedIn.getZ());
                     if (!this.level().isClientSide) {
                         this.pullEntity(this.hookedIn);
-                        this.level().broadcastEntityEvent(this, (byte)31);
+                        this.level().broadcastEntityEvent(this, EntityEvent.FISHING_ROD_REEL_IN);
                     }
                 } else {
                     this.setHookedEntity(null);
                 }
             } else if (isAttached) {
-                if (this.shouldFall()) {
+                double STICY_MAX_PULL_BEFORE_BREAK = 5;
+                if (this.isSticky && (this.position().distanceTo(player.position()) <= TARGET_LENGTH_STICKY || this.totalPull > STICY_MAX_PULL_BEFORE_BREAK)) {
+                    this.playSound(SoundEvents.SLIME_HURT, 0.7F, 1.0F);
+                    // TODO: Rod damage as if retrieving
+                    this.discard();
+                } else if (this.shouldFall()) {
                     this.startFalling();
                 }
             } else {
@@ -177,7 +191,7 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
                         // Pretend we hit the top to avoid bounce off
                         blockEdgeHitResult = new BlockHitResult(blockEdgeHitResult.getLocation(), Direction.UP, blockEdgeHitResult.getBlockPos(), blockEdgeHitResult.isInside());
                     }
-
+                    this.setDeltaMovement(this.getDeltaMovement().reverse());
                     this.onHit(blockEdgeHitResult);
                     this.hasImpulse = true;
                 } else {
@@ -262,6 +276,10 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
     @Override
     public void lerpTo(double x, double y, double z, float yRot, float xRot, int lerpSteps, boolean teleport) {
+    }
+
+    public void addPull(double amount) {
+        this.totalPull += amount;
     }
 
     public int retrieve(@Nonnull ItemStack fishingRod) {
@@ -352,19 +370,33 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
 
         Direction hitDirection = result.getDirection();
         Vec3 hitPos = result.getLocation();
+        this.setPos(hitPos);
 
         // Bounce if hitting the side or bottom of a block
-        if (!hitDirection.equals(Direction.UP) && !this.isSticky) {
+        if (!hitDirection.equals(Direction.UP) && !this.isSticky && !blockState.is(RaspberryTags.GRAPPLING_HOOK_STICKS)) {
             this.setDeltaMovement(this.getDeltaMovement().scale(0.1));
             if (hitDirection.getAxis() == Direction.Axis.X) {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(-1,1,1));
             } else if (hitDirection.getAxis() == Direction.Axis.Z) {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(1,1,-1));
+            } else if (hitDirection.getAxis() == Direction.Axis.Y) {
+                this.setDeltaMovement(this.getDeltaMovement().multiply(1,-1,1));
             }
             return;
         }
 
-        RandomSource random = level().getRandom();
+        // if sticky, bounce off if going too fast
+//        if (isSticky && deltaMovement.lengthSqr() > 0.25 && hitDirection == Direction.UP) {
+//            Vec3 faceNormal = Vec3.atLowerCornerOf(hitDirection.getNormal());
+//            Vec3 moveDirection = deltaMovement.normalize();
+//            this.playSound(SoundEvents.SLIME_JUMP, 1.0F, 1.0F);
+//            deltaMovement = moveDirection.subtract(faceNormal.scale(2 * moveDirection.dot(faceNormal))).scale(0.7);
+//            this.setDeltaMovement(deltaMovement);
+//            return;
+//        }
+
+
+        RandomSource random = level.getRandom();
 
         if (this.isSticky) {
             this.playSound(SoundEvents.SLIME_SQUISH, 0.5F, 1.0F);
@@ -381,7 +413,6 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
         }
 
         this.setDeltaMovement(Vec3.ZERO);
-        this.setPos(hitPos);
         this.shakeTime = 7;
         this.isAttached = true;
 
@@ -507,6 +538,13 @@ public class GrapplingHookEntity extends Projectile implements IEntityAdditional
     @Nullable
     public Entity getHookedIn() {
         return this.hookedIn;
+    }
+
+    public boolean getShouldPull() {
+        return this.shouldPull;
+    }
+    public void setShouldPull(boolean value) {
+        this.shouldPull = value;
     }
 
 
