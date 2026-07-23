@@ -6,6 +6,7 @@ import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.client.entity.renderer.SwapArrowRenderer;
 import cc.cassian.raspberry.client.music.MusicHandler;
 import cc.cassian.raspberry.events.FlowerGarlandEvent;
+import cc.cassian.raspberry.events.WikiTooltipEvent;
 import cc.cassian.raspberry.registry.BlockSupplier;
 import cc.cassian.raspberry.client.registry.RaspberryItemProperties;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
@@ -36,6 +37,7 @@ public class RaspberryModClient {
         // Register config
         registerModsPage(context);
         MinecraftForge.EVENT_BUS.addListener(RaspberryModClient::clickTick);
+        MinecraftForge.EVENT_BUS.addListener(WikiTooltipEvent::wikiTooltip);
     }
 
     @SubscribeEvent

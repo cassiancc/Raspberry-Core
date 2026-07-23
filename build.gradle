@@ -185,19 +185,6 @@ repositories {
             includeGroup "local"
         }
     }
-    // EMI
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = "TerraformersMC"
-                url = "https://maven.terraformersmc.com/"
-            }
-        }
-        filter {
-            includeGroup "dev.emi"
-
-        }
-    }
     exclusiveContent {
         forRepository {
             maven {
@@ -244,7 +231,7 @@ dependencies {
     modImplementation("maven.modrinth:autumnity:$autumnity_version")
 
     // Recipe viewers
-    modImplementation("dev.emi:emi-forge:${emi_version}+$minecraft_version")
+    modImplementation("maven.modrinth:emi:${emi_version}+$minecraft_version+forge")
     modImplementation("maven.modrinth:jei:$jei_version-forge")
 
     // Farmer's Delight and its addons
