@@ -1,10 +1,10 @@
 package cc.cassian.raspberry.events;
 
+import cc.cassian.raspberry.config.ModConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.Map;
@@ -74,7 +74,7 @@ public class WikiTooltipEvent {
 			Map.entry(61, "GLOW_LICHEN"));
 
 	public static void wikiTooltip(ItemTooltipEvent event) {
-		if (event.getItemStack().getItem() instanceof BlockItem blockItem) {
+		if (ModConfig.get().infoTooltips && event.getItemStack().getItem() instanceof BlockItem blockItem) {
 			var tooltip = event.getToolTip();
 			var block = blockItem.getBlock();
 			BlockState state = block.defaultBlockState();

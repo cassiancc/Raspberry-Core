@@ -9,6 +9,9 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(PointedDripstoneBlock.class)
 public interface PointedDripstoneBlockAccessor {
+	/**
+	 * {@link PointedDripstoneBlock#canDripThrough(BlockGetter, BlockPos, BlockState)}
+	 */
 	@Invoker
 	static boolean callCanDripThrough(BlockGetter level, BlockPos pos, BlockState state) {
 		throw new UnsupportedOperationException();

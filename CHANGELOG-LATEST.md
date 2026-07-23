@@ -1,8 +1,9 @@
 ### Added
 - Grappling Hooks - a new traversal tool that can be equipped on a Reinforced Fishing Rod (Aquaculture).
 - Molten Fluids for multiple mods metal types, including Cauldrons and Buckets.
+- Raw ore blocks now generate corundum when placed over natural ores, lava, and pointed dripstone.
 - A backport of the Infested effect from Minecraft 1.21.
-- A backport of the Red Shrub block from Minecraft 26.3.
+- A backport of the Red Shrub block from Minecraft 26.3, tweaked to use a biome tint rather than a hardcoded colour.
 - Wand of Freezing (Caverns and Chasms) can now be used on Wind Vane (Supplementaries) to change the weather.
 - Better jukeboxes config option:
     - Fades out vanilla music when playing a jukebox (supports Etched).
@@ -21,6 +22,7 @@
   - Targets are only chosen from within a cone in front of the projectile
   - If a mob with Glowing is within range, it will always be chosen as the target
   - Projectiles have slightly different physics and a new particle effect
+- A debug tooltip that provides info about block data.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

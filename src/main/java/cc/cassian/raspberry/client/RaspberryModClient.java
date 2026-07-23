@@ -67,6 +67,11 @@ public class RaspberryModClient {
     }
 
     @SubscribeEvent
+    public static void registerBlockColors(RegisterColorHandlersEvent.Item event){
+        event.register(((stack, view) -> 9551193), RaspberryBlocks.SHRUB.getBlock());
+    }
+
+    @SubscribeEvent
     @SuppressWarnings("unchecked")
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(RaspberryEntityTypes.ASHBALL.get(), ThrownItemRenderer::new);

@@ -42,8 +42,8 @@ public class DripstoneEvent {
 	 * convertsToTarget->targetBlock (dripstone, converted to rock salt)
 	 * }</pre>
 	 */
-	public static void convertBlockViaDripstone(ServerLevel level, @Nullable BlockPos blockPos, PointedDripstoneBlock.FluidInfo fluidInfo, Fluid fluid, BlockState targetBlockState, TagKey<Block> convertsToTarget, FlowingFluid requiredFluid, Block requiredBlock, boolean generateAsCrystal) {
-		if (blockPos == null) return;
+	public static void convertBlockViaDripstone(ServerLevel level, @Nullable BlockPos blockPos, PointedDripstoneBlock.FluidInfo fluidInfo, Fluid fluid, @Nullable BlockState targetBlockState, TagKey<Block> convertsToTarget, FlowingFluid requiredFluid, Block requiredBlock, boolean generateAsCrystal) {
+		if (blockPos == null || targetBlockState == null) return;
 		if (level.getBlockState(fluidInfo.pos().below()).is(requiredBlock) && fluid == requiredFluid) {
 			BlockPos targetPos = findConvertible(level, blockPos, convertsToTarget);
 			if (targetPos != null) {
