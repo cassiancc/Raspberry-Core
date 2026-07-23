@@ -102,6 +102,7 @@ public final class RaspberryMod {
         }
 
         event.enqueueWork(RaspberryBlocks::addPottedPlants);
+        event.enqueueWork(RaspberryBlocks::addCompostables);
     }
 
     public static void onLivingHurt(LivingHurtEvent event) {

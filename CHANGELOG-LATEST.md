@@ -40,3 +40,4 @@
 - Autumnity Pumpkin Blocks can now be sheared by modded shears.
 - Farmer's Respite Tea Bushes can now be sheared by modded shears.
 - Raspberry Core's flower pot blocks are now tagged correctly.
+- Wildflowers are now compostable.

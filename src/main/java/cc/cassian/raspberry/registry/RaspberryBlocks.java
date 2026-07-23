@@ -258,4 +258,12 @@ public class RaspberryBlocks {
         RaspberryBlocks.POTTED_PLANTS.put(block.getItemSupplier().getId(), pottedBlock);
         return pottedBlock;
     }
+
+    public static void addCompostables() {
+        ComposterBlock.COMPOSTABLES.put(SHRUB.getBlock().asItem(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(RaspberryBlocks.MOODY_WILDFLOWERS.getBlock().asItem(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(RaspberryBlocks.PINK_PETALS.getBlock().asItem(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(RaspberryBlocks.CHEERFUL_WILDFLOWERS.getBlock().asItem(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(RaspberryBlocks.HOPEFUL_WILDFLOWERS.getBlock().asItem(), 0.3F);
+    }
 }
