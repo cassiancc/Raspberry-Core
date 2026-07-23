@@ -217,7 +217,6 @@ public class RaspberryBlocks {
         FOLIAGE_BLOCKS.add(PINK_PETALS);
         FOLIAGE_BLOCKS.add(MOODY_WILDFLOWERS);
         FOLIAGE_BLOCKS.add(HOPEFUL_WILDFLOWERS);
-        FOLIAGE_BLOCKS.add(SHRUB);
     }
 
     public static BlockBehaviour.Properties getTruffleProperties() {

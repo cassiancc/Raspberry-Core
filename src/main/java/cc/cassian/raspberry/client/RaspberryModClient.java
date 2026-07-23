@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
@@ -64,11 +65,17 @@ public class RaspberryModClient {
                 return BiomeColors.getAverageFoliageColor(view, pos);
             }), block.getBlock());
         }
+        event.register(((state, view, pos, tintIndex) -> {
+            if (view == null || pos == null) {
+                return GrassColor.get(0.5F, 1.0F);
+            }
+            return BiomeColors.getAverageGrassColor(view, pos);
+        }), RaspberryBlocks.SHRUB.getBlock(), RaspberryBlocks.POTTED_SHRUB.get());
     }
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Item event){
-        event.register(((stack, view) -> 9551193), RaspberryBlocks.SHRUB.getBlock());
+        event.register(((stack, view) -> GrassColor.get(0.5F, 1.0F)), RaspberryBlocks.SHRUB.getBlock());
     }
 
     @SubscribeEvent

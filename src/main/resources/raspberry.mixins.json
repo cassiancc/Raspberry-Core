@@ -27,7 +27,6 @@
     "spyglass_improvements.MinecraftMixin"
   ],
   "mixins": [
-    "minecraft.PointedDripstoneBlockAccessor",
     "additional_enchantments.BracewalkMixin",
     "additional_enchantments.ClientRegistryMixin",
     "additional_enchantments.KeyHandlerMixin",
@@ -131,6 +130,7 @@
     "minecraft.PathfinderMobAccessor",
     "minecraft.PigMixin",
     "minecraft.PlayerMixin",
+    "minecraft.PointedDripstoneBlockAccessor",
     "minecraft.RaiderMixin",
     "minecraft.ScreenMixin",
     "minecraft.SilenceServerMixin",

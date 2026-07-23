@@ -183,7 +183,8 @@
   "emi.cooking.time_minute": "%s Minute",
   "emi.cooking.time_minutes": "%s Minutes",
 
- "emi.category.raspberry.anvil": "Runic Etching",
+  "emi.category.raspberry.dripping": "Dripping",
+  "emi.category.raspberry.anvil": "Runic Etching",
  "emi.category.raspberry.beacon_base": "Beacon Base Blocks",
  "emi.category.raspberry.beacon_payment": "Beacon Payments",
  "emi.category.farmersdelight.cooking": "Cooking",
