@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.events;
 
+import cc.cassian.raspberry.mixin.minecraft.PointedDripstoneBlockAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -64,7 +65,7 @@ public class DripstoneEvent {
 			return arg2.is(convertsToTarget);
 		};
 		BiPredicate<BlockPos, BlockState> positionalStatePredicate = (arg2, arg3) -> {
-			return PointedDripstoneBlock.canDripThrough(level, arg2, arg3) || arg3.is(Blocks.POINTED_DRIPSTONE);
+			return PointedDripstoneBlockAccessor.callCanDripThrough(level, arg2, arg3) || arg3.is(Blocks.POINTED_DRIPSTONE);
 		};
 
 		return findBlockVertical(level, pos, Direction.DOWN.getAxisDirection(), positionalStatePredicate, statePredicate).orElse(null);
