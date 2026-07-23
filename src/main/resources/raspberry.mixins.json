@@ -101,6 +101,7 @@
     "minecraft.AbstractMinecartEntityMixin",
     "minecraft.BoatMixin",
     "minecraft.CampfireBlockMixin",
+    "minecraft.DamageEnchantmentMixin",
     "minecraft.DoublePlantBlockMixin",
     "minecraft.DragonFireballMixin",
     "minecraft.EnchantmentMixin",

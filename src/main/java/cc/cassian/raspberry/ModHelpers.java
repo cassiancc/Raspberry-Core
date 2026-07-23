@@ -13,14 +13,20 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.apache.commons.lang3.text.WordUtils;
+import org.jetbrains.annotations.Nullable;
 import vectorwing.farmersdelight.common.block.CookingPotBlock;
 import vectorwing.farmersdelight.common.block.state.CookingPotSupport;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -120,11 +126,29 @@ public class ModHelpers {
         else return (ModCompat.QUARK && QuarkCompat.isPaperLantern(downState));
     }
 
-    public static MobType affectArthropods(LivingEntity instance, Operation<MobType> original) {
-        if (instance.getType().is(RaspberryTags.SENSITIVE_TO_BANE_OF_ARTHROPODS)) {
+    public static MobType getDamageBonus(@Nullable Enchantment enchantment, LivingEntity instance, Operation<MobType> original) {
+        if (enchantment == null) {
+			return original.call(instance);
+		} else if (enchantment.equals(Enchantments.BANE_OF_ARTHROPODS) && instance.getType().is(RaspberryTags.SENSITIVE_TO_BANE_OF_ARTHROPODS)) {
             return MobType.ARTHROPOD;
+        } else if (enchantment.equals(Enchantments.IMPALING) && instance.getType().is(RaspberryTags.SENSITIVE_TO_IMPALING)) {
+            return MobType.WATER;
         } else {
             return original.call(instance);
         }
     }
+
+	public static Enchantment getDamageEnchantment(ItemStack mainHandItem) {
+        var enchantments = mainHandItem.getAllEnchantments();
+		for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+			Enchantment enchantment = entry.getKey();
+            if (enchantment instanceof TridentImpalerEnchantment) {
+                return enchantment;
+            }
+			else if (enchantment instanceof DamageEnchantment) {
+				return enchantment;
+			}
+		}
+		return null;
+	}
 }

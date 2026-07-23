@@ -4,6 +4,7 @@ import cc.cassian.raspberry.registry.RaspberryTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,6 +16,8 @@ public class EnchantmentMixin {
     private void mixin(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         var enchantment = (Enchantment) (Object) this;
         if (enchantment.category.equals(EnchantmentCategory.WEAPON) && stack.is(RaspberryTags.ENCHANTABLE_WEAPON))
+            cir.setReturnValue(true);
+        if (enchantment instanceof TridentImpalerEnchantment && stack.is(RaspberryTags.ENCHANTABLE_IMPALING))
             cir.setReturnValue(true);
     }
 }

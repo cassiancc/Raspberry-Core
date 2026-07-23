@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
+import cc.cassian.raspberry.ModHelpers;
 import cc.cassian.raspberry.PlayerWithGrapplingHook;
 import cc.cassian.raspberry.entity.GrapplingHookEntity;
 import cc.cassian.raspberry.registry.RaspberryTags;
@@ -8,12 +9,10 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.Vec3i;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -25,16 +24,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
 
-import static cc.cassian.raspberry.ModHelpers.affectArthropods;
+import static cc.cassian.raspberry.ModHelpers.getDamageBonus;
 
 @Mixin(Player.class)
-public class PlayerMixin implements PlayerWithGrapplingHook {
+public abstract class PlayerMixin extends LivingEntity implements PlayerWithGrapplingHook {
     @Unique
     private int raspberryCore$noJumpDelay;
 
     @Unique
     @Nullable
     private GrapplingHookEntity raspberryCore$grapplingHook;
+
+    protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
+        super(entityType, level);
+    }
 
     @Inject(method = "jumpFromGround", at = @At("HEAD"))
     private void jumpFromGround(CallbackInfo ci) {
@@ -198,7 +201,7 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
 
     @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getMobType()Lnet/minecraft/world/entity/MobType;"))
     private MobType mixin(LivingEntity instance, Operation<MobType> original) {
-        return affectArthropods(instance, original);
+        return getDamageBonus(ModHelpers.getDamageEnchantment(this.getMainHandItem()), instance, original);
     }
 }
 

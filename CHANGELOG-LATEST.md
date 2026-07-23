@@ -23,7 +23,8 @@
   - If a mob with Glowing is within range, it will always be chosen as the target
   - Projectiles have slightly different physics and a new particle effect
 - A debug tooltip that provides info about block data.
-- Backported `sensitive_to_bane_of_arthropods` to the `raspberry` namespace.
+- Backported `minecraft:sensitive_to_bane_of_arthropods` entity tag as `raspberry:sensitive/bane_of_arthropods`.
+- Added `raspberry:enchantable/impaling` item tag to allow additional items to be enchanted with Impaling, and added `raspberry:sensitive/impaling` entity tag to allow more mobs to be affected by Impaling, defaulting to Drowned.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

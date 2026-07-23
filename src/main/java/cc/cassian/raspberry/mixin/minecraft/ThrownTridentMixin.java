@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
+import cc.cassian.raspberry.ModHelpers;
 import cc.cassian.raspberry.config.ModConfig;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -10,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-import static cc.cassian.raspberry.ModHelpers.affectArthropods;
+import static cc.cassian.raspberry.ModHelpers.getDamageBonus;
 
 @Mixin(ThrownTrident.class)
 public class ThrownTridentMixin {
@@ -21,6 +22,6 @@ public class ThrownTridentMixin {
 
     @WrapOperation(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getMobType()Lnet/minecraft/world/entity/MobType;"))
     private MobType mixin(LivingEntity instance, Operation<MobType> original) {
-        return affectArthropods(instance, original);
+        return getDamageBonus(ModHelpers.getDamageEnchantment(instance.getMainHandItem()), instance, original);
     }
 }

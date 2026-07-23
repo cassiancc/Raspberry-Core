@@ -315,6 +315,7 @@ dependencies {
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:5138314")
     modImplementation("maven.modrinth:mmmmmmmmmmmm:1.7.2-forge")
+    modImplementation("maven.modrinth:item-descriptions:$item_descriptions_version")
 
     // EMI Compat for Enchantments
     modRuntimeOnly("dev.latvian.mods:kubejs-forge:$kubejs_version")
