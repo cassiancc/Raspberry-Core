@@ -20,5 +20,6 @@ public class MoltenLiquidBlock extends LiquidBlock {
         super.entityInside(state, level, pos, entity);
         entity.hurt(DamageSource.LAVA, 2f);
         entity.setSecondsOnFire(10);
+        entity.setSharedFlagOnFire(true);
     }
 }

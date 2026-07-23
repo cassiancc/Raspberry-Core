@@ -83,6 +83,7 @@ public class WikiTooltipEvent {
 			tooltip.add(Component.literal("Blast resistance: " + block.getExplosionResistance()));
 			tooltip.add(Component.literal("Hardness: " + block.defaultDestroyTime()));
 			tooltip.add(Component.literal("Note block instrument: " + NoteBlockInstrument.byState(state)));
+			tooltip.add(Component.literal("Flammable: " + state.getMaterial().isFlammable()));
 		}
 	}
 }
