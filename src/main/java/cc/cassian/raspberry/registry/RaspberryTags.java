@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.registry;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -9,6 +10,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import static cc.cassian.raspberry.RaspberryMod.locate;
 
 public class RaspberryTags {
+    public static final TagKey<EntityType<?>> SENSITIVE_TO_BANE_OF_ARTHROPODS = createEntityTypeTag("sensitive_to_bane_of_arthropods");
+
     public static final TagKey<Item> DISABLED = createItemTag("disabled");
     public static final TagKey<Item> BAIT = createItemTag("bait");
     public static final TagKey<Item> BAD_BAIT = createItemTag("bad_bait");
@@ -73,5 +76,9 @@ public class RaspberryTags {
 
     private static TagKey<EntityType<?>> createEntityTypeTag(String id) {
         return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), locate(id));
+    }
+
+    private static TagKey<EntityType<?>> createEntityTypeTag(String namespace, String id) {
+        return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), new ResourceLocation(namespace, id));
     }
 }

@@ -3,11 +3,15 @@ package cc.cassian.raspberry.mixin.minecraft;
 import cc.cassian.raspberry.PlayerWithGrapplingHook;
 import cc.cassian.raspberry.entity.GrapplingHookEntity;
 import cc.cassian.raspberry.registry.RaspberryTags;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.Vec3i;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
@@ -20,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
+
+import static cc.cassian.raspberry.ModHelpers.affectArthropods;
 
 @Mixin(Player.class)
 public class PlayerMixin implements PlayerWithGrapplingHook {
@@ -188,6 +194,11 @@ public class PlayerMixin implements PlayerWithGrapplingHook {
     @Override
     public void raspberryCore$setHook(@Nullable GrapplingHookEntity hookEntity) {
         this.raspberryCore$grapplingHook = hookEntity;
+    }
+
+    @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getMobType()Lnet/minecraft/world/entity/MobType;"))
+    private MobType mixin(LivingEntity instance, Operation<MobType> original) {
+        return affectArthropods(instance, original);
     }
 }
 

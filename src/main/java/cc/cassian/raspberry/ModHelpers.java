@@ -2,12 +2,16 @@ package cc.cassian.raspberry;
 
 import cc.cassian.raspberry.compat.QuarkCompat;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
+import cc.cassian.raspberry.registry.RaspberryTags;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.CandleHolderBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
@@ -114,5 +118,13 @@ public class ModHelpers {
             return true;
         }
         else return (ModCompat.QUARK && QuarkCompat.isPaperLantern(downState));
+    }
+
+    public static MobType affectArthropods(LivingEntity instance, Operation<MobType> original) {
+        if (instance.getType().is(RaspberryTags.SENSITIVE_TO_BANE_OF_ARTHROPODS)) {
+            return MobType.ARTHROPOD;
+        } else {
+            return original.call(instance);
+        }
     }
 }

@@ -23,6 +23,7 @@
   - If a mob with Glowing is within range, it will always be chosen as the target
   - Projectiles have slightly different physics and a new particle effect
 - A debug tooltip that provides info about block data.
+- Backported `sensitive_to_bane_of_arthropods` to the `raspberry` namespace.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

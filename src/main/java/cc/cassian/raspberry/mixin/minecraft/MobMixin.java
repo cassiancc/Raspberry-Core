@@ -3,10 +3,13 @@ package cc.cassian.raspberry.mixin.minecraft;
 import cc.cassian.raspberry.compat.vanillabackport.leash.KnotConnectionManager;
 import cc.cassian.raspberry.compat.vanillabackport.leash.Leashable;
 import cc.cassian.raspberry.config.ModConfig;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.monster.Enemy;
@@ -19,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+
+import static cc.cassian.raspberry.ModHelpers.affectArthropods;
 
 @Mixin(Mob.class)
 public abstract class MobMixin {
@@ -61,5 +66,10 @@ public abstract class MobMixin {
                 knot.discard();
             }
         }
+    }
+
+    @WrapOperation(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getMobType()Lnet/minecraft/world/entity/MobType;"))
+    private MobType mixin(LivingEntity instance, Operation<MobType> original) {
+        return affectArthropods(instance, original);
     }
 }
