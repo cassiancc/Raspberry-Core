@@ -24,9 +24,11 @@
   - Projectiles have slightly different physics and a new particle effect
 - A debug tooltip that provides info about block data.
 - Various new tags to control enchantment behaviour.
-  - Backported `minecraft:sensitive_to_bane_of_arthropods` entity tag as `raspberry:sensitive/bane_of_arthropods`.
-  - Added `raspberry:enchantable/impaling` item tag to allow additional items to be enchanted with Impaling, and added `raspberry:sensitive/impaling` entity tag to allow more mobs to be affected by Impaling, defaulting to Drowned.
-  - Added `raspberry:enchantable/trueshot` item tag to allow additional items to be enchanted with Impaling.
+  - Added `raspberry:sensitive/bane_of_arthropods` entity tag to allow more mobs to be affected by Bane of Arthropods.
+  - Added `raspberry:sensitive/smite` entity tag to allow more mobs to be affected by Smite.
+  - Added `raspberry:sensitive/impaling` entity tag to allow more mobs to be affected by Impaling, defaulting to Drowned.
+  - Added `raspberry:enchantable/impaling` item tag to allow additional items to be enchanted with Impaling.
+  - Added `raspberry:enchantable/trueshot` item tag to allow additional items to be enchanted with Trueshot.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

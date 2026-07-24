@@ -26,6 +26,7 @@ public class RaspberryTags {
 
     public static final TagKey<EntityType<?>> SENSITIVE_TO_BANE_OF_ARTHROPODS = createEntityTypeTag("sensitive/bane_of_arthropods");
     public static final TagKey<EntityType<?>> SENSITIVE_TO_IMPALING = createEntityTypeTag("sensitive/impaling");
+    public static final TagKey<EntityType<?>> SENSITIVE_TO_SMITE = createEntityTypeTag("sensitive/smite");
 
     public static final TagKey<Item> FIREPROOF = createItemTag("fireproof");
 

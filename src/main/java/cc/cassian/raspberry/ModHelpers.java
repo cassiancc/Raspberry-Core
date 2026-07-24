@@ -133,6 +133,8 @@ public class ModHelpers {
             return MobType.ARTHROPOD;
         } else if (enchantment.equals(Enchantments.IMPALING) && instance.getType().is(RaspberryTags.SENSITIVE_TO_IMPALING)) {
             return MobType.WATER;
+        } else if (enchantment.equals(Enchantments.SMITE) && instance.getType().is(RaspberryTags.SENSITIVE_TO_SMITE)) {
+            return MobType.UNDEAD;
         } else {
             return original.call(instance);
         }
