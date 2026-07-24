@@ -1,0 +1,23 @@
+package cc.cassian.raspberry.mixin.additional_enchantments;
+
+import cc.cassian.raspberry.registry.RaspberryTags;
+import de.cadentem.additional_enchantments.enchantments.HomingEnchantment;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.SweepingEdgeEnchantment;
+import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(Enchantment.class)
+public class EnchantmentMixin {
+    @Inject(method = "canEnchant", at = @At(value = "HEAD"), cancellable = true)
+    private void mixin(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        var enchantment = (Enchantment) (Object) this;
+        if (enchantment instanceof HomingEnchantment && stack.is(RaspberryTags.ENCHANTABLE_HOMING))
+            cir.setReturnValue(true);
+    }
+}

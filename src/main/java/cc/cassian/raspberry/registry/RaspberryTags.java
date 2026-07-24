@@ -23,6 +23,8 @@ public class RaspberryTags {
     public static final TagKey<Item> ENCHANTABLE_CAVALIER = createItemTag("enchantable/cavalier");
     public static final TagKey<Item> ENCHANTABLE_IMPALING = createItemTag("enchantable/impaling");
     public static final TagKey<Item> ENCHANTABLE_TRUESHOT = createItemTag("enchantable/trueshot");
+    public static final TagKey<Item> ENCHANTABLE_HOMING = createItemTag("enchantable/homing");
+    public static final TagKey<Item> ENCHANTABLE_LAUNCH = createItemTag("enchantable/launch");
 
     public static final TagKey<Item> PREVENT_SWEEPING = createItemTag("prevent_sweeping");
 
