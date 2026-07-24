@@ -54,6 +54,7 @@
     "clash.GreatbladeSlashEntityMixin",
     "cofh_core.CoreEnchantmentsMixin",
     "cofh_core.EffectEventsMixin",
+    "cofh_core.EnchantmentMixin",
     "cofh_core.SnowballMixin",
     "connectiblechains.ChainKnotEntityBehaviorMixin",
     "controllable.ControllableMixin",
