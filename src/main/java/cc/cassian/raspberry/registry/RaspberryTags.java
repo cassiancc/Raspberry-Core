@@ -24,6 +24,8 @@ public class RaspberryTags {
     public static final TagKey<Item> ENCHANTABLE_IMPALING = createItemTag("enchantable/impaling");
     public static final TagKey<Item> ENCHANTABLE_TRUESHOT = createItemTag("enchantable/trueshot");
 
+    public static final TagKey<Item> PREVENT_SWEEPING = createItemTag("prevent_sweeping");
+
     public static final TagKey<EntityType<?>> SENSITIVE_TO_BANE_OF_ARTHROPODS = createEntityTypeTag("sensitive/bane_of_arthropods");
     public static final TagKey<EntityType<?>> SENSITIVE_TO_IMPALING = createEntityTypeTag("sensitive/impaling");
     public static final TagKey<EntityType<?>> SENSITIVE_TO_SMITE = createEntityTypeTag("sensitive/smite");

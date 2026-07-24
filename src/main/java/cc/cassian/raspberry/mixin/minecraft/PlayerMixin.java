@@ -11,11 +11,13 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ToolAction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -202,6 +204,14 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerWithGrap
     @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getMobType()Lnet/minecraft/world/entity/MobType;"))
     private MobType mixin(LivingEntity instance, Operation<MobType> original) {
         return getDamageBonus(ModHelpers.getDamageEnchantment(this.getMainHandItem()), instance, original);
+    }
+
+    @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;canPerformAction(Lnet/minecraftforge/common/ToolAction;)Z"))
+    private boolean sweep(ItemStack instance, ToolAction toolAction, Operation<Boolean> original) {
+        if (instance.is(RaspberryTags.PREVENT_SWEEPING)) {
+            return false;
+        }
+        return original.call(instance, toolAction);
     }
 }
 
