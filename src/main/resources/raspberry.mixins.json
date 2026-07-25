@@ -78,6 +78,7 @@
     "endergetic.EnderWallTorchMixin",
     "endermanoverhaul.ReplacedEndermanMixin",
     "ensorcellation.CavalierEnchantmentMixin",
+    "ensorcellation.VitalityEnchantmentMixin",
     "ensorcellation.SoulboundEnchantmentMixin",
     "ensorcellation.SoulboundEventsMixin",
     "environmental.AbstractSkeletonMixin",

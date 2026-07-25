@@ -29,6 +29,7 @@
   - Added `raspberry:sensitive/impaling` entity tag to allow more mobs to be affected by Impaling, defaulting to Drowned.
   - Added `raspberry:enchantable/impaling` item tag to allow additional items to be enchanted with Impaling.
   - Added `raspberry:enchantable/trueshot` item tag to allow additional items to be enchanted with Trueshot (Ensorcellation).
+  - Added `raspberry:enchantable/vitality` item tag to allow additional items to be enchanted with Vitality (Ensorcellation).
   - Added `raspberry:enchantable/homing` item tag to allow additional items to be enchanted with Homing (Additional Enchantments).
   - Added `raspberry:enchantable/launch` item tag to allow additional items to be enchanted with Launch (Allurement).
 - Added `raspberry:prevent_sweeping` item tag to prevent weapons from causing Sweeping damage, defaults to Mace Backport's Mace.
