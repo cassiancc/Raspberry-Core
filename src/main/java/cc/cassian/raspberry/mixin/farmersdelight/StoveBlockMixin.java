@@ -7,11 +7,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import vectorwing.farmersdelight.common.block.AbstractStoveBlock;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 
 import static vectorwing.farmersdelight.common.block.StoveBlock.LIT;
 
-@Mixin(StoveBlock.class)
+@Mixin(AbstractStoveBlock.class)
 public abstract class StoveBlockMixin {
     @Inject(
             method = "getStateForPlacement",
