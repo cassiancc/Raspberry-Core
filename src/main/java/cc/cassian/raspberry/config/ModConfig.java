@@ -108,6 +108,7 @@ public class ModConfig {
         )
     );
     public int greatblade_slash_damage_bonus = 0;
+    public boolean disableCreativeInventory = false;
 
 	public ModConfig() {
         creativeTabIcons.put("minecraft:building_blocks", "minecraft:bricks");
