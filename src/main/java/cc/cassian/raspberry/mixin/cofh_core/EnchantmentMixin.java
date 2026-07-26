@@ -1,10 +1,10 @@
-package cc.cassian.raspberry.mixin.minecraft;
+package cc.cassian.raspberry.mixin.cofh_core;
 
 import cc.cassian.raspberry.registry.RaspberryTags;
+import cofh.ensorcellation.enchantment.TrueshotEnchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.SweepingEdgeEnchantment;
 import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,11 +16,7 @@ public class EnchantmentMixin {
     @Inject(method = "canEnchant", at = @At(value = "HEAD"), cancellable = true)
     private void mixin(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         var enchantment = (Enchantment) (Object) this;
-        if (enchantment.category.equals(EnchantmentCategory.WEAPON) && stack.is(RaspberryTags.ENCHANTABLE_WEAPON))
+        if (enchantment instanceof TrueshotEnchantment && stack.is(RaspberryTags.ENCHANTABLE_TRUESHOT))
             cir.setReturnValue(true);
-        if (enchantment instanceof TridentImpalerEnchantment && stack.is(RaspberryTags.ENCHANTABLE_IMPALING))
-            cir.setReturnValue(true);
-        if (enchantment instanceof SweepingEdgeEnchantment && stack.is(RaspberryTags.PREVENT_SWEEPING))
-            cir.setReturnValue(false);
     }
 }

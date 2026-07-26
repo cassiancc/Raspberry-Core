@@ -1,6 +1,7 @@
-package cc.cassian.raspberry.mixin.minecraft;
+package cc.cassian.raspberry.mixin.additional_enchantments;
 
 import cc.cassian.raspberry.registry.RaspberryTags;
+import de.cadentem.additional_enchantments.enchantments.HomingEnchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -16,11 +17,7 @@ public class EnchantmentMixin {
     @Inject(method = "canEnchant", at = @At(value = "HEAD"), cancellable = true)
     private void mixin(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         var enchantment = (Enchantment) (Object) this;
-        if (enchantment.category.equals(EnchantmentCategory.WEAPON) && stack.is(RaspberryTags.ENCHANTABLE_WEAPON))
+        if (enchantment instanceof HomingEnchantment && stack.is(RaspberryTags.ENCHANTABLE_HOMING))
             cir.setReturnValue(true);
-        if (enchantment instanceof TridentImpalerEnchantment && stack.is(RaspberryTags.ENCHANTABLE_IMPALING))
-            cir.setReturnValue(true);
-        if (enchantment instanceof SweepingEdgeEnchantment && stack.is(RaspberryTags.PREVENT_SWEEPING))
-            cir.setReturnValue(false);
     }
 }

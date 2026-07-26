@@ -6,8 +6,9 @@
   - Change creative tab icons
 - Grappling Hooks - a new traversal tool that can be equipped on a Reinforced Fishing Rod (Aquaculture).
 - Molten Fluids for multiple mods metal types, including Cauldrons and Buckets.
+- Raw ore blocks now generate corundum when placed over natural ores, lava, and pointed dripstone.
 - A backport of the Infested effect from Minecraft 1.21.
-- A backport of the Red Shrub block from Minecraft 26.3.
+- A backport of the Red Shrub block from Minecraft 26.3, tweaked to use a biome tint rather than a hardcoded colour.
 - Wand of Freezing (Caverns and Chasms) can now be used on Wind Vane (Supplementaries) to change the weather.
 - Better jukeboxes config option:
     - Fades out vanilla music when playing a jukebox (supports Etched).
@@ -37,6 +38,17 @@
   - Targets are only chosen from within a cone in front of the projectile
   - If a mob with Glowing is within range, it will always be chosen as the target
   - Projectiles have slightly different physics and a new particle effect
+- A debug tooltip that provides info about block data.
+- Various new tags to control enchantment behaviour.
+  - Added `raspberry:sensitive/bane_of_arthropods` entity tag to allow more mobs to be affected by Bane of Arthropods.
+  - Added `raspberry:sensitive/smite` entity tag to allow more mobs to be affected by Smite.
+  - Added `raspberry:sensitive/impaling` entity tag to allow more mobs to be affected by Impaling, defaulting to Drowned.
+  - Added `raspberry:enchantable/impaling` item tag to allow additional items to be enchanted with Impaling.
+  - Added `raspberry:enchantable/trueshot` item tag to allow additional items to be enchanted with Trueshot (Ensorcellation).
+  - Added `raspberry:enchantable/vitality` item tag to allow additional items to be enchanted with Vitality (Ensorcellation).
+  - Added `raspberry:enchantable/homing` item tag to allow additional items to be enchanted with Homing (Additional Enchantments).
+  - Added `raspberry:enchantable/launch` item tag to allow additional items to be enchanted with Launch (Allurement).
+- Added `raspberry:prevent_sweeping` item tag to prevent weapons from causing Sweeping damage, defaults to Mace Backport's Mace.
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.
@@ -59,3 +71,4 @@
 - Autumnity Pumpkin Blocks can now be sheared by modded shears.
 - Farmer's Respite Tea Bushes can now be sheared by modded shears.
 - Raspberry Core's flower pot blocks are now tagged correctly.
+- Wildflowers are now compostable.

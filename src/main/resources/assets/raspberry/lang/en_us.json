@@ -224,10 +224,7 @@
   "emi.category.raspberry.anvil": "Runic Etching",
   "emi.category.raspberry.beacon_base": "Beacon Base Blocks",
   "emi.category.raspberry.beacon_payment": "Beacon Payments",
-  "emi.category.farmersdelight.cooking": "Cooking",
-  "emi.category.farmersdelight.cutting": "Cutting Board",
-  "emi.category.farmersdelight.decomposition": "Decomposition",
-  "emi.category.brewinandchewin.fermenting": "Fermenting",
+  "emi.category.raspberry.dripping": "Dripping",
 
   "emi.brewinandchewin.fermenting.hot": "Requires at least two heat sources placed against the Keg.",
   "emi.brewinandchewin.fermenting.warm": "Requires at least one heat source placed against the Keg.",

@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.registry;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -22,6 +23,17 @@ public class RaspberryTags {
     public static final TagKey<Item> ENCHANTABLE_HEARTFELT = createItemTag("enchantable/heartfelt");
     public static final TagKey<Item> ENCHANTABLE_SOULBOUND = createItemTag("enchantable/soulbound");
     public static final TagKey<Item> ENCHANTABLE_CAVALIER = createItemTag("enchantable/cavalier");
+    public static final TagKey<Item> ENCHANTABLE_VITALITY = createItemTag("enchantable/vitality");
+    public static final TagKey<Item> ENCHANTABLE_IMPALING = createItemTag("enchantable/impaling");
+    public static final TagKey<Item> ENCHANTABLE_TRUESHOT = createItemTag("enchantable/trueshot");
+    public static final TagKey<Item> ENCHANTABLE_HOMING = createItemTag("enchantable/homing");
+    public static final TagKey<Item> ENCHANTABLE_LAUNCH = createItemTag("enchantable/launch");
+
+    public static final TagKey<Item> PREVENT_SWEEPING = createItemTag("prevent_sweeping");
+
+    public static final TagKey<EntityType<?>> SENSITIVE_TO_BANE_OF_ARTHROPODS = createEntityTypeTag("sensitive/bane_of_arthropods");
+    public static final TagKey<EntityType<?>> SENSITIVE_TO_IMPALING = createEntityTypeTag("sensitive/impaling");
+    public static final TagKey<EntityType<?>> SENSITIVE_TO_SMITE = createEntityTypeTag("sensitive/smite");
 
     public static final TagKey<Item> FIREPROOF = createItemTag("fireproof");
 
@@ -75,5 +87,9 @@ public class RaspberryTags {
 
     private static TagKey<EntityType<?>> createEntityTypeTag(String id) {
         return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), locate(id));
+    }
+
+    private static TagKey<EntityType<?>> createEntityTypeTag(String namespace, String id) {
+        return TagKey.create(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), new ResourceLocation(namespace, id));
     }
 }

@@ -113,6 +113,7 @@ public final class RaspberryMod {
         }
 
         event.enqueueWork(RaspberryBlocks::addPottedPlants);
+        event.enqueueWork(RaspberryBlocks::addCompostables);
     }
 
     @SubscribeEvent

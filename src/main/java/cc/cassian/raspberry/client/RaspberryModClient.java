@@ -7,6 +7,7 @@ import cc.cassian.raspberry.client.entity.renderer.GrapplingHookRenderer;
 import cc.cassian.raspberry.client.entity.renderer.SwapArrowRenderer;
 import cc.cassian.raspberry.client.music.MusicHandler;
 import cc.cassian.raspberry.events.FlowerGarlandEvent;
+import cc.cassian.raspberry.events.WikiTooltipEvent;
 import cc.cassian.raspberry.registry.BlockSupplier;
 import cc.cassian.raspberry.client.registry.RaspberryItemProperties;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
@@ -18,7 +19,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.level.FoliageColor;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -26,10 +32,13 @@ import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = RaspberryMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RaspberryModClient {
@@ -38,6 +47,7 @@ public class RaspberryModClient {
         // Register config
         registerModsPage(context);
         MinecraftForge.EVENT_BUS.addListener(FlowerGarlandEvent::tick);
+        MinecraftForge.EVENT_BUS.addListener(WikiTooltipEvent::wikiTooltip);
     }
 
     @SubscribeEvent
@@ -56,16 +66,20 @@ public class RaspberryModClient {
                 return BiomeColors.getAverageFoliageColor(view, pos);
             }), block.getBlock());
         }
-
         event.register((state, view, pos, tintIndex) -> view != null && pos != null
                 ? BiomeColors.getAverageFoliageColor(view, pos)
                 : FoliageColor.getDefaultColor(), RaspberryBlocks.AVOCADO_HEDGE.getBlock());
+        event.register(((state, view, pos, tintIndex) -> {
+            if (view == null || pos == null) {
+                return GrassColor.get(0.5F, 1.0F);
+            }
+            return BiomeColors.getAverageGrassColor(view, pos);
+        }), RaspberryBlocks.SHRUB.getBlock(), RaspberryBlocks.POTTED_SHRUB.get());
     }
 
     @SubscribeEvent
-    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-        event.register((stack, tintIndex) -> FoliageColor.getDefaultColor(),
-                RaspberryBlocks.AVOCADO_HEDGE.getBlock());
+    public static void registerBlockColors(RegisterColorHandlersEvent.Item event){
+        event.register(((stack, view) -> GrassColor.get(0.5F, 1.0F)), RaspberryBlocks.SHRUB.getBlock());
     }
 
     @SubscribeEvent

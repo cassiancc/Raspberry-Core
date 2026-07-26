@@ -1,0 +1,17 @@
+{
+  "replace":false,
+  "values":[
+    "raspberry:molten_brass_bucket",
+    "raspberry:molten_bronze_bucket",
+    "raspberry:molten_copper_bucket",
+    "raspberry:molten_electrum_bucket",
+    "raspberry:molten_lead_bucket",
+    "raspberry:molten_gold_bucket",
+    "raspberry:molten_iron_bucket",
+    "raspberry:molten_necromium_bucket",
+    "raspberry:molten_netherite_bucket",
+    "raspberry:molten_rose_gold_bucket",
+    "raspberry:molten_silver_bucket",
+    "raspberry:molten_steel_bucket",
+    "raspberry:molten_zinc_bucket"
+  ]}

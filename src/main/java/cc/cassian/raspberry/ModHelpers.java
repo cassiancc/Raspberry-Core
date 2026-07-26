@@ -2,21 +2,31 @@ package cc.cassian.raspberry;
 
 import cc.cassian.raspberry.compat.QuarkCompat;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
+import cc.cassian.raspberry.registry.RaspberryTags;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.CandleHolderBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.apache.commons.lang3.text.WordUtils;
+import org.jetbrains.annotations.Nullable;
 import vectorwing.farmersdelight.common.block.CookingPotBlock;
 import vectorwing.farmersdelight.common.block.state.CookingPotSupport;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -115,4 +125,32 @@ public class ModHelpers {
         }
         else return (ModCompat.hasQuark() && QuarkCompat.isPaperLantern(downState));
     }
+
+    public static MobType getDamageBonus(@Nullable Enchantment enchantment, LivingEntity instance, Operation<MobType> original) {
+        if (enchantment == null) {
+			return original.call(instance);
+		} else if (enchantment.equals(Enchantments.BANE_OF_ARTHROPODS) && instance.getType().is(RaspberryTags.SENSITIVE_TO_BANE_OF_ARTHROPODS)) {
+            return MobType.ARTHROPOD;
+        } else if (enchantment.equals(Enchantments.IMPALING) && instance.getType().is(RaspberryTags.SENSITIVE_TO_IMPALING)) {
+            return MobType.WATER;
+        } else if (enchantment.equals(Enchantments.SMITE) && instance.getType().is(RaspberryTags.SENSITIVE_TO_SMITE)) {
+            return MobType.UNDEAD;
+        } else {
+            return original.call(instance);
+        }
+    }
+
+	public static Enchantment getDamageEnchantment(ItemStack mainHandItem) {
+        var enchantments = mainHandItem.getAllEnchantments();
+		for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+			Enchantment enchantment = entry.getKey();
+            if (enchantment instanceof TridentImpalerEnchantment) {
+                return enchantment;
+            }
+			else if (enchantment instanceof DamageEnchantment) {
+				return enchantment;
+			}
+		}
+		return null;
+	}
 }
