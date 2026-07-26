@@ -350,6 +350,7 @@ dependencies {
     modImplementation("maven.modrinth:necronomicon:${necronomicon_version}")
     modImplementation("maven.modrinth:sidekick:${sidekick_version}+${minecraft_version}-forge")
     modImplementation("maven.modrinth:modernfix:${modernfix_version}")
+    modImplementation("maven.modrinth:inventorio:${inventorio_version}")
 
     // MixinSquared
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.2.0"))

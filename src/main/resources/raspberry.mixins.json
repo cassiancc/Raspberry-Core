@@ -10,6 +10,7 @@
     "emi.RecipeScreenMixin",
     "etched.EtchedRecordItemMixin",
     "etched.StopListeningSoundMixin",
+    "inventorio.InventorioScreenMixin",
     "minecraft.AbstractSoundInstanceWrapper",
     "minecraft.FlameParticleProviderMixin",
     "minecraft.FlameParticleSmallFlameProviderMixin",

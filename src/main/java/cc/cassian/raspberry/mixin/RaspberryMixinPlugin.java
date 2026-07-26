@@ -94,6 +94,9 @@ public class RaspberryMixinPlugin implements IMixinConfigPlugin {
         else if (checkMixin("geckolib3", mixinClassName)){
             return false;
         }
+        else if (checkMixin("inventorio", mixinClassName)){
+            return false;
+        }
         else if (checkMixin("map_atlases", mixinClassName)){
             return false;
         }
