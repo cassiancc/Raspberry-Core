@@ -221,6 +221,17 @@ repositories {
             includeGroup("top.theillusivec4.curios")
         }
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "sisby maven"
+                url = "https://repo.sleeping.town/"
+            }
+        }
+        filter {
+            includeGroup("folk.sisby")
+        }
+    }
 }
 
 dependencies {
@@ -311,6 +322,7 @@ dependencies {
     modImplementation("curse.maven:map-atlases-forge-519759:6301932")
     modImplementation("maven.modrinth:mmmmmmmmmmmm:zAahRq2q")
     modImplementation("maven.modrinth:item-descriptions:$item_descriptions_version")
+    implementation(forgeRuntimeLibrary("folk.sisby:kaleido-config:0.3.3+1.3.2"))
 
     // EMI Compat for Enchantments
     modRuntimeOnly("dev.latvian.mods:kubejs-forge:$kubejs_version")

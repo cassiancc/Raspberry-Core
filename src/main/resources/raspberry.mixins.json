@@ -30,7 +30,6 @@
     "additional_enchantments.KeyHandlerMixin",
     "additional_enchantments.PlayerDataMixin",
     "additional_enchantments.ProjectileDataMixin",
-    "alloyed.BlockEntityTypeMixin",
     "allurement.EnchantmentMixin",
     "aquaculture.AquaFishingBobberEntityMixin",
     "aquaculture.AquaFishingRodItemMixin",

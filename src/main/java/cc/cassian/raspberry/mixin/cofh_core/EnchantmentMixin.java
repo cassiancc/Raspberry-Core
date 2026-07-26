@@ -1,7 +1,7 @@
 package cc.cassian.raspberry.mixin.cofh_core;
 
 import cc.cassian.raspberry.registry.RaspberryTags;
-import cofh.ensorcellation.enchantment.TrueshotEnchantment;
+import cofh.ensorcellation.common.enchantment.TrueshotEnchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;

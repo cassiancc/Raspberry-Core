@@ -79,11 +79,11 @@ public class WikiTooltipEvent {
 			var block = blockItem.getBlock();
 			BlockState state = block.defaultBlockState();
 			tooltip.add(Component.literal("Light level: " + state.getLightEmission()));
-			tooltip.add(Component.literal("Map color: " + MAP_COLORS.get(block.defaultMaterialColor().id)));
+			tooltip.add(Component.literal("Map color: " + MAP_COLORS.get(block.defaultMapColor().id)));
 			tooltip.add(Component.literal("Blast resistance: " + block.getExplosionResistance()));
 			tooltip.add(Component.literal("Hardness: " + block.defaultDestroyTime()));
-			tooltip.add(Component.literal("Note block instrument: " + NoteBlockInstrument.byState(state)));
-			tooltip.add(Component.literal("Flammable: " + state.getMaterial().isFlammable()));
+			tooltip.add(Component.literal("Note block instrument: " + state.instrument()));
+			tooltip.add(Component.literal("Ignited by lava: " + state.ignitedByLava()));
 		}
 	}
 }
