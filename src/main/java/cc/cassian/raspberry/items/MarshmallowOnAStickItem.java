@@ -1,5 +1,6 @@
 package cc.cassian.raspberry.items;
 
+import cc.cassian.raspberry.registry.RaspberryItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -30,28 +31,15 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class MarshmallowOnAStickItem extends Item {
-	private static final FoodProperties RAW_PROPERTIES = new FoodProperties.Builder().nutrition(2).alwaysEat().build();
-	private static final FoodProperties COOKED_PROPERTIES = new FoodProperties.Builder().nutrition(4).alwaysEat().build();
-	private static final FoodProperties CHARRED_PROPERTIES = new FoodProperties.Builder().nutrition(1).alwaysEat().build();
+	public static final FoodProperties RAW_PROPERTIES = new FoodProperties.Builder().nutrition(2).alwaysEat().build();
+	public static final FoodProperties COOKED_PROPERTIES = new FoodProperties.Builder().nutrition(4).alwaysEat().build();
+	public static final FoodProperties CHARRED_PROPERTIES = new FoodProperties.Builder().nutrition(1).alwaysEat().build();
 	public static final int COOKING_TIME = 60;
-	public static final String COOK_TIME_HANDHELD = "CookTimeHandheld";
-	public static final String COOKING = "Cooking";
+	private static final String COOK_TIME_HANDHELD = "CookTimeHandheld";
+	private static final String COOKING = "Cooking";
 
 	public MarshmallowOnAStickItem(Properties properties) {
 		super(properties);
-	}
-
-	@Override
-	public Component getName(ItemStack stack) {
-		if (stack.hasTag()) {
-			if (stack.getTag().contains("charred")) {
-				return Component.translatable("item.raspberry.charred_marshmallow_on_a_stick");
-			}
-			else if (stack.getTag().contains("cooked")) {
-				return Component.translatable("item.raspberry.cooked_marshmallow_on_a_stick");
-			}
-		}
-		return super.getName(stack);
 	}
 
 	private static boolean isPlayerNearHeatSource(Player player, LevelReader level) {
@@ -91,7 +79,7 @@ public class MarshmallowOnAStickItem extends Item {
 				return InteractionResultHolder.pass(cookingStack);
 			}
 
-			Optional<ItemStack> recipe = getCookingRecipe(cookingStack, level);
+			Optional<ItemStack> recipe = getCookingRecipe(cookingStack);
 			if (recipe.isPresent()) {
 				ItemStack cookingStackCopy = cookingStack.copy();
 				ItemStack cookingStackUnit = cookingStackCopy.split(1);
@@ -102,16 +90,10 @@ public class MarshmallowOnAStickItem extends Item {
 			}
 			return InteractionResultHolder.pass(cookingStack);
 		} else {
-			if (!cooking) {
-				return super.use(level, player, hand);
-			}
+			cookingStack.removeTagKey(COOKING);
+			cookingStack.removeTagKey(COOK_TIME_HANDHELD);
+			return super.use(level, player, hand);
 		}
-		return InteractionResultHolder.pass(cookingStack);
-	}
-
-	@Override
-	public boolean isEdible() {
-		return true;
 	}
 
 	public UseAnim getUseAnimation(ItemStack itemStack) {
@@ -135,7 +117,7 @@ public class MarshmallowOnAStickItem extends Item {
 
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
-		if (entity instanceof Player player) {
+		if (entity instanceof Player) {
 			CompoundTag tag = stack.getOrCreateTag();
 			if (tag.contains(COOKING)) {
 				tag.remove(COOKING);
@@ -149,15 +131,20 @@ public class MarshmallowOnAStickItem extends Item {
 		if (entity instanceof Player player) {
 			CompoundTag tag = stack.getOrCreateTag();
 			if (tag.contains(COOKING)) {
-				Optional<ItemStack> cookingRecipe = getCookingRecipe(stack, level);
+				Optional<ItemStack> cookingRecipe = getCookingRecipe(stack);
 				cookingRecipe.ifPresent((resultStack) -> {
-
-					stack.setCount(stack.getCount() - 1);
-
 					resultStack.setCount(1);
 
-					if (!player.getInventory().add(resultStack)) {
-						player.drop(resultStack, false);
+					if (stack.getCount()==1 && entity.getItemInHand(InteractionHand.MAIN_HAND).equals(stack)) {
+						entity.setItemInHand(InteractionHand.MAIN_HAND, resultStack);
+					} else if (stack.getCount()==1 && entity.getItemInHand(InteractionHand.OFF_HAND).equals(stack)) {
+						entity.setItemInHand(InteractionHand.OFF_HAND, resultStack);
+					} else {
+						stack.setCount(stack.getCount() - 1);
+
+						if (!player.getInventory().add(resultStack)) {
+							player.drop(resultStack, false);
+						}
 					}
 
 					if (player instanceof ServerPlayer) {
@@ -175,36 +162,23 @@ public class MarshmallowOnAStickItem extends Item {
 		return stack;
 	}
 
-	public static Optional<ItemStack> getCookingRecipe(final ItemStack stack, Level level) {
+	public static Optional<ItemStack> getCookingRecipe(final ItemStack stack) {
 		if (stack.isEmpty()) return Optional.empty();
-		var newStack = stack.copy();
-		newStack.setCount(1);
+
 		CompoundTag compoundTag = new CompoundTag();
-		if (newStack.hasTag()) {
-			compoundTag = newStack.getTag();
-		}
-		if (!compoundTag.contains("cooked")) {
-			compoundTag.putBoolean("cooked", true);
-		} else if (!compoundTag.contains("charred")) {
-			compoundTag.putBoolean("charred", true);
-		}
-		else return Optional.of(newStack);
-
-		newStack.setTag(compoundTag);
-		return Optional.of(newStack);
-	}
-
-	@Override
-	public @Nullable FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
 		if (stack.hasTag()) {
-			if (stack.getTag().contains("charred")) {
-				return CHARRED_PROPERTIES;
-			}
-			else if (stack.getTag().contains("cooked")) {
-				return COOKED_PROPERTIES;
-			}
+			compoundTag = stack.getTag();
 		}
-		return RAW_PROPERTIES;
+
+		Item newItem;
+		if (stack.is(RaspberryItems.MARSHMALLOW_ON_A_STICK.get())) {
+			newItem = RaspberryItems.CARAMELIZED_MARSHMALLOW_ON_A_STICK.get();
+		}
+		else if (stack.is(RaspberryItems.CARAMELIZED_MARSHMALLOW_ON_A_STICK.get())) {
+			newItem = RaspberryItems.CHARRED_MARSHMALLOW_ON_A_STICK.get();
+		}
+		else return Optional.empty();
+		return Optional.of(new ItemStack(newItem, 1, compoundTag));
 	}
 
 	public static boolean canCookOrIsCooking(LivingEntity livingEntity, ItemStack stack) {
@@ -215,10 +189,12 @@ public class MarshmallowOnAStickItem extends Item {
 	}
 
 	public static boolean canCookOrIsCooking(ItemStack stack) {
+		if (stack.is(RaspberryItems.CHARRED_MARSHMALLOW_ON_A_STICK.get())) {
+			return false;
+		}
 		if (stack.hasTag()) {
 			return stack.getTag().contains(COOKING);
 		}
-
 		return false;
 	}
 

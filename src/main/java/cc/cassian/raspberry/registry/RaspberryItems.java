@@ -36,7 +36,9 @@ public class RaspberryItems {
     public static Supplier<Item> MOODY_WILDFLOWER_GARLAND = registerItem("moody_wildflower_garland", () -> new FlowerGarlandItem(RaspberryBlocks.MOODY_WILDFLOWER_GARLAND.get(), new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
 
     public static Supplier<Item> MARSHMALLOW = registerItem("marshmallow", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).build()).tab(CreativeModeTab.TAB_FOOD)));
-    public static Supplier<Item> MARSHMALLOW_ON_A_STICK = registerItem("marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static Supplier<Item> MARSHMALLOW_ON_A_STICK = registerItem("marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.RAW_PROPERTIES).tab(CreativeModeTab.TAB_FOOD)));
+    public static Supplier<Item> CARAMELIZED_MARSHMALLOW_ON_A_STICK = registerItem("caramelized_marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.COOKED_PROPERTIES).tab(CreativeModeTab.TAB_FOOD)));
+    public static Supplier<Item> CHARRED_MARSHMALLOW_ON_A_STICK = registerItem("charred_marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.CHARRED_PROPERTIES).tab(CreativeModeTab.TAB_FOOD)));
 
     public static RegistryObject<Item> registerItem(String itemID, Supplier<Item> item) {
         return RaspberryItems.ITEMS.register(itemID, item);

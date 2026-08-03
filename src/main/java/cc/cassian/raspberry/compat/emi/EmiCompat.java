@@ -5,19 +5,31 @@ import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.compat.BrewinAndChewinCompat;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.events.DripstoneEvent;
+import cc.cassian.raspberry.items.MarshmallowOnAStickItem;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
+import cc.cassian.raspberry.registry.RaspberryItems;
+import dev.emi.emi.EmiPort;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
+import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.widget.WidgetHolder;
+import dev.emi.emi.recipe.EmiCookingRecipe;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.Collections;
+import java.util.List;
 
 @EmiEntrypoint
 public class EmiCompat implements EmiPlugin {
@@ -62,6 +74,15 @@ public class EmiCompat implements EmiPlugin {
             emiRegistry.addRecipe(new EmiDripstoneRecipe(DripstoneEvent.DIAMOND));
             emiRegistry.addRecipe(new EmiDripstoneRecipe(DripstoneEvent.AMETHYST));
         }
+
+        addMarshmallowOnAStickRecipe(emiRegistry, RaspberryItems.MARSHMALLOW_ON_A_STICK.get(), RaspberryItems.CARAMELIZED_MARSHMALLOW_ON_A_STICK.get());
+        addMarshmallowOnAStickRecipe(emiRegistry, RaspberryItems.CARAMELIZED_MARSHMALLOW_ON_A_STICK.get(), RaspberryItems.CHARRED_MARSHMALLOW_ON_A_STICK.get());
     }
 
+    private static void addMarshmallowOnAStickRecipe(EmiRegistry emiRegistry, Item input, Item output) {
+        int cookingTime = MarshmallowOnAStickItem.COOKING_TIME;
+        CampfireCookingRecipe fakeRecipe = new CampfireCookingRecipe(RaspberryMod.locate("/" + output.builtInRegistryHolder().key().location().getPath()), "", Ingredient.of(input), output.getDefaultInstance(), 0, cookingTime);
+        EmiCookingRecipe emiRecipe = new EmiMarshmallowCookingRecipe(fakeRecipe, cookingTime, input, output);
+        emiRegistry.addRecipe(emiRecipe);
+    }
 }
