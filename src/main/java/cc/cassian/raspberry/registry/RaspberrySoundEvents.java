@@ -1,8 +1,6 @@
 package cc.cassian.raspberry.registry;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -28,6 +26,8 @@ public class RaspberrySoundEvents {
 
     public static final RegistryObject<SoundEvent> BLOCK_CYCLE = register("event.raspberry.block_cycle");
     public static final RegistryObject<SoundEvent> WEATHER_CYCLE = register("event.raspberry.weather_cycle");
+
+    public static final RegistryObject<SoundEvent> MARSHMALLOW_SIZZLE = register("block.marshmallow.sizzle");
 
     private static RegistryObject<SoundEvent> register(String key) {
         return SOUNDS.register(key, ()-> new SoundEvent(locate(key)));

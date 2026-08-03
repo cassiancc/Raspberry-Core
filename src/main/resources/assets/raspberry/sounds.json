@@ -87,5 +87,14 @@
       "raspberry:equip_copper6"
     ],
     "subtitle": "subtitles.item.armor.equip_copper"
+  },
+  "block.marshmallow.sizzle": {
+    "subtitle": "raspberry.subtitles.marshmallow.sizzle",
+    "sounds": [
+      {
+        "name": "block.furnace.fire_crackle",
+        "type": "event"
+      }
+    ]
   }
 }

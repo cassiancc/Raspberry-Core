@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.items;
 
 import cc.cassian.raspberry.registry.RaspberryItems;
+import cc.cassian.raspberry.registry.RaspberrySoundEvents;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import vectorwing.farmersdelight.common.block.SkilletBlock;
-import vectorwing.farmersdelight.common.registry.ModSounds;
 import vectorwing.farmersdelight.common.tag.ModTags;
 
 import java.util.List;
@@ -97,7 +97,7 @@ public class MarshmallowOnAStickItem extends Item {
 	}
 
 	public UseAnim getUseAnimation(ItemStack itemStack) {
-		if (canCookOrIsCooking(itemStack)) return UseAnim.NONE;
+		if (canCookOrIsCooking(itemStack)) return UseAnim.SPEAR;
 		if (itemStack.getItem().isEdible()) return UseAnim.EAT;
 		return UseAnim.NONE;
 	}
@@ -110,7 +110,7 @@ public class MarshmallowOnAStickItem extends Item {
 			double y = pos.y();
 			double z = pos.z() + (double)0.5F;
 			if (level.random.nextInt(50) == 0) {
-				level.playLocalSound(x, y, z, ModSounds.BLOCK_SKILLET_SIZZLE.get(), SoundSource.BLOCKS, 0.4F, level.random.nextFloat() * 0.2F + 0.9F, false);
+				level.playLocalSound(x, y, z, RaspberrySoundEvents.MARSHMALLOW_SIZZLE.get(), SoundSource.BLOCKS, 0.4F, level.random.nextFloat() * 0.2F + 0.9F, false);
 			}
 		}
 	}
