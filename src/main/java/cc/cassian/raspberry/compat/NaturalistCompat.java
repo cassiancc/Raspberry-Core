@@ -1,7 +1,6 @@
 package cc.cassian.raspberry.compat;
 
 import cc.cassian.raspberry.config.ModConfig;
-import cc.cassian.raspberry.registry.RaspberryItems;
 import com.starfish_studios.naturalist.Naturalist;
 import com.starfish_studios.naturalist.item.forge.CaughtMobItem;
 import com.starfish_studios.naturalist.registry.NaturalistEntityTypes;
@@ -20,7 +19,7 @@ public class NaturalistCompat {
         return false;
     }
 
-    public static Supplier<Item> registerFireflyItem() {
-        return RaspberryItems.registerItem("firefly", () -> new CaughtMobItem(NaturalistEntityTypes.FIREFLY, ()-> Fluids.EMPTY, NaturalistSoundEvents.SNAIL_FORWARD, new Item.Properties().tab(Naturalist.TAB)));
+    public static Supplier<Item> getFireflyItem() {
+        return () -> new CaughtMobItem(NaturalistEntityTypes.FIREFLY, ()-> Fluids.EMPTY, NaturalistSoundEvents.SNAIL_FORWARD, new Item.Properties().tab(Naturalist.TAB));
     }
 }

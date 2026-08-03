@@ -3,8 +3,6 @@ package cc.cassian.raspberry.mixin.minecraft;
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.compat.NaturalistCompat;
 import cc.cassian.raspberry.compat.SpelunkeryCompat;
-import cc.cassian.raspberry.config.ModConfig;
-import com.starfish_studios.naturalist.Naturalist;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
