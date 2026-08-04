@@ -27,7 +27,9 @@ public class RaspberrySoundEvents {
     public static final RegistryObject<SoundEvent> BLOCK_CYCLE = register("event.raspberry.block_cycle");
     public static final RegistryObject<SoundEvent> WEATHER_CYCLE = register("event.raspberry.weather_cycle");
 
-    public static final RegistryObject<SoundEvent> MARSHMALLOW_SIZZLE = register("block.marshmallow.sizzle");
+    public static final RegistryObject<SoundEvent> MARSHMALLOW_SIZZLE = register("item.marshmallow.sizzle");
+    public static final RegistryObject<SoundEvent> MARSHMALLOW_CARAMELIZE = register("item.marshmallow.caramelize");
+    public static final RegistryObject<SoundEvent> MARSHMALLOW_CHAR = register("item.marshmallow.char");
 
     private static RegistryObject<SoundEvent> register(String key) {
         return SOUNDS.register(key, ()-> new SoundEvent(locate(key)));

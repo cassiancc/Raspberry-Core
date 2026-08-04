@@ -2,14 +2,21 @@ package cc.cassian.raspberry.items;
 
 import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+import com.molybdenum.alloyed.common.registry.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -22,6 +29,9 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 import vectorwing.farmersdelight.common.block.SkilletBlock;
 import vectorwing.farmersdelight.common.tag.ModTags;
@@ -29,6 +39,7 @@ import vectorwing.farmersdelight.common.tag.ModTags;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class MarshmallowOnAStickItem extends Item {
 	public static final FoodProperties RAW_PROPERTIES = new FoodProperties.Builder().nutrition(2).alwaysEat().build();
@@ -97,22 +108,43 @@ public class MarshmallowOnAStickItem extends Item {
 	}
 
 	public UseAnim getUseAnimation(ItemStack itemStack) {
-		if (canCookOrIsCooking(itemStack)) return UseAnim.SPEAR;
+		if (canCookOrIsCooking(itemStack)) return UseAnim.NONE;
 		if (itemStack.getItem().isEdible()) return UseAnim.EAT;
 		return UseAnim.NONE;
 	}
 
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+		super.initializeClient(consumer);
+		consumer.accept(new IClientItemExtensions() {
+			@Override
+			public boolean applyForgeHandTransform(PoseStack matrixStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTicks, float equipProcess, float swingProcess) {
+				if (itemInHand.hasTag() && itemInHand.getTag().contains(COOKING)) {
+					int i = arm == HumanoidArm.RIGHT ? 1 : -1;
+					matrixStack.translate((float)i * 0.56F, -0.52F + equipProcess * -0.6F, -0.72F);
+					matrixStack.translate(i*-.5, 0.2, -0.05);
+					matrixStack.mulPose(Vector3f.XP.rotationDegrees(-55.0F));
+					return true;
+				}
+				return false;
+			}
+		});
+	}
+
 	@Override
 	public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int count) {
-		if (entity instanceof Player player) {
-			Vec3 pos = player.position();
-			double x = pos.x() + (double)0.5F;
-			double y = pos.y();
-			double z = pos.z() + (double)0.5F;
-			if (level.random.nextInt(50) == 0) {
-				level.playLocalSound(x, y, z, RaspberrySoundEvents.MARSHMALLOW_SIZZLE.get(), SoundSource.BLOCKS, 0.4F, level.random.nextFloat() * 0.2F + 0.9F, false);
-			}
+		if (entity instanceof Player player && level.random.nextInt(50) == 0) {
+			playLocalSound(level, player, RaspberrySoundEvents.MARSHMALLOW_SIZZLE.get());
 		}
+	}
+
+	private static void playLocalSound(Level level, Player player, SoundEvent sound) {
+		Vec3 pos = player.position();
+		double x = pos.x() + (double) 0.5F;
+		double y = pos.y();
+		double z = pos.z() + (double) 0.5F;
+		level.playLocalSound(x, y, z, sound, SoundSource.BLOCKS, 0.4F, level.random.nextFloat() * 0.2F + 0.9F, false);
 	}
 
 	@Override
@@ -134,6 +166,13 @@ public class MarshmallowOnAStickItem extends Item {
 				Optional<ItemStack> cookingRecipe = getCookingRecipe(stack);
 				cookingRecipe.ifPresent((resultStack) -> {
 					resultStack.setCount(1);
+
+					if (resultStack.is(RaspberryItems.CHARRED_MARSHMALLOW_ON_A_STICK.get())) {
+						playLocalSound(level, player, RaspberrySoundEvents.MARSHMALLOW_CHAR.get());
+					}
+					else if (resultStack.is(RaspberryItems.CARAMELIZED_MARSHMALLOW_ON_A_STICK.get())) {
+						playLocalSound(level, player, RaspberrySoundEvents.MARSHMALLOW_CARAMELIZE.get());
+					}
 
 					if (stack.getCount()==1 && entity.getItemInHand(InteractionHand.MAIN_HAND).equals(stack)) {
 						entity.setItemInHand(InteractionHand.MAIN_HAND, resultStack);

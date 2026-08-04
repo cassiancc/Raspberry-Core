@@ -96,6 +96,8 @@
   "item.raspberry.caramelized_marshmallow_on_a_stick": "Caramelized Marshmallow on a Stick",
   "emi.raspberry.marshmallow_on_a_stick.help": "Hold over a Campfire to cook.",
   "raspberry.subtitles.marshmallow.sizzle": "Marshmallow melts",
+  "raspberry.subtitles.marshmallow.char": "Marshmallow chars",
+  "raspberry.subtitles.marshmallow.caramelize": "Marshmallow caramelizes",
 
   "block.raspberry.molten_brass": "Molten Brass",
   "block.raspberry.molten_bronze": "Molten Bronze",
