@@ -20,7 +20,6 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -38,7 +37,7 @@ public class MarshmallowOnAStickItem extends Item {
 	public static final FoodProperties RAW_PROPERTIES = new FoodProperties.Builder().nutrition(2).alwaysEat().build();
 	public static final FoodProperties COOKED_PROPERTIES = new FoodProperties.Builder().nutrition(4).alwaysEat().build();
 	public static final FoodProperties CHARRED_PROPERTIES = new FoodProperties.Builder().nutrition(1).alwaysEat().build();
-	public static final int COOKING_TIME = 60;
+	public static final int COOKING_TIME = 100;
 	private static final String COOK_TIME_HANDHELD = "CookTimeHandheld";
 
 	public MarshmallowOnAStickItem(Properties properties) {
@@ -64,7 +63,7 @@ public class MarshmallowOnAStickItem extends Item {
 	@Override
 	public int getUseDuration(ItemStack stack) {
 		if (canCookOrIsCooking(stack)) {
-			int fireAspectLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, stack);
+			int fireAspectLevel = stack.getEnchantmentLevel(Enchantments.FIRE_ASPECT);
 			int cookingTime = stack.getOrCreateTag().getInt(COOK_TIME_HANDHELD);
 			return SkilletBlock.getSkilletCookingTime(cookingTime, fireAspectLevel);
 		} else {
@@ -112,7 +111,10 @@ public class MarshmallowOnAStickItem extends Item {
 					int i = arm == HumanoidArm.RIGHT ? 1 : -1;
 					matrixStack.translate((float)i * 0.56F, -0.52F + equipProcess * -0.6F, -0.72F);
 					matrixStack.translate(i*-.5, 0.2, -0.05);
-					matrixStack.mulPose(Vector3f.XP.rotationDegrees(-55.0F));
+					matrixStack.mulPose(Vector3f.YP.rotationDegrees(2));
+					matrixStack.mulPose(Vector3f.XP.rotationDegrees(185));
+					matrixStack.mulPose(Vector3f.ZP.rotationDegrees(165));
+					matrixStack.translate(-.25, 0 ,0);
 					return true;
 				}
 				return false;
