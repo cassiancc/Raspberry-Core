@@ -4,13 +4,10 @@ import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import com.molybdenum.alloyed.common.registry.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -32,12 +28,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import org.jetbrains.annotations.Nullable;
 import vectorwing.farmersdelight.common.block.SkilletBlock;
 import vectorwing.farmersdelight.common.tag.ModTags;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -47,7 +40,6 @@ public class MarshmallowOnAStickItem extends Item {
 	public static final FoodProperties CHARRED_PROPERTIES = new FoodProperties.Builder().nutrition(1).alwaysEat().build();
 	public static final int COOKING_TIME = 60;
 	private static final String COOK_TIME_HANDHELD = "CookTimeHandheld";
-	private static final String COOKING = "Cooking";
 
 	public MarshmallowOnAStickItem(Properties properties) {
 		super(properties);
@@ -83,7 +75,7 @@ public class MarshmallowOnAStickItem extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack cookingStack = player.getItemInHand(hand);
-		boolean cooking = cookingStack.getOrCreateTag().contains(COOKING);
+		boolean cooking = cookingStack.getOrCreateTag().contains(COOK_TIME_HANDHELD);
 		if (isPlayerNearHeatSource(player, level)) {
 			if (cooking) {
 				player.startUsingItem(hand);
@@ -92,16 +84,12 @@ public class MarshmallowOnAStickItem extends Item {
 
 			Optional<ItemStack> recipe = getCookingRecipe(cookingStack);
 			if (recipe.isPresent()) {
-				ItemStack cookingStackCopy = cookingStack.copy();
-				ItemStack cookingStackUnit = cookingStackCopy.split(1);
-				cookingStack.getOrCreateTag().put(COOKING, cookingStackUnit.serializeNBT());
 				cookingStack.getOrCreateTag().putInt(COOK_TIME_HANDHELD, COOKING_TIME);
 				player.startUsingItem(hand);
 				return InteractionResultHolder.success(cookingStack);
 			}
 			return InteractionResultHolder.pass(cookingStack);
 		} else {
-			cookingStack.removeTagKey(COOKING);
 			cookingStack.removeTagKey(COOK_TIME_HANDHELD);
 			return super.use(level, player, hand);
 		}
@@ -120,7 +108,7 @@ public class MarshmallowOnAStickItem extends Item {
 		consumer.accept(new IClientItemExtensions() {
 			@Override
 			public boolean applyForgeHandTransform(PoseStack matrixStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTicks, float equipProcess, float swingProcess) {
-				if (itemInHand.hasTag() && itemInHand.getTag().contains(COOKING)) {
+				if (itemInHand.hasTag() && itemInHand.getTag().contains(COOK_TIME_HANDHELD)) {
 					int i = arm == HumanoidArm.RIGHT ? 1 : -1;
 					matrixStack.translate((float)i * 0.56F, -0.52F + equipProcess * -0.6F, -0.72F);
 					matrixStack.translate(i*-.5, 0.2, -0.05);
@@ -151,8 +139,7 @@ public class MarshmallowOnAStickItem extends Item {
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
 		if (entity instanceof Player) {
 			CompoundTag tag = stack.getOrCreateTag();
-			if (tag.contains(COOKING)) {
-				tag.remove(COOKING);
+			if (tag.contains(COOK_TIME_HANDHELD)) {
 				tag.remove(COOK_TIME_HANDHELD);
 			}
 		}
@@ -162,7 +149,7 @@ public class MarshmallowOnAStickItem extends Item {
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
 		if (entity instanceof Player player) {
 			CompoundTag tag = stack.getOrCreateTag();
-			if (tag.contains(COOKING)) {
+			if (tag.contains(COOK_TIME_HANDHELD)) {
 				Optional<ItemStack> cookingRecipe = getCookingRecipe(stack);
 				cookingRecipe.ifPresent((resultStack) -> {
 					resultStack.setCount(1);
@@ -191,7 +178,6 @@ public class MarshmallowOnAStickItem extends Item {
 					}
 
 				});
-				tag.remove(COOKING);
 				tag.remove(COOK_TIME_HANDHELD);
 			} else {
 				return super.finishUsingItem(stack, level, entity);
@@ -232,16 +218,8 @@ public class MarshmallowOnAStickItem extends Item {
 			return false;
 		}
 		if (stack.hasTag()) {
-			return stack.getTag().contains(COOKING);
+			return stack.getTag().contains(COOK_TIME_HANDHELD);
 		}
 		return false;
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
-		var tag = Objects.requireNonNullElse(stack.getTag(), new CompoundTag());
-		if (tag.contains(COOKING)) {
-			tooltipComponents.add(Component.literal("Cooking"));
-		}
 	}
 }
