@@ -22,7 +22,7 @@ public class RaspberryItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     public static Supplier<Item> ASHBALL = registerItem("ashball", () -> new AshballItem(new Item.Properties()));
-    public static Supplier<Item> FIREFLY = RaspberryItems.registerItem("firefly", ModCompat.NATURALIST ? NaturalistCompat.getFireflyItem() : () -> new Item(new Item.Properties()));
+    public static Supplier<Item> FIREFLY = RaspberryItems.registerItem("firefly", ModCompat.hasNaturalist() ? NaturalistCompat.getFireflyItem() : () -> new Item(new Item.Properties()));
 
     public static Supplier<Item> ROSE_GOLD_BOMB = registerItem("rose_gold_bomb", () -> new RoseGoldBombItem(new Item.Properties()));
     public static Supplier<Item> SWAP_ARROW = registerItem("swap_arrow", () -> new SwapArrowItem(new Item.Properties()));

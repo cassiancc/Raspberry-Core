@@ -3,7 +3,7 @@ package cc.cassian.raspberry.items;
 import cc.cassian.raspberry.registry.RaspberryItems;
 import cc.cassian.raspberry.registry.RaspberrySoundEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -51,7 +51,7 @@ public class MarshmallowOnAStickItem extends Item {
 			BlockPos pos = player.blockPosition();
 
 			for(BlockPos nearbyPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
-				if (level.getBlockState(nearbyPos).is(ModTags.HEAT_SOURCES)) {
+				if (level.getBlockState(nearbyPos).is(ModTags.Blocks.HEAT_SOURCES)) {
 					return true;
 				}
 			}
@@ -111,9 +111,9 @@ public class MarshmallowOnAStickItem extends Item {
 					int i = arm == HumanoidArm.RIGHT ? 1 : -1;
 					matrixStack.translate((float)i * 0.56F, -0.52F + equipProcess * -0.6F, -0.72F);
 					matrixStack.translate(i*-.5, 0.2, -0.05);
-					matrixStack.mulPose(Vector3f.YP.rotationDegrees(2));
-					matrixStack.mulPose(Vector3f.XP.rotationDegrees(185));
-					matrixStack.mulPose(Vector3f.ZP.rotationDegrees(165));
+					matrixStack.mulPose(Axis.YP.rotationDegrees(2));
+					matrixStack.mulPose(Axis.XP.rotationDegrees(185));
+					matrixStack.mulPose(Axis.ZP.rotationDegrees(165));
 					matrixStack.translate(-.25, 0 ,0);
 					return true;
 				}
@@ -210,7 +210,7 @@ public class MarshmallowOnAStickItem extends Item {
 
 	public static boolean canCookOrIsCooking(LivingEntity livingEntity, ItemStack stack) {
 		if (livingEntity instanceof Player player) {
-			return isPlayerNearHeatSource(player, player.level);
+			return isPlayerNearHeatSource(player, player.level());
 		}
 		return canCookOrIsCooking(stack);
 	}

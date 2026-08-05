@@ -30,6 +30,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
@@ -102,7 +103,7 @@ public class EmiCompat implements EmiPlugin {
 
     private static void addMarshmallowOnAStickRecipe(EmiRegistry emiRegistry, Item input, Item output) {
         int cookingTime = MarshmallowOnAStickItem.COOKING_TIME;
-        CampfireCookingRecipe fakeRecipe = new CampfireCookingRecipe(RaspberryMod.locate("/" + output.builtInRegistryHolder().key().location().getPath()), "", Ingredient.of(input), output.getDefaultInstance(), 0, cookingTime);
+        CampfireCookingRecipe fakeRecipe = new CampfireCookingRecipe(RaspberryMod.locate("/" + output.builtInRegistryHolder().key().location().getPath()), "", CookingBookCategory.FOOD, Ingredient.of(input), output.getDefaultInstance(), 0, cookingTime);
         EmiCookingRecipe emiRecipe = new EmiMarshmallowCookingRecipe(fakeRecipe, cookingTime, input, output);
         emiRegistry.addRecipe(emiRecipe);
     }
