@@ -100,6 +100,15 @@
   "item.raspberry.molten_steel_bucket": "Molten Steel Bucket",
   "item.raspberry.molten_zinc_bucket": "Molten Zinc Bucket",
 
+  "item.raspberry.marshmallow": "Marshmallow",
+  "item.raspberry.marshmallow_on_a_stick": "Marshmallow on a Stick",
+  "item.raspberry.charred_marshmallow_on_a_stick": "Charred Marshmallow on a Stick",
+  "item.raspberry.caramelized_marshmallow_on_a_stick": "Caramelized Marshmallow on a Stick",
+  "emi.raspberry.marshmallow_on_a_stick.help": "Hold over a Campfire to cook.",
+  "raspberry.subtitles.marshmallow.sizzle": "Marshmallow melts",
+  "raspberry.subtitles.marshmallow.char": "Marshmallow chars",
+  "raspberry.subtitles.marshmallow.caramelize": "Marshmallow caramelizes",
+
   "block.raspberry.molten_brass": "Molten Brass",
   "block.raspberry.molten_bronze": "Molten Bronze",
   "block.raspberry.molten_copper": "Molten Copper",

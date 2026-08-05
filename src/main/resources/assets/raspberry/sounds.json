@@ -87,5 +87,32 @@
       "raspberry:equip_copper6"
     ],
     "subtitle": "subtitles.item.armor.equip_copper"
+  },
+  "item.marshmallow.sizzle": {
+    "subtitle": "raspberry.subtitles.marshmallow.sizzle",
+    "sounds": [
+      {
+        "name": "block.furnace.fire_crackle",
+        "type": "event"
+      }
+    ]
+  },
+  "item.marshmallow.caramelize": {
+    "subtitle": "raspberry.subtitles.marshmallow.caramelize",
+    "sounds": [
+      {
+        "name": "entity.generic.extinguish_fire",
+        "type": "event"
+      }
+    ]
+  },
+  "item.marshmallow.char": {
+    "subtitle": "raspberry.subtitles.marshmallow.char",
+    "sounds": [
+      {
+        "name": "entity.blaze.shoot",
+        "type": "event"
+      }
+    ]
   }
 }

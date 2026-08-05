@@ -5,10 +5,10 @@ import cc.cassian.raspberry.compat.NaturalistCompat;
 import cc.cassian.raspberry.items.*;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import net.minecraft.ChatFormatting;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -22,15 +22,7 @@ public class RaspberryItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     public static Supplier<Item> ASHBALL = registerItem("ashball", () -> new AshballItem(new Item.Properties()));
-    public static Supplier<Item> FIREFLY = registerFireflyItem();
-
-    private static Supplier<Item> registerFireflyItem() {
-        if (ModCompat.hasNaturalist()) {
-            return NaturalistCompat.registerFireflyItem();
-        } else {
-            return RaspberryItems.registerItem("firefly", () -> new Item(new Item.Properties()));
-        }
-    }
+    public static Supplier<Item> FIREFLY = RaspberryItems.registerItem("firefly", ModCompat.NATURALIST ? NaturalistCompat.getFireflyItem() : () -> new Item(new Item.Properties()));
 
     public static Supplier<Item> ROSE_GOLD_BOMB = registerItem("rose_gold_bomb", () -> new RoseGoldBombItem(new Item.Properties()));
     public static Supplier<Item> SWAP_ARROW = registerItem("swap_arrow", () -> new SwapArrowItem(new Item.Properties()));
@@ -44,6 +36,11 @@ public class RaspberryItems {
     public static Supplier<Item> HOPEFUL_WILDFLOWER_GARLAND = registerItem("hopeful_wildflower_garland", () -> new FlowerGarlandItem(RaspberryBlocks.HOPEFUL_WILDFLOWER_GARLAND.get(), new Item.Properties()));
     public static Supplier<Item> PLAYFUL_WILDFLOWER_GARLAND = registerItem("playful_wildflower_garland", () -> new FlowerGarlandItem(RaspberryBlocks.PLAYFUL_WILDFLOWER_GARLAND.get(), new Item.Properties()));
     public static Supplier<Item> MOODY_WILDFLOWER_GARLAND = registerItem("moody_wildflower_garland", () -> new FlowerGarlandItem(RaspberryBlocks.MOODY_WILDFLOWER_GARLAND.get(), new Item.Properties()));
+
+    public static Supplier<Item> MARSHMALLOW = registerItem("marshmallow", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).build())));
+    public static Supplier<Item> MARSHMALLOW_ON_A_STICK = registerItem("marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.RAW_PROPERTIES)));
+    public static Supplier<Item> CARAMELIZED_MARSHMALLOW_ON_A_STICK = registerItem("caramelized_marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.COOKED_PROPERTIES)));
+    public static Supplier<Item> CHARRED_MARSHMALLOW_ON_A_STICK = registerItem("charred_marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.CHARRED_PROPERTIES)));
 
     public static RegistryObject<Item> registerItem(String itemID, Supplier<Item> item) {
         return RaspberryItems.ITEMS.register(itemID, item);
