@@ -99,7 +99,7 @@ public class RaspberryFluids {
 
 	private static ForgeFlowingFluid.Properties registerProperties(String name, RegistryObject<FluidType> moltenFluidType, RegistryObject<FlowingFluid> source, RegistryObject<FlowingFluid> flowing) {
 		Supplier<? extends Item> bucket = bucket(name, source);
-		RaspberryBlocks.registerBlock("%s_cauldron".formatted(name), ()-> new MoltenCauldronBlock(bucket, BlockBehaviour.Properties.copy(Blocks.LAVA_CAULDRON)));
+		RaspberryBlocks.registerBlockWithoutItem("%s_cauldron".formatted(name), ()-> new MoltenCauldronBlock(bucket, BlockBehaviour.Properties.copy(Blocks.LAVA_CAULDRON)));
 		return new ForgeFlowingFluid.Properties(moltenFluidType, source, flowing).bucket(bucket).block(block(name, source));
 	}
 
