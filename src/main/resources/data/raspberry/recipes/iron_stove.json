@@ -1,0 +1,1 @@
+{"type":"minecraft:crafting_shaped","category":"building","pattern":["III","# #","#C#"],"key":{"I":{"item":"minecraft:iron_ingot"},"C":{"item":"minecraft:campfire"},"#":{"item":"minecraft:iron_ingot"}},"result":{"item":"raspberry:iron_stove","count":1}}

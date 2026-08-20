@@ -51,6 +51,10 @@ public class RaspberryBlocks {
             ()-> new StoveBlock(BlockBehaviour.Properties.copy(ModBlocks.STOVE.get())), FarmersDelight.CREATIVE_TAB);
 
     public static BlockSupplier
+            IRON_STOVE = registerBlock("iron_stove",
+            ()-> new IronStoveBlock(BlockBehaviour.Properties.copy(ModBlocks.STOVE.get())), FarmersDelight.CREATIVE_TAB);
+
+    public static BlockSupplier
             LEAD_GRATE = registerLeadGrate();
 
     public static BlockSupplier
