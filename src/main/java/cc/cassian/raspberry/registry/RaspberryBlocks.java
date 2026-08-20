@@ -4,6 +4,7 @@ import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.blocks.*;
 import cc.cassian.raspberry.compat.CopperBackportCompat;
 import cc.cassian.raspberry.compat.EnvironmentalCompat;
+import com.baisylia.cookscollection.block.custom.OvenBlock;
 import net.mehvahdjukaar.moonlight.api.block.ModStairBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.AshLayerBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.PancakeBlock;
@@ -53,6 +54,14 @@ public class RaspberryBlocks {
     public static BlockSupplier
             IRON_STOVE = registerBlock("iron_stove",
             ()-> new IronStoveBlock(BlockBehaviour.Properties.copy(ModBlocks.STOVE.get())), FarmersDelight.CREATIVE_TAB);
+
+    public static BlockSupplier
+            SILT_OVEN = registerBlock("silt_oven",
+            ()-> new OvenBlock(BlockBehaviour.Properties.copy(com.baisylia.cookscollection.block.ModBlocks.OVEN.get())), FarmersDelight.CREATIVE_TAB);
+
+    public static BlockSupplier
+            ASH_OVEN = registerBlock("ash_oven",
+            ()-> new OvenBlock(BlockBehaviour.Properties.copy(com.baisylia.cookscollection.block.ModBlocks.OVEN.get())), FarmersDelight.CREATIVE_TAB);
 
     public static BlockSupplier
             LEAD_GRATE = registerLeadGrate();

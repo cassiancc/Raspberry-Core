@@ -51,6 +51,7 @@ public class EMIPlugin implements EmiPlugin {
 
         registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.ASH_STOVE.getBlock()));
         registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.SILT_STOVE.getBlock()));
+        registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.IRON_STOVE.getBlock()));
 
         registry.addWorkstation(FDRecipeCategories.COOKING, FDRecipeWorkstations.COOKING_POT);
         registry.addWorkstation(FDRecipeCategories.CUTTING, FDRecipeWorkstations.CUTTING_BOARD);

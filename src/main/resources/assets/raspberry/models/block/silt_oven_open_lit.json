@@ -1,0 +1,6 @@
+{
+  "parent": "raspberry:block/silt_oven",
+  "textures": {
+    "front": "raspberry:block/silt_oven_front_open_lit"
+  }
+}
