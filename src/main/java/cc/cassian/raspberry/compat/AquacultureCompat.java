@@ -1,6 +1,7 @@
 package cc.cassian.raspberry.compat;
 
 import cc.cassian.raspberry.registry.RaspberryTags;
+import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -10,7 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
+import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
+
 public class AquacultureCompat {
+    public static Hook GRAPPLING_HOOK = (new Hook.HookBuilder("grappling")).setModID(MOD_ID).setDurabilityChance(0.1).setColor(ChatFormatting.GRAY).build();
+
     public static void checkAndAddTooltip(ItemTooltipEvent event) {
         if (event.getItemStack().getItem() instanceof AquaFishingRodItem) {
             ItemStack bait = AquaFishingRodItem.getBait(event.getItemStack());
@@ -34,4 +39,8 @@ public class AquacultureCompat {
             return ChatFormatting.GOLD;
         } else return ChatFormatting.WHITE;
     }
+
+	public static void init() {
+
+	}
 }

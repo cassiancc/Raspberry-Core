@@ -2,7 +2,7 @@ plugins {
     id 'dev.architectury.loom' version '1.11.445'
     id 'maven-publish'
     id 'org.moddedmc.wiki.toolkit' version '0.2.7'
-    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
+    id "me.modmuss50.mod-publish-plugin" version "2.2.0"
     id 'co.uzzu.dotenv.gradle' version "4.0.0"
 }
 
@@ -396,18 +396,22 @@ publishMods {
         requires("blueprint")
         requires("supplementaries")
         requires("farmers-delight")
-        requires("aquaculture-2")
         requires("cooks-collection")
+        optional("aquaculture")
+        optional("emi")
+        optional("naturalist")
+        environment = CLIENT_AND_SERVER
     }
 
     curseforge {
-        projectId = "1dE2nxJB"
+        projectId = "1204167"
         accessToken = env.CURSEFORGE_API_KEY.orNull()
         minecraftVersions.add(minecraft_version)
         requires("blueprint")
         requires("supplementaries")
         requires("farmers-delight")
-        requires("aquaculture-2")
         requires("cooks-collection")
+        clientRequired = true
+        serverRequired = true
     }
 }

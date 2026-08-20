@@ -3,8 +3,6 @@ package cc.cassian.raspberry.registry;
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.compat.NaturalistCompat;
 import cc.cassian.raspberry.items.*;
-import com.teammetallurgy.aquaculture.api.fishing.Hook;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -22,8 +20,6 @@ public class RaspberryItems {
 
     public static Supplier<Item> ASHBALL = registerItem("ashball", () -> new AshballItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static Supplier<Item> FIREFLY = RaspberryItems.registerItem("firefly", ModCompat.NATURALIST ? NaturalistCompat.getFireflyItem() : () -> new Item(new Item.Properties()));
-
-    public static Hook GRAPPLING_HOOK = (new Hook.HookBuilder("grappling")).setModID(MOD_ID).setDurabilityChance(0.1).setColor(ChatFormatting.GRAY).build();
 
     public static Supplier<Item> ROSE_GOLD_BOMB = registerItem("rose_gold_bomb", () -> new RoseGoldBombItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static Supplier<Item> SWAP_ARROW = registerItem("swap_arrow", () -> new SwapArrowItem(new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));

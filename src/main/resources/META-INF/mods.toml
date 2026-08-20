@@ -57,13 +57,6 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.raspberry]]
-modId = "aquaculture"
-mandatory = true
-versionRange = "[0,)"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies.raspberry]]
 modId = "domesticationinnovation"
 mandatory = false
 versionRange = "[1.6.1,)"

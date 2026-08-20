@@ -2,22 +2,25 @@ package cc.cassian.raspberry.mixin.cookscollection;
 
 import cc.cassian.raspberry.registry.RaspberryBlocks;
 import com.baisylia.cookscollection.block.ModBlocks;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(AbstractContainerMenu.class)
 public abstract class OvenMenuMixin {
 
-	@WrapOperation(method = "method_17696", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z"))
-	private static boolean forceAllowOvens(BlockState instance, Block block, Operation<Boolean> original) {
-		if (block.equals(ModBlocks.OVEN.get())) {
-			return original.call(instance, block) || instance.is(RaspberryBlocks.SILT_OVEN.getBlock()) || instance.is(RaspberryBlocks.ASH_OVEN.getBlock());
+	@ModifyReturnValue(method = "stillValid(Lnet/minecraft/world/inventory/ContainerLevelAccess;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/Block;)Z", at = @At(value = "RETURN"))
+	private static boolean forceAllowOvens(boolean original, ContainerLevelAccess access, Player player, Block targetBlock) {
+		if (!original && targetBlock.equals(ModBlocks.OVEN.get())) {
+			return access.evaluate((level, pos) -> {
+				if (!level.getBlockState(pos).is(RaspberryBlocks.SILT_OVEN.getBlock()) && !level.getBlockState(pos).is(RaspberryBlocks.ASH_OVEN.getBlock())) return false;
+				return player.distanceToSqr((double) pos.getX() + (double) 0.5F, (double) pos.getY() + (double) 0.5F, (double) pos.getZ() + (double) 0.5F) <= (double) 64.0F;
+			}, true);
 		}
-		return original.call(instance, block);
+		return original;
 	}
 }
