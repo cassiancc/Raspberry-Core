@@ -1,24 +1,25 @@
 ### Added
-- Grappling Hooks - a new traversal tool that can be equipped on a Reinforced Fishing Rod (Aquaculture).
-- Molten Fluids for multiple mods metal types, including Cauldrons and Buckets.
+- Grappling Hooks - a new traversal tool that can be equipped on a Reinforced Fishing Rod (Aquaculture). Implemented by Kobber.
+- Molten Fluids for multiple mods metal types, including Cauldrons and Buckets. Textures by raspmary.
 - Raw ore blocks now generate corundum when placed over natural ores, lava, and pointed dripstone.
-- Marshmallows, a new food source that can be placed on a stick and roasted over a fire. Has no recipe by default.
+- Iron Stoves, a new decorative variant of Stoves.
+- Marshmallows, a new food source that can be placed on a stick and roasted over a fire. Has no recipe by default. Texture by raspmary.
 - A backport of the Infested effect from Minecraft 1.21.
 - A backport of the Red Shrub block from Minecraft 26.3, tweaked to use a biome tint rather than a hardcoded colour.
 - Wand of Freezing (Caverns and Chasms) can now be used on Wind Vane (Supplementaries) to change the weather.
-- Better jukeboxes config option:
+- Better jukeboxes config option (evanbones):
     - Fades out vanilla music when playing a jukebox (supports Etched).
     - Changes jukebox sound to be non-directional.
 - Setting in music and sounds menu to control jukebox fade distance.
 - Config option to disable Ecologics penguins dropping feathers.
-- Config option to modify Savage & Ravage creeper spore cloud durations.
+- Config option to modify Savage & Ravage creeper spore cloud durations (evanbones).
 - Disabled some curative items.
 - Items in the `raspberry:fireproof` tag no longer burn.
 - Spawn egg tinting can now be disabled.
 - Pebbles now break glass (Twigs).
 - Disabled all keybinds from Additional Enchantments.
 - Greatblade attack damage can now be configured (Clash!)
-- Various changes to the Homing enchantment:
+- Various changes to the Homing enchantment (Kobber):
   - Keybind to filter target types/priority has been removed
   - Targets are only chosen from within a cone in front of the projectile
   - If a mob with Glowing is within range, it will always be chosen as the target
@@ -34,6 +35,7 @@
   - Added `raspberry:enchantable/homing` item tag to allow additional items to be enchanted with Homing (Additional Enchantments).
   - Added `raspberry:enchantable/launch` item tag to allow additional items to be enchanted with Launch (Allurement).
 - Added `raspberry:prevent_sweeping` item tag to prevent weapons from causing Sweeping damage, defaults to Mace Backport's Mace.
+- Totems of Holding now properly re-equip Create Goggles and Gliders (from Gliders).
 
 ### Fixed
 - Swap Arrows can no longer force Withers into boats.

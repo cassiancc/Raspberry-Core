@@ -159,6 +159,7 @@
     "quark.DoubleDoorOpeningModuleMixin",
     "quark.ExpandedItemInteractionsModuleMixin",
     "quark.QuickArmorSwappingModuleMixin",
+    "quark.TotemOfHoldingEntityMixin",
     "quark.TrowelItemMixin",
     "quark.WoodPostBlockMixin",
     "savageandravage.ConchOfConjuringMixin",
