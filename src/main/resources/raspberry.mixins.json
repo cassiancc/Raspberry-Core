@@ -61,6 +61,7 @@
     "connectiblechains.ChainKnotEntityBehaviorMixin",
     "controllable.ControllableMixin",
     "cookscollection.BlockEntityTypeMixin",
+    "cookscollection.OvenMenuMixin",
     "copperized.CopperizedArmorMaterialsMixin",
     "create.AllArmorMaterialsMixin",
     "create.AllFluidsMixin",

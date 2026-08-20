@@ -1,5 +1,7 @@
 {
   "attribute.raspberry.kinetic_damage": "Kinetic Damage",
+  "block.raspberry.ash_oven": "Ash Oven",
+  "block.raspberry.silt_oven": "Silt Oven",
   "block.raspberry.ash_stove": "Ash Stove",
   "block.raspberry.silt_stove": "Silt Stove",
   "block.raspberry.iron_stove": "Iron Stove",

@@ -2,7 +2,8 @@
 - Grappling Hooks - a new traversal tool that can be equipped on a Reinforced Fishing Rod (Aquaculture). Implemented by Kobber.
 - Molten Fluids for multiple mods metal types, including Cauldrons and Buckets. Textures by raspmary.
 - Raw ore blocks now generate corundum when placed over natural ores, lava, and pointed dripstone.
-- Iron Stoves, a new decorative variant of Stoves.
+- Iron Stoves, a new decorative variant of Stoves. Implemented by Kobber.
+- Ash and Silt Ovens (Twigs, Supplementaries, Cooks Collection). Implemented by Kobber.
 - Marshmallows, a new food source that can be placed on a stick and roasted over a fire. Has no recipe by default. Texture by raspmary.
 - A backport of the Infested effect from Minecraft 1.21.
 - A backport of the Red Shrub block from Minecraft 26.3, tweaked to use a biome tint rather than a hardcoded colour.

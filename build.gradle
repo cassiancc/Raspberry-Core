@@ -396,6 +396,8 @@ publishMods {
         requires("blueprint")
         requires("supplementaries")
         requires("farmers-delight")
+        requires("aquaculture-2")
+        requires("cooks-collection")
     }
 
     curseforge {
@@ -405,5 +407,7 @@ publishMods {
         requires("blueprint")
         requires("supplementaries")
         requires("farmers-delight")
+        requires("aquaculture-2")
+        requires("cooks-collection")
     }
 }

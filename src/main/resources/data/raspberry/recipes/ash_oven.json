@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "supplementaries:ash_bricks"
+    },
+    "S": {
+      "item": "minecraft:stone_bricks"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "B B",
+    "SiS"
+  ],
+  "result": {
+    "item": "raspberry:ash_oven"
+  },
+  "show_notification": true
+}
