@@ -30,6 +30,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.infernalstudios.miningmaster.init.MMEnchantments;
 import vectorwing.farmersdelight.common.registry.ModItems;
+import vectorwing.farmersdelight.common.tag.CommonTags;
 import vectorwing.farmersdelight.common.tag.ForgeTags;
 
 import java.util.List;
@@ -293,7 +294,7 @@ public class EmiSmithingRecipe extends EmiAbstractSmithingRecipe {
 
         // SILENT - BACKSTABBING
         addRecipe(emiRegistry,
-                ModItems.DIAMOND_KNIFE.get(), ForgeTags.TOOLS_KNIVES,
+                ModItems.DIAMOND_KNIFE.get(), CommonTags.Items.TOOLS_KNIVES,
                 vectorwing.farmersdelight.common.registry.ModEnchantments.BACKSTABBING.get(), SILENT,
                 "backstabbing");
         // SILENT - SWIFT SNEAK

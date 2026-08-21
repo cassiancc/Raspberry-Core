@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import vazkii.quark.addons.oddities.entity.TotemOfHoldingEntity;
+import org.violetmoon.quark.addons.oddities.entity.TotemOfHoldingEntity;
 
 @Mixin(TotemOfHoldingEntity.class)
 public class TotemOfHoldingEntityMixin {
@@ -19,10 +19,10 @@ public class TotemOfHoldingEntityMixin {
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;", ordinal = 0)
 	)
 	private static Item reEquipGlidersAndGoggles(ItemStack stack, Operation<Item> original) {
-		if (ModCompat.GLIDERS && GlidersCompat.isGlider(stack)) {
+		if (ModCompat.hasGliders() && GlidersCompat.isGlider(stack)) {
 			return Items.CHAINMAIL_CHESTPLATE;
 		}
-		if (ModCompat.CREATE && CreateCompat.isGoggles(stack)) {
+		if (ModCompat.hasCreate() && CreateCompat.isGoggles(stack)) {
 			return Items.CHAINMAIL_HELMET;
 		}
 		else return original.call(stack);

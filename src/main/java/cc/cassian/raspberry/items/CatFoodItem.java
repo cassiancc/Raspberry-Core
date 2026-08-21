@@ -44,7 +44,7 @@ public class CatFoodItem extends ConsumableItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag isAdvanced) {
-        if (Configuration.FOOD_EFFECT_TOOLTIP.get()) {
+        if (Configuration.ENABLE_FOOD_EFFECT_TOOLTIP.get()) {
             MutableComponent textWhenFeeding = Component.translatable("raspberry.tooltip.cat_food.when_feeding");
             tooltip.add(textWhenFeeding.withStyle(ChatFormatting.GRAY));
 

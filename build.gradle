@@ -311,7 +311,7 @@ dependencies {
     modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
     modCompileOnly("curse.maven:controllable-317269:4445137")
     modImplementation("maven.modrinth:architects-palette:${architects_palette_version}")
-    modCompileOnly("maven.modrinth:cooks-collection:$cooks_collection_version")
+    modImplementation("maven.modrinth:cooks-collection:$cooks_collection_version")
     modCompileOnly("maven.modrinth:jade:$jade_version")
     modImplementation("maven.modrinth:xaeros-minimap:${xaeros_minimap_version}")
     modImplementation("maven.modrinth:xaeros-world-map:${xaeros_worldmap_version}")
@@ -404,7 +404,7 @@ publishing {
 
 publishMods {
     file = remapJar.archiveFile
-    type = BETA
+    type = ALPHA
     modLoaders.add("forge")
     changelog = file('CHANGELOG-LATEST.md').text.trim()
 
@@ -416,6 +416,8 @@ publishMods {
         requires("supplementaries")
         requires("farmers-delight")
         requires("cooks-collection")
+        requires("quark")
+        requires("cultural-delights")
         optional("aquaculture")
         optional("emi")
         optional("naturalist")
@@ -430,6 +432,8 @@ publishMods {
         requires("supplementaries")
         requires("farmers-delight")
         requires("cooks-collection")
+        requires("quark")
+        requires("cultural-delights")
         clientRequired = true
         serverRequired = true
     }

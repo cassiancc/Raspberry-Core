@@ -21,6 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.violetmoon.quark.content.building.block.HedgeBlock;
 import org.violetmoon.zeta.module.ZetaModule;
+import vectorwing.farmersdelight.FarmersDelight;
 import vectorwing.farmersdelight.common.block.PieBlock;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
@@ -49,15 +50,15 @@ public class RaspberryBlocks {
 
     public static BlockSupplier
             IRON_STOVE = registerBlock("iron_stove",
-            ()-> new IronStoveBlock(BlockBehaviour.Properties.copy(ModBlocks.STOVE.get())), FarmersDelight.CREATIVE_TAB);
+            ()-> new IronStoveBlock(BlockBehaviour.Properties.copy(ModBlocks.STOVE.get())));
 
     public static BlockSupplier
             SILT_OVEN = registerBlock("silt_oven",
-            ()-> new OvenBlock(BlockBehaviour.Properties.copy(com.baisylia.cookscollection.block.ModBlocks.OVEN.get())), FarmersDelight.CREATIVE_TAB);
+            ()-> new OvenBlock(BlockBehaviour.Properties.copy(com.baisylia.cookscollection.block.ModBlocks.OVEN.get())));
 
     public static BlockSupplier
             ASH_OVEN = registerBlock("ash_oven",
-            ()-> new OvenBlock(BlockBehaviour.Properties.copy(com.baisylia.cookscollection.block.ModBlocks.OVEN.get())), FarmersDelight.CREATIVE_TAB);
+            ()-> new OvenBlock(BlockBehaviour.Properties.copy(com.baisylia.cookscollection.block.ModBlocks.OVEN.get())));
 
     public static BlockSupplier
             LEAD_GRATE = registerLeadGrate();
