@@ -1,0 +1,62 @@
+{
+  "parent": "block/block",
+  "render_type":"cutout",
+  "textures": {
+    "3": "raspberry:block/iron_stove_bottom",
+    "top": "raspberry:block/iron_stove_top_on",
+    "front": "raspberry:block/iron_stove_front_on",
+    "side": "raspberry:block/iron_stove_side",
+    "particle": "raspberry:block/iron_stove_bottom"
+  },
+  "elements": [
+    {
+      "from": [2, 4, 2],
+      "to": [14, 16, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 7]},
+      "faces": {
+        "north": {"uv": [0, 0, 12, 12], "texture": "#front"},
+        "east": {"uv": [0, 0, 12, 12], "texture": "#side"},
+        "south": {"uv": [0, 0, 12, 12], "texture": "#side"},
+        "west": {"uv": [0, 0, 12, 12], "texture": "#side"},
+        "up": {"uv": [0, 0, 12, 12], "texture": "#top"},
+        "down": {"uv": [0, 0, 12, 12], "texture": "#3"}
+      }
+    },
+    {
+      "from": [2, 0, 2],
+      "to": [14, 4, 2],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7, -4, 7]},
+      "faces": {
+        "north": {"uv": [0, 12, 12, 16], "texture": "#front"},
+        "south": {"uv": [0, 12, 12, 16], "texture": "#side"}
+      }
+    },
+    {
+      "from": [14, 0, 2],
+      "to": [14, 4, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [9, -4, 7]},
+      "faces": {
+        "east": {"uv": [0, 12, 12, 16], "texture": "#side"},
+        "west": {"uv": [0, 12, 12, 16], "texture": "#side"}
+      }
+    },
+    {
+      "from": [2, 0, 14],
+      "to": [14, 4, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [9, -4, 9]},
+      "faces": {
+        "north": {"uv": [0, 12, 12, 16], "texture": "#side"},
+        "south": {"uv": [0, 12, 12, 16], "texture": "#side"}
+      }
+    },
+    {
+      "from": [2, 0, 2],
+      "to": [2, 4, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7, -4, 9]},
+      "faces": {
+        "east": {"uv": [0, 12, 12, 16], "texture": "#side"},
+        "west": {"uv": [0, 12, 12, 16], "texture": "#side"}
+      }
+    }
+  ]
+}

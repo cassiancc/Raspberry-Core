@@ -66,6 +66,7 @@ public final class RaspberryMod {
         // Register event bus listeners.
         if (ModCompat.hasAquaculture())
             MinecraftForge.EVENT_BUS.addListener(AquacultureCompat::checkAndAddTooltip);
+            AquacultureCompat.init();
         if (ModCompat.hasEnvironmental()) {
 			MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onEntityInteract);
             MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onEntityJoinWorld);

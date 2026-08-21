@@ -96,7 +96,6 @@ public class ModConfig {
     public boolean corundumGenerators = true;
     public boolean infoTooltips = false;
     public float infested_spawn_chance = 0.1f;
-    public float thrown_trident_base_damage = 8.0f;
     public Map<String, List<String>> fishing_line_patterns = Map.of(
         "pride", List.of(
                 "#fe0000",

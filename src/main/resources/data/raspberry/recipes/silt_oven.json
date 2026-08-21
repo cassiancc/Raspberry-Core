@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "twigs:silt_bricks"
+    },
+    "S": {
+      "item": "minecraft:stone_bricks"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "B B",
+    "SiS"
+  ],
+  "result": {
+    "item": "raspberry:silt_oven"
+  },
+  "show_notification": true
+}
