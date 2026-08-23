@@ -1,10 +1,11 @@
 package cc.cassian.raspberry.config;
 
-
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
+import java.util.List;
 
 import static cc.cassian.raspberry.ModHelpers.*;
 
@@ -60,6 +61,11 @@ public class ClothConfigFactory {
                 category.addEntry(entryBuilder.startFloatField(fieldName(field), fieldGet(ModConfig.get(), field))
                         .setSaveConsumer(fieldSetter(ModConfig.get(), field))
                         .setDefaultValue((float) fieldGet(DEFAULT_VALUES, field)).build());
+            }
+            else if (field.getType() == List.class) {
+                category.addEntry(entryBuilder.startStrList(fieldName(field), fieldGet(ModConfig.get(), field))
+                        .setSaveConsumer(fieldSetter(ModConfig.get(), field))
+                        .setDefaultValue((java.util.List<String>) fieldGet(DEFAULT_VALUES, field)).build());
             }
         }
         builder.setSavingRunnable(ModConfig::save);

@@ -1,4 +1,5 @@
 package cc.cassian.raspberry.config;
+
 import cc.cassian.raspberry.RaspberryMod;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -91,6 +92,7 @@ public class ModConfig {
         )
     );
     public int greatblade_slash_damage_bonus = 0;
+    public List<String> removedStatistics = List.of();
 
 	public static void load() {
         if (!Files.exists(configPath())) {

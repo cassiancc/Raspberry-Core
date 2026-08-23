@@ -11,6 +11,7 @@
     "etched.EtchedRecordItemMixin",
     "etched.StopListeningSoundMixin",
     "geckolib3.GeoEntityRendererMixin",
+    "minecraft.AbstractSelectionListMixin",
     "minecraft.AbstractSoundInstanceWrapper",
     "minecraft.ClientPacketListenerMixin",
     "minecraft.EntityRendererAccessor",
@@ -22,6 +23,7 @@
     "minecraft.SoundEngineMixin",
     "minecraft.SoundEngineWrapper",
     "minecraft.SoundOptionsScreenMixin",
+    "minecraft.StatsScreenMixin",
     "miningmaster.KnightJumpEnchantmentMixin",
     "naturalist.GlowGoopItemMixin",
     "spyglass_improvements.MinecraftMixin"
