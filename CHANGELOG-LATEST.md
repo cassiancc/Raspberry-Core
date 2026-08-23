@@ -1,2 +1,2 @@
 ### Fixed
-- EMI plugin failing to load with newer versions of Cooks Collection.
+- 'Spyglass Works In Bundles' feature now works with the latest version of Spyglass Improvements.

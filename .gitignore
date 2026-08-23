@@ -121,6 +121,7 @@ run/
 !gradle-wrapper.jar
 !libs/ecologics-forge-1.19.2-2.1.11.jar
 !libs/sage_brush-1.19.2-0.1.0-all.jar
+!libs/spyglass_improvements-forge-1.5.12+mc1.19+forge.jar
 
 kubejs/
 .env

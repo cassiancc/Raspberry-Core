@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.1]
+
+### Fixed
+- EMI plugin failing to load with newer versions of Cooks Collection.
+
 ## [1.11]
 
 ### Added
