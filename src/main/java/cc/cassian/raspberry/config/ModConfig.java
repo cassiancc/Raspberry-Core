@@ -122,6 +122,7 @@ public class ModConfig {
         creativeTabIcons.put("minecraft:spawn_eggs", "minecraft:creeper_spawn_egg");
         creativeTabIcons.put("minecraft:op_blocks", "minecraft:command_block");
     }
+    public List<String> removedStatistics = List.of();
 
 	public static void load() {
         if (!Files.exists(configPath())) {

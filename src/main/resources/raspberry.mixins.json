@@ -11,6 +11,8 @@
     "etched.EtchedRecordItemMixin",
     "etched.StopListeningSoundMixin",
     "inventorio.InventorioScreenMixin",
+    "geckolib3.GeoEntityRendererMixin",
+    "minecraft.AbstractSelectionListMixin",
     "minecraft.AbstractSoundInstanceWrapper",
     "minecraft.FlameParticleProviderMixin",
     "minecraft.FlameParticleSmallFlameProviderMixin",
@@ -22,6 +24,8 @@
     "modernfix.KeyMappingAccessor",
     "modernfix.ModernFixCompatMixin",
     "modernfix.ModernFixReplacementMixin",
+    "minecraft.StatsScreenMixin",
+    "miningmaster.KnightJumpEnchantmentMixin",
     "naturalist.GlowGoopItemMixin",
     "spyglass_improvements.MinecraftMixin"
   ],

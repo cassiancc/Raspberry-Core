@@ -1,22 +1,21 @@
 package cc.cassian.raspberry.mixin.minecraft;
 
 import cc.cassian.raspberry.config.ModConfig;
-import com.teamabnormals.buzzier_bees.common.item.CuringItem;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.HoneyBottleItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(HoneyBottleItem.class)
 public class HoneyBottleMixin {
-	@Inject(
-			method = "finishUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;awardStat(Lnet/minecraft/stats/Stat;)V"), cancellable = true)
-	public void raspberry$disableCuring(ItemStack stack, Level worldIn, LivingEntity entityLiving, CallbackInfoReturnable<ItemStack> cir) {
-		if (ModConfig.get().disableCurativeItems)
-			cir.setReturnValue(stack);
+	@WrapOperation(
+			method = "finishUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;removeEffect(Lnet/minecraft/world/effect/MobEffect;)Z"))
+	public boolean raspberry$disableCuring(LivingEntity instance, MobEffect mobeffectinstance, Operation<Boolean> original) {
+		if (!ModConfig.get().disableCurativeItems)
+			original.call(instance, mobeffectinstance);
+		return false;
 	}
 }

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import java.util.List;
+
 import static cc.cassian.raspberry.ModHelpers.*;
 
 public class ClothConfigFactory {
@@ -106,6 +108,11 @@ public class ClothConfigFactory {
                 category.addEntry(entryBuilder.startFloatField(fieldName(field), fieldGet(ModConfig.get(), field))
                         .setSaveConsumer(fieldSetter(ModConfig.get(), field))
                         .setDefaultValue((float) fieldGet(DEFAULT_VALUES, field)).build());
+            }
+            else if (field.getType() == List.class) {
+                category.addEntry(entryBuilder.startStrList(fieldName(field), fieldGet(ModConfig.get(), field))
+                        .setSaveConsumer(fieldSetter(ModConfig.get(), field))
+                        .setDefaultValue((java.util.List<String>) fieldGet(DEFAULT_VALUES, field)).build());
             }
         }
         builder.setSavingRunnable(ModConfig::save);
