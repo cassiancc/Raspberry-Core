@@ -3,6 +3,7 @@ package cc.cassian.raspberry.mixin.minecraft;
 import cc.cassian.raspberry.config.ModConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.achievement.StatsScreen.GeneralStatisticsList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,9 +22,9 @@ public abstract class AbstractSelectionListMixin extends net.minecraft.client.gu
 	private Stat<ResourceLocation> stat;
 
 	@Inject(method = "render", at = @At(value = "TAIL"))
-	private void hideStats(PoseStack poseStack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver, float partialTick, CallbackInfo ci) {
-		if (ModConfig.get().infoTooltips && isMouseOver) {
-			Minecraft.getInstance().screen.renderTooltip(poseStack, Component.literal(stat.getValue().toString()), mouseX, mouseY);
+	private void hideStats(GuiGraphics guiGraphics, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean hovering, float partialTick, CallbackInfo ci) {
+		if (ModConfig.get().infoTooltips && hovering) {
+			guiGraphics.renderTooltip(Minecraft.getInstance().font, Component.literal(stat.getValue().toString()), mouseX, mouseY);
 		}
 	}
 }

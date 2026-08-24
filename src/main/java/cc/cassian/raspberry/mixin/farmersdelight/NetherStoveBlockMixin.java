@@ -15,12 +15,5 @@ import static vectorwing.farmersdelight.common.block.StoveBlock.LIT;
 @Pseudo
 @Mixin(NetherStoveBlock.class)
 public abstract class NetherStoveBlockMixin {
-    @Inject(
-            method = "getStateForPlacement",
-            at = @At(value = "RETURN"),
-            cancellable = true)
-    private void startStovesLit(BlockPlaceContext context, CallbackInfoReturnable<BlockState> cir) {
-        if (!ModConfig.get().stovesStartLit)
-            cir.setReturnValue(cir.getReturnValue().setValue(LIT, false));
-    }
+
 }
