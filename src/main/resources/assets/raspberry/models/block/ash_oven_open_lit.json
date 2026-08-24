@@ -1,0 +1,6 @@
+{
+  "parent": "raspberry:block/ash_oven",
+  "textures": {
+    "front": "raspberry:block/ash_oven_front_open_lit"
+  }
+}

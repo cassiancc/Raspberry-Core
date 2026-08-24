@@ -1,8 +1,8 @@
 plugins {
-    id 'dev.architectury.loom' version '1.11.445'
+    id 'dev.architectury.loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
     id 'org.moddedmc.wiki.toolkit' version '0.2.7'
-    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
+    id "me.modmuss50.mod-publish-plugin" version "2.2.0"
     id 'co.uzzu.dotenv.gradle' version "4.0.0"
 }
 
@@ -285,6 +285,7 @@ dependencies {
     modImplementation("curse.maven:resourceful-config-714059:$resourceful_config_version") // dependency of enderman overhaul
     modImplementation("curse.maven:resourceful-lib-570073:$resourceful_lib_version") // dependency of enderman overhaul
     modImplementation("maven.modrinth:quark:$quark_version")
+    modImplementation("maven.modrinth:quark-oddities:$quark_oddities_version")
     modImplementation("maven.modrinth:autoreglib:$autoreglib_version") // dependency of quark
     modImplementation("maven.modrinth:dynamiccrosshair:$dynamic_crosshair_version-forge")
     modImplementation("maven.modrinth:cofh-core:$cofh_core_version-forge")
@@ -295,7 +296,7 @@ dependencies {
     modImplementation("maven.modrinth:survivality:${survivality_version}")
     modImplementation("maven.modrinth:screenshot-viewer:${screenshot_viewer_version}")
     modCompileOnly("local:ecologics-forge:1.19.2-2.1.11") // jar built locally to avoid errors when importing the project
-    modImplementation("maven.modrinth:spyglass-improvements:${spyglass_improvements_version}")
+    modImplementation("local:spyglass_improvements-forge:${spyglass_improvements_version}")
     modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}") // dependency of spyglass improvements
     modImplementation("maven.modrinth:toms-storage:$toms_simple_storage_version")
     modImplementation("curse.maven:controllable-317269:4445137")
@@ -395,14 +396,22 @@ publishMods {
         requires("blueprint")
         requires("supplementaries")
         requires("farmers-delight")
+        requires("cooks-collection")
+        optional("aquaculture")
+        optional("emi")
+        optional("naturalist")
+        environment = CLIENT_AND_SERVER
     }
 
     curseforge {
-        projectId = "1dE2nxJB"
+        projectId = "1204167"
         accessToken = env.CURSEFORGE_API_KEY.orNull()
         minecraftVersions.add(minecraft_version)
         requires("blueprint")
         requires("supplementaries")
         requires("farmers-delight")
+        requires("cooks-collection")
+        clientRequired = true
+        serverRequired = true
     }
 }

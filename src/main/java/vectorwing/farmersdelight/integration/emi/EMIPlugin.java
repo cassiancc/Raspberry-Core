@@ -24,6 +24,8 @@ SOFTWARE.
 package vectorwing.farmersdelight.integration.emi;
 
 import cc.cassian.raspberry.registry.RaspberryBlocks;
+import com.baisylia.cookscollection.block.ModBlocks;
+import com.baisylia.cookscollection.integration.emi.EMICooksCollectionPlugin;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -51,10 +53,16 @@ public class EMIPlugin implements EmiPlugin {
 
         registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.ASH_STOVE.getBlock()));
         registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.SILT_STOVE.getBlock()));
+        registry.addWorkstation(VanillaEmiRecipeCategories.CAMPFIRE_COOKING, EmiStack.of(RaspberryBlocks.IRON_STOVE.getBlock()));
 
         registry.addWorkstation(FDRecipeCategories.COOKING, FDRecipeWorkstations.COOKING_POT);
         registry.addWorkstation(FDRecipeCategories.CUTTING, FDRecipeWorkstations.CUTTING_BOARD);
         registry.addRecipeHandler(ModMenuTypes.COOKING_POT.get(), new CookingPotEmiRecipeHandler());
+
+        registry.addWorkstation(EMICooksCollectionPlugin.SHAPELESS_BAKING, EmiStack.of(RaspberryBlocks.ASH_OVEN.getBlock()));
+        registry.addWorkstation(EMICooksCollectionPlugin.SHAPELESS_BAKING, EmiStack.of(RaspberryBlocks.SILT_OVEN.getBlock()));
+        registry.addWorkstation(EMICooksCollectionPlugin.SHAPED_BAKING, EmiStack.of(RaspberryBlocks.ASH_OVEN.getBlock()));
+        registry.addWorkstation(EMICooksCollectionPlugin.SHAPED_BAKING, EmiStack.of(RaspberryBlocks.SILT_OVEN.getBlock()));
 
         for (CookingPotRecipe recipe : registry.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COOKING.get())) {
             registry.addRecipe(new CookingPotEmiRecipe(recipe.getId(), recipe.getIngredients().stream().map(EmiIngredient::of).toList(),

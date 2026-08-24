@@ -1,5 +1,6 @@
 {"replace":false,"values":[
   {"id":"raspberry:silt_stove","required":false},
   {"id":"raspberry:ash_stove","required":false},
+  {"id":"raspberry:iron_stove","required":false},
   "#raspberry:molten_cauldrons"
 ]}

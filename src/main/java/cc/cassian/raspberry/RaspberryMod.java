@@ -49,8 +49,10 @@ public final class RaspberryMod {
         RaspberrySoundEvents.SOUNDS.register(eventBus);
         RaspberryParticleTypes.PARTICLE_TYPES.register(eventBus);
         // Register event bus listeners.
-        if (ModCompat.AQUACULTURE)
-            MinecraftForge.EVENT_BUS.addListener(AquacultureCompat::checkAndAddTooltip);
+        if (ModCompat.AQUACULTURE) {
+            AquacultureCompat.init();
+			MinecraftForge.EVENT_BUS.addListener(AquacultureCompat::checkAndAddTooltip);
+		}
         if (ModCompat.ENVIRONMENTAL) {
 			MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onEntityInteract);
             MinecraftForge.EVENT_BUS.addListener(EnvironmentalCompat::onEntityJoinWorld);

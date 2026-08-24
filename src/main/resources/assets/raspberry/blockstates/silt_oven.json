@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,lit=false,open=false": {
+      "model": "raspberry:block/silt_oven",
+      "y": 90
+    },
+    "facing=east,lit=true,open=false": {
+      "model": "raspberry:block/silt_oven_lit",
+      "y": 90
+    },
+    "facing=north,lit=false,open=false": {
+      "model": "raspberry:block/silt_oven"
+    },
+    "facing=north,lit=true,open=false": {
+      "model": "raspberry:block/silt_oven_lit"
+    },
+    "facing=south,lit=false,open=false": {
+      "model": "raspberry:block/silt_oven",
+      "y": 180
+    },
+    "facing=south,lit=true,open=false": {
+      "model": "raspberry:block/silt_oven_lit",
+      "y": 180
+    },
+    "facing=west,lit=false,open=false": {
+      "model": "raspberry:block/silt_oven",
+      "y": 270
+    },
+    "facing=west,lit=true,open=false": {
+      "model": "raspberry:block/silt_oven_lit",
+      "y": 270
+    },
+    "facing=east,lit=false,open=true": {
+      "model": "raspberry:block/silt_oven_open",
+      "y": 90
+    },
+    "facing=east,lit=true,open=true": {
+      "model": "raspberry:block/silt_oven_open_lit",
+      "y": 90
+    },
+    "facing=north,lit=false,open=true": {
+      "model": "raspberry:block/silt_oven_open"
+    },
+    "facing=north,lit=true,open=true": {
+      "model": "raspberry:block/silt_oven_open_lit"
+    },
+    "facing=south,lit=false,open=true": {
+      "model": "raspberry:block/silt_oven_open",
+      "y": 180
+    },
+    "facing=south,lit=true,open=true": {
+      "model": "raspberry:block/silt_oven_open_lit",
+      "y": 180
+    },
+    "facing=west,lit=false,open=true": {
+      "model": "raspberry:block/silt_oven_open",
+      "y": 270
+    },
+    "facing=west,lit=true,open=true": {
+      "model": "raspberry:block/silt_oven_open_lit",
+      "y": 270
+    }
+  }
+}
