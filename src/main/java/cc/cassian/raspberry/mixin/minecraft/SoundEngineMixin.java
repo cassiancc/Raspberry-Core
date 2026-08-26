@@ -89,6 +89,14 @@ public abstract class SoundEngineMixin {
             }
 
             if (coordinates.containsKey(sound)) {
+                if ((sound.getX() != 0 || sound.getY() != 0 || sound.getZ() != 0)
+                        && sound instanceof AbstractSoundInstanceWrapper modifiedPositionSound) {
+                    coordinates.put(sound, new Vec3(sound.getX(), sound.getY(), sound.getZ()));
+                    modifiedPositionSound.setX(0);
+                    modifiedPositionSound.setY(0);
+                    modifiedPositionSound.setZ(0);
+                }
+
                 double distanceSquared = playerPosition.distanceToSqr(coordinates.get(sound));
 
                 double calculatedVolume = (maxDistanceSquared - distanceSquared) / divisor;
