@@ -81,6 +81,13 @@ public abstract class SoundEngineMixin {
         }
 
         for (SoundInstance sound : records) {
+            ChannelAccess.ChannelHandle sourceManager = wrapper.getInstanceToChannel().get(sound);
+
+            if (sourceManager == null) {
+                coordinates.remove(sound);
+                continue;
+            }
+
             if (coordinates.containsKey(sound)) {
                 double distanceSquared = playerPosition.distanceToSqr(coordinates.get(sound));
 
@@ -88,14 +95,12 @@ public abstract class SoundEngineMixin {
                 calculatedVolume = Math.max(0, Math.min(1, calculatedVolume));
                 float adjustedVolume = wrapper.calculateAdjustedVolume((float) calculatedVolume, SoundSource.RECORDS);
 
-                wrapper.getInstanceToChannel().get(sound).execute(source -> source.setVolume(adjustedVolume));
+                sourceManager.execute(source -> source.setVolume(adjustedVolume));
 
                 if (sound instanceof AbstractSoundInstanceWrapper modifiedSound) {
                     modifiedSound.trackVolumeForReferenceOnly(adjustedVolume);
                 }
             }
-
-            ChannelAccess.ChannelHandle sourceManager = wrapper.getInstanceToChannel().get(sound);
 
             if (sourceManager.isStopped()) {
                 coordinates.remove(sound);
@@ -113,6 +118,8 @@ public abstract class SoundEngineMixin {
 
         for (SoundInstance sound : music) {
             ChannelAccess.ChannelHandle sourceManager = wrapper.getInstanceToChannel().get(sound);
+            if (sourceManager == null) continue;
+
             float maxVolume = sound.getVolume();
 
             sourceManager.execute(source -> {
@@ -157,6 +164,7 @@ public abstract class SoundEngineMixin {
 
         for (SoundInstance sound : music) {
             ChannelAccess.ChannelHandle sourceManager = wrapper.getInstanceToChannel().get(sound);
+            if (sourceManager == null) continue;
             sourceManager.execute(Channel::pause);
         }
     }
