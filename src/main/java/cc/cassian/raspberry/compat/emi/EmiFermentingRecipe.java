@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.client.recipebook.KegRecipeBookTab;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,7 +69,10 @@ public class EmiFermentingRecipe implements EmiRecipe {
 
     @Override
     public List<EmiIngredient> getInputs() {
-        return inputItems;
+        var list = new ArrayList<EmiIngredient>(inputItems);
+        inputItems.add(EmiIngredient.of(fluidItem));
+        inputItems.add(EmiStack.of(container));
+        return list;
     }
 
     @Override
