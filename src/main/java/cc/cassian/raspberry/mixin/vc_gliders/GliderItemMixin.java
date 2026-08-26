@@ -24,7 +24,7 @@ public class GliderItemMixin {
             )}
     )
     private void swapArmorViaSurvivality(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
-        if (ModCompat.SURVIVALITY && SurvivalityCompat.swappingEnabled()) {
+        if (ModCompat.hasSurvivality() && SurvivalityCompat.swappingEnabled()) {
             SurvivalityCompat.swap(user);
             if (!world.isClientSide) {
                 user.awardStat(Stats.ITEM_USED.get((GliderItem)(Object)this));

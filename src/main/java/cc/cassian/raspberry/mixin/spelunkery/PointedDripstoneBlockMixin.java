@@ -23,10 +23,10 @@ public class PointedDripstoneBlockMixin {
 
     @Inject(method = "maybeTransferFluid", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/PointedDripstoneBlock;findTip(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;IZ)Lnet/minecraft/core/BlockPos;"))
     private static void soSalty(BlockState state, ServerLevel level, BlockPos pos, float randChance, CallbackInfo ci, @Local Optional<PointedDripstoneBlock.FluidInfo> optional, @Local Fluid fluid, @Local(ordinal = 0) BlockPos blockPos) {
-        if (ModCompat.SPELUNKERY && ModConfig.get().saltGenerator) {
+        if (ModCompat.hasSpelunkery() && ModConfig.get().saltGenerator) {
             DripstoneEvent.convertBlockViaDripstone(level, pos, optional.orElseThrow(), fluid, SALT);
         }
-        if (ModCompat.QUARK && ModConfig.get().corundumGenerators) {
+        if (ModCompat.hasQuark() && ModConfig.get().corundumGenerators) {
             DripstoneEvent.convertBlockViaDripstone(level, pos, optional.orElseThrow(), fluid, DIAMOND);
             DripstoneEvent.convertBlockViaDripstone(level, pos, optional.orElseThrow(), fluid, AMETHYST);
             DripstoneEvent.convertBlockViaDripstone(level, pos, optional.orElseThrow(), fluid, QUARTZ);

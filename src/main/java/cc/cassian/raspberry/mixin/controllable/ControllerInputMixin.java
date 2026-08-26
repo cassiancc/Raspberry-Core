@@ -26,7 +26,7 @@ public class ControllerInputMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/AbstractContainerScreen;getSlotUnderMouse()Lnet/minecraft/world/inventory/Slot;"), remap = false
     )
     private Slot emiClientTick(AbstractContainerScreen instance, Operation<Slot> original, @Local(name = "finalCursorX") double finalCursorX, @Local(name="finalCursorY") double finalCursorY, @Local(name="dragX") double dragX, @Local(name="dragY") double dragY, @Local(name="activeMouseButton") int activeMouseButton) {
-        if (ModCompat.EMI) {
+        if (ModCompat.hasEmi()) {
             if (EmiSupport.invokeMouseDragged(activeMouseButton, finalCursorX, finalCursorY, dragX, dragY)) {
                 return null;
             }
@@ -39,7 +39,7 @@ public class ControllerInputMixin {
             at = @At(value = "RETURN"), remap = false
     )
     private void gatherEmiNavigationPoints(Screen screen, @Coerce Object navigate, int mouseX, int mouseY, CallbackInfoReturnable<List<NavigationPoint>> cir) {
-        if (ModCompat.EMI && ClientHelper.isPlayingGame()) {
+        if (ModCompat.hasEmi() && ClientHelper.isPlayingGame()) {
             cir.getReturnValue().addAll(EmiSupport.getNavigationPoints(screen));
         }
     }
@@ -49,7 +49,7 @@ public class ControllerInputMixin {
             at = @At(value = "INVOKE", target = "Lcom/mrcrayfish/controllable/client/ControllerInput;invokeMouseClick(Lnet/minecraft/client/gui/screens/Screen;IDD)V"), remap = false
     )
     private void emiMouseClicked(ControllerInput instance, Screen screen, int button, double mouseX, double mouseY, Operation<Void> original) {
-        if (!ModCompat.EMI || !EmiSupport.invokeMouseClick(button, mouseX, mouseY)) {
+        if (!ModCompat.hasEmi() || !EmiSupport.invokeMouseClick(button, mouseX, mouseY)) {
             original.call(instance, screen, button, mouseX, mouseY);
         }
     }
@@ -59,7 +59,7 @@ public class ControllerInputMixin {
             at = @At(value = "INVOKE", target = "Lcom/mrcrayfish/controllable/client/ControllerInput;invokeMouseReleased(Lnet/minecraft/client/gui/screens/Screen;IDD)V"), remap = false
     )
     private void emiMouseReleased(ControllerInput instance, Screen screen, int button, double mouseX, double mouseY, Operation<Void> original) {
-        if (!ModCompat.EMI || !EmiSupport.invokeMouseReleased(button, mouseX, mouseY)) {
+        if (!ModCompat.hasEmi() || !EmiSupport.invokeMouseReleased(button, mouseX, mouseY)) {
             original.call(instance, screen, button, mouseX, mouseY);
         }
     }

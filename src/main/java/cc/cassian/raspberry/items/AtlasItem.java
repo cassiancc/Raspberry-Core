@@ -16,7 +16,7 @@ public class AtlasItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        if (ModCompat.XAEROS_WORLD_MAP && level.isClientSide()) {
+        if (ModCompat.hasXaerosWorldMap() && level.isClientSide()) {
             XaerosCompat.openWorldMap(player);
         }
         return InteractionResultHolder.success(player.getItemInHand(usedHand));

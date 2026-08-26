@@ -24,7 +24,7 @@ public class GogglesItemMixin {
                     value = "NEW", target = "(Lnet/minecraft/world/InteractionResult;Ljava/lang/Object;)Lnet/minecraft/world/InteractionResultHolder;", ordinal = 1)}
     )
     private void swapArmorViaSurvivality(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {
-        if (ModCompat.SURVIVALITY && SurvivalityCompat.swappingEnabled()) {
+        if (ModCompat.hasSurvivality() && SurvivalityCompat.swappingEnabled()) {
             SurvivalityCompat.swap(user);
             if (!world.isClientSide) {
                 user.awardStat(Stats.ITEM_USED.get((GogglesItem)(Object)this));

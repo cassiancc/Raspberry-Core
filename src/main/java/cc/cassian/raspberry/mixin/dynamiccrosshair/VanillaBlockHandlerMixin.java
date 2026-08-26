@@ -27,7 +27,7 @@ public class VanillaBlockHandlerMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;isCorrectToolForDrops(Lnet/minecraft/world/level/block/state/BlockState;)Z")
     )
     private static boolean fixQuarkGoldTools(Item instance, BlockState state, Operation<Boolean> original) {
-        if (ModCompat.QUARK && instance instanceof DiggerItem diggerItem && diggerItem.getTier().equals(Tiers.GOLD)) {
+        if (ModCompat.hasQuark() && instance instanceof DiggerItem diggerItem && diggerItem.getTier().equals(Tiers.GOLD)) {
             if (QuarkCompat.checkGold(diggerItem, state))
                 return true;
         }

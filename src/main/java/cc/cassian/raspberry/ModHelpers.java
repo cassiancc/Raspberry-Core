@@ -123,7 +123,7 @@ public class ModHelpers {
         else if (downState.getBlock() instanceof CandleHolderBlock && downState.getValue(BlockStateProperties.ATTACH_FACE).equals(AttachFace.CEILING)) {
             return true;
         }
-        else return (ModCompat.QUARK && QuarkCompat.isPaperLantern(downState));
+        else return (ModCompat.hasQuark() && QuarkCompat.isPaperLantern(downState));
     }
 
     public static MobType getDamageBonus(@Nullable Enchantment enchantment, LivingEntity instance, Operation<MobType> original) {

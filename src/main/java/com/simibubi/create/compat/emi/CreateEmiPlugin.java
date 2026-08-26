@@ -141,7 +141,7 @@ public class CreateEmiPlugin implements EmiPlugin {
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void register(EmiRegistry registry) {
-        if (!ModConfig.get().create_emi && ModCompat.CREATE) return;
+        if (!ModConfig.get().create_emi && ModCompat.hasCreate()) return;
 		registry.removeEmiStacks(s -> {
 			Object key = s.getKey();
 			Item item = s.getItemStack().getItem();

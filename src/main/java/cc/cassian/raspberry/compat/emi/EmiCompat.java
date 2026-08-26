@@ -3,6 +3,7 @@ package cc.cassian.raspberry.compat.emi;
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.compat.BrewinAndChewinCompat;
+import cc.cassian.raspberry.compat.item_obliterator.ItemObliteratorCompat;
 import cc.cassian.raspberry.config.ModConfig;
 import cc.cassian.raspberry.events.DripstoneEvent;
 import cc.cassian.raspberry.items.MarshmallowOnAStickItem;
@@ -42,15 +43,18 @@ public class EmiCompat implements EmiPlugin {
     @Override
     public void register(EmiRegistry emiRegistry) {
         RaspberryMod.LOGGER.info("Initializing EMI Integration");
-        if (ModConfig.get().emi_tablets && ModCompat.CREATE && ModCompat.DOMESTICATION_INNOVATION && ModCompat.ENSORCELLATION && ModCompat.SUPPLEMENTARIES && ModCompat.ALLUREMENT) {
+        if (ModCompat.hasItemObliterator()) {
+            ItemObliteratorCompat.hideItems(emiRegistry);
+        }
+        if (ModConfig.get().emi_tablets && ModCompat.hasCreate() && ModCompat.hasDomesticationInnovation() && ModCompat.hasEnsorcellation() && ModCompat.hasSupplementaries() && ModCompat.hasAllurement()) {
             EmiSmithingRecipe.addEnchantments(emiRegistry);
         }
-        if (ModCompat.QUARK) {
+        if (ModCompat.hasQuark()) {
             emiRegistry.addWorkstation(EmiCompat.ANVIL, EmiIngredient.of(Ingredient.of(Items.ANVIL, Items.CHIPPED_ANVIL, Items.DAMAGED_ANVIL)));
             emiRegistry.addCategory(ANVIL);
             EmiEtchingRecipe.addRunes(emiRegistry);
         }
-        if (ModCompat.BETTER_BEACONS) {
+        if (ModCompat.hasBetterBeacons()) {
             emiRegistry.addWorkstation(EmiCompat.BEACON_BASE, EmiStack.of(Items.BEACON));
             emiRegistry.addCategory(BEACON_BASE);
             EmiBeaconBaseRecipe.addBeaconRecipe(emiRegistry);
@@ -58,7 +62,7 @@ public class EmiCompat implements EmiPlugin {
             emiRegistry.addCategory(BEACON_PAYMENT);
             EmiBeaconPaymentRecipe.addBeaconRecipe(emiRegistry);
         }
-        if (ModCompat.BREWINANDCHEWIN) {
+        if (ModCompat.hasBrewinAndChewin()) {
             BrewinAndChewinCompat.registerEmi(emiRegistry);
         }
         emiRegistry.addCategory(DRIPPING);

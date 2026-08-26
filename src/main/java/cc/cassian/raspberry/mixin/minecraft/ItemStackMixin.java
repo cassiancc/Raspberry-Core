@@ -17,11 +17,11 @@ public abstract class ItemStackMixin {
         if (!arg.hasTag() && !arg2.hasTag()) {
             cir.setReturnValue(true);
         }
-        else if (ModCompat.SPELUNKERY) {
+        else if (ModCompat.hasSpelunkery()) {
             if (SpelunkeryCompat.checkDimensionalTears(arg, arg2))
                 cir.setReturnValue(true);
         }
-        if (ModCompat.NATURALIST) {
+        if (ModCompat.hasNaturalist()) {
             if (NaturalistCompat.match(arg, arg2)) {
                 cir.setReturnValue(true);
             }

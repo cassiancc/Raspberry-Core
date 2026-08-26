@@ -14,7 +14,7 @@ public class ControllableMixin {
             at = @At(value = "RETURN"), remap = false,
             cancellable = true)
     private static void backportJEMIFix(CallbackInfoReturnable<Boolean> cir) {
-        if (ModCompat.EMI) {
+        if (ModCompat.hasEmi()) {
             cir.setReturnValue(false);
         }
     }

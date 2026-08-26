@@ -20,7 +20,7 @@ public class SurvivalityUtilsMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;")
     )
     private static Item gogglesAreHelmetsBasically(ItemStack stack, Operation<Item> original) {
-        if (ModCompat.CREATE && CreateCompat.isGoggles(stack)) {
+        if (ModCompat.hasCreate() && CreateCompat.isGoggles(stack)) {
             return Items.CHAINMAIL_HELMET;
         }
         else return original.call(stack);

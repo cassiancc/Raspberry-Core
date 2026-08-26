@@ -79,6 +79,7 @@
     "ecologics.CoconutSliceItemMixin",
     "ecologics.PenguinMixin",
     "emi.EmiRecipesMixin",
+    "emi.VanillaPluginMixin",
     "endergetic.EnderWallTorchMixin",
     "endermanoverhaul.ReplacedEndermanMixin",
     "ensorcellation.CavalierEnchantmentMixin",

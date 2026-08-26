@@ -18,7 +18,7 @@ public class KnightJumpEnchantmentMixin {
     private static boolean disableDoubleJumpInWater(KeyMapping instance, Operation<Boolean> original, @Local Minecraft mc) {
         if (mc.player == null) return false;
         if (!mc.player.isInWater() && (mc.player.getVehicle() == null)) {
-            if (ModCompat.CONTROLLABLE && ControllableCompat.isJumping()) {
+            if (ModCompat.hasControllable() && ControllableCompat.isJumping()) {
                 return true;
             }
             return original.call(instance);
