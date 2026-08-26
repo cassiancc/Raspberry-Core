@@ -2,6 +2,7 @@ package cc.cassian.raspberry.items;
 
 import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.compat.XaerosCompat;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -16,8 +17,13 @@ public class AtlasItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        if (ModCompat.hasXaerosWorldMap() && level.isClientSide()) {
-            XaerosCompat.openWorldMap(player);
+        if (ModCompat.hasXaerosWorldMap()) {
+            if (level.isClientSide()) {
+                XaerosCompat.openWorldMap(player);
+            }
+        } else {
+            player.displayClientMessage(Component.nullToEmpty("No compatible world map mod present!"), true);
+            return InteractionResultHolder.fail(player.getItemInHand(usedHand));
         }
         return InteractionResultHolder.success(player.getItemInHand(usedHand));
     }
