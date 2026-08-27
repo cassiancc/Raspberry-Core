@@ -93,6 +93,7 @@ public class ModConfig {
     );
     public int greatblade_slash_damage_bonus = 0;
     public List<String> removedStatistics = List.of();
+    public boolean creepersDoNotExplodeInMidAir = true;
 
 	public static void load() {
         if (!Files.exists(configPath())) {
