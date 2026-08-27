@@ -5,6 +5,7 @@
   "minVersion": "0.8",
   "client": [
     "aquaculture.ClientHandlerMixin",
+    "caverns_and_chasms.CreepieMixin",
     "connectiblechains.ChainKnotEntityRendererMixin",
     "create.MechanicalCrafterMixin",
     "emi.RecipeScreenMixin",
@@ -55,6 +56,7 @@
     "caverns_and_chasms.BluntArrowMixin",
     "caverns_and_chasms.BowItemMixin",
     "caverns_and_chasms.BrazierBlockMixin",
+    "caverns_and_chasms.PeeperMixin",
     "clash.GreatbladeSlashEntityMixin",
     "cofh_core.CoreEnchantmentsMixin",
     "cofh_core.EffectEventsMixin",
@@ -75,6 +77,7 @@
     "create.WrenchItemMixin",
     "domesticationinnovation.WaywardLanternBlockMixin",
     "dungeons_mobs.CobwebProjectileEntityMixin",
+    "dungeons_mobs.IcyCreeperMixin",
     "dynamiccrosshair.VanillaBlockHandlerMixin",
     "ecologics.CoconutSliceItemMixin",
     "ecologics.PenguinMixin",

@@ -1,6 +1,7 @@
 ### Added
 - Config option to hide statistics.
 - Item Obliterated items are now hidden from EMI.
+- Creepers (and variants) no longer explode when in the air.
 
 ### Changed
 - Atlas now displays a warning if no compatible item is present.
