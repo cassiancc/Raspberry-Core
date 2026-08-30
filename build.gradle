@@ -314,7 +314,7 @@ dependencies {
     modImplementation("maven.modrinth:windswept:$windswept_version")
     modImplementation("maven.modrinth:item-obliterator:$item_obliterator_version")
     modImplementation("maven.modrinth:necronomicon:$necronomicon_version")
-
+    modImplementation("maven.modrinth:reliable-backpacks:$reliable_backpacks_version")
 
     // mods for testing purposes
     modImplementation("curse.maven:map-atlases-forge-519759:5138314")

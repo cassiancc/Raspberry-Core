@@ -2,9 +2,11 @@
 - Config option to hide statistics.
 - Item Obliterated items are now hidden from EMI.
 - Creepers (and variants) no longer explode when in the air.
+- Standardized re-equipping logic to `raspberry:equippable/helmet` and `raspberry:equippable/chestplate`, fixing some inconsistencies with equipping items.
 
 ### Changed
 - Atlas now displays a warning if no compatible item is present.
+- Reliable Backpacks can now be equipped by Totems of Holding.
 
 ### Fixed
 - 'Spyglass Works In Bundles' feature now works with the latest version of Spyglass Improvements.
