@@ -57,6 +57,7 @@ public class RaspberryTags {
 
     public static final TagKey<Block> CONVERTS_TO_SALT = createBlockTag("converts_to_salt");
 
+    public static final TagKey<Item> DUPLICATES_ALLAYS = createItemTag("duplicates_allays");
     public static final TagKey<Item> HORSE_FOOD = createItemTag("horse_food");
     public static final TagKey<Item> CONTAINERS = createItemTag("container");
 

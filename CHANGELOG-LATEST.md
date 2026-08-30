@@ -3,6 +3,7 @@
 - Item Obliterated items are now hidden from EMI.
 - Creepers (and variants) no longer explode when in the air.
 - Standardized re-equipping logic to `raspberry:equippable/helmet` and `raspberry:equippable/chestplate`, fixing some inconsistencies with equipping items.
+- Backported allay duplication tag as `raspberry:duplicates_allays`
 
 ### Changed
 - Atlas now displays a warning if no compatible item is present.
