@@ -14,3 +14,4 @@
 - Fermenting recipes now show ingredients correctly.
 - Fixed music toast related crash (@evanbones).
 - Fixed the Etched boombox not playing sound (@evanbones).
+- Molten metal buckets can now be dispensed.
