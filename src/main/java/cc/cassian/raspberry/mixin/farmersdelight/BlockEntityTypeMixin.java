@@ -6,13 +6,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import vectorwing.farmersdelight.common.block.SkilletBlock;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 
 @Mixin(BlockEntityType.class)
 public class BlockEntityTypeMixin {
     @Inject(method = "isValid", at = @At(value = "RETURN"), cancellable = true)
-    private void forceAllowStoves(BlockState arg, CallbackInfoReturnable<Boolean> cir) {
-        if (arg.getBlock() instanceof StoveBlock)
+    private void forceAllowBlocks(BlockState arg, CallbackInfoReturnable<Boolean> cir) {
+        if (arg.getBlock() instanceof StoveBlock || arg.getBlock() instanceof SkilletBlock)
             cir.setReturnValue(true);
     }
 }

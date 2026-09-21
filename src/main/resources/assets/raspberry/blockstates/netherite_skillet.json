@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,support=false": {
+      "model": "raspberry:block/netherite_skillet"
+    },
+    "facing=south,support=false": {
+      "model": "raspberry:block/netherite_skillet",
+      "y": 180
+    },
+    "facing=west,support=false": {
+      "model": "raspberry:block/netherite_skillet",
+      "y": 270
+    },
+    "facing=east,support=false": {
+      "model": "raspberry:block/netherite_skillet",
+      "y": 90
+    },
+    "facing=north,support=true": {
+      "model": "raspberry:block/netherite_skillet_tray"
+    },
+    "facing=south,support=true": {
+      "model": "raspberry:block/netherite_skillet_tray",
+      "y": 180
+    },
+    "facing=west,support=true": {
+      "model": "raspberry:block/netherite_skillet_tray",
+      "y": 270
+    },
+    "facing=east,support=true": {
+      "model": "raspberry:block/netherite_skillet_tray",
+      "y": 90
+    }
+  }
+}

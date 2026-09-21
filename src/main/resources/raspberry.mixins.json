@@ -104,6 +104,7 @@
     "farmersdelight.HotCocoaItemMixin",
     "farmersdelight.NetherStoveBlockMixin",
     "farmersdelight.RichSoilFarmlandBlockMixin",
+    "farmersdelight.SkilletItemMixin",
     "farmersdelight.StoveBlockMixin",
     "farmersrespite.TeaBushBlockMixin",
     "jade.OverlayRendererMixin",

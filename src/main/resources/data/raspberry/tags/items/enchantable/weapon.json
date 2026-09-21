@@ -24,6 +24,10 @@
     {
       "id": "farmersdelight:skillet",
       "required": false
+    },
+    {
+      "id": "raspberry:netherite_skillet",
+      "required": false
     }
   ]
 }

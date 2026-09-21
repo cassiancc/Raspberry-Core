@@ -4,16 +4,19 @@ import cc.cassian.raspberry.ModCompat;
 import cc.cassian.raspberry.compat.NaturalistCompat;
 import cc.cassian.raspberry.items.*;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import vectorwing.farmersdelight.common.item.SkilletItem;
 
 import java.util.function.Supplier;
 
 import static cc.cassian.raspberry.RaspberryMod.MOD_ID;
+import static vectorwing.farmersdelight.common.registry.ModItems.basicItem;
 
 public class RaspberryItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
@@ -35,6 +38,8 @@ public class RaspberryItems {
     public static Supplier<Item> MARSHMALLOW_ON_A_STICK = registerItem("marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.RAW_PROPERTIES).tab(CreativeModeTab.TAB_FOOD)));
     public static Supplier<Item> CARAMELIZED_MARSHMALLOW_ON_A_STICK = registerItem("caramelized_marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.COOKED_PROPERTIES).tab(CreativeModeTab.TAB_FOOD)));
     public static Supplier<Item> CHARRED_MARSHMALLOW_ON_A_STICK = registerItem("charred_marshmallow_on_a_stick", () -> new MarshmallowOnAStickItem(new Item.Properties().food(MarshmallowOnAStickItem.CHARRED_PROPERTIES).tab(CreativeModeTab.TAB_FOOD)));
+
+    public static Supplier<Item> NETHERITE_SKILLET = ITEMS.register("netherite_skillet", () -> new NetheriteSkilletItem(RaspberryBlocks.SKILLET.get(), basicItem().stacksTo(1)));
 
     public static RegistryObject<Item> registerItem(String itemID, Supplier<Item> item) {
         return RaspberryItems.ITEMS.register(itemID, item);

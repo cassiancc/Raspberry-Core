@@ -21,6 +21,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import vectorwing.farmersdelight.FarmersDelight;
+import vectorwing.farmersdelight.common.block.SkilletBlock;
 import vectorwing.farmersdelight.common.block.StoveBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 
@@ -57,6 +58,9 @@ public class RaspberryBlocks {
     public static BlockSupplier
             ASH_OVEN = registerBlock("ash_oven",
             ()-> new OvenBlock(BlockBehaviour.Properties.copy(com.baisylia.cookscollection.block.ModBlocks.OVEN.get())), FarmersDelight.CREATIVE_TAB);
+
+    public static Supplier<Block> SKILLET = registerBlock("netherite_skillet",
+            () -> new SkilletBlock(BlockBehaviour.Properties.of(Material.METAL).strength(0.5F, 1200.0F).sound(SoundType.NETHERITE_BLOCK)));
 
     public static BlockSupplier
             LEAD_GRATE = registerLeadGrate();

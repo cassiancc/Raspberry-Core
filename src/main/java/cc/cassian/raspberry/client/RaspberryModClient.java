@@ -5,6 +5,7 @@ import cc.cassian.raspberry.RaspberryMod;
 import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.client.entity.renderer.GrapplingHookRenderer;
 import cc.cassian.raspberry.client.entity.renderer.SwapArrowRenderer;
+import cc.cassian.raspberry.client.model.NetheriteSkilletModel;
 import cc.cassian.raspberry.client.music.MusicHandler;
 import cc.cassian.raspberry.events.FlowerGarlandEvent;
 import cc.cassian.raspberry.events.WikiTooltipEvent;
@@ -13,17 +14,14 @@ import cc.cassian.raspberry.client.registry.RaspberryItemProperties;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
 import cc.cassian.raspberry.registry.RaspberryEntityTypes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.GrassColor;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -31,7 +29,6 @@ import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -55,8 +52,17 @@ public class RaspberryModClient {
     }
 
     @SubscribeEvent
+    public static void onModelBake(ModelEvent.BakingCompleted event) {
+        Map<ResourceLocation, BakedModel> modelRegistry = event.getModels();
+        ModelResourceLocation skilletLocation = new ModelResourceLocation(RaspberryMod.locate("netherite_skillet"), "inventory");
+        BakedModel skilletModel = modelRegistry.get(skilletLocation);
+        ModelResourceLocation skilletCookingLocation = new ModelResourceLocation(RaspberryMod.locate( "netherite_skillet_cooking"), "inventory");
+        BakedModel skilletCookingModel = modelRegistry.get(skilletCookingLocation);
+        modelRegistry.put(skilletLocation, new NetheriteSkilletModel(event.getModelBakery(), skilletModel, skilletCookingModel));
+    }
+
+    @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event){
-        BlockColors blockColors = event.getBlockColors();
         for (BlockSupplier block : RaspberryBlocks.FOLIAGE_BLOCKS) {
             event.register(((state, view, pos, tintIndex) -> {
                 if (view == null || pos == null) {
@@ -79,12 +85,11 @@ public class RaspberryModClient {
     }
 
     @SubscribeEvent
-    @SuppressWarnings("unchecked")
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(RaspberryEntityTypes.ASHBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(RaspberryEntityTypes.ROSE_GOLD_BOMB.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(RaspberryEntityTypes.SWAP_ARROW.get(), SwapArrowRenderer::new);
-        event.registerEntityRenderer((EntityType) RaspberryEntityTypes.GRAPPLING_HOOK.get(), GrapplingHookRenderer::new);
+        event.registerEntityRenderer(RaspberryEntityTypes.GRAPPLING_HOOK.get(), GrapplingHookRenderer::new);
     }
 
     @SubscribeEvent
@@ -108,6 +113,7 @@ public class RaspberryModClient {
         event.register(RaspberryMod.locate("block/playful_wildflowers_potted"));
         event.register(RaspberryMod.locate("block/hopeful_wildflowers_potted"));
         event.register(RaspberryMod.locate("block/clovers_potted"));
+        event.register(new ModelResourceLocation(RaspberryMod.locate( "netherite_skillet_cooking"), "inventory"));
     }
 
 
