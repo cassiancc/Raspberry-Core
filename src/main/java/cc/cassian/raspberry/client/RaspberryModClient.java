@@ -6,14 +6,12 @@ import cc.cassian.raspberry.client.config.ModConfigFactory;
 import cc.cassian.raspberry.client.entity.renderer.GrapplingHookRenderer;
 import cc.cassian.raspberry.client.entity.renderer.SwapArrowRenderer;
 import cc.cassian.raspberry.client.model.NetheriteSkilletModel;
-import cc.cassian.raspberry.client.music.MusicHandler;
 import cc.cassian.raspberry.events.FlowerGarlandEvent;
 import cc.cassian.raspberry.events.WikiTooltipEvent;
 import cc.cassian.raspberry.registry.BlockSupplier;
 import cc.cassian.raspberry.client.registry.RaspberryItemProperties;
 import cc.cassian.raspberry.registry.RaspberryBlocks;
 import cc.cassian.raspberry.registry.RaspberryEntityTypes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.BiomeColors;
@@ -26,7 +24,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,11 +41,6 @@ public class RaspberryModClient {
         registerModsPage(context);
         MinecraftForge.EVENT_BUS.addListener(FlowerGarlandEvent::tick);
         MinecraftForge.EVENT_BUS.addListener(WikiTooltipEvent::wikiTooltip);
-    }
-
-    @SubscribeEvent
-    public static void registerReloadListeners(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(new MusicHandler());
     }
 
     @SubscribeEvent
@@ -96,10 +88,6 @@ public class RaspberryModClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(RaspberryBlocks.TEMPORARY_COBWEB.get(), RenderType.cutout());
-
-            Minecraft.getInstance()
-                .getSoundManager()
-                .addListener(new MusicEventListener());
         });
 
         RaspberryItemProperties.register();

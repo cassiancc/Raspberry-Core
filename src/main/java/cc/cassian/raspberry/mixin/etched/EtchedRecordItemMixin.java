@@ -1,9 +1,9 @@
 package cc.cassian.raspberry.mixin.etched;
 
-import cc.cassian.raspberry.client.music.MusicHandler;
 import gg.moonflower.etched.api.record.AlbumCover;
 import gg.moonflower.etched.api.record.PlayableRecord;
 import gg.moonflower.etched.api.record.TrackData;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
@@ -22,13 +22,11 @@ public class EtchedRecordItemMixin implements PlayableRecord {
     @Override
     public Optional<TrackData[]> getMusic(ItemStack stack) {
         RecordItem disc = (RecordItem) (Object) this;
-        MusicHandler.MusicMetadata info = MusicHandler.getDiscInfo(disc);
 
-        TrackData track = new TrackData(
-            disc.getSound().getLocation().toString(),
-            info.author().getString(),
-            info.title()
-        );
+        String[] split = disc.getDisplayName().getString().split(" - ", 2);
+        TrackData track = split.length == 2
+            ? new TrackData(disc.getSound().getLocation().toString(), split[0], Component.literal(split[1]))
+            : new TrackData(disc.getSound().getLocation().toString(), "", disc.getDescription());
 
         return Optional.of(new TrackData[]{track});
     }

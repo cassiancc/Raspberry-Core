@@ -64,11 +64,7 @@ public class ModConfig {
     public boolean backportLeash = true;
     public boolean disableBirchLeafTinting = true;
     public boolean jadeRequiresScoping = true;
-    public MusicFrequency musicFrequency = MusicFrequency.DEFAULT;
-    public boolean showMusicToast = false;
     public boolean disableFaucetSourceBlocks = false;
-    public boolean betterJukeboxes = true;
-    public double jukeboxDistance = 64.0;
     public boolean disablePenguinShedding = false;
     public boolean disableCurativeItems = true;
     public double creeperSporesDurationModifier = 1.0;

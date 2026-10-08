@@ -12,6 +12,8 @@
 ### Fixed
 - 'Spyglass Works In Bundles' feature now works with the latest version of Spyglass Improvements.
 - Fermenting recipes now show ingredients correctly.
-- Fixed music toast related crash (@evanbones).
 - Fixed the Etched boombox not playing sound (@evanbones).
 - Molten metal buckets can now be dispensed.
+
+### Removed
+- Music toasts, music frequency, jukebox distance, and jukebox music fade-out (now part of [Mini Music Tweaks](https://modrinth.com/mod/eiONV3dI) for 1.19) (@evanbones).
