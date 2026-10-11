@@ -157,6 +157,7 @@
     "oreganized.EnchantmentHelperMixin",
     "oreganized.EntityMixin",
     "oreganized.SilverMirrorItemMixin",
+    "peeping_angels.PeeperMixin",
     "quark.CrateBlacklistMixin",
     "quark.CrateContainerBlacklistMixin",
     "quark.DoubleDoorOpeningModuleMixin",

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import static cc.cassian.raspberry.events.CreeperTickEvent.calculateNewSwell;
 
-@Mixin(Peeper.class)
+@Mixin(value = Peeper.class, priority = 1500)
 public abstract class PeeperMixin extends Mob {
 
     protected PeeperMixin(EntityType<? extends Mob> entityType, Level level) {
